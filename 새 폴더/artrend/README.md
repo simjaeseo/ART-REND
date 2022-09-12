@@ -1,4 +1,4 @@
-# front
+# artrend
 
 ## Project setup
 ```

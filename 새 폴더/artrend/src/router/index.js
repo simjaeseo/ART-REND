@@ -1,6 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router';
-
-//로그인 페이지
+import { createRouter, createWebHistory } from 'vue-router';
 import LoginView from '@/views/accounts/LoginView.vue';
 
 const routes = [
@@ -8,7 +6,7 @@ const routes = [
     path: '/',
     name: 'Login',
     component: LoginView,
-  }  
+  },
 ];
 
 const router = createRouter({

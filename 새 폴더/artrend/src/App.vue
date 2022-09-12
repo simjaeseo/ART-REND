@@ -1,12 +1,16 @@
 <template>
   <div>
-    <nav class="navbar fixed-top">
-      <div class="container-fluid">
+    <div class="fixed-top">
+      <div class="navbar">
         <a class="navbar-brand" href="#">ART-REND</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-          <span class="navbar-toggler-icon"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <span>
+            <img src="@/assets/button.png" alt="button" id="button-img">
+          </span>
         </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header">
             <p type="button" data-bs-dismiss="offcanvas" aria-label="Close" id="close-btn">X</p>
           </div>
@@ -30,21 +34,31 @@
           </div>
         </div>
       </div>
-    </nav>
+    </div>
   <router-view/>
   </div>
 </template>
 
 <script>
 
-
 export default {
   name: 'App',
-}
+};
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+#button-img {
+  widows: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.navbar-brand {
+  color: white;
+  font-weight: 600;
+  font-size: 30px;
+  margin-left: 30px;
+}
 .offcanvas-header {
   justify-content: end;
 }
@@ -113,7 +127,6 @@ export default {
     --bs-navbar-toggler-padding-y: 0.25rem;
     --bs-navbar-toggler-padding-x: 0.75rem;
     --bs-navbar-toggler-font-size: 1.25rem;
-    --bs-navbar-toggler-icon-bg: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e);
     --bs-navbar-toggler-border-color: none;
     --bs-navbar-toggler-border-radius: 0.375rem;
     --bs-navbar-toggler-focus-width: 0rem;

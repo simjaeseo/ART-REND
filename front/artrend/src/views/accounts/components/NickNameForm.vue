@@ -43,7 +43,7 @@ input {
 	background-color: transparent;
 	border: none;
 	border-bottom: 1px solid white;
-	width: 381%;
+	width: 50vw;
 	color: white;
 	font-size: 30px;
 }

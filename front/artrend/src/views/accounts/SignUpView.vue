@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="wrap1">
 		<img
 			:src="require(`@/assets/login-bg/${state.randomNum}.png`)"
 			alt="img"
@@ -31,6 +31,9 @@ export default {
 </script>
 
 <style scoped>
+#wrap1 {
+	height: 100vh;
+}
 #background-img {
 	height: 100%;
 	width: 100%;

@@ -2,7 +2,9 @@
 	<div>
 		<div class="fixed-top">
 			<div class="navbar">
-				<a class="navbar-brand" href="/">ART-REND</a>
+				<router-link :to="{ name: 'Main' }" id="brad-text">
+					<h1>ART-REND</h1>
+				</router-link>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -63,6 +65,15 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+#brad-text {
+	margin-top: 10px;
+	margin-left: 20px;
+	font-weight: 400;
+	font-size: 100px;
+	text-decoration: none;
+	color: white;
+	font-family: 'DM Serif Display', serif;
+}
 #button-img {
 	widows: 20px;
 	height: 20px;

@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 #background-img {
-	height: 100%;
+	height: 100vh;
 	width: 100%;
 	filter: brightness(20%);
 	position: absolute;

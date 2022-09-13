@@ -1,17 +1,17 @@
 <template>
   <div>
     <img :src="require(`@/assets/login-bg/${state.randomNum}.png`)" alt="img" id="background-img">
-    <login-form></login-form>
+    <nick-name-form></nick-name-form>
   </div>
 </template>
 
 <script>
 import { reactive, onBeforeMount } from 'vue';
-import LoginForm from '@/views/accounts/components/LoginForm.vue';
+import NickNameForm from '@/views/accounts/components/NickNameForm.vue';
 
 export default {
-  name: 'LoginView',
-  components: { LoginForm },
+  name: 'SignUpView',
+  components: { NickNameForm },
   setup() {
     const state = reactive({
       randomNum: null,
@@ -28,9 +28,9 @@ export default {
 
 <style scoped>
 #background-img {
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  filter: brightness(40%);
+  filter: brightness(20%);
   position: absolute;
   z-index: -1;
 }

@@ -1,16 +1,40 @@
 <template>
-  <div>
-    <h1>메인페이지에 들어갈 그림들 가져오면 됩니당</h1>
-  </div>
+	<div>
+		<h1>화이팅</h1>
+		<div class="image-list">
+			<div v-for="image in state.imageNum" :key="image" class="main-image">
+				<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>
-export default {
-  name: 'MainPageArtWork',
-};
+import { reactive } from 'vue'
 
+export default {
+	name: 'MainPageArtWork',
+	setup() {
+		const state = reactive({
+			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		})
+		return {
+			state,
+		}
+	},
+}
 </script>
 
-<style>
+<style scoped>
+img {
+	width: 100%;
+}
 
+.image-list {
+	display: flex;
+}
+
+.main-image {
+	width: 100%;
+}
 </style>

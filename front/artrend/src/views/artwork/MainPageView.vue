@@ -17,8 +17,8 @@ export default {
 .main-bg {
 	background-color: black;
 	height: 100vh;
-	display: flex;
-	align-items: center;
+	width: 100%;
 	overflow-y: hidden;
+	/* padding-top: 85px; */
 }
 </style>

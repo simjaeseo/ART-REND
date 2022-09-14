@@ -1,8 +1,6 @@
 <template>
 	<div class="main-bg">
-		<div class="artwork">
-			<main-page-art-work />
-		</div>
+		<main-page-art-work />
 	</div>
 </template>
 
@@ -19,12 +17,8 @@ export default {
 .main-bg {
 	background-color: black;
 	height: 100vh;
-}
-
-.artwork {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
+	width: 100%;
+	overflow-y: hidden;
+	/* padding-top: 85px; */
 }
 </style>

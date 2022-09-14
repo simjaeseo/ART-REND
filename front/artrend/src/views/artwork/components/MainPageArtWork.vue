@@ -3,11 +3,13 @@
 		<div class="horizontal-scroll-wrapper">
 			<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
 				<a href="#" target="_blank" rel="noopener">
-					<img
-						:src="require(`@/assets/main-img/${image}.jpg`)"
-						alt="image"
-						class="main-image"
-					/>
+					<div class="image-box">
+						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+						<div class="image-info">
+							<h3 class="title">Street Man Fighter, 2022</h3>
+							<h5 class="name">Tom Smith</h5>
+						</div>
+					</div>
 				</a>
 			</div>
 		</div>
@@ -31,7 +33,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 /* hide scrollbar */
 ::-webkit-scrollbar {
 	width: 1px;
@@ -67,35 +69,50 @@ export default {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	// min-height: 70vh;
-	min-height: 40vh;
+	min-height: 60vh;
 	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0.1px) translateX(0px) translateY(-3vh);
+	transform: rotate(90deg) translateZ(0px) translateX(0px);
 	transition: 1s;
 }
 
 .img-wrapper:hover {
-	// min-height: 90vh;
-	min-height: 65vh;
-	// transform: rotate(90deg) scale(1.1);
+	min-height: 75vh;
+	transform: rotate(90deg) translateZ(0px) translateX(0px) scale(1.2);
 }
 
 .img-wrapper a {
 	overflow: hidden;
 	display: block;
-	box-shadow: 0px 0px 80px rgb(255, 255, 255, 0.25);
-	padding: 1vh;
+	box-shadow: 15px 15px 60px rgb(255, 255, 255, 0.3);
+	/* background-color: rgba(255, 255, 255, 0.8);
+	padding: 0.5vh; */
+}
+
+.image-box {
+	transition: 0.5s;
+	vertical-align: top;
+	filter: grayscale(70%);
 }
 
 img {
-	max-height: 60vh;
-	transition: 0.5s;
-	vertical-align: top;
 	max-width: 45vh;
-	filter: saturate(40%) sepia(30%) hue-rotate(5deg);
+	max-height: 50vh;
 }
 
-a:hover img {
+a:hover .image-box {
 	filter: none;
+}
+
+a:hover .image-info {
+	display: none;
+}
+
+.image-info {
+	position: absolute;
+	bottom: 20px;
+	right: 30px;
+	text-align: end;
+	color: white;
+	transition: 1s;
 }
 </style>

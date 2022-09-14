@@ -19,6 +19,5 @@ export default {
 	height: 100vh;
 	width: 100%;
 	overflow-y: hidden;
-	/* padding-top: 85px; */
 }
 </style>

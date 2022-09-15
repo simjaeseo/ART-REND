@@ -8,8 +8,8 @@
 import MainPageArtWork from '@/views/artwork/components/MainPageArtWork.vue'
 
 export default {
-  name: 'MainPageView',
-  components: { MainPageArtWork },
+	name: 'MainPageView',
+	components: { MainPageArtWork },
 }
 </script>
 

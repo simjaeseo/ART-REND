@@ -6,36 +6,36 @@ import MainPageView from '@/views/artwork/MainPageView.vue'
 import DetailPageView from '@/views/artwork/DetailPageView.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'Login',
-    component: LoginView,
-  },
-  {
-    path: '/signup',
-    name: 'SignUp',
-    component: SignUpView,
-  },
-  {
-    path: '/select',
-    name: 'SelectImage',
-    component: SelectImageView,
-  },
-  {
-    path: '/main',
-    name: 'Main',
-    component: MainPageView,
-  },
-  {
-    path: '/detail',
-    name: 'Detail',
-    component: DetailPageView,
-  },
+	{
+		path: '/',
+		name: 'Login',
+		component: LoginView,
+	},
+	{
+		path: '/signup',
+		name: 'SignUp',
+		component: SignUpView,
+	},
+	{
+		path: '/select',
+		name: 'SelectImage',
+		component: SelectImageView,
+	},
+	{
+		path: '/main',
+		name: 'Main',
+		component: MainPageView,
+	},
+	{
+		path: '/detail',
+		name: 'Detail',
+		component: DetailPageView,
+	},
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes,
+	history: createWebHistory(process.env.BASE_URL),
+	routes,
 })
 
 export default router

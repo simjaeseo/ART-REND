@@ -35,18 +35,18 @@ module.exports = {
 		semi: ['error', 'never'],
 		quotes: ['error', 'single'],
 
-    'vue/html-self-closing': [
-      'error',
-      {
-        html: {
-          void: 'always',
-          normal: 'never',
-          component: 'always',
-        },
-        svg: 'always',
-        math: 'always',
-      },
-    ],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-  },
+		'vue/html-self-closing': [
+			'error',
+			{
+				html: {
+					void: 'always',
+					normal: 'never',
+					component: 'always',
+				},
+				svg: 'always',
+				math: 'always',
+			},
+		],
+		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+	},
 }

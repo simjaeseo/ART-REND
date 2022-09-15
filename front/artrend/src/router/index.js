@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '@/views/accounts/LoginView.vue'
 import SignUpView from '@/views/accounts/SignUpView.vue'
 import SelectImageView from '@/views/accounts/SelectImageView.vue'
+import MyPageView from '@/views/accounts/MyPageView.vue'
 import MainPageView from '@/views/artwork/MainPageView.vue'
 import DetailPageView from '@/views/artwork/DetailPageView.vue'
 
@@ -20,6 +21,11 @@ const routes = [
 		path: '/select',
 		name: 'SelectImage',
 		component: SelectImageView,
+	},
+	{
+		path: '/mypage',
+		name: 'MyPage',
+		component: MyPageView,
 	},
 	{
 		path: '/main',

@@ -168,5 +168,7 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+
+	background-color: black;
 }
 </style>

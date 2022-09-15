@@ -5,6 +5,7 @@ import SelectImageView from '@/views/accounts/SelectImageView.vue'
 import MyPageView from '@/views/accounts/MyPageView.vue'
 import MainPageView from '@/views/artwork/MainPageView.vue'
 import DetailPageView from '@/views/artwork/DetailPageView.vue'
+import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
 
 const routes = [
 	{
@@ -36,6 +37,11 @@ const routes = [
 		path: '/detail',
 		name: 'Detail',
 		component: DetailPageView,
+	},
+	{
+		path: '/artworks',
+		name: 'Artworks',
+		component: ArtWorksArrayView,
 	},
 ]
 

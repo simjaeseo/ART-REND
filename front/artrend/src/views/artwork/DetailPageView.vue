@@ -4,19 +4,13 @@
 		<div id="img-sticky">
 			<div id="img-wrap2">
 				<img
-					src="@/assets/main-img/1.jpg"
+					src="@/assets/main-img/3.jpg"
 					alt="img"
 					id="selected-img2"
 					@click="getImageModal"
 				/>
-				<div id="myModal" class="modal">
-					<img
-						class="modal-content"
-						id="img01"
-						alt="Image"
-						@click="outImageModal"
-					/>
-				</div>
+				<img src="@/assets/unlike.png" alt="unlike-button" id="unlike-button" />
+				<img src="@/assets/upload.png" alt="upload-button" id="upload-button" />
 			</div>
 			<!-- <div id="img-wrap">
         <img src="@/assets/main-img/1.jpg" alt="img" id="selected-img" />
@@ -111,6 +105,14 @@
 				</div>
 			</div>
 		</div>
+		<div id="myModal" class="modal">
+			<img
+				class="modal-content"
+				id="img01"
+				alt="Image"
+				@click="outImageModal"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -120,17 +122,14 @@ export default {
 	setup() {
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
-			const temp = document.getElementById('selected-img2').src
-			console.log(temp)
-			const img = require('../../assets/main-img/1.jpg')
-			console.log(img)
+			const img = require('../../assets/main-img/3.jpg')
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
-			modalImg.src = this.img
+			modalImg.src = img
 		}
 		const outImageModal = function () {
 			const modalImg = document.getElementById('img01')
-			modalImg.className += 'out'
+			modalImg.classList.add('out')
 			setTimeout(function () {
 				const modal = document.getElementById('myModal')
 				modal.style.display = 'none'
@@ -149,6 +148,22 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+#upload-button {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 94%;
+	right: 7%;
+	cursor: pointer;
+}
+#unlike-button {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 94%;
+	right: 1%;
+	cursor: pointer;
+}
 #description-cell {
 	font-size: 35px;
 	font-family: 'Noto Sans', sans-serif;
@@ -195,6 +210,7 @@ hr {
 	top: 200px;
 	left: 700px;
 	color: white;
+	z-index: 1;
 }
 #img-sticky {
 	display: flex;
@@ -213,7 +229,7 @@ hr {
 	width: 30vw;
 }
 #selected-img2 {
-	height: 100%;
+	height: 90%;
 	position: relative;
 	animation: slideInRight 2s ease-out;
 	cursor: pointer;
@@ -238,7 +254,7 @@ hr {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
+	z-index: 2; /* Sit on top */
 	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;
@@ -270,14 +286,6 @@ hr {
 }
 
 /* Add Animation */
-.modal-content,
-#caption {
-	-webkit-animation-name: zoom;
-	-webkit-animation-duration: 0.6s;
-	animation-name: zoom;
-	animation-duration: 0.6s;
-}
-
 .out {
 	animation-name: zoom-out;
 	animation-duration: 0.6s;
@@ -308,24 +316,6 @@ hr {
 	to {
 		transform: scale(0);
 	}
-}
-
-/* The Close Button */
-.close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-
-.close:hover,
-.close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
 }
 
 /* 100% Image Width on Smaller Screens */

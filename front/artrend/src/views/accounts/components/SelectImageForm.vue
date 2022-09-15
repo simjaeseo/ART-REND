@@ -7,7 +7,7 @@
 			aria-labelledby="exampleModalLabel"
 			aria-hidden="true"
 		>
-			<div class="modal-dialog modal-xl">
+			<div class="modal-dialog modal-lg modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-body">
 						<img alt="" id="modal-inner" data-bs-dismiss="modal" />
@@ -39,54 +39,6 @@
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(2)"
-						@mouseover="plusClass(2)"
-						@mouseleave="deleteClass(2)"
-						id="2"
-					>
-						<img src="@/assets/select-img/2.jpg" alt="img1" />
-						<img
-							id="btn2"
-							class="zoom-btn"
-							@click="zoomImage(2)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(3)"
-						@mouseover="plusClass(3)"
-						@mouseleave="deleteClass(3)"
-						id="3"
-					>
-						<img src="@/assets/select-img/3.jpg" alt="img1" />
-						<img
-							id="btn3"
-							class="zoom-btn"
-							@click="zoomImage(3)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(4)"
-						@mouseover="plusClass(4)"
-						@mouseleave="deleteClass(4)"
-						id="4"
-					>
-						<img src="@/assets/select-img/4.jpg" alt="img1" />
-						<img
-							id="btn4"
-							class="zoom-btn"
-							@click="zoomImage(4)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
 						@dblclick.prevent="selectedImage(5)"
 						@mouseover="plusClass(5)"
 						@mouseleave="deleteClass(5)"
@@ -103,16 +55,32 @@
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(6)"
-						@mouseover="plusClass(6)"
-						@mouseleave="deleteClass(6)"
-						id="6"
+						@dblclick.prevent="selectedImage(2)"
+						@mouseover="plusClass(2)"
+						@mouseleave="deleteClass(2)"
+						id="2"
 					>
-						<img src="@/assets/select-img/6.jpg" alt="img1" />
+						<img src="@/assets/select-img/2.jpg" alt="img1" />
 						<img
-							id="btn6"
+							id="btn2"
 							class="zoom-btn"
-							@click="zoomImage(6)"
+							@click="zoomImage(2)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(4)"
+						@mouseover="plusClass(4)"
+						@mouseleave="deleteClass(4)"
+						id="4"
+					>
+						<img src="@/assets/select-img/4.jpg" alt="img1" />
+						<img
+							id="btn4"
+							class="zoom-btn"
+							@click="zoomImage(4)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
@@ -151,6 +119,22 @@
 					</div>
 					<div
 						class="mItem filter"
+						@dblclick.prevent="selectedImage(6)"
+						@mouseover="plusClass(6)"
+						@mouseleave="deleteClass(6)"
+						id="6"
+					>
+						<img src="@/assets/select-img/6.jpg" alt="img1" />
+						<img
+							id="btn6"
+							class="zoom-btn"
+							@click="zoomImage(6)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
 						@dblclick.prevent="selectedImage(9)"
 						@mouseover="plusClass(9)"
 						@mouseleave="deleteClass(9)"
@@ -177,6 +161,22 @@
 							id="btn10"
 							class="zoom-btn"
 							@click="zoomImage(10)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(3)"
+						@mouseover="plusClass(3)"
+						@mouseleave="deleteClass(3)"
+						id="3"
+					>
+						<img src="@/assets/select-img/3.jpg" alt="img1" />
+						<img
+							id="btn3"
+							class="zoom-btn"
+							@click="zoomImage(3)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
@@ -287,7 +287,6 @@ img {
 
 .masonry {
 	column-count: 4;
-	column-gap: 16px;
 }
 
 .masonry .mItem {
@@ -302,7 +301,7 @@ img {
 	position: relative;
 }
 .filter {
-	filter: brightness(40%);
+	filter: brightness(60%);
 }
 .modal {
 	--bs-modal-zindex: 1055;
@@ -328,13 +327,15 @@ img {
 	--bs-modal-footer-border-width: 1px;
 	position: fixed;
 	top: 0;
-	left: 0;
 	z-index: var(--bs-modal-zindex);
 	display: none;
 	width: 100%;
 	height: 100%;
-	overflow-x: hidden;
 	overflow-y: auto;
 	outline: 0;
+}
+.modal-dialog {
+	width: auto;
+	height: 50vh;
 }
 </style>

@@ -119,7 +119,7 @@ export default {
 	setup() {
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
-			const img = require('../../assets/main-img/1.jpg')
+			const img = require('../../assets/main-img/9.jpg')
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img
@@ -272,7 +272,7 @@ hr {
 .modal-content {
 	margin: auto;
 	display: block;
-	height: 80vh;
+	height: 100vh;
 	width: auto;
 	/* max-width: 75%; */
 }

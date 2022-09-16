@@ -27,10 +27,16 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
 
 logging:
   level:
     org:
+      com.ssafy.artrend.authservice: DEBUG
       hibernate:
         type:
           descriptor:
@@ -48,4 +54,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh
 

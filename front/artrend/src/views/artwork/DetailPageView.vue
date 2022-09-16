@@ -4,7 +4,7 @@
 		<div id="img-sticky">
 			<div id="img-wrap2">
 				<img
-					src="@/assets/main-img/3.jpg"
+					src="@/assets/main-img/1.jpg"
 					alt="img"
 					id="selected-img2"
 					@click="getImageModal"
@@ -122,7 +122,7 @@ export default {
 	setup() {
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
-			const img = require('../../assets/main-img/3.jpg')
+			const img = require('../../assets/main-img/1.jpg')
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img
@@ -259,7 +259,7 @@ hr {
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
-	height: 100%; /* Full height */
+	height: 100vh; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
@@ -269,7 +269,8 @@ hr {
 .modal-content {
 	margin: auto;
 	display: block;
-	width: 75%;
+	height: 80vh;
+	width: auto;
 	/* max-width: 75%; */
 }
 

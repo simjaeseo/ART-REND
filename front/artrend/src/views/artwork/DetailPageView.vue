@@ -15,7 +15,10 @@
 						src="@/assets/upload.png"
 						alt="upload-button"
 						id="upload-button"
+						data-bs-toggle="modal"
+						data-bs-target="#pictureModal"
 					/>
+
 					<img
 						src="@/assets/unlike.png"
 						alt="unlike-button"
@@ -106,6 +109,53 @@
 				@click="outImageModal"
 			/>
 		</div>
+
+		<!-- 사진변환 Modal -->
+		<div
+			class="modal fade"
+			id="pictureModal"
+			tabindex="-1"
+			aria-labelledby="exampleModalLabel"
+			aria-hidden="true"
+		>
+			<div class="modal-dialog">
+				<div class="modal-content content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							변환할 사진을 선택해 주세요.
+						</h5>
+					</div>
+					<div class="modal-body">
+						<div>
+							<label
+								htmlFor="input-file"
+								@change="handleAddImage"
+								class="image-input"
+							>
+								<input type="file" accept="image/*" id="input-file" />
+								<input
+									class="image-upload"
+									:placeholder="state.imageName"
+									readOnly
+								/>
+								<span>사진추가</span>
+							</label>
+							<div class="show-image">
+								<div class="image-sample">
+									<img :src="state.imageUrl" alt="" id="sample-imag" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="change-button">변환하기</button>
+						<button type="button" class="change-button" data-bs-dismiss="modal">
+							닫기
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -117,9 +167,15 @@ export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
+		const state = reactive({
+			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+			imageName: '',
+			imageUrl: '',
+		})
+
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
-			const img = require('../../assets/main-img/9.jpg')
+			const img = require('../../assets/main-img/1.jpg')
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img
@@ -134,14 +190,17 @@ export default {
 			}, 400)
 		}
 
-		const state = reactive({
-			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-		})
+		const handleAddImage = function (event) {
+			const image = event.target.files[0]
+			state.imageName = image.name
+			state.imageUrl = URL.createObjectURL(image)
+		}
 
 		return {
+			state,
 			getImageModal,
 			outImageModal,
-			state,
+			handleAddImage,
 		}
 	},
 }
@@ -239,8 +298,6 @@ hr {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-
-	z-index: 1;
 }
 #background-div {
 	margin-left: 20%;
@@ -257,7 +314,7 @@ hr {
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
-	z-index: 2; /* Sit on top */
+	/* z-index: 2; Sit on top */
 	padding-top: 100px; /* Location of the box */
 	left: 0;
 	top: 0;
@@ -371,5 +428,86 @@ hr {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+/* Modal */
+.modal-dialog {
+	width: 40vw;
+	max-width: 40vw;
+}
+
+.content {
+	height: auto;
+	background-color: white;
+	padding: 20px;
+	border-radius: 20px;
+}
+
+.image-input {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: 10px 0;
+}
+
+.image-input input[type='file'] {
+	display: none;
+}
+
+.image-input > .image-upload {
+	display: inline-block;
+	height: 40px;
+	padding: 0 10px;
+	margin: 0px 10px;
+	border: 1px solid rgb(200, 200, 200);
+	color: rgb(200, 200, 200);
+	width: 85%;
+}
+
+.image-input > span {
+	display: inline-block;
+	padding: 7px 20px;
+	color: #fff;
+	background-color: rgb(200, 200, 200);
+	cursor: pointer;
+	height: 40px;
+	margin: 0 20px 0 0;
+	white-space: nowrap;
+	border-radius: 10px;
+}
+
+.image-input > span:hover {
+	background-color: rgb(0, 0, 0);
+}
+
+.show-image {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.image-sample {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin: 10px;
+	width: 80%;
+}
+
+.image-sample > img {
+	height: 30vh;
+}
+
+.change-button {
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(200, 200, 200);
+	color: white;
+	padding: 5px 10px;
+}
+
+.change-button:hover {
+	background-color: rgb(0, 0, 0);
 }
 </style>

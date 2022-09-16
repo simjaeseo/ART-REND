@@ -3,7 +3,9 @@
 		<div class="fixed-top">
 			<div class="navbar">
 				<router-link :to="{ name: 'Main' }" id="brad-text">
-					<h1>ART-REND</h1>
+					<h1 :style="[oneBlack ? { color: '#000000' } : { color: '#ffffff' }]">
+						ART-REND
+					</h1>
 				</router-link>
 				<button
 					class="navbar-toggler"
@@ -13,7 +15,18 @@
 					aria-controls="offcanvasNavbar"
 				>
 					<span>
-						<img src="@/assets/button.png" alt="button" id="button-img" />
+						<img
+							v-if="twoBlack === false"
+							src="@/assets/button.png"
+							alt="button"
+							id="button-img"
+						/>
+						<img
+							v-if="twoBlack === true"
+							src="@/assets/buttonblack.png"
+							alt="button"
+							id="button-img"
+						/>
 					</span>
 				</button>
 				<div
@@ -60,6 +73,29 @@
 <script>
 export default {
 	name: 'App',
+	setup() {
+		let oneBlack = false
+		let twoBlack = false
+		let now = window.location.href
+		console.log(now)
+		if (now.includes('detail')) {
+			oneBlack = true
+			console.log('글씨만검정이다!')
+			console.log(oneBlack)
+		} else if (now.includes('mypage') || now.includes('artworks')) {
+			oneBlack = true
+			twoBlack = true
+		} else {
+			oneBlack = false
+			twoBlack = false
+			console.log('글씨검정아니다!')
+		}
+		return {
+			now,
+			oneBlack,
+			twoBlack,
+		}
+	},
 }
 </script>
 
@@ -168,7 +204,5 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
-
-	background-color: black;
 }
 </style>

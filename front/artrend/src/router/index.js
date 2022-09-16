@@ -6,6 +6,7 @@ import MyPageView from '@/views/accounts/MyPageView.vue'
 import MainPageView from '@/views/artwork/MainPageView.vue'
 import DetailPageView from '@/views/artwork/DetailPageView.vue'
 import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
+import KakaoAuthView from '@/views/accounts/KakaoAuthView.vue'
 
 const routes = [
 	{
@@ -42,6 +43,11 @@ const routes = [
 		path: '/artworks',
 		name: 'Artworks',
 		component: ArtWorksArrayView,
+	},
+	{
+		path: '/auth',
+		name: 'KakaoAuth',
+		component: KakaoAuthView,
 	},
 ]
 

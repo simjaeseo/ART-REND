@@ -1,4 +1,4 @@
-package com.ssafy.artrend.authservice.global.common;
+package com.artrend.authservice.global.common;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

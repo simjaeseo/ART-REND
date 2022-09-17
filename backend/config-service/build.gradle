@@ -4,8 +4,8 @@ plugins {
 	id 'java'
 }
 
-group = 'com.ssafy.artrend'
-version = '0.0.1-SNAPSHOT'
+group = 'com.artrend'
+version = '0.1'
 sourceCompatibility = '11'
 
 repositories {
@@ -18,9 +18,10 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 dependencyManagement {

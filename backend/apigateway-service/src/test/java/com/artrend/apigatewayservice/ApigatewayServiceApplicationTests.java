@@ -1,4 +1,4 @@
-package com.ssafy.artrend.apigatewayservice;
+package com.artrend.apigatewayservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

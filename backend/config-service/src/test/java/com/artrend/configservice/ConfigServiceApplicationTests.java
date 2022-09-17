@@ -1,10 +1,10 @@
-package com.ssafy.artrend.configserver;
+package com.artrend.configservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ConfigServerApplicationTests {
+class ConfigServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

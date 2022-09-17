@@ -5,7 +5,6 @@ server:
 #    key-store-type: PKCS12
 #    key-store-password: ssafyartrendpjt
 
-
 spring:
   #  sql:
   #    init:
@@ -36,25 +35,20 @@ spring:
 logging:
   level:
     org:
-      com.ssafy.artrend.authservice: DEBUG
+      com.artrend.authservice: DEBUG
       hibernate:
         type:
           descriptor:
             sql: trace
 
-
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instance-id:${random.value}}
   client:
-    # ??? ????? ???? ??? ??
     register-with-eureka: true
-    # ??? ????? ?????? ??? ????? ????
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-
 
 management:
   endpoints:

@@ -1,4 +1,4 @@
-package com.ssafy.artrend.authservice;
+package com.artrend.authservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package com.ssafy.artrend.apigatewayservice;
+package com.artrend.apigatewayservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
@@ -13,7 +13,7 @@ public class ApigatewayServiceApplication {
 		SpringApplication.run(ApigatewayServiceApplication.class, args);
 	}
 
-	// actuator의 httptrace를 사용하기 위한 설정
+	// For Http Trace of Actuator
 	@Bean
 	public HttpTraceRepository httpTraceRepository(){
 		return new InMemoryHttpTraceRepository();

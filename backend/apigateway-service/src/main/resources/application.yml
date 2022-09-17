@@ -1,5 +1,5 @@
 server:
-    port: 8000
+  port: 8080
 
 eureka:
   instance:
@@ -38,4 +38,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace, busrefresh
+        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus

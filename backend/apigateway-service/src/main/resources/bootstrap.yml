@@ -2,4 +2,4 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-#      name: 사용할 설정파일 이름
+#      name: using config-file name

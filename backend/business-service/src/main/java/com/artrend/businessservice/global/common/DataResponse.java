@@ -1,4 +1,4 @@
-package com.ssafy.artrend.businessservice.global.common;
+package com.artrend.businessservice.global.common;
 
 import lombok.Getter;
 

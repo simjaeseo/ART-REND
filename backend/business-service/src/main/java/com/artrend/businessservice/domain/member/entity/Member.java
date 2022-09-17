@@ -1,10 +1,10 @@
-package com.ssafy.artrend.businessservice.domain.member.domain;
+package com.artrend.businessservice.domain.member.entity;
 
-import com.ssafy.artrend.businessservice.global.common.BaseEntity;
+import com.artrend.businessservice.global.common.BaseEntity;
 
 import javax.persistence.*;
+
 @Entity
-@Table(name = "member")
 public class Member extends BaseEntity {
 
     @Id

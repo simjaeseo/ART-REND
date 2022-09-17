@@ -1,6 +1,6 @@
-package com.ssafy.artrend.businessservice.domain.member.repository;
+package com.artrend.businessservice.domain.member.repository;
 
-import com.ssafy.artrend.businessservice.domain.member.domain.Member;
+import com.artrend.businessservice.domain.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

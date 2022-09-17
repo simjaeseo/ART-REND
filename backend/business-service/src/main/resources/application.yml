@@ -7,9 +7,9 @@ server:
 
 
 spring:
-#  sql:
-#    init:
-#      mode: always
+  #  sql:
+  #    init:
+  #      mode: always
   application:
     name: business-service
   datasource:
@@ -35,29 +35,24 @@ spring:
 
 logging:
   level:
-    com.ssafy.artrend.businessservice: DEBUG
+    com.artrend.businessservice: DEBUG
     org:
       hibernate:
         type:
           descriptor:
             sql: trace
 
-
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instance-id:${random.value}}
   client:
-    # ??? ????? ???? ??? ??
     register-with-eureka: true
-    # ??? ????? ?????? ??? ????? ????
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
-
-
 
 management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans, httptrace, busrefresh
+        include: refresh, health, beans, busrefresh, info, metrics, prometheus

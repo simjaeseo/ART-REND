@@ -1,4 +1,4 @@
-package com.ssafy.artrend.businessservice.domain.member.api;
+package com.artrend.businessservice.domain.member.api;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,1 +1,2 @@
-**/src/main/resources/application.yml
+business-service/src/main/resources/application.yml
+auth-service/src/main/resources/application.yml

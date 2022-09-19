@@ -15,7 +15,7 @@ export default {
 
 <style scoped>
 .main-bg {
-	background-color: black;
+	background-color: rgb(0, 0, 0);
 	height: 100vh;
 	width: 100%;
 	overflow-y: hidden;

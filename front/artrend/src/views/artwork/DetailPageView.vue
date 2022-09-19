@@ -18,7 +18,6 @@
 						data-bs-toggle="modal"
 						data-bs-target="#pictureModal"
 					/>
-
 					<img
 						src="@/assets/unlike.png"
 						alt="unlike-button"
@@ -59,7 +58,7 @@
 								</div>
 							</div>
 							<div class="title-wrapper">
-								<sapn id="description-cell">Description</sapn>
+								<sapn id="description-cell2">Description</sapn>
 								<p id="description-inner2">
 									국회는 헌법개정안이 공고된 날로부터 60일 이내에 의결하여야
 									하며, 국회의 의결은 재적의원 3분의 2 이상의 찬성을 얻어야
@@ -216,40 +215,54 @@ export default {
 	transition: 1s;
 	display: flex;
 	justify-content: flex-end;
-	margin-top: 15px;
+	margin-top: 1vw;
 }
 #upload-button {
-	width: 30px;
-	height: 30px;
+	width: 2vw;
+	height: 2vw;
 	cursor: pointer;
-	margin-right: 10px;
+	margin-right: 1vw;
 }
 #unlike-button {
-	width: 30px;
-	height: 30px;
+	width: 2vw;
+	height: 2vw;
 	cursor: pointer;
 }
 #description-cell {
-	font-size: 35px;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 500;
 	display: inline-block;
-	width: 300px;
+	font-size: 1vw;
+	width: 15vw;
+	/* font-size: 35px; */
+	/* width: 300px; */
 	/* margin-top: 50px; */
 }
+#description-cell2 {
+	/* font-size: 35px; */
+	/* width: 300px; */
+	font-size: 1.5vw;
+	width: 15vw;
+	font-family: 'Noto Sans', sans-serif;
+	font-weight: 500;
+	display: inline-block;
+	margin-top: 50px;
+}
 #description-inner2 {
+	/* font-size: 23px; */
+	font-size: 1vw;
 	margin-top: 20px;
-	font-size: 23px;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 }
 #description-inner {
-	font-size: 23px;
+	/* font-size: 23px; */
+	font-size: 1vw;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 200;
 }
 #recommend {
-	font-size: 60px;
+	font-size: 4vw;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 500;
 	display: flex;
@@ -260,27 +273,30 @@ hr {
 	background-color: white;
 	width: 100px;
 	height: 2px;
-	margin-top: 50px;
 }
 #img-title2 {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 400;
+	font-size: 1.5vw;
 }
 #img-title3 {
 	font-family: 'Noto Serif Georgian', serif;
+	font-size: 1.5vw;
 }
 #img-title {
-	font-size: 70px;
+	/* font-size: 70px; */
+	/* margin-bottom: 50px; */
+	font-size: 3.5vw;
+	margin-bottom: 3vw;
 	font-family: 'Noto Serif Georgian', serif;
-	margin-bottom: 50px;
 }
 #img-title-wrap {
 	margin-left: 10%;
-	margin-top: -10%;
+	margin-top: -10vw;
 }
 
 .img-box {
-	height: 800px;
+	height: 70%;
 	display: flex;
 	justify-content: flex-end;
 }

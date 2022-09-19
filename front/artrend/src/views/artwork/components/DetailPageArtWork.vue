@@ -5,8 +5,9 @@
 				<div class="image-box">
 					<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
 					<div class="image-info">
-						<h3 class="title">Street Man Fighter, 2022</h3>
-						<h5 class="name">Tom Smith</h5>
+						<div class="title">Street Man Fighter</div>
+						<div class="name">2022</div>
+						<div class="name">Tom Smith</div>
 					</div>
 				</div>
 			</a>
@@ -32,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+
 /* hide scrollbar */
 .img-wrapper {
 	display: flex;
@@ -77,10 +81,21 @@ a:hover .image-info {
 
 .image-info {
 	position: absolute;
-	bottom: 20px;
-	right: 30px;
+	bottom: 15px;
+	right: 20px;
 	text-align: end;
 	color: white;
 	transition: 1s;
+}
+.title {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 1.2vw;
+	font-weight: 600;
+}
+
+.name {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 1vw;
+	font-weight: 200;
 }
 </style>

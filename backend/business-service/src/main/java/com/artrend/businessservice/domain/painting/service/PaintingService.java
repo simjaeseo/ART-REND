@@ -1,10 +1,10 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.painting.dto.PaintingResponseDto;
-import com.artrend.businessservice.domain.painting.entity.Painting;
+import com.artrend.businessservice.domain.painting.dto.PaintingResponse;
 
 import java.util.List;
 
 public interface PaintingService {
-    List<PaintingResponseDto> selectAllPaintings();
+    PaintingResponse findPainting(Long id);
+    List<PaintingResponse> findAllPaintings();
 }

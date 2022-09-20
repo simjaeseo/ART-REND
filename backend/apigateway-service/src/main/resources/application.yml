@@ -19,11 +19,22 @@ spring:
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business-service/**
+            - Path=/business-service/actuator/**
+            - Method=GET,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business-service/actuator/**
+            - Path=/business-service/paintings/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+        - id: business-service
+          uri: lb://BUSINESS-SERVICE
+          predicates:
+            - Path=/business-service/users/**
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie

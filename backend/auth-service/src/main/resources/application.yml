@@ -13,11 +13,6 @@ spring:
     include: oauth
   application:
     name: auth-service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/artrend?serverTimezone=UTC&characterEncoding=UTF-8
-    username: root
-    password: ssafy
   jpa:
     show-sql: true
     generate-ddl: true
@@ -33,6 +28,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
 
 logging:
   level:

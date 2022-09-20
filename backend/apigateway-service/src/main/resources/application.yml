@@ -51,21 +51,21 @@ spring:
           filters:
 #            - RemoveRequestHeader=Cookie
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
-        - id: recommend-service
-          uri: lb://RECOMMEND-SERVICE
-          predicates:
-            - Path=/recommend-service/actuator/**
-            - Method=GET,POST
-        - filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
-        - id: recommend-service
-          uri: lb://RECOMMEND-SERVICE
-          predicates:
-            - Path=/recommend-service/**
-        - filters:
-            - RemoveRequestHeader=Cookie
-            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/actuator/**
+#            - Method=GET,POST
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/**
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
 
 management:
   endpoints:

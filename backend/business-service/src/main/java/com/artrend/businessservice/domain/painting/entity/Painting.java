@@ -19,6 +19,10 @@ public class Painting extends BaseEntity {
 
     private String title;
 
+    private String koreanTitle;
+
+    private String artTrend;
+
     private String artist;
 
     private String description;

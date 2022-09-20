@@ -2,8 +2,6 @@
 	<div>
 		<div id="wrap1">
 			<div id="wrap2">
-				{{ isLoggedIn }}
-				{{ state.token }}
 				<img
 					src="@/assets/kakao_login/en/kakao_login_large_narrow.png"
 					alt="kakao-login"
@@ -48,6 +46,7 @@ export default {
 			window.Kakao.API.request({
 				url: '/v2/user/me',
 				success: res => {
+					console.log(res)
 					const kakao_account = res.kakao_account
 					state.nickname = kakao_account.profile.nickname
 					state.email = kakao_account.email

@@ -2,7 +2,8 @@ FROM openjdk:17-ea-11-jdk-slim AS build-stage
 
 WORKDIR /var/jenkins_home/workspace/deploy/backend/apigateway-service
 COPY gradlew .
-COPY gradle gradleCOPY build.gradle .
+COPY gradle gradle
+COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 RUN chmod +x ./gradlew

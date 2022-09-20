@@ -1,7 +1,8 @@
 FROM openjdk:17-ea-11-jdk-slim
 WORKDIR /var/jenkins_home/workspace/deploy/backend/auth-service
 COPY gradlew .
-COPY gradle gradleCOPY build.gradle .
+COPY gradle gradle
+COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 RUN chmod +x ./gradlew

@@ -4,7 +4,7 @@
 			<div id="img-wrap">
 				<div class="img-box">
 					<img
-						src="@/assets/main-img/1.jpg"
+						src="@/assets/main-img/5.jpg"
 						alt="img"
 						id="selected-img"
 						@click="getImageModal"
@@ -174,7 +174,7 @@ export default {
 
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
-			const img = require('../../assets/main-img/1.jpg')
+			const img = require('../../assets/main-img/5.jpg')
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img

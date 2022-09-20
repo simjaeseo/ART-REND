@@ -50,7 +50,9 @@
 						<h5 id="menu-text">MENU</h5>
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 							<li class="nav-item">
-								<p>HOME</p>
+								<router-link :to="{ name: 'Main' }">
+									<p>HOME</p>
+								</router-link>
 							</li>
 							<li class="nav-item">
 								<p>PROFILE</p>
@@ -80,7 +82,6 @@ export default {
 		console.log(now)
 		if (now.includes('detail')) {
 			oneBlack = true
-			console.log('글씨만검정이다!')
 			console.log(oneBlack)
 		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
@@ -88,7 +89,6 @@ export default {
 		} else {
 			oneBlack = false
 			twoBlack = false
-			console.log('글씨검정아니다!')
 		}
 		return {
 			now,
@@ -101,6 +101,9 @@ export default {
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap');
+.fixed-bottom {
+	text-align: end;
+}
 #brad-text {
 	margin-top: 10px;
 	margin-left: 20px;

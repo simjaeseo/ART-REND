@@ -1,5 +1,6 @@
 package com.artrend.businessservice.domain.painting.entity;
 
+import com.artrend.businessservice.domain.member.entity.Member;
 import com.artrend.businessservice.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -7,35 +8,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Painting extends BaseEntity {
-
+public class ChangedPainting extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "painting_id")
+    @Column(name = "changed_painting_id")
     private Long id;
 
-    private String title;
-
-    private String artist;
-
-    private String description;
-
-    private String year;
-
-    private String dimensions;
-
-    private String medium;
-
-    private String place;
-
+    @ManyToOne(fetch = LAZY)
+    private Painting painting;
+    
     private String url;
-
-    private Long hits;
-
-    private Long totalLikeCount;
-
-    private Long totalChangeCount;
 }

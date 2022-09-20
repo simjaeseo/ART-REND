@@ -90,7 +90,7 @@
 									영역안에서는 중대한 군사상
 								</p>
 							</div>
-							<div class="title-wrapper">
+							<div class="title-wrapper2">
 								<div id="recommend">Recommend</div>
 								<div id="recommend">Artwork</div>
 							</div>
@@ -209,6 +209,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
 
 .button-box {
 	color: white;
@@ -232,7 +233,7 @@ export default {
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 500;
 	display: inline-block;
-	font-size: 1vw;
+	font-size: 2vh;
 	width: 15vw;
 	/* font-size: 35px; */
 	/* width: 300px; */
@@ -241,7 +242,7 @@ export default {
 #description-cell2 {
 	/* font-size: 35px; */
 	/* width: 300px; */
-	font-size: 1.5vw;
+	font-size: 2.5vh;
 	width: 15vw;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 500;
@@ -250,20 +251,20 @@ export default {
 }
 #description-inner2 {
 	/* font-size: 23px; */
-	font-size: 1vw;
+	font-size: 1.5vh;
 	margin-top: 20px;
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 }
 #description-inner {
 	/* font-size: 23px; */
-	font-size: 1vw;
+	font-size: 1.5vh;
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 200;
 }
 #recommend {
-	font-size: 4vw;
-	font-family: 'Noto Sans', sans-serif;
+	font-size: 5vh;
+	font-family: 'Playfair Display', serif;
 	font-weight: 500;
 	display: flex;
 	justify-content: center;
@@ -277,22 +278,21 @@ hr {
 #img-title2 {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 400;
-	font-size: 1.5vw;
+	font-size: 2.3vh;
 }
 #img-title3 {
 	font-family: 'Noto Serif Georgian', serif;
-	font-size: 1.5vw;
+	font-size: 2.3vh;
 }
 #img-title {
 	/* font-size: 70px; */
 	/* margin-bottom: 50px; */
-	font-size: 3.5vw;
+	font-size: 5.5vh;
 	margin-bottom: 3vw;
 	font-family: 'Noto Serif Georgian', serif;
 }
 #img-title-wrap {
 	margin-left: 10%;
-	margin-top: -10vw;
 }
 
 .img-box {
@@ -308,7 +308,6 @@ hr {
 #img-wrap {
 	height: 100%;
 	animation: slideInRight 2s ease-out;
-	overflow: hidden;
 	position: fixed;
 	width: 30vw;
 	display: flex;
@@ -439,11 +438,26 @@ hr {
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(200px);
 	transition: 1s;
+	min-height: 60vh;
 
 	height: 50vw;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.title-wrapper2 {
+	transform-origin: 50% 50%;
+	transform: rotate(90deg) translateZ(0px) translateX(200px);
+	transition: 1s;
+	min-height: 60vh;
+
+	height: 50vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	padding-right: 10%;
 }
 
 /* Modal */

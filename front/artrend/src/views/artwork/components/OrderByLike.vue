@@ -6,8 +6,9 @@
 					<div class="image-box">
 						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
 						<div class="image-info">
-							<h3 class="title">Street Man Fighter, 2022</h3>
-							<h5 class="name">Tom Smith</h5>
+							<div class="title">Street Man Fighter</div>
+							<div class="name">2022</div>
+							<div class="name">Tom Smith</div>
 						</div>
 					</div>
 				</a>
@@ -34,6 +35,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+
 /* hide scrollbar */
 ::-webkit-scrollbar {
 	width: 1px;
@@ -123,6 +127,7 @@ a:hover .delete {
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -131,5 +136,17 @@ a:hover .delete {
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+}
+
+.title {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 2vh;
+	font-weight: 600;
+}
+
+.name {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 1.5vh;
+	font-weight: 200;
 }
 </style>

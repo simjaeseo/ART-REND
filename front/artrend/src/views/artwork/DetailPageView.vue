@@ -219,14 +219,14 @@ export default {
 	margin-top: 1vw;
 }
 #upload-button {
-	width: 2vw;
-	height: 2vw;
+	width: 3vh;
+	height: 3vh;
 	cursor: pointer;
-	margin-right: 1vw;
+	margin-right: 1vh;
 }
 #unlike-button {
-	width: 2vw;
-	height: 2vw;
+	width: 2.6vh;
+	height: 2.6vh;
 	cursor: pointer;
 }
 #description-cell {

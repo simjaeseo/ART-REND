@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+
 .mypage {
 	padding-top: 80px;
 	height: 100vh;
@@ -83,8 +86,9 @@ input[name='tabmenu'] {
 .like-picture,
 .trans-picture {
 	text-align: center;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: 20px;
+	font-family: 'Noto Sans', sans-serif;
 }
 
 input[id='my-picture']:checked ~ .tabmenu .my-picture,
@@ -93,6 +97,7 @@ input[id='trans-picture']:checked ~ .tabmenu .trans-picture {
 	color: rgb(0, 0, 0);
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	font-size: 25px;
+	/* border-bottom: 2px solid black; */
 }
 
 .tab-inner {
@@ -123,17 +128,5 @@ input[id='like-picture']:checked ~ .tab-inner .tabs {
 }
 input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	top: -200%;
-}
-
-.button {
-	color: rgb(255, 255, 255);
-	font-size: 13px;
-	align-items: center;
-	background-color: rgba(0, 0, 0, 0.3);
-	border: none;
-	border-radius: 10px;
-	padding: 2px 10px;
-	margin-top: 10px;
-	margin-right: 10px;
 }
 </style>

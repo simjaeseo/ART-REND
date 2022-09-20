@@ -33,6 +33,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+
 .masorny {
 	display: flex;
 	flex-flow: row wrap;
@@ -79,6 +82,7 @@ a:hover .delete {
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
 	background-color: rgba(255, 255, 255, 0.5);

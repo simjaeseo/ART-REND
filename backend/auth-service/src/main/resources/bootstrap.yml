@@ -1,7 +1,5 @@
-#spring:
-#  cloud:
-#    config:
-#      uri: http://localhost:8888
-#      name: using config-file name
-#  profiles:
-#    active: dev
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8888
+      name: artrend

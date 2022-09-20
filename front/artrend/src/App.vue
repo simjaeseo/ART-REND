@@ -79,10 +79,8 @@ export default {
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
-		console.log(now)
 		if (now.includes('detail')) {
 			oneBlack = true
-			console.log(oneBlack)
 		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
 			twoBlack = true

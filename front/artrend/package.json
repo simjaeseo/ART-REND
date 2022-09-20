@@ -11,6 +11,8 @@
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "gsap": "^3.11.1",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^3.1.2",
     "locomotive-scroll": "^4.1.4",
     "sass": "^1.54.9",
     "sass-loader": "^10.3.1",

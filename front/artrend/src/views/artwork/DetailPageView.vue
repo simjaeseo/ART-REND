@@ -161,6 +161,7 @@
 <script>
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive } from 'vue'
+// import jwt_decode from 'jwt-decode'
 
 export default {
 	name: 'MainPageView',
@@ -195,7 +196,17 @@ export default {
 			state.imageUrl = URL.createObjectURL(image)
 		}
 
+		// const url = new URLSearchParams(location.search)
+		// const test = url.get('accessToken')
+		// const decodeAccessToken = jwt_decode(test)
+		// console.log(decodeAccessToken)
+		// console.log(decodeAccessToken.id)
+		// console.log(test)
+
 		return {
+			// decodeAccessToken,
+			// test,
+			// url,
 			state,
 			getImageModal,
 			outImageModal,

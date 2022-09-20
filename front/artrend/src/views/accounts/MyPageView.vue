@@ -6,12 +6,15 @@
 			<input type="radio" name="tabmenu" id="like-picture" />
 			<input type="radio" name="tabmenu" id="like-picture-all" />
 			<div class="tabmenu">
-				<label for="my-picture" class="my-picture">
-					<div>PHOTO CARD</div>
-				</label>
-				<label for="like-picture" class="like-picture">
-					<div>Favorite Artwork</div>
-				</label>
+				<div>
+					<label for="my-picture" class="my-picture">
+						<div>PHOTO CARD</div>
+					</label>
+					<label for="like-picture" class="like-picture">
+						<div>Favorite Artwork</div>
+					</label>
+				</div>
+				<button class="move-button">파도타기</button>
 			</div>
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
@@ -52,6 +55,9 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+
 .mypage {
 	padding-top: 80px;
 	height: 100vh;
@@ -65,23 +71,45 @@ input[name='tabmenu'] {
 .tabmenu {
 	width: 100%;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 	position: absolute;
 	z-index: 1;
 }
 
-.tabmenu > label {
+.my-picture,
+.like-picture {
+	text-align: center;
+	font-weight: 600;
+	font-size: 20px;
+	font-family: 'Noto Sans', sans-serif;
+
 	cursor: pointer;
 	align-items: center;
 	color: rgba(0, 0, 0, 0.2);
 	margin-left: 25px;
 }
 
-.my-picture,
-.like-picture {
+.move-button {
+	margin-right: 25px;
+	align-items: center;
+	background-color: transparent;
+	border: 2px solid rgb(0, 0, 0, 0.2);
+	padding: 2px 12px;
+	border-radius: 20px;
+
+	font-family: 'Noto Sans KR', sans-serif;
+	color: rgba(0, 0, 0, 0.2);
 	text-align: center;
-	font-weight: bold;
-	font-size: 20px;
+	font-weight: 600;
+	font-size: 15px;
+}
+
+.move-button:hover {
+	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	color: rgba(0, 0, 0);
+	border: 2px solid rgb(0, 0, 0);
 }
 
 .my-picture-all,
@@ -93,7 +121,8 @@ input[name='tabmenu'] {
 	bottom: 30px;
 	z-index: 1;
 
-	font-weight: bold;
+	font-family: 'Noto Sans', sans-serif;
+	font-weight: 600;
 	font-size: 20px;
 	color: rgb(0, 0, 0, 0.2);
 }
@@ -161,18 +190,6 @@ input[id='like-picture']:checked ~ .tab-inner .tabs {
 
 input[id='like-picture-all']:checked ~ .tab-inner .tabs {
 	top: -300%;
-}
-
-.button {
-	color: rgb(255, 255, 255);
-	font-size: 13px;
-	align-items: center;
-	background-color: rgba(0, 0, 0, 0.3);
-	border: none;
-	border-radius: 10px;
-	padding: 2px 10px;
-	margin-top: 10px;
-	margin-right: 10px;
 }
 
 /* scroll */

@@ -1,28 +1,23 @@
 <template>
-	<div>
-		<div class="external">
-			<div class="horizontal-scroll-wrapper">
-				<div class="title-wrapper1">
-					<h2 id="title-text1">
-						Art of Trend <br />
-						<h4>My Own Exhibition</h4>
-					</h2>
-				</div>
-				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-					<a href="#" target="_blank" rel="noopener">
-						<div class="image-box">
-							<button class="delete">delete</button>
-							<img
-								:src="require(`@/assets/main-img/${image}.jpg`)"
-								alt="image"
-							/>
-							<div class="image-info">
-								<h3 class="title">Street Man Fighter, 2022</h3>
-								<h5 class="name">Tom Smith</h5>
-							</div>
+	<div class="external">
+		<div class="horizontal-scroll-wrapper">
+			<div class="title-wrapper1">
+				<h2 id="title-text1">
+					Art of Trend <br />
+					<h4>Favorite Artwork</h4>
+				</h2>
+			</div>
+			<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
+				<a href="#" target="_blank" rel="noopener">
+					<div class="image-box">
+						<button class="delete">delete</button>
+						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+						<div class="image-info">
+							<h3 class="title">Street Man Fighter, 2022</h3>
+							<h5 class="name">Tom Smith</h5>
 						</div>
-					</a>
-				</div>
+					</div>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -37,6 +32,7 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
+
 		return {
 			state,
 		}
@@ -149,18 +145,6 @@ a:hover .delete {
 	color: white;
 	transition: 1s;
 	display: none;
-}
-
-.title {
-	font-family: 'Noto Sans', sans-serif;
-	font-size: 1.2vw;
-	font-weight: 600;
-}
-
-.name {
-	font-family: 'Noto Sans', sans-serif;
-	font-size: 1vw;
-	font-weight: 200;
 }
 
 .delete {

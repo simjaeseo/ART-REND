@@ -36,7 +36,6 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 
-/* hide scrollbar */
 .img-wrapper {
 	display: flex;
 	align-items: center;
@@ -89,13 +88,13 @@ a:hover .image-info {
 }
 .title {
 	font-family: 'Noto Sans', sans-serif;
-	font-size: 1.2vw;
+	font-size: 2vh;
 	font-weight: 600;
 }
 
 .name {
 	font-family: 'Noto Sans', sans-serif;
-	font-size: 1vw;
+	font-size: 1.2vh;
 	font-weight: 200;
 }
 </style>

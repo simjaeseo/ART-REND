@@ -2,16 +2,16 @@ package com.artrend.businessservice.domain.painting.entity;
 
 import com.artrend.businessservice.global.common.BaseEntity;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Painting extends BaseEntity {
 
@@ -26,14 +26,15 @@ public class Painting extends BaseEntity {
 
     private String description;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate year;
+    private String year;
 
     private String dimensions;
 
     private String medium;
 
     private String place;
+
+    private String url;
 
     private Long hits;
 

@@ -19,15 +19,43 @@ spring:
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business-service/**
-        - id: business-service
-          uri: lb://BUSINESS-SERVICE
-          predicates:
-            - Path=/user-service/actuator/**
+            - Path=/business-service/actuator/**
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+        - id: business-service
+          uri: lb://BUSINESS-SERVICE
+          predicates:
+            - Path=/business-service/paintings/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+        - id: business-service
+          uri: lb://BUSINESS-SERVICE
+          predicates:
+            - Path=/business-service/users/**
+            - Method=GET,POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/actuator/**
+#            - Method=GET,POST
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/**
+#            - Method=GET, POST
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+
   rabbitmq:
     host: 127.0.0.1
     port: 5672

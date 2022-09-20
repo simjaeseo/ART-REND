@@ -10,4 +10,6 @@ RUN ./gradlew bootJAR
 
 FROM openjdk:17-ea-11-jdk-slim
 COPY --from=build-stage /var/jenkins_home/workspace/deploy/backend/discovery-service/build/libs/discovery-service-0.1.jar DiscoveryService.jar
+
+EXPOSE 5671
 ENTRYPOINT ["java","-jar","DiscoveryService.jar"]

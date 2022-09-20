@@ -10,4 +10,6 @@ RUN ./gradlew bootJAR
 
 FROM openjdk:17-ea-11-jdk-slim
 COPY --from=build-stage /var/jenkins_home/workspace/deploy/backend/config-service/build/libs/config-service-0.1.jar ConfigServer.jar
+
+EXPOSE 8888
 ENTRYPOINT ["java","-jar","ConfigServer.jar"]

@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:17-ea-11-jdk-slim as build-stage
 WORKDIR /var/jenkins_home/workspace/deploy/backend/business-service
 COPY gradlew .
 COPY gradle gradle

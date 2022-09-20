@@ -6,8 +6,9 @@
 					<button class="delete">delete</button>
 					<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
 					<div class="image-info">
-						<h3 class="title">Street Man Fighter, 2022</h3>
-						<h5 class="name">Tom Smith</h5>
+						<div class="title">Street Man Fighter</div>
+						<div class="name">2022</div>
+						<div class="name">Tom Smith</div>
 					</div>
 				</div>
 			</a>
@@ -86,5 +87,17 @@ a:hover .delete {
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+}
+
+.title {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 2vh;
+	font-weight: 600;
+}
+
+.name {
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 1.5vh;
+	font-weight: 200;
 }
 </style>

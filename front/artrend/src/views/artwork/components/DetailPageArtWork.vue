@@ -86,6 +86,7 @@ a:hover .image-info {
 	color: white;
 	transition: 1s;
 }
+
 .title {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 2vh;
@@ -94,7 +95,7 @@ a:hover .image-info {
 
 .name {
 	font-family: 'Noto Sans', sans-serif;
-	font-size: 1.2vh;
+	font-size: 1.5vh;
 	font-weight: 200;
 }
 </style>

@@ -23,19 +23,26 @@ spring:
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/user-service/actuator/**
+            - Path=/business-service/actuator/**
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
-            - RewritePath=/user-service/(?<segment>.*), /$\{segment}
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth-service/**
+          filters:
+#            - RemoveRequestHeader=Cookie
+            - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus

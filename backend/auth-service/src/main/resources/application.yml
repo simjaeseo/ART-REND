@@ -9,6 +9,8 @@ spring:
   #  sql:
   #    init:
   #      mode: always
+  profiles:
+    include: oauth
   application:
     name: auth-service
   datasource:
@@ -49,6 +51,10 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
 
 management:
   endpoints:

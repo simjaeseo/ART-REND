@@ -39,31 +39,21 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/business-service/(?<segment>.*), /$\{segment}
-#        - id: recommend-service
-#          uri: lb://RECOMMEND-SERVICE
-#          predicates:
-#            - Path=/recommend-service/actuator/**
-#            - Method=GET,POST
-#        - filters:
+        - id: auth-service
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth-service/**
+          filters:
 #            - RemoveRequestHeader=Cookie
-#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
-#        - id: recommend-service
-#          uri: lb://RECOMMEND-SERVICE
-#          predicates:
-#            - Path=/recommend-service/**
-#            - Method=GET, POST
-#        - filters:
-#            - RemoveRequestHeader=Cookie
-#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
-
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus
+            - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+#  rabbitmq:
+#    host: 127.0.0.1
+#    port: 5672
+#    username: guest
+#    password: guest
+#
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus

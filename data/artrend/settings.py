@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'artrend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'temp_project',
+        'NAME': 'artrend',
         'USER': 'root',
         'PASSWORD': 'marine1006@',
         'HOST': 'localhost',

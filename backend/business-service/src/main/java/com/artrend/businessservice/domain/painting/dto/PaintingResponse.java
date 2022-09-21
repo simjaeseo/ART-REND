@@ -13,7 +13,6 @@ public class PaintingResponse {
     private String description;
     private String genre;
     private String year;
-    private String genre;
     private String dimensions;
     private String medium;
     private String place;
@@ -30,7 +29,6 @@ public class PaintingResponse {
         this.description = painting.getDescription();
         this.genre = painting.getGenre();
         this.year = painting.getYear();
-        this.genre = painting.getGenre();
         this.dimensions = painting.getDimensions();
         this.medium = painting.getMedium();
         this.place = painting.getPlace();

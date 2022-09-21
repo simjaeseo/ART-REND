@@ -11,6 +11,7 @@ public class PaintingResponse {
     private String artTrend;
     private String artist;
     private String description;
+    private String genre;
     private String year;
     private String genre;
     private String dimensions;
@@ -27,6 +28,7 @@ public class PaintingResponse {
         this.artTrend = painting.getArtTrend();
         this.artist = painting.getArtist();
         this.description = painting.getDescription();
+        this.genre = painting.getGenre();
         this.year = painting.getYear();
         this.genre = painting.getGenre();
         this.dimensions = painting.getDimensions();

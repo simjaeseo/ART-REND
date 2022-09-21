@@ -28,6 +28,8 @@ public class Painting extends BaseEntity {
     @Column(length = 5000)
     private String description;
 
+    private String genre;
+
     private String year;
 
     private String genre;

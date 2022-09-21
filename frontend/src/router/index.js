@@ -8,6 +8,15 @@ import DetailPageView from '@/views/artwork/DetailPageView.vue'
 import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
 import KakaoAuthView from '@/views/accounts/KakaoAuthView.vue'
 
+const requireAuth = () => (from, to, next) => {
+	const token = localStorage.getItem('token')
+	if (token) {
+		return next()
+	} else {
+		next('/')
+	}
+}
+
 const routes = [
 	{
 		path: '/',
@@ -18,31 +27,37 @@ const routes = [
 		path: '/signup',
 		name: 'SignUp',
 		component: SignUpView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/select',
 		name: 'SelectImage',
 		component: SelectImageView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/mypage',
 		name: 'MyPage',
 		component: MyPageView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/main',
 		name: 'Main',
 		component: MainPageView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/detail',
 		name: 'Detail',
 		component: DetailPageView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/artworks',
 		name: 'Artworks',
 		component: ArtWorksArrayView,
+		beforeEnter: requireAuth(),
 	},
 	{
 		path: '/auth',

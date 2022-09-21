@@ -32,8 +32,6 @@ public class Painting extends BaseEntity {
 
     private String year;
 
-    private String genre;
-
     private String dimensions;
 
     private String medium;

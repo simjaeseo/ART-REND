@@ -3,6 +3,8 @@ package com.artrend.businessservice.domain.painting.dto;
 import com.artrend.businessservice.domain.painting.entity.Painting;
 import lombok.Data;
 
+import javax.persistence.Column;
+
 @Data
 public class PaintingResponse {
     private Long id;
@@ -10,10 +12,10 @@ public class PaintingResponse {
     private String koreanTitle;
     private String artTrend;
     private String artist;
+    @Column(length = 5000)
     private String description;
     private String genre;
     private String year;
-    private String genre;
     private String dimensions;
     private String medium;
     private String place;

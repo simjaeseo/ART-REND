@@ -1,18 +1,16 @@
 package com.artrend.authservice.domain;
 
 import com.artrend.authservice.global.common.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @AllArgsConstructor
+@ToString
 public class Member extends BaseEntity {
 
     @Id
@@ -22,11 +20,32 @@ public class Member extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String provider;
+    private String nickname;
 
-    @Column(nullable = false)
-    private String providerId;
+    private String kakaoProvider;
+
+    private String kakaoProviderId;
+
+    private String googleProvider;
+
+    private String googleProviderId;
+
+    private String di;
+
+    public void updateProviderAndProviderId(String provider, String providerId){
+
+        if(provider.equals("kakao")){
+            this.kakaoProvider= provider;
+            this.kakaoProviderId = providerId;
+        }else{
+            this.googleProvider =provider;
+            this.googleProviderId = providerId;
+        }
+    }
+
+    public void updateNickname(String nickname){
+        this.nickname = nickname;
+    }
 
 //    @Column(nullable = false)
 //    private String email;

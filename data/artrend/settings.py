@@ -31,8 +31,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # local apps
     'user',
     'recommend_art',
+    # django extensions
+    'django_extensions',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_seed',
+    
+    'corsheaders',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,3 +138,21 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# 모두에게 교차출처 허용 (*)
+CORS_ALLOW_ALL_ORIGINS = True
+
+# DRF 인증 관련 설정
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 모두에게 허용
+        'rest_framework.permissions.AllowAny', 
+
+        # 인증된 사용자만 모든일이 가능 / 비인증 사용자는 모두 401 Unauthorized
+        # 'rest_framework.permissions.IsAuthenticated'
+    ]
+}

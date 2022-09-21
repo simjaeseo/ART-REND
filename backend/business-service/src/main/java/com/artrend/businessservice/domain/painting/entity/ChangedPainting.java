@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import com.artrend.businessservice.domain.member.entity.Member;
 import com.artrend.businessservice.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;

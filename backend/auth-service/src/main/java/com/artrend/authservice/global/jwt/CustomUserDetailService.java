@@ -18,12 +18,12 @@ public class CustomUserDetailService implements UserDetailsService {
 
     // username이 DB에 있는지 확인
     @Override
-    public UserDetails loadUserByUsername(String providerId) throws UsernameNotFoundException {
-        Member findMember = memberRepository.findByProviderId(providerId)
+    public UserDetails loadUserByUsername(String memberId) throws UsernameNotFoundException {
+        Member findMember = memberRepository.findById(Long.parseLong(memberId))
                 .orElseThrow(() -> new RuntimeException("멤버익셉션 만들자"));
 
         return CustomUserDetails.builder()
-                .id(findMember.getProviderId())
+                .id(String.valueOf(findMember.getId()))
                 .name(findMember.getName())
                 .build();
     }

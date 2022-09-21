@@ -51,6 +51,7 @@ public class TokenProvider implements InitializingBean {
        return Jwts.builder()
                 .setSubject(providerId)
                 .claim("id",memberId)
+                .claim("aaaaaaa",memberId)
                 .setIssuedAt(now)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)
@@ -60,19 +61,19 @@ public class TokenProvider implements InitializingBean {
 
     // 토큰으로 인증 객체를 얻기 위한 메서드
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(getUserProviderId(token));
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getMemberProviderId(token));
         // Authentication 객체 리턴
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
-    public String getUserProviderId(String token) {
+    public String getMemberProviderId(String token) {
         try {
             if (token == null || token.isEmpty()) {
 //                throw new TokenNotFoundException();
                 log.info("TokenNotFoundException{}","예외생성해야한다아앙아");
             }
-            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+            return (String) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id");
 
         }
 //        catch (TokenNotFoundException e) {

@@ -1,7 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.service.PaintingService;
-import com.artrend.businessservice.domain.painting.dto.PaintingResponse;
+import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/paintings")
+@RequestMapping("/api/paintings")
 @Slf4j
 public class PaintingController {
     private final PaintingService paintingService;
@@ -33,14 +33,14 @@ public class PaintingController {
 
     @GetMapping
     public ResponseEntity<? extends DataResponse> findAllPaintings() {
-        List<PaintingResponse> paintingList = paintingService.findAllPaintings();
+        List<PaintingDto> paintingList = paintingService.findAllPaintings();
 
         return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse(paintingList, paintingList.size()));
     }
 
     @GetMapping("/{painting_id}")
     public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long id) {
-        PaintingResponse findPainting = paintingService.findPainting(id);
+        PaintingDto findPainting = paintingService.findPainting(id);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
     }
 }

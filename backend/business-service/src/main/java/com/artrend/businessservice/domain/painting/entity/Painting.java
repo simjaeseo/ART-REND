@@ -1,9 +1,7 @@
 package com.artrend.businessservice.domain.painting.entity;
 
 import com.artrend.businessservice.global.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,6 +9,8 @@ import java.io.Serializable;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class Painting extends BaseEntity implements Serializable {
 
     @Id
@@ -46,4 +46,8 @@ public class Painting extends BaseEntity implements Serializable {
     private Long totalLikeCount;
 
     private Long totalChangeCount;
+
+    public void updateTotalLikeCount(Integer count) {
+        this.totalLikeCount += count;
+    }
 }

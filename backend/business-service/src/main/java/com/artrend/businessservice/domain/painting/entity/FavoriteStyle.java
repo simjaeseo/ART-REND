@@ -6,12 +6,16 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
+
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FavoriteStyle {
+public class FavoriteStyle implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "favorite_style_id")
-    private Long id;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "painting_id")
+    private Painting painting;
 }

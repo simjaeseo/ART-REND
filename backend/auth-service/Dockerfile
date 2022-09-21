@@ -10,5 +10,5 @@ RUN ./gradlew bootJAR
 
 FROM openjdk:17-ea-11-jdk-slim
 COPY --from=build-stage /var/jenkins_home/workspace/deploy/backend/auth-service/build/libs/auth-service-0.1.jar AuthService.jar
-
+EXPOSE 8081
 ENTRYPOINT ["java","-jar","AuthService.jar"]

@@ -1,23 +1,20 @@
 package com.artrend.authservice.global.config;
 
 import com.artrend.authservice.global.auth.OAuth2AuthenticationSuccessHandler;
+import com.artrend.authservice.global.auth.OAuth2LogoutSuccessHandler;
+import com.artrend.authservice.global.auth.CustomOAuth2UserService;
 import com.artrend.authservice.global.jwt.JwtAccessDeniedHandler;
 import com.artrend.authservice.global.jwt.JwtAuthenticationEntryPoint;
 import com.artrend.authservice.global.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.And;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import javax.ws.rs.HttpMethod;
-import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor
@@ -27,8 +24,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
+    private final OAuth2LogoutSuccessHandler oAuth2LogoutSuccessHandler;
+
     private static final String[] PERMIT_URL_ARRAY = {
             "/favicon.ico",
             /* custom oauth api */
@@ -37,7 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/error",
             "/health_check",
             "/logout",
-            "/token/reissuance/*"
+            "/token/reissuance/*",
+            "/signup/**"
     };
 
 
@@ -57,8 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
-                    .logout()
-                        .logoutSuccessUrl("/")
+                .logout()
+                .logoutSuccessUrl("/logout-success")
+                .logoutSuccessHandler(oAuth2LogoutSuccessHandler)
 
                 .and()
                     .oauth2Login()

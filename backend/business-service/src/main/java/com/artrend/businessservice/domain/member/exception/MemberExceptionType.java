@@ -1,19 +1,16 @@
-package com.artrend.businessservice.domain.painting.exception;
+package com.artrend.businessservice.domain.member.exception;
 
 import com.artrend.businessservice.global.Exception.BaseExceptionType;
 import org.springframework.http.HttpStatus;
 
-public enum PaintingExceptionType implements BaseExceptionType {
-    NOT_FOUND_PAINTING(404, HttpStatus.NOT_FOUND, "그림 정보가 없습니다."),
-    ALREADY_LIKED_PAINTING(409, HttpStatus.CONFLICT, "이미 좋아요한 그림입니다."),
-    NOT_LIKED_PAINTING(409, HttpStatus.CONFLICT, "좋아요한 그림이 아닙니다."),
-    CONFLICT_INFORMATION(409, HttpStatus.CONFLICT, "회원 ID 또는 ");
+public enum MemberExceptionType implements BaseExceptionType {
+    NOT_FOUND_MEMBER(404, HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
 
     private int errorCode;
     private HttpStatus httpStatus;
     private String errorMessage;
 
-    PaintingExceptionType(int errorCode, HttpStatus httpStatus, String errorMessage) {
+    MemberExceptionType(int errorCode, HttpStatus httpStatus, String errorMessage) {
         this.errorCode = errorCode;
         this.httpStatus = httpStatus;
         this.errorMessage = errorMessage;

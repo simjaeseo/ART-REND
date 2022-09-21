@@ -1,5 +1,6 @@
 package com.artrend.businessservice.domain.painting.service;
 
+import com.artrend.businessservice.domain.painting.client.UserServiceClient;
 import com.artrend.businessservice.domain.painting.dto.PaintingResponse;
 import com.artrend.businessservice.domain.painting.entity.Painting;
 import com.artrend.businessservice.domain.painting.exception.PaintingException;
@@ -18,7 +19,9 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PaintingServiceImpl implements PaintingService {
     private final PaintingRepository paintingRepository;
+    private final UserServiceClient userServiceClient;
 
+    @Override
     public PaintingResponse findPainting(Long id) {
         Painting findPainting = paintingRepository.findById(id)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
@@ -26,6 +29,7 @@ public class PaintingServiceImpl implements PaintingService {
         return new PaintingResponse(findPainting);
     }
 
+    @Override
     public List<PaintingResponse> findAllPaintings() {
         List<Painting> findPaintings = paintingRepository.findAll();
         List<PaintingResponse> result = findPaintings.stream()
@@ -34,4 +38,6 @@ public class PaintingServiceImpl implements PaintingService {
 
         return result;
     }
+
+
 }

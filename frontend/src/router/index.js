@@ -12,9 +12,8 @@ const requireAuth = () => (from, to, next) => {
 	const token = localStorage.getItem('token')
 	if (token) {
 		return next()
-	} else {
-		next('/')
 	}
+	next('/')
 }
 
 const routes = [

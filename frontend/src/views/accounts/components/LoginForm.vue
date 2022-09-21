@@ -25,18 +25,12 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 export default {
 	name: 'LoginForm',
 	setup() {
 		const store = useStore()
-		const state = reactive({
-			nickname: '',
-			email: '',
-			token: '',
-			istoken: false,
-		})
 
 		const loginWithKakao = function () {
 			window.open(
@@ -46,7 +40,6 @@ export default {
 
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		return {
-			state,
 			loginWithKakao,
 			isLoggedIn,
 		}

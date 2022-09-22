@@ -73,9 +73,13 @@
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 export default {
 	name: 'App',
 	setup() {
+		const store = useStore()
+		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -92,6 +96,7 @@ export default {
 			now,
 			oneBlack,
 			twoBlack,
+			isLoggedIn,
 		}
 	},
 }

@@ -1,17 +1,19 @@
 <template>
-	<div class="masorny">
-		<div v-for="image in state.imageNum" :key="image" class="masorny-inner">
-			<a href="#" target="_blank" rel="noopener">
-				<div class="image-box">
-					<button class="delete">delete</button>
-					<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
-					<div class="image-info">
-						<div class="title">Street Man Fighter</div>
-						<div class="name">2022</div>
-						<div class="name">Tom Smith</div>
+	<div class="masonry-container">
+		<div v-for="image in state.imageNum" :key="image" class="masonry-item">
+			<div class="pseudo-img">
+				<a href="#" target="_blank" rel="noopener">
+					<div class="image-box">
+						<button class="delete">delete</button>
+						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+						<div class="image-info">
+							<div class="title">Street Man Fighter</div>
+							<div class="name">2022</div>
+							<div class="name">Tom Smith</div>
+						</div>
 					</div>
-				</div>
-			</a>
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
@@ -25,6 +27,31 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
+
+		window.onload = function () {
+			function masonryLayout() {
+				const masonryContainerStyle = getComputedStyle(
+					document.querySelector('.masonry-container'),
+				)
+				const columnGap = parseInt(
+					masonryContainerStyle.getPropertyValue('column-gap'),
+				)
+				const autoRows = parseInt(
+					masonryContainerStyle.getPropertyValue('grid-auto-rows'),
+				)
+
+				document.querySelectorAll('.masonry-item').forEach(elt => {
+					elt.style.gridRowEnd = `span ${Math.ceil(
+						elt.querySelector('.pseudo-img').scrollHeight / autoRows +
+							columnGap / autoRows,
+					)}`
+				})
+			}
+
+			masonryLayout()
+			window.addEventListener('resize', masonryLayout)
+		}
+
 		return {
 			state,
 		}
@@ -36,15 +63,52 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 
-.masorny {
-	display: flex;
-	flex-flow: row wrap;
+.masonry-container {
+	--gap: 10px;
+
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: var(--gap);
+	grid-auto-rows: 10px;
+	margin: 0px 300px;
 }
 
-.masorny-inner {
-	padding: 10px;
-	margin: 10px;
-	border: 1px solid black;
+@media screen and (max-width: 2100px) {
+	.masonry-container {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+@media screen and (max-width: 1900px) {
+	.masonry-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 0 15vw;
+	}
+}
+
+@media screen and (max-width: 1300px) {
+	.masonry-container {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.masonry-container {
+		display: block;
+	}
+
+	.masonry-item {
+		margin-bottom: var(--gap);
+	}
+}
+
+/* ignore this */
+.pseudo-img {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 2rem;
 }
 
 .image-box {
@@ -54,8 +118,7 @@ export default {
 }
 
 img {
-	max-width: 45vh;
-	max-height: 50vh;
+	width: 100%;
 }
 
 a:hover .image-box {

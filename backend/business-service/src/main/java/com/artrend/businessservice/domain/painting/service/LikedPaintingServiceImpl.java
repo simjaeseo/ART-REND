@@ -1,9 +1,9 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.member.entity.Member;
+import com.artrend.businessservice.domain.member.client.MemberServiceClient;
 import com.artrend.businessservice.domain.member.exception.MemberException;
 import com.artrend.businessservice.domain.member.exception.MemberExceptionType;
-import com.artrend.businessservice.domain.member.repository.MemberRepository;
+import com.artrend.businessservice.domain.member.vo.MemberResponse;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
@@ -11,12 +11,19 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
+import feign.FeignException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.security.Key;
 import java.util.Optional;
 
 @Service
@@ -26,12 +33,18 @@ import java.util.Optional;
 public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final MemberRepository memberRepository;
+
+    private final MemberServiceClient memberServiceClient;
+    @Value("${jwt.secret}")
+    private String secret;
+    private Key key;
+    private Long memberId;
 
     @Override
     @Transactional
     public void like(LikedPaintingDto likedPaintingDto) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
+        validateToken(likedPaintingDto);
 
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(likedPaintingDto).isPresent()) {
@@ -41,7 +54,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         // 3. 좋아요 한 그림 ID와 회원 ID로 DB에 저장하기
         LikedPainting likedPainting = LikedPainting.builder()
                 .paintingId(likedPaintingDto.getPaintingId())
-                .member(memberRepository.findMemberById(likedPaintingDto.getMemberId()))
+//                .member(memberRepository.findMemberById(likedPaintingDto.getMemberId()))
                 .build();
 
         likedPaintingRepository.save(likedPainting);
@@ -54,7 +67,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     @Transactional
     public void cancelLike(LikedPaintingDto likedPaintingDto) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-
+        validateToken(likedPaintingDto);
 
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting
@@ -70,15 +83,33 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     public void validateToken(LikedPaintingDto likedPaintingDto) {
         // 유효한 토큰인지 검증 (auth-service 요청 필요)
+        String token = HttpHeaders.AUTHORIZATION;
+
+        // secret 암호화
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
+
+        // token id값 추출
+        Long id = (Long) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id");
+
+        if (id == null) {
+            throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
+        }
+
+        MemberResponse memberResponse = null;
+        try {
+            memberResponse = memberServiceClient.getMemberId(id);
+        } catch (FeignException ex) {
+            log.error(ex.getMessage());
+        }
+
+        memberId = memberResponse.getId();
     }
 
+    // 회원 ID와 그림 ID로 좋아요 여부 확인
     public Optional<LikedPainting> findLikedPaintingWithMemberAndPaintingId(LikedPaintingDto likedPaintingDto) {
-        // 존재하는 회원이 아닌 경우 에러 호출하기
-        Member findMember = memberRepository.findById(likedPaintingDto.getMemberId())
-                .orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
-
         return likedPaintingRepository
-                .findLikedPaintingByMemberAndPaintingId(findMember, likedPaintingDto.getPaintingId());
+                .findByMemberIdAndPaintingId(memberId, likedPaintingDto.getPaintingId());
     }
 
     public void updateLikeCount(Long paintingId, Integer count) throws IOException {

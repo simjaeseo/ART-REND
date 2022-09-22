@@ -25,58 +25,21 @@
 </template>
 
 <script>
-import { reactive, computed } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
+import drf from '@/api/api'
+
 export default {
 	name: 'LoginForm',
 	setup() {
 		const store = useStore()
-		const state = reactive({
-			nickname: '',
-			email: '',
-			token: '',
-			istoken: false,
-		})
 
 		const loginWithKakao = function () {
-			console.log(window.Kakao)
-			window.Kakao.Auth.login({
-				scope: 'profile_nickname, account_email, gender, age_range',
-				success: getKakaoAccount,
-			})
+			window.open(drf.auth.kakaoLogin())
 		}
-		const getKakaoAccount = function () {
-			window.Kakao.API.request({
-				url: '/v2/user/me',
-				success: res => {
-					console.log(res)
-					const kakao_account = res.kakao_account
-					state.nickname = kakao_account.profile.nickname
-					state.email = kakao_account.email
-					state.token = localStorage.getItem(
-						'kakao_5c75e8f0bca47d584945e323bf5abf49' || '',
-					)
-				},
-				fail: error => {
-					console.log(error)
-				},
-			}).then(() => {
-				if (state.token) {
-					state.istoken = true
-					store.commit('SET_TOKEN', state.token)
-				} else {
-					state.istoken = false
-				}
-				// console.log(state.istoken)
-				// console.log(state.nickname)
-				// console.log(state.email)
-				// console.log(state.token)
-			})
-		}
+
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		return {
-			state,
-			getKakaoAccount,
 			loginWithKakao,
 			isLoggedIn,
 		}

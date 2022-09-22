@@ -8,6 +8,7 @@
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 import jwt_decode from 'jwt-decode'
+
 export default {
 	name: 'KakaoAuthView',
 	setup() {
@@ -16,10 +17,14 @@ export default {
 		const url = new URLSearchParams(location.search)
 		const token = url.get('accessToken')
 		const decodeAccessToken = jwt_decode(token)
+
 		console.log(decodeAccessToken)
 		console.log(decodeAccessToken.id)
 		console.log(token)
+
+		store.commit('SET_USER_ID', decodeAccessToken.id)
 		store.dispatch('saveToken', token)
+
 		return {
 			isLoggedIn,
 			decodeAccessToken,

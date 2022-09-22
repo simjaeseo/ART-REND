@@ -1,4 +1,4 @@
-package com.artrend.authservice.global.config;
+package com.artrend.authservice.global.auth;
 
 import com.artrend.authservice.domain.Member;
 import com.artrend.authservice.dto.OAuthAttributes;
@@ -29,7 +29,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
    @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-
+       System.out.println(111111111);
         // 아마, UserRequest 데이터에서 OAuth로부터 받아온 유저데이터(OAuth2User)만 뽑아내는 부분같음
        OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
@@ -47,14 +47,39 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         }else if(provider.equals("kakao")){
             providerId = oAuth2User.getAttributes().get("id").toString();
         }
-
+       System.out.println("oAuth2User.getAttributes() : " + oAuth2User.getAttributes());
         // 구글 or 카카오에 따라 사용자 정보 파싱하는 키가 다름
        // 소셜로부터 받아온 사용자 이름 + provider, providerId
         OAuthAttributes attributes = OAuthAttributes.of(provider, providerId, oAuth2User.getAttributes());
 
-       Optional<Member> member = memberRepository.findByProviderId(attributes.getProviderId());
+       Optional<Member> member = null;
+       if(provider.equals("google")){
+           member = memberRepository.findByKakaoProviderId(attributes.getProviderId());
+       }else if(provider.equals("kakao")){
+           member = memberRepository.findByKakaoProviderId(attributes.getProviderId());
+       }
+
+
+       // 해당 소셜로 회원가입이 한적 없다면,
        if(!member.isPresent()) {
-           memberRepository.save(attributes.toEntity());
+           // DI를 요청
+
+           String di = attributes.getDi(attributes.getName());
+
+           Optional<Member> findMemberbyDi = memberRepository.findByDi(di);
+
+           // di로 테이블 검색했는데도 멤버가 없으면
+           if(!findMemberbyDi.isPresent()){
+               // 회원가입 진행
+               if(provider.equals("kakao")){
+                   memberRepository.save(attributes.toKakaoEntity());
+               }else{
+                   memberRepository.save(attributes.toGoogleEntity());
+               }
+           }else{
+               // di로 검색했는데 멤버가 존재한다면 해당 컬럼에 소셜 정보 인서트
+               findMemberbyDi.get().updateProviderAndProviderId(provider, providerId);
+           }
        }
 
         return new DefaultOAuth2User(null,

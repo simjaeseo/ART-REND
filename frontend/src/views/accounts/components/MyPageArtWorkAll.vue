@@ -1,9 +1,9 @@
 <template>
-	<div class="masonry-container masonry">
+	<div class="masonry-container">
 		<div v-for="image in state.imageNum" :key="image" class="masonry-item">
 			<div class="pseudo-img">
 				<a href="#" target="_blank" rel="noopener">
-					<div cl ass="image-box">
+					<div class="image-box">
 						<button class="delete">delete</button>
 						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
 						<div class="image-info">
@@ -28,27 +28,30 @@ export default {
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
 
-		function masonryLayout() {
-			const masonryContainerStyle = getComputedStyle(
-				document.querySelector('.masonry-container'),
-			)
-			const columnGap = parseInt(
-				masonryContainerStyle.getPropertyValue('column-gap'),
-			)
-			const autoRows = parseInt(
-				masonryContainerStyle.getPropertyValue('grid-auto-rows'),
-			)
+		window.onload = function () {
+			function masonryLayout() {
+				const masonryContainerStyle = getComputedStyle(
+					document.querySelector('.masonry-container'),
+				)
+				const columnGap = parseInt(
+					masonryContainerStyle.getPropertyValue('column-gap'),
+				)
+				const autoRows = parseInt(
+					masonryContainerStyle.getPropertyValue('grid-auto-rows'),
+				)
 
-			document.querySelectorAll('.masonry-item').forEach(elt => {
-				elt.style.gridRowEnd = `span ${Math.ceil(
-					elt.querySelector('.pseudo-img').scrollHeight / autoRows +
-						columnGap / autoRows,
-				)}`
-			})
+				document.querySelectorAll('.masonry-item').forEach(elt => {
+					elt.style.gridRowEnd = `span ${Math.ceil(
+						elt.querySelector('.pseudo-img').scrollHeight / autoRows +
+							columnGap / autoRows,
+					)}`
+				})
+			}
+
+			masonryLayout()
+			window.addEventListener('resize', masonryLayout)
 		}
 
-		masonryLayout()
-		window.addEventListener('resize', masonryLayout)
 		return {
 			state,
 		}
@@ -64,18 +67,33 @@ export default {
 	--gap: 10px;
 
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(5, 1fr);
 	column-gap: var(--gap);
 	grid-auto-rows: 10px;
+	margin: 0px 300px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 2100px) {
 	.masonry-container {
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(4, 1fr);
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 1900px) {
+	.masonry-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 0 15vw;
+	}
+}
+
+@media screen and (max-width: 1300px) {
+	.masonry-container {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 800px) {
 	.masonry-container {
 		display: block;
 	}
@@ -100,8 +118,7 @@ export default {
 }
 
 img {
-	max-width: 45vh;
-	max-height: 50vh;
+	width: 100%;
 }
 
 a:hover .image-box {

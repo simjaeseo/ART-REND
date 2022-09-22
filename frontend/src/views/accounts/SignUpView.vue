@@ -23,6 +23,7 @@ export default {
 		onBeforeMount(() => {
 			state.randomNum = Math.floor(Math.random() * (9 - 1) + 1)
 		})
+
 		return {
 			state,
 		}

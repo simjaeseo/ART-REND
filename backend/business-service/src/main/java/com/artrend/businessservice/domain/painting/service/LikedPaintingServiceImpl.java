@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.member.entity.Member;
 import com.artrend.businessservice.domain.member.exception.MemberException;
 import com.artrend.businessservice.domain.member.exception.MemberExceptionType;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;

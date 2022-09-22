@@ -1,13 +1,16 @@
 package com.artrend.authservice.dto;
 
 import com.artrend.authservice.domain.Member;
-import lombok.Builder;
-import lombok.Getter;
+import com.artrend.authservice.global.auth.SHA256;
+import lombok.*;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
 @Getter
 @Builder
+@RequiredArgsConstructor
+@AllArgsConstructor
 public class OAuthAttributes {
     private Map<String, Object> attributes; // OAuth2 반환하는 유저 정보 Map
     private String name;
@@ -45,17 +48,37 @@ public class OAuthAttributes {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .attributes(attributes)
-                .provider("kakao")
+                .provider("google")
                 .providerId(userNameAttributeName)
                 .build();
     }
 
-    public Member toEntity(){
+    public Member toKakaoEntity(){
         return Member.builder()
                 .name(name)
-                .provider(provider)
-                .providerId(providerId)
+                .kakaoProvider(provider)
+                .kakaoProviderId(providerId)
+                .di(getDi(name))
                 .build();
+    }
+
+    public Member toGoogleEntity(){
+        return Member.builder()
+                .name(name)
+                .googleProvider(provider)
+                .googleProviderId(providerId)
+                .di(getDi(name))
+                .build();
+    }
+
+    public String getDi(String name) {
+        SHA256 sha256 = new SHA256();
+
+        try {
+            return sha256.encrypt(name);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

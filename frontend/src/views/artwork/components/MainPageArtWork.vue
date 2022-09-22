@@ -73,6 +73,7 @@ export default {
 #text-saying {
 	font-family: 'Playfair Display', serif;
 	color: white;
+	font-size: 1vh;
 }
 #title-wrapper4 {
 	background-color: white;
@@ -80,7 +81,7 @@ export default {
 	min-width: 100%;
 }
 #m-image {
-	width: 300px;
+	width: 100%;
 	height: auto;
 }
 .masonry {
@@ -91,7 +92,6 @@ export default {
 .masonry .mItem {
 	display: inline-block;
 	width: 100%;
-	cursor: pointer;
 	margin-bottom: 10px;
 }
 #h2-inner {
@@ -151,7 +151,7 @@ export default {
 	align-items: center;
 	justify-content: center;
 	min-height: 80vh;
-	min-width: 1000px;
+	/* min-width: 1000px; */
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(0px);
 	transition: 1s;

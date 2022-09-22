@@ -1,12 +1,18 @@
 package com.artrend.businessservice.domain.painting.dto;
 
 import com.artrend.businessservice.domain.painting.entity.Painting;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 
 @Data
-public class PaintingResponse {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PaintingDto {
     private Long id;
     private String title;
     private String koreanTitle;
@@ -23,7 +29,7 @@ public class PaintingResponse {
     private Long totalLikeCount;
     private Long totalChangeCount;
 
-    public PaintingResponse(Painting painting) {
+    public PaintingDto(Painting painting) {
         this.id = painting.getId();
         this.title = painting.getTitle();
         this.koreanTitle = painting.getKoreanTitle();
@@ -32,7 +38,6 @@ public class PaintingResponse {
         this.description = painting.getDescription();
         this.genre = painting.getGenre();
         this.year = painting.getYear();
-        this.genre = painting.getGenre();
         this.dimensions = painting.getDimensions();
         this.medium = painting.getMedium();
         this.place = painting.getPlace();

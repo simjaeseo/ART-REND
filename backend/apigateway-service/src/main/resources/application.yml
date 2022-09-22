@@ -20,6 +20,8 @@ spring:
           uri: lb://BUSINESS-SERVICE
           predicates:
             - Path=/business-service/**
+          filters:
+            - AuthorizationHeaderFilter
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
@@ -33,8 +35,12 @@ spring:
           predicates:
             - Path=/auth-service/**
           filters:
-#            - RemoveRequestHeader=Cookie
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
 #  rabbitmq:
 #    host: 127.0.0.1
 #    port: 5672

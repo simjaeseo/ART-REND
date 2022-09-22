@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import com.artrend.businessservice.domain.member.entity.Member;
 import com.artrend.businessservice.global.common.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -19,9 +18,7 @@ public class ChangedPainting extends BaseEntity {
     @Column(name = "changed_painting_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Long memberId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "painting_id")

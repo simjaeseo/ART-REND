@@ -35,6 +35,9 @@ spring:
   zipkin:
     base-url: http://127.0.0.1:9411
     enabled: true
+  sql:
+    init:
+      mode: always
 
 logging:
   level:
@@ -44,6 +47,10 @@ logging:
         type:
           descriptor:
             sql: trace
+
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+
 
 eureka:
   instance:

@@ -8,10 +8,19 @@
 				<div>
 					<form action="">
 						<label for="user-nick-name">
-							<input type="text" id="user-nick-name" />
+							<input
+								type="text"
+								id="user-nick-name"
+								v-model="state.userNickName"
+							/>
 						</label>
 						<div id="btn-wrap">
-							<button class="btn" id="nick-name-check-btn" type="submit">
+							<button
+								class="btn"
+								id="nick-name-check-btn"
+								type="submit"
+								@click="doubleCheck"
+							>
 								CHECK
 							</button>
 						</div>
@@ -23,8 +32,26 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
+import { reactive } from 'vue'
+
 export default {
 	name: 'NickNameForm',
+	setup() {
+		const state = reactive({
+			userNickName: null,
+		})
+		const store = useStore()
+
+		// 닉네임 중복검사
+		const doubleCheck = function () {
+			store.dispatch('doubleCheck', state.userNickName)
+		}
+		return {
+			doubleCheck,
+			state,
+		}
+	},
 }
 </script>
 

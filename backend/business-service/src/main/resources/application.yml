@@ -48,6 +48,10 @@ logging:
           descriptor:
             sql: trace
 
+jwt:
+  secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
+
+
 eureka:
   instance:
     instance-id: ${spring.cloud.client.hostname}:${spring.application.instance-id:${random.value}}

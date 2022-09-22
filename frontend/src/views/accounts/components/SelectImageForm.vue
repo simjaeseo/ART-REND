@@ -23,48 +23,112 @@
 				<div class="masonry">
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(1)"
-						@mouseover="plusClass(1)"
-						@mouseleave="deleteClass(1)"
-						id="1"
+						@dblclick.prevent="selectedImage(147)"
+						@mouseover="plusClass(147)"
+						@mouseleave="deleteClass(147)"
+						id="147"
 					>
-						<img src="@/assets/select-img/1.jpg" alt="img1" />
+						<img src="@/assets/select-img/147.jpg" alt="img147" />
 						<img
-							id="btn1"
+							id="btn147"
 							class="zoom-btn"
-							@click="zoomImage(1)"
+							@click="zoomImage(147)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(5)"
-						@mouseover="plusClass(5)"
-						@mouseleave="deleteClass(5)"
-						id="5"
+						@dblclick.prevent="selectedImage(101)"
+						@mouseover="plusClass(101)"
+						@mouseleave="deleteClass(101)"
+						id="101"
 					>
-						<img src="@/assets/select-img/5.jpg" alt="img1" />
+						<img src="@/assets/select-img/101.jpg" alt="img101" />
 						<img
-							id="btn5"
+							id="btn101"
 							class="zoom-btn"
-							@click="zoomImage(5)"
+							@click="zoomImage(101)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(2)"
-						@mouseover="plusClass(2)"
-						@mouseleave="deleteClass(2)"
-						id="2"
+						@dblclick.prevent="selectedImage(110)"
+						@mouseover="plusClass(110)"
+						@mouseleave="deleteClass(110)"
+						id="110"
 					>
-						<img src="@/assets/select-img/2.jpg" alt="img1" />
+						<img src="@/assets/select-img/110.jpg" alt="img110" />
 						<img
-							id="btn2"
+							id="btn110"
 							class="zoom-btn"
-							@click="zoomImage(2)"
+							@click="zoomImage(110)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(12)"
+						@mouseover="plusClass(12)"
+						@mouseleave="deleteClass(12)"
+						id="12"
+					>
+						<img src="@/assets/select-img/12.jpg" alt="img12" />
+						<img
+							id="btn12"
+							class="zoom-btn"
+							@click="zoomImage(12)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(65)"
+						@mouseover="plusClass(65)"
+						@mouseleave="deleteClass(65)"
+						id="65"
+					>
+						<img src="@/assets/select-img/65.jpg" alt="img65" />
+						<img
+							id="btn65"
+							class="zoom-btn"
+							@click="zoomImage(65)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(32)"
+						@mouseover="plusClass(32)"
+						@mouseleave="deleteClass(32)"
+						id="32"
+					>
+						<img src="@/assets/select-img/32.jpg" alt="img32" />
+						<img
+							id="btn32"
+							class="zoom-btn"
+							@click="zoomImage(32)"
+							data-bs-toggle="modal"
+							data-bs-target="#exampleModal"
+						/>
+					</div>
+					<div
+						class="mItem filter"
+						@dblclick.prevent="selectedImage(97)"
+						@mouseover="plusClass(97)"
+						@mouseleave="deleteClass(97)"
+						id="97"
+					>
+						<img src="@/assets/select-img/97.jpg" alt="img97" />
+						<img
+							id="btn97"
+							class="zoom-btn"
+							@click="zoomImage(97)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
@@ -76,7 +140,7 @@
 						@mouseleave="deleteClass(4)"
 						id="4"
 					>
-						<img src="@/assets/select-img/4.jpg" alt="img1" />
+						<img src="@/assets/select-img/4.jpg" alt="img4" />
 						<img
 							id="btn4"
 							class="zoom-btn"
@@ -87,96 +151,32 @@
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(7)"
-						@mouseover="plusClass(7)"
-						@mouseleave="deleteClass(7)"
-						id="7"
+						@dblclick.prevent="selectedImage(52)"
+						@mouseover="plusClass(52)"
+						@mouseleave="deleteClass(52)"
+						id="52"
 					>
-						<img src="@/assets/select-img/7.jpg" alt="img1" />
+						<img src="@/assets/select-img/52.jpg" alt="img52" />
 						<img
-							id="btn7"
+							id="btn52"
 							class="zoom-btn"
-							@click="zoomImage(7)"
+							@click="zoomImage(52)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
 					</div>
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(8)"
-						@mouseover="plusClass(8)"
-						@mouseleave="deleteClass(8)"
-						id="8"
+						@dblclick.prevent="selectedImage(124)"
+						@mouseover="plusClass(124)"
+						@mouseleave="deleteClass(124)"
+						id="124"
 					>
-						<img src="@/assets/select-img/8.jpg" alt="img1" />
+						<img src="@/assets/select-img/124.jpg" alt="img124" />
 						<img
-							id="btn8"
+							id="btn124"
 							class="zoom-btn"
-							@click="zoomImage(8)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(6)"
-						@mouseover="plusClass(6)"
-						@mouseleave="deleteClass(6)"
-						id="6"
-					>
-						<img src="@/assets/select-img/6.jpg" alt="img1" />
-						<img
-							id="btn6"
-							class="zoom-btn"
-							@click="zoomImage(6)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(9)"
-						@mouseover="plusClass(9)"
-						@mouseleave="deleteClass(9)"
-						id="9"
-					>
-						<img src="@/assets/select-img/9.jpg" alt="img1" />
-						<img
-							id="btn9"
-							class="zoom-btn"
-							@click="zoomImage(9)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(10)"
-						@mouseover="plusClass(10)"
-						@mouseleave="deleteClass(10)"
-						id="10"
-					>
-						<img src="@/assets/select-img/10.jpg" alt="img1" />
-						<img
-							id="btn10"
-							class="zoom-btn"
-							@click="zoomImage(10)"
-							data-bs-toggle="modal"
-							data-bs-target="#exampleModal"
-						/>
-					</div>
-					<div
-						class="mItem filter"
-						@dblclick.prevent="selectedImage(3)"
-						@mouseover="plusClass(3)"
-						@mouseleave="deleteClass(3)"
-						id="3"
-					>
-						<img src="@/assets/select-img/3.jpg" alt="img1" />
-						<img
-							id="btn3"
-							class="zoom-btn"
-							@click="zoomImage(3)"
+							@click="zoomImage(124)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>
@@ -198,7 +198,8 @@ export default {
 	setup() {
 		const selectedImages = []
 		const selectedImage = function (num) {
-			console.log('더블클릭했다!')
+			console.log(num)
+			console.log(selectedImages)
 			// 배열에 이미 선택한 사진이 있으면
 			if (selectedImages.includes(num)) {
 				// 포문을 돌면서 배열에 들어있는 선택한 값을 제거?
@@ -287,18 +288,19 @@ img {
 
 .masonry {
 	column-count: 4;
+	cursor: pointer;
+	margin-bottom: 16px;
 }
 
 .masonry .mItem {
-	display: inline-block;
 	margin-bottom: 16px;
-	width: 100%;
-	cursor: pointer;
+	/* width: 100%;
+	cursor: pointer; */
 }
+
 .masonry .mItem:hover {
 	filter: brightness(100%);
 	cursor: pointer;
-	position: relative;
 }
 .filter {
 	filter: brightness(60%);

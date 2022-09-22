@@ -8,11 +8,13 @@ import DetailPageView from '@/views/artwork/DetailPageView.vue'
 import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
 import KakaoAuthView from '@/views/accounts/KakaoAuthView.vue'
 
+// 라우터가드는 개발 끝나고 주석 풀면 됨
 // const requireAuth = () => (from, to, next) => {
 // 	const token = localStorage.getItem('token')
 // 	if (token) {
 // 		return next()
 // 	}
+// 	alert('로그인이 필요한 서비스입니다.')
 // 	next('/')
 // }
 

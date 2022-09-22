@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import com.artrend.businessservice.domain.member.entity.Member;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,9 +17,7 @@ public class SelectedPainting {
     @Column(name = "selected_painting_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Long memberId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "painting_id")

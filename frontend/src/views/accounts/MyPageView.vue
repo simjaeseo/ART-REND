@@ -50,7 +50,7 @@ import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
 export default {
 	name: 'MyPageView',
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll },
-	serup() {},
+	setup() {},
 }
 </script>
 

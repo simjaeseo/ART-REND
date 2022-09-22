@@ -60,9 +60,15 @@ public class LikedPaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likeDto));
     }
 
+    @Operation(summary = "좋아요한 그림 조회", description = "회원 정보로 좋아요한 그림 목록을 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(description = "parameter - memberId : 조회할 회원 ID값\n" +
+                    "parameter - size : 한 번에 조회할 그림의 개수\n" +
+                    "parameter - page : 조회할 페이지(시작 인덱스 : 0)")
+    })
     @GetMapping
     public ResponseEntity<? extends DataResponse> findLikedPaintings(Long memberId, Pageable pageable) {
-        Page<LikedPaintingDto> likedPaintings = likedPaintingRepository.findLikedPaintings(memberId, pageable);
+        Page<LikedPaintingDto> likedPaintings = likedPaintingService.findLikedPaintings(memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likedPaintings));
     }
 }

@@ -32,19 +32,20 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { reactive } from 'vue'
-import router from '@/router/index'
+
 export default {
 	name: 'NickNameForm',
 	setup() {
 		const state = reactive({
 			userNickName: null,
 		})
+		const store = useStore()
+
 		// 닉네임 중복검사
 		const doubleCheck = function () {
-			confirm(`${state.userNickName}(으)로 사용하시겠습니까?`).then(
-				router.push('/select'),
-			)
+			store.dispatch('doubleCheck', state.userNickName)
 		}
 		return {
 			doubleCheck,

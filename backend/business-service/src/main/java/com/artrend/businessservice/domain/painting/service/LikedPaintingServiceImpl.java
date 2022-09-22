@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.member.client.MemberServiceClient;
 import com.artrend.businessservice.domain.member.exception.MemberException;
 import com.artrend.businessservice.domain.member.exception.MemberExceptionType;
 import com.artrend.businessservice.domain.painting.dto.LikeDto;
@@ -17,12 +16,13 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.security.Key;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,11 +33,9 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
 
-    private final MemberServiceClient memberServiceClient;
     @Value("${jwt.secret}")
     private String secret;
     private Key key;
-    private Long memberId;
 
     @Override
     @Transactional
@@ -85,17 +83,19 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     }
 
     @Override
-    public List<LikedPaintingDto> findLikedPaintings() {
+    public Page<LikedPaintingDto> findLikedPaintings(Long memberId, Pageable pageable) {
+        return likedPaintingRepository.findLikedPaintings(memberId, pageable);
+    }
 
-        return null;
+    public void afterPropertiesSet() {
+        byte[] keyBytes = Decoders.BASE64.decode(secret);
+        this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
     public void validateToken(LikeDto likeDto, String token) {
-        // 유효한 토큰인지 검증 (auth-service 요청 필요)
-
+        // 유효한 토큰인지 검증
         // secret 암호화
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
+        afterPropertiesSet();
 
         // token id값 추출
         Long memberId = Long.parseLong(

@@ -34,12 +34,18 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        login 성공한 사용자 목록.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         String providerId = oAuth2User.getAttributes().get("id").toString();
+        System.out.println(oAuth2User.getAttributes());
 
-        Member findMember = memberRepository.findByProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        // 카카오 로그인일때
+        Member findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+
+        // 구글 로그인일때 나누기
 
         String accessToken = tokenProvider.createToken(providerId, findMember.getId());
 
         String url = makeRedirectUrl(accessToken);;
+
+//        String url = "http://localhost:3002/auth";
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -49,7 +55,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     }
 
     private String makeRedirectUrl(String accessToken) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3002/detail")
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("accessToken", accessToken)
 //                .queryParam("refreshToken", refreshToken)
                 .build().toUriString();

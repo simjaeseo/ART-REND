@@ -24,5 +24,6 @@ public class DetailRecommendedPainting {
     private Painting painting;
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "recommended_painting_id")
     private Painting recommendedPainting;
 }

@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from recommend_art.models import Painting, DjangoContentType
 # Create your models here.
-
 
 
 class AuthGroup(models.Model):
@@ -10,12 +10,20 @@ class AuthGroup(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_group'
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255)
+    content_type = models.ForeignKey(DjangoContentType, models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
 
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
 
 class AuthGroupPermissions(models.Model):
     id = models.BigAutoField(primary_key=True)
     group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
-    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
 
     class Meta:
         managed = False
@@ -23,15 +31,7 @@ class AuthGroupPermissions(models.Model):
         unique_together = (('group', 'permission'),)
 
 
-class AuthPermission(models.Model):
-    name = models.CharField(max_length=255)
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
-    codename = models.CharField(max_length=100)
 
-    class Meta:
-        managed = False
-        db_table = 'auth_permission'
-        unique_together = (('content_type', 'codename'),)
 
 
 class AuthUser(AbstractBaseUser, PermissionsMixin):
@@ -46,7 +46,6 @@ class AuthUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
     USERNAME_FIELD = 'username'
-    
     class Meta:
         managed = False
         db_table = 'auth_user'
@@ -82,3 +81,6 @@ class AuthtokenToken(models.Model):
     class Meta:
         managed = False
         db_table = 'authtoken_token'
+
+
+

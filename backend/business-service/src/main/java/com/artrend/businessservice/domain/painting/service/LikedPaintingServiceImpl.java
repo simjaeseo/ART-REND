@@ -10,6 +10,7 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
+import com.artrend.businessservice.domain.painting.util.TokenValidate;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -32,16 +33,13 @@ import java.util.Optional;
 public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-
-    @Value("${jwt.secret}")
-    private String secret;
-    private Key key;
+    private final TokenValidate tokenValidate;
 
     @Override
     @Transactional
     public void like(LikeDto likeDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        validateToken(likeDto, token);
+        tokenValidate.validateToken(likeDto, token);
 
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(likeDto).isPresent()) {
@@ -68,7 +66,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     @Transactional
     public void cancelLike(LikeDto likeDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        validateToken(likeDto, token);
+        tokenValidate.validateToken(likeDto, token);
 
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting
@@ -85,32 +83,6 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     @Override
     public Page<LikedPaintingDto> findLikedPaintings(Long memberId, Pageable pageable) {
         return likedPaintingRepository.findLikedPaintings(memberId, pageable);
-    }
-
-    public void afterPropertiesSet() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        this.key = Keys.hmacShaKeyFor(keyBytes);
-    }
-
-    public void validateToken(LikeDto likeDto, String token) {
-        // 유효한 토큰인지 검증
-        // secret 암호화
-        afterPropertiesSet();
-
-        // token id값 추출
-        Long memberId = Long.parseLong(
-                Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id")
-                        .toString());
-
-        log.debug("memberId -> {}", memberId);
-
-        if (memberId == null) {
-            throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
-        }
-
-        if (memberId != likeDto.getMemberId()) {
-            throw new MemberException(MemberExceptionType.CONFLICT_MEMBER);
-        }
     }
 
     // 회원 ID와 그림 ID로 좋아요 여부 확인

@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8082
 #  ssl:
 #    key-store: classpath:keystore.p12
 #    key-store-type: PKCS12
@@ -32,6 +32,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
 
 logging:
   level:

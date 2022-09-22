@@ -1,5 +1,5 @@
 server:
-  port: 0
+  port: 8082
 #  ssl:
 #    key-store: classpath:keystore.p12
 #    key-store-type: PKCS12
@@ -28,11 +28,14 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
-#  rabbitmq:
-#    host: 127.0.0.1
-#    port: 5672
-#    username: guest
-#    password: guest
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+  zipkin:
+    base-url: http://127.0.0.1:9411
+    enabled: true
 
 logging:
   level:
@@ -56,9 +59,9 @@ jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
   token-validity-in-seconds: 86400
 
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: refresh, health, beans, httptrace, busrefresh
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh
 

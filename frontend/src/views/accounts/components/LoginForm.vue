@@ -27,15 +27,15 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import drf from '@/api/api'
+
 export default {
 	name: 'LoginForm',
 	setup() {
 		const store = useStore()
 
 		const loginWithKakao = function () {
-			window.open(
-				'http://localhost:8080/auth-service/oauth2/authorization/kakao',
-			)
+			window.open(drf.auth.kakaoLogin())
 		}
 
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)

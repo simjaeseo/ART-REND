@@ -1,10 +1,6 @@
 from django.db import models
-
+from user.models import AuthUser
 # Create your models here.
-
-
-
-
 class ChangedPainting(models.Model):
     changed_painting_id = models.BigAutoField(primary_key=True)
     created_at = models.DateTimeField(blank=True, null=True)

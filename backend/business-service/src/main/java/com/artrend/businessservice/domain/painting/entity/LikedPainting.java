@@ -1,11 +1,9 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import com.artrend.businessservice.domain.member.entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -21,7 +19,5 @@ public class LikedPainting {
     @NonNull
     private Long paintingId;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Long memberId;
 }

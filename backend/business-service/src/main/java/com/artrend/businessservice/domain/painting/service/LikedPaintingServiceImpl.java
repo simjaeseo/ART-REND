@@ -18,7 +18,6 @@ import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,9 +41,9 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     @Override
     @Transactional
-    public void like(LikedPaintingDto likedPaintingDto) throws IOException {
+    public void like(LikedPaintingDto likedPaintingDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        validateToken(likedPaintingDto);
+        validateToken(likedPaintingDto, token);
 
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(likedPaintingDto).isPresent()) {
@@ -65,9 +64,9 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     @Override
     @Transactional
-    public void cancelLike(LikedPaintingDto likedPaintingDto) throws IOException {
+    public void cancelLike(LikedPaintingDto likedPaintingDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        validateToken(likedPaintingDto);
+        validateToken(likedPaintingDto, token);
 
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting
@@ -81,29 +80,24 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         updateLikeCount(likedPaintingDto.getPaintingId(), -1);
     }
 
-    public void validateToken(LikedPaintingDto likedPaintingDto) {
+    public void validateToken(LikedPaintingDto likedPaintingDto, String token) {
         // 유효한 토큰인지 검증 (auth-service 요청 필요)
-        String token = HttpHeaders.AUTHORIZATION;
 
         // secret 암호화
         byte[] keyBytes = Decoders.BASE64.decode(secret);
+        System.out.println(secret);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        System.out.println(this.key.toString());
 
         // token id값 추출
-        Long id = (Long) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id");
+        Long memberId = Long.parseLong(
+                Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id")
+                        .toString());
 
-        if (id == null) {
+        if (memberId == null) {
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
-
-        MemberResponse memberResponse = null;
-        try {
-            memberResponse = memberServiceClient.getMemberId(id);
-        } catch (FeignException ex) {
-            log.error(ex.getMessage());
-        }
-
-        memberId = memberResponse.getId();
+        log.debug("memberId -> {}", memberId);
     }
 
     // 회원 ID와 그림 ID로 좋아요 여부 확인
@@ -118,4 +112,5 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
         findPainting.updateTotalLikeCount(count);
     }
+
 }

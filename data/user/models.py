@@ -1,6 +1,8 @@
 from django.db import models
-
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 # Create your models here.
+
+
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -8,7 +10,6 @@ class AuthGroup(models.Model):
     class Meta:
         managed = False
         db_table = 'auth_group'
-
 
 
 class AuthGroupPermissions(models.Model):
@@ -22,7 +23,6 @@ class AuthGroupPermissions(models.Model):
         unique_together = (('group', 'permission'),)
 
 
-
 class AuthPermission(models.Model):
     name = models.CharField(max_length=255)
     content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
@@ -34,7 +34,7 @@ class AuthPermission(models.Model):
         unique_together = (('content_type', 'codename'),)
 
 
-class AuthUser(models.Model):
+class AuthUser(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
     is_superuser = models.IntegerField()
@@ -45,7 +45,8 @@ class AuthUser(models.Model):
     is_staff = models.IntegerField()
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
-
+    USERNAME_FIELD = 'username'
+    
     class Meta:
         managed = False
         db_table = 'auth_user'

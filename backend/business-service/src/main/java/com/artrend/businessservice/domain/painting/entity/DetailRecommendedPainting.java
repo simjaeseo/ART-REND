@@ -6,20 +6,23 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.io.Serializable;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class RecommendedPainting {
+public class DetailRecommendedPainting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "liked_painting_id")
+    @Column(name = "detail_recommended_painting_id")
     private Long id;
-
-    private Long memberId;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "painting_id")
     private Painting painting;
+
+    @ManyToOne(fetch = LAZY)
+    private Painting recommendedPainting;
 }

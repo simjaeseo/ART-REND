@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,9 +31,11 @@ public class LikedPaintingController {
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
     @PostMapping
-    public ResponseEntity<? extends DataResponse> like(@RequestBody @Valid
-                                                           LikedPaintingDto likedPaintingDto) throws IOException {
-        likedPaintingService.like(likedPaintingDto);
+    public ResponseEntity<? extends DataResponse> like(
+            @RequestBody @Valid LikedPaintingDto likedPaintingDto,
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
+        token = token.split(" ")[1].trim();
+        likedPaintingService.like(likedPaintingDto, token);
         return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(likedPaintingDto));
     }
 
@@ -44,9 +47,11 @@ public class LikedPaintingController {
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
     @DeleteMapping
-    public ResponseEntity<? extends DataResponse> cancelLike(@RequestBody @Valid
-                                                             LikedPaintingDto likedPaintingDto) throws IOException {
-        likedPaintingService.cancelLike(likedPaintingDto);
+    public ResponseEntity<? extends DataResponse> cancelLike(
+            @RequestBody @Valid LikedPaintingDto likedPaintingDto,
+            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
+        token = token.split(" ")[1].trim();
+        likedPaintingService.cancelLike(likedPaintingDto, token);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likedPaintingDto));
     }
 }

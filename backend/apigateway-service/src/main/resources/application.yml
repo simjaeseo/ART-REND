@@ -13,19 +13,33 @@ eureka:
 spring:
   application:
     name: apigateway-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     gateway:
       routes:
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business-service/**
+            - Path=/business-service/actuator/**
+            - Method=GET,POST
           filters:
-            - AuthorizationHeaderFilter
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
         - id: business-service
           uri: lb://BUSINESS-SERVICE
           predicates:
-            - Path=/business-service/actuator/**
+            - Path=/business-service/paintings/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/business-service/(?<segment>.*), /$\{segment}
+        - id: business-service
+          uri: lb://BUSINESS-SERVICE
+          predicates:
+            - Path=/business-service/users/**
             - Method=GET,POST
           filters:
             - RemoveRequestHeader=Cookie
@@ -36,19 +50,28 @@ spring:
             - Path=/auth-service/**
           filters:
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/actuator/**
+#            - Method=GET,POST
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+#        - id: recommend-service
+#          uri: lb://RECOMMEND-SERVICE
+#          predicates:
+#            - Path=/recommend-service/**
+#        - filters:
+#            - RemoveRequestHeader=Cookie
+#            - RewritePath=/recommend-service/(?<segment>.*), /$\{segment}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus
 
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
   token-validity-in-seconds: 86400
-
-#  rabbitmq:
-#    host: 127.0.0.1
-#    port: 5672
-#    username: guest
-#    password: guest
-#
-#management:
-#  endpoints:
-#    web:
-#      exposure:
-#        include: refresh, health, beans, httptrace, busrefresh, info, metrics, prometheus

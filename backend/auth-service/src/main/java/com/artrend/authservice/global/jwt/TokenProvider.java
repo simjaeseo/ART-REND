@@ -51,7 +51,6 @@ public class TokenProvider implements InitializingBean {
        return Jwts.builder()
                 .setSubject(providerId)
                 .claim("id",memberId)
-                .claim("aaaaaaa",memberId)
                 .setIssuedAt(now)
                 .signWith(key, SignatureAlgorithm.HS512)
                 .setExpiration(validity)

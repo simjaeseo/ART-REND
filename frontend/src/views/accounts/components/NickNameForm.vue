@@ -8,10 +8,19 @@
 				<div>
 					<form action="">
 						<label for="user-nick-name">
-							<input type="text" id="user-nick-name" />
+							<input
+								type="text"
+								id="user-nick-name"
+								v-model="state.userNickName"
+							/>
 						</label>
 						<div id="btn-wrap">
-							<button class="btn" id="nick-name-check-btn" type="submit">
+							<button
+								class="btn"
+								id="nick-name-check-btn"
+								type="submit"
+								@click="doubleCheck"
+							>
 								CHECK
 							</button>
 						</div>
@@ -23,8 +32,25 @@
 </template>
 
 <script>
+import { reactive } from 'vue'
+import router from '@/router/index'
 export default {
 	name: 'NickNameForm',
+	setup() {
+		const state = reactive({
+			userNickName: null,
+		})
+		// 닉네임 중복검사
+		const doubleCheck = function () {
+			confirm(`${state.userNickName}(으)로 사용하시겠습니까?`).then(
+				router.push('/select'),
+			)
+		}
+		return {
+			doubleCheck,
+			state,
+		}
+	},
 }
 </script>
 

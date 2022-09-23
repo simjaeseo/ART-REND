@@ -4,7 +4,8 @@ import com.artrend.businessservice.global.Exception.BaseExceptionType;
 import org.springframework.http.HttpStatus;
 
 public enum MemberExceptionType implements BaseExceptionType {
-    NOT_FOUND_MEMBER(404, HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다.");
+    NOT_FOUND_MEMBER(404, HttpStatus.NOT_FOUND, "존재하지 않는 회원입니다."),
+    CONFLICT_MEMBER(409, HttpStatus.CONFLICT, "유효하지 않은 요청입니다.");
 
     private int errorCode;
     private HttpStatus httpStatus;

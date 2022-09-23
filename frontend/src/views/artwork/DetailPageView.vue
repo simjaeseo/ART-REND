@@ -168,13 +168,14 @@
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive } from 'vue'
 import { useStore } from 'vuex'
-// import jwt_decode from 'jwt-decode'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
 		const store = useStore()
+		const route = useRoute()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			imageName: '',
@@ -182,6 +183,9 @@ export default {
 			image: null,
 			img: null,
 		})
+		const artworkId = { ...route }
+		const payLoadId = artworkId.params.artworkId
+		store.dispatch('getArtWorkDetail', payLoadId)
 
 		const getImageModal = function () {
 			const modal = document.getElementById('myModal')
@@ -232,6 +236,8 @@ export default {
 			outImageModal,
 			handleAddImage,
 			onSubmit,
+			artworkId,
+			payLoadId,
 		}
 	},
 }

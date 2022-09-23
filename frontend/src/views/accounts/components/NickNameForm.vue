@@ -19,7 +19,7 @@
 								class="btn"
 								id="nick-name-check-btn"
 								type="submit"
-								@click="doubleCheck"
+								@click.prevent="doubleCheck"
 							>
 								CHECK
 							</button>

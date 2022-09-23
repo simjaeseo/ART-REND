@@ -188,6 +188,7 @@
 						id="nick-name-check-btn"
 						type="submit"
 						v-if="state.selectedImages.length == 2"
+						@click.prevent="selectForm"
 					>
 						SELECT
 					</button>
@@ -198,13 +199,18 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { reactive } from 'vue'
+
 export default {
 	name: 'SelectImage',
 	setup() {
+		const store = useStore()
+
 		const state = reactive({
 			selectedImages: [],
 		})
+
 		const selectedImage = function (num) {
 			// 배열에 이미 선택한 사진이 있으면
 			if (state.selectedImages.includes(num)) {
@@ -231,15 +237,12 @@ export default {
 				document.getElementById(state.selectedImages[0]).classList.add('filter')
 				state.selectedImages.shift()
 			}
-			console.log(state.selectedImages)
 		}
 		const zoomImage = function (num) {
 			const modal = document.getElementById(`${num}`)
 			const img = require(`../../../assets/select-img/${num}.jpg`)
 			const modalImg = document.getElementById('modal-inner')
-			const modalInner = document.getElementById('modal-title')
-			console.log(modal)
-			console.log(modalInner)
+			// const modalInner = document.getElementById('modal-title')
 			modal.style.display = 'block'
 			modalImg.src = img
 		}
@@ -253,12 +256,17 @@ export default {
 			img.src = ''
 			img.classList.remove('zoom-btn')
 		}
+		const selectForm = function () {
+			const selectedImages = JSON.parse(JSON.stringify(state.selectedImages))
+			store.dispatch('selectForm', selectedImages)
+		}
 		return {
 			deleteClass,
 			plusClass,
 			zoomImage,
 			state,
 			selectedImage,
+			selectForm,
 		}
 	},
 }

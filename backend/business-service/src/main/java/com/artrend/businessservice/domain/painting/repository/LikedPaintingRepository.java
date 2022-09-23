@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 
-public interface LikedPaintingRepository extends JpaRepository<LikedPainting, Long> {
+public interface LikedPaintingRepository extends JpaRepository<LikedPainting, Long>, LikedPaintingRepositoryCustom {
     Optional<LikedPainting> findByMemberIdAndPaintingId(Long memberId, Long paintingId);
 }

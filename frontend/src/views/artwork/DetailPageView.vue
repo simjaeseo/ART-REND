@@ -30,64 +30,37 @@
 					<div class="horizontal-scroll-wrapper">
 						<div id="img-title-wrap">
 							<div class="title-wrapper">
-								<h1 id="img-title">Boby Notre-Dame</h1>
-								<h5 id="img-title2">한글제목다그닥다그닥, 1985</h5>
-								<h4 id="img-title3">Andy worhol</h4>
+								<h1 id="img-title">{{ detailData.title }}</h1>
+								<h5 id="img-title2">{{ detailData.koreanTitle }}</h5>
+								<h4 id="img-title3">{{ detailData.artist }}</h4>
 								<hr />
 								<div>
 									<span id="description-cell">Place</span>
-									<span id="description-inner"
-										>Saint-Remy-de-Provence(Object made in)
-									</span>
+									<span id="description-inner">{{ detailData.place }} </span>
+								</div>
+								<div>
+									<span id="description-cell">Genre</span>
+									<span id="description-inner">{{ detailData.genre }} </span>
 								</div>
 								<div>
 									<span id="description-cell">Date</span>
-									<span id="description-inner">1989</span>
+									<span id="description-inner">{{ detailData.year }}</span>
 								</div>
 								<div>
 									<span id="description-cell">Oil on Canvas</span>
-									<span id="description-inner"
-										>Saint-Remy-de-Provence(Object made in)
-									</span>
+									<span id="description-inner">{{ detailData.medium }} </span>
 								</div>
 								<div>
 									<span id="description-cell">Dimensions</span>
-									<span id="description-inner"
-										>73.6 x 92.3 cm (29 x 36 5/8 in)</span
-									>
+									<span id="description-inner">{{
+										detailData.dimensions
+									}}</span>
 								</div>
 							</div>
 							<div class="title-wrapper">
 								<span id="description-cell2">Description</span>
 								<p id="description-inner2">
-									국회는 헌법개정안이 공고된 날로부터 60일 이내에 의결하여야
-									하며, 국회의 의결은 재적의원 3분의 2 이상의 찬성을 얻어야
-									한다. 국가는 지역간의 균형있는 발전을 위하여 지역경제를 육성할
-									의무를 진다. 근로자는 근로조건의 향상을 위하여 자주적인
-									단결권·단체교섭권 및 단체행동권을 가진다. 국가는 전통문화의
-									계승·발전과 민족문화의 창달에 노력하여야 한다. 누구든지
-									병역의무의 이행으로 인하여 불이익한 처우를 받지 아니한다.
-									재의의 요구가 있을 때에는 국회는 재의에 붙이고,
-									재적의원과반수의 출석과 출석의원 3분의 2 이상의 찬성으로 전과
-									같은 의결을 하면 그 법률안은 법률로서 확정된다. 대통령은
-									필요하다고 인정할 때에는 외교·국방·통일 기타 국가안위에 관한
-									중요정책을 국민투표에 붙일 수 있다. 모든 국민은 소급입법에
-									의하여 참정권의 제한을 받거나 재산권을 박탈당하지 아니한다.
-									대통령의 임기연장 또는 중임변경을 위한 헌법개정은 그 헌법개정
-									제안 당시의 대통령에 대하여는 효력이 없다. 누구든지 체포 또는
-									구속의 이유와 변호인의 조력을 받을 권리가 있음을 고지받지
-									아니하고는 체포 또는 구속을 당하지 아니한다. 체포 또는 구속을
-									당한 자의 가족등 법률이 정하는 자에게는 그 이유와 일시·장소가
-									지체없이 통지되어야 한다. 제안된 헌법개정안은 대통령이 20일
-									이상의 기간 이를 공고하여야 한다. 모든 국민은 행위시의 법률에
-									의하여 범죄를 구성하지 아니하는 행위로 소추되지 아니하며,
-									동일한 범죄에 대하여 거듭 처벌받지 아니한다. 법원은 최고법원인
-									대법원과 각급법원으로 조직된다. 국회의원은 법률이 정하는 직을
-									겸할 수 없다. 모든 국민은 헌법과 법률이 정한 법관에 의하여
-									법률에 의한 재판을 받을 권리를 가진다. 원장은 국회의 동의를
-									얻어 대통령이 임명하고, 그 임기는 4년으로 하며, 1차에 한하여
-									중임할 수 있다. 군인 또는 군무원이 아닌 국민은 대한민국의
-									영역안에서는 중대한 군사상
+									{{ detailData.description }}
 								</p>
 							</div>
 							<div class="title-wrapper2">
@@ -166,7 +139,7 @@
 
 <script>
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 
@@ -230,6 +203,7 @@ export default {
 				})
 				.then(store.dispatch('imageConvert', state.img))
 		}
+		const detailData = computed(() => store.getters.detailData)
 		return {
 			state,
 			getImageModal,
@@ -238,6 +212,7 @@ export default {
 			onSubmit,
 			artworkId,
 			payLoadId,
+			detailData,
 		}
 	},
 }

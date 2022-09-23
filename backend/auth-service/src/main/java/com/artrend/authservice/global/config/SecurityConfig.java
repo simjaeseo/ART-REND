@@ -36,7 +36,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/health_check",
             "/logout",
             "/token/reissuance/*",
-            "/signup/**"
+            "/signup/**",
+            "/api/**"
     };
 
 

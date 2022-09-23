@@ -1,22 +1,22 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-
-import java.io.Serializable;
 
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FavoriteStyle implements Serializable {
+@ToString
+public class FavoriteStyle {
     @Id
-    @ManyToOne(fetch = LAZY)
+    @Column(name = "favorite_style_id")
+    private Long id;
+
+    @OneToOne(fetch = LAZY)
+    @MapsId
     @JoinColumn(name = "painting_id")
     private Painting painting;
 }

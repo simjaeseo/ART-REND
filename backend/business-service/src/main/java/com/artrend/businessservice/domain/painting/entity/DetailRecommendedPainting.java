@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -24,5 +25,6 @@ public class DetailRecommendedPainting {
     private Painting painting;
 
     @ManyToOne(fetch = LAZY)
-    private Painting recommendedPainting;
+    @JoinColumn(name = "recommended_id")
+    private Painting recommended;
 }

@@ -2,5 +2,9 @@ export default {
 	state: {},
 	getters: {},
 	mutations: {},
-	actions: {},
+	actions: {
+		imageConvert(data) {
+			console.log(data)
+		},
+	},
 }

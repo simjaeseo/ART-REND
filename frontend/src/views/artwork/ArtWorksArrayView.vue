@@ -34,10 +34,10 @@
 import OrderByLike from '@/views/artwork/components/OrderByLike.vue'
 import OrderByView from '@/views/artwork/components/OrderByView.vue'
 import OrderByTrans from '@/views/artwork/components/OrderByTrans.vue'
-
 export default {
 	name: 'MyPageView',
 	components: { OrderByLike, OrderByView, OrderByTrans },
+	setup() {},
 }
 </script>
 

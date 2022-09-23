@@ -1,5 +1,5 @@
 const AUTH = 'auth-service/'
-const BUSiNESS = 'business-service/'
+const BUSINESS = 'business-service/'
 // const RECOMMEND = 'recommend-service/'
 
 export default {
@@ -9,6 +9,7 @@ export default {
 		nickNameCheck: memberId => `${AUTH}signup/${memberId}/nickname/duplicate`,
 	},
 	business: {
-		select: () => `${BUSiNESS}api/select`,
+		select: () => `${BUSINESS}api/select`,
+		detail: artworkId => `${BUSINESS}api/paintings/${artworkId}`,
 	},
 }

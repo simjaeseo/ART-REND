@@ -72,7 +72,7 @@ public class TokenProvider implements InitializingBean {
 //                throw new TokenNotFoundException();
                 log.info("TokenNotFoundException{}","예외생성해야한다아앙아");
             }
-            return (String) Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id");
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id").toString();
 
         }
 //        catch (TokenNotFoundException e) {

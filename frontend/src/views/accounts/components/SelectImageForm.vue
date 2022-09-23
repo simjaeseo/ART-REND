@@ -183,7 +183,12 @@
 					</div>
 				</div>
 				<div id="btn-wrap">
-					<button class="btn" id="nick-name-check-btn" type="submit">
+					<button
+						class="btn"
+						id="nick-name-check-btn"
+						type="submit"
+						v-if="state.selectedImages.length == 2"
+					>
 						SELECT
 					</button>
 				</div>
@@ -193,34 +198,40 @@
 </template>
 
 <script>
+import { reactive } from 'vue'
 export default {
 	name: 'SelectImage',
 	setup() {
-		const selectedImages = []
+		const state = reactive({
+			selectedImages: [],
+		})
 		const selectedImage = function (num) {
-			console.log(num)
-			console.log(selectedImages)
 			// 배열에 이미 선택한 사진이 있으면
-			if (selectedImages.includes(num)) {
+			if (state.selectedImages.includes(num)) {
 				// 포문을 돌면서 배열에 들어있는 선택한 값을 제거?
-				for (let i = 0; i < selectedImages.length; i += 1) {
-					if (selectedImages[i] == num) {
-						document.getElementById(selectedImages[i]).classList.add('filter')
-						selectedImages.splice(i, 1)
+				for (let i = 0; i < state.selectedImages.length; i += 1) {
+					if (state.selectedImages[i] == num) {
+						document
+							.getElementById(state.selectedImages[i])
+							.classList.add('filter')
+						state.selectedImages.splice(i, 1)
 						i--
 					}
 				}
 				// 배열에 선택한 사진이 없으면 새롭게 추가
 			} else {
-				selectedImages.push(num)
-				const idx = selectedImages.indexOf(num)
-				document.getElementById(selectedImages[idx]).classList.remove('filter')
+				state.selectedImages.push(num)
+				const idx = state.selectedImages.indexOf(num)
+				document
+					.getElementById(state.selectedImages[idx])
+					.classList.remove('filter')
 			}
 			// 두개넘어가면 첫번째 삭제
-			if (selectedImages.length > 2) {
-				document.getElementById(selectedImages[0]).classList.add('filter')
-				selectedImages.shift()
+			if (state.selectedImages.length > 2) {
+				document.getElementById(state.selectedImages[0]).classList.add('filter')
+				state.selectedImages.shift()
 			}
+			console.log(state.selectedImages)
 		}
 		const zoomImage = function (num) {
 			const modal = document.getElementById(`${num}`)
@@ -246,7 +257,7 @@ export default {
 			deleteClass,
 			plusClass,
 			zoomImage,
-			selectedImages,
+			state,
 			selectedImage,
 		}
 	},

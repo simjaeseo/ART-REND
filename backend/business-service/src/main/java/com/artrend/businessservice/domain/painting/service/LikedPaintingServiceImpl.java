@@ -39,7 +39,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     @Transactional
     public void like(LikeDto likeDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        tokenValidate.validateToken(likeDto, token);
+        tokenValidate.validateToken(likeDto.getMemberId(), token);
 
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(likeDto).isPresent()) {
@@ -66,7 +66,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     @Transactional
     public void cancelLike(LikeDto likeDto, String token) throws IOException {
         // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        tokenValidate.validateToken(likeDto, token);
+        tokenValidate.validateToken(likeDto.getMemberId(), token);
 
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting

@@ -2,7 +2,6 @@ package com.artrend.businessservice.domain.painting.util;
 
 import com.artrend.businessservice.domain.member.exception.MemberException;
 import com.artrend.businessservice.domain.member.exception.MemberExceptionType;
-import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -24,7 +23,7 @@ public class TokenValidate {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public void validateToken(LikeDto likeDto, String token) {
+    public void validateToken(Long id, String token) {
         // 유효한 토큰인지 검증
         // secret 암호화
         afterPropertiesSet();
@@ -40,7 +39,7 @@ public class TokenValidate {
             throw new MemberException(MemberExceptionType.NOT_FOUND_MEMBER);
         }
 
-        if (memberId != likeDto.getMemberId()) {
+        if (memberId != id) {
             throw new MemberException(MemberExceptionType.CONFLICT_MEMBER);
         }
     }

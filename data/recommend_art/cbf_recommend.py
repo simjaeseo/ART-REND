@@ -32,30 +32,25 @@ def art_recommend():
     
     weight_cosine_sim = cosine_similarity(weight_cosine_vector, weight_cosine_vector).argsort()[:,::-1]
     
-    
+    idx = 1
     for painting in paintings:
         title = painting.title
 
         try:
             recommend_art = make_recommend_art(artist_df, title, weight_cosine_sim)
+            
             for art_id in recommend_art['painting_id']:
                 a = Painting.objects.get(painting_id=art_id)
-                print(a.painting_id)
-                # painting.painting.add(painting)
-                # painting.recommended_painting.add(a)
-                # detail = DetailRecommendedPainting()
-                # print(detail)
-                # detail.painting_id_id = painting.painting_id
-                # print(detail)
-                # detail.recommended_painting_id = a
-                # recommend_detail = DetailRecommendedPainting(painting_id = painting, recommended_painting_id = a)
-                painting.choose_painting.add(painting)
-                painting.choose_painting_recommended.add(a)
-                painting.save()
-                print(painting, a)
-                # recommend_detail.save()
-                # detail.save()
-                print('save성공')
+                paint = painting
+
+                detail = DetailRecommendedPainting(detail_recommended_painting_id= idx)
+                idx += 1
+
+                detail.detail_painting = paint
+
+                detail.recommended_painting_id = a
+                detail.save()
+
         except ValueError:
             print('save실패')
             continue

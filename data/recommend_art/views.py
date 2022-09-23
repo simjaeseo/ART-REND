@@ -16,7 +16,7 @@ from rest_framework.decorators import api_view, permission_classes
 @api_view(['GET'])
 def index(request):
     paintings = get_list_or_404(Painting.objects.order_by('-painting_id'))
-    art_recommend()
+    # art_recommend()
     # print(paintings)
     serializer = PaintingListSerializer(paintings, many=True)
     return Response(serializer.data)

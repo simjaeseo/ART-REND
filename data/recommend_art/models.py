@@ -26,6 +26,14 @@ class Painting(models.Model):
         managed = False
         db_table = 'painting'
         
+class DetailRecommendedPainting(models.Model):
+    detail_recommended_painting_id = models.BigAutoField(primary_key=True)
+    detail_painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="choose_painting", db_column="painting_id") # db_column자체를 설정
+    recommended_painting_id = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="choose_painting_recommended", db_column="recommended_id")
+    
+    class Meta:
+        managed = False
+        db_table = 'detail_recommended_painting'
         
 class ChangedPainting(models.Model):
     changed_painting_id = models.BigAutoField(primary_key=True)
@@ -40,14 +48,6 @@ class ChangedPainting(models.Model):
         db_table = 'changed_painting'   
         
             
-class DetailRecommendedPainting(models.Model):
-    detail_recommended_painting_id = models.BigAutoField(primary_key=True)
-    painting_id = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="painting")
-    recommended_painting_id = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="recommended_painting")
-    
-    class Meta:
-        managed = False
-        db_table = 'detail_recommended_painting'
 
 class DjangoContentType(models.Model):
     app_label = models.CharField(max_length=100)

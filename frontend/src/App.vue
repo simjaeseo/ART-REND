@@ -92,6 +92,7 @@ export default {
 			oneBlack = false
 			twoBlack = false
 		}
+
 		return {
 			now,
 			oneBlack,

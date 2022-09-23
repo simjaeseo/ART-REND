@@ -8,7 +8,7 @@ export default {
 		userId: null,
 	},
 	getters: {
-		authHeader: state => ({ Authorization: `Token ${state.token}` }),
+		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
 		isLoggedIn: state => !!state.token,
 		userId: state => state.userId,
 	},
@@ -34,9 +34,13 @@ export default {
 				data: {
 					nickname: userNickName,
 				},
-			}).then(() => {
-				router.push({ name: 'SelectImage' })
 			})
+				.then(() => {
+					router.push({ name: 'SelectImage' })
+				})
+				.catch(() => {
+					alert('에러발생!!!!!!!!!!!')
+				})
 		},
 
 		doubleCheck({ getters, dispatch }, userNickName) {
@@ -53,6 +57,24 @@ export default {
 				})
 				.catch(() => {
 					alert('사용할 수 없는 닉네임입니다.')
+				})
+		},
+
+		selectForm({ getters }, img) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.select(),
+				method: 'post',
+				data: {
+					memberId: getters.userId,
+					paintings: img,
+				},
+			})
+				.then(() => {
+					router.push({ name: 'Main' })
+				})
+				.catch(() => {
+					alert('그림을 2개 선택해주세요.')
 				})
 		},
 	},

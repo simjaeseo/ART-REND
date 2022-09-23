@@ -9,9 +9,6 @@
 					@click="loginWithKakao"
 					@keydown="loginWithKakao"
 				/>
-				<a href="http://localhost:8080/auth-service/oauth2/authorization/kakao"
-					>kakao</a
-				>
 				<img
 					src="@/assets/google_login/google_login.png"
 					alt="google-login"

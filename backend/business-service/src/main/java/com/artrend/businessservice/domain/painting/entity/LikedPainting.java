@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 
 @Entity
 @Getter
@@ -16,8 +18,16 @@ public class LikedPainting {
     @Column(name = "liked_painting_id")
     private Long id;
 
-    @NonNull
-    private Long paintingId;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "painting_id")
+    private Painting painting;
 
     private Long memberId;
+
+    public void update(Long memberId) {
+        if (this.memberId == null) {
+            this.memberId = memberId;
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
+import java.security.SignatureException;
 
 @RestControllerAdvice
 @Slf4j
@@ -44,15 +45,31 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity handleIoEx(IOException exception){
+    public ResponseEntity handleIoEx(IOException exception) {
         log.error("IOException 발생 ! {}", exception.getMessage());
         return new ResponseEntity<>(new ExceptionDto("IOException 발생했습니다."), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity handleIoEx(IllegalArgumentException exception){
+    public ResponseEntity handleIoEx(IllegalArgumentException exception) {
         log.error("IllegalArgumentException 발생 ! {}", exception.getMessage());
         return new ResponseEntity<>(new ExceptionDto("IllegalArgumentException 발생했습니다."), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity handleIoEx(SignatureException exception) {
+        log.error("SignatureException 발생 ! {}", exception.getMessage());
+        return new ResponseEntity<>(new ExceptionDto(
+                "Signature Exception이 발생했습니다. 유효한 인증 정보인지 확인하세요."
+        ), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity handleIoEx(IllegalStateException exception) {
+        log.error("IllegalState Exception 발생 ! {}", exception.getMessage());
+        return new ResponseEntity<>(new ExceptionDto(
+                "IllegalState Exception이 발생했습니다. 적절한 호출인지 확인하세요"
+        ), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)

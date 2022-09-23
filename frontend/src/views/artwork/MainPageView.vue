@@ -6,10 +6,12 @@
 
 <script>
 import MainPageArtWork from '@/views/artwork/components/MainPageArtWork.vue'
-
 export default {
 	name: 'MainPageView',
 	components: { MainPageArtWork },
+	setup() {
+		return {}
+	},
 }
 </script>
 

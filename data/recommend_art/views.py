@@ -5,7 +5,7 @@ from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 
 from .serializers.painting import PaintingListSerializer
-
+from .cbf_recommend import art_recommend
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 
@@ -16,6 +16,7 @@ from rest_framework.decorators import api_view, permission_classes
 @api_view(['GET'])
 def index(request):
     paintings = get_list_or_404(Painting.objects.order_by('-painting_id'))
-    print(paintings)
+    art_recommend()
+    # print(paintings)
     serializer = PaintingListSerializer(paintings, many=True)
     return Response(serializer.data)

@@ -42,8 +42,8 @@ class ChangedPainting(models.Model):
             
 class DetailRecommendedPainting(models.Model):
     detail_recommended_painting_id = models.BigAutoField(primary_key=True)
-    painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="painting")
-    recommended_painting_painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="recommended_painting")
+    painting_id = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="painting")
+    recommended_painting_id = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, related_name="recommended_painting")
     
     class Meta:
         managed = False

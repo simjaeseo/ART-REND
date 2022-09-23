@@ -9,9 +9,6 @@ import lombok.Getter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LikedPaintingDto {
     private Long id;
-    private Long memberId;
-    private String memberName;
-    private String nickname;
     private String title;
     private String koreanTitle;
     private String artTrend;

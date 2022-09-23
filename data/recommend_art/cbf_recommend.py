@@ -1,4 +1,4 @@
-from .models import Painting
+from .models import Painting, DetailRecommendedPainting
 import numpy as np
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
@@ -6,12 +6,12 @@ from sklearn.metrics.pairwise import cosine_similarity
 from django_pandas.io import read_frame
 
 def make_recommend_art(df, art_title, weight_cosine_sim, top=20):
-    target_art_idx = df[df['그림 제목'] == art_title].index.values
+    target_art_idx = df[df['title'] == art_title].index.values
     sim_index = weight_cosine_sim[target_art_idx, : top].reshape(-1)
     sim_index = sim_index[sim_index != target_art_idx]
 
     result = df.iloc[sim_index][:top]
-    result = result[['index','그림 제목']]
+    result = result[['painting_id','title']]
     return result
 
 def art_recommend():
@@ -23,7 +23,7 @@ def art_recommend():
     
     # genre_lst = set():
     #     for genre
-    artist_df['weight'] = artist_df['예술사조'] + ' ' + artist_df['소재']
+    artist_df['weight'] = artist_df['art_trend'] + ' ' + artist_df['genre']
     artist_df = artist_df.reset_index()
     
     count_vector = CountVectorizer(ngram_range=(1,3))
@@ -33,4 +33,30 @@ def art_recommend():
     weight_cosine_sim = cosine_similarity(weight_cosine_vector, weight_cosine_vector).argsort()[:,::-1]
     
     
-    
+    for painting in paintings:
+        title = painting.title
+
+        try:
+            recommend_art = make_recommend_art(artist_df, title, weight_cosine_sim)
+            for art_id in recommend_art['painting_id']:
+                a = Painting.objects.get(painting_id=art_id)
+                print(a.painting_id)
+                # painting.painting.add(painting)
+                # painting.recommended_painting.add(a)
+                # detail = DetailRecommendedPainting()
+                # print(detail)
+                # detail.painting_id_id = painting.painting_id
+                # print(detail)
+                # detail.recommended_painting_id = a
+                # recommend_detail = DetailRecommendedPainting(painting_id = painting, recommended_painting_id = a)
+                painting.choose_painting.add(painting)
+                painting.choose_painting_recommended.add(a)
+                painting.save()
+                print(painting, a)
+                # recommend_detail.save()
+                # detail.save()
+                print('save성공')
+        except ValueError:
+            print('save실패')
+            continue
+        

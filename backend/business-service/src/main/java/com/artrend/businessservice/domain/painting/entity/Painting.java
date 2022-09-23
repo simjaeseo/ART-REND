@@ -52,11 +52,11 @@ public class Painting extends BaseEntity implements Serializable {
 
     private Long totalChangeCount;
 
-    @ManyToOne(fetch = LAZY)
-    private FavoriteStyle favoriteStyle;
-
     @OneToMany(mappedBy = "painting")
     private List<LikedPainting> likedPainting = new ArrayList<>();
+
+    @OneToMany(mappedBy = "recommended")
+    private List<DetailRecommendedPainting> detailRecommendedPaintings = new ArrayList<>();
 
     public void updateTotalLikeCount(Integer count) {
         this.totalLikeCount += count;

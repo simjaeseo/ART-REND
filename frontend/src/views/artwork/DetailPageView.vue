@@ -19,16 +19,18 @@
 						data-bs-target="#pictureModal"
 					/>
 					<img
+						v-if="detailData.isLiked === true"
 						src="@/assets/like.png"
 						alt="unlike-button"
 						id="unlike-button"
-						@click.prevent="likeArtWork"
+						@click.prevent="unlikeArtWork"
 					/>
 					<img
+						v-if="detailData.isLiked === false"
 						src="@/assets/unlike.png"
 						alt="like-button"
 						id="like-button"
-						@click.prevent="unlikeArtWork"
+						@click.prevent="likeArtWork"
 					/>
 					<div>{{ detailData.totalLikeCount }}</div>
 				</div>

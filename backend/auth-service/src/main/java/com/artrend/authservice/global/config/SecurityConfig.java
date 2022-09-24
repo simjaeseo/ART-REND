@@ -31,13 +31,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/favicon.ico",
             /* custom oauth api */
             "/oauth2/authorization/kakao",
+            "/oauth2/authorization/google",
             "/test",
             "/error",
             "/health_check",
             "/logout",
             "/token/reissuance/*",
             "/signup/**",
-            "/api/**"
+            "/api/**",
+            "/ccccccc"
     };
 
 

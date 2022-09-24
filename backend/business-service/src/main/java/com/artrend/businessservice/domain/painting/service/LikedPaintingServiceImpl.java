@@ -1,7 +1,5 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.member.exception.MemberException;
-import com.artrend.businessservice.domain.member.exception.MemberExceptionType;
 import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
@@ -10,20 +8,15 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
-import com.artrend.businessservice.domain.painting.util.TokenValidate;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.Optional;
 
 @Service
@@ -33,14 +26,10 @@ import java.util.Optional;
 public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final TokenValidate tokenValidate;
 
     @Override
     @Transactional
-    public void like(LikeDto likeDto, String token) throws IOException {
-        // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        tokenValidate.validateToken(likeDto.getMemberId(), token);
-
+    public void like(LikeDto likeDto) throws IOException {
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(likeDto).isPresent()) {
             throw new PaintingException(PaintingExceptionType.ALREADY_LIKED_PAINTING);
@@ -64,10 +53,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     @Override
     @Transactional
-    public void cancelLike(LikeDto likeDto, String token) throws IOException {
-        // 1. jwtToken 인가 받기 (auth-service 요청 필요)
-        tokenValidate.validateToken(likeDto.getMemberId(), token);
-
+    public void cancelLike(LikeDto likeDto) throws IOException {
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting
                 = findLikedPaintingWithMemberAndPaintingId(likeDto)

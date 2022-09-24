@@ -20,9 +20,9 @@ public class LikedPaintingDto {
     private String medium;
     private String place;
     private String url;
-    private Long hits;
-    private Long totalLikeCount;
-    private Long totalChangeCount;
+    private Integer hits;
+    private Integer totalLikeCount;
+    private Integer totalChangeCount;
 
     @QueryProjection
     public LikedPaintingDto(Painting painting) {

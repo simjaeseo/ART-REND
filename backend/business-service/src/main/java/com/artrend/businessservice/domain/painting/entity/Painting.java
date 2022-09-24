@@ -5,10 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
-import static javax.persistence.FetchType.LAZY;
+import java.util.List;
 
 @Entity
 @Getter
@@ -46,17 +44,21 @@ public class Painting extends BaseEntity implements Serializable {
 
     private String url;
 
-    private Long hits;
+    private Integer hits;
 
-    private Long totalLikeCount;
+    private Integer totalLikeCount;
 
-    private Long totalChangeCount;
+    private Integer totalChangeCount;
 
     @OneToMany(mappedBy = "painting")
     private List<LikedPainting> likedPainting;
 
     public void updateTotalLikeCount(Integer count) {
         this.totalLikeCount += count;
+    }
+
+    public void updateTotalChangeCount(Integer count) {
+        this.totalChangeCount++;
     }
 
     public void updateHits() {

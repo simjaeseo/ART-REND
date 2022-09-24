@@ -53,16 +53,13 @@ public class Painting extends BaseEntity implements Serializable {
     private Long totalChangeCount;
 
     @OneToMany(mappedBy = "painting")
-    private List<LikedPainting> likedPainting = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "recommended", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<DetailRecommendedPainting> detailRecommendedPaintings = new ArrayList<>();
-//
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "detail_recommended_painting")
-    private DetailRecommendedPainting detailRecommendedPainting;
+    private List<LikedPainting> likedPainting;
 
     public void updateTotalLikeCount(Integer count) {
         this.totalLikeCount += count;
+    }
+
+    public void updateHits() {
+        this.hits++;
     }
 }

@@ -50,7 +50,7 @@ import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
 export default {
 	name: 'MyPageView',
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll },
-	serup() {},
+	setup() {},
 }
 </script>
 
@@ -88,6 +88,7 @@ input[name='tabmenu'] {
 	align-items: center;
 	color: rgba(0, 0, 0, 0.2);
 	margin-left: 25px;
+	white-space: nowrap;
 }
 
 .move-button {
@@ -103,6 +104,7 @@ input[name='tabmenu'] {
 	text-align: center;
 	font-weight: 600;
 	font-size: 15px;
+	white-space: nowrap;
 }
 
 .move-button:hover {
@@ -139,7 +141,6 @@ input[id='like-picture']:checked ~ .tabmenu .like-picture,
 input[id='like-picture-all']:checked ~ .tabmenu .like-picture {
 	color: rgb(0, 0, 0);
 	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-	font-size: 20px;
 	border-bottom: 2px solid black;
 }
 

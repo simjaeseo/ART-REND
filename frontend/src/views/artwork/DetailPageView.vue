@@ -58,7 +58,7 @@
 								</div>
 							</div>
 							<div class="title-wrapper">
-								<sapn id="description-cell2">Description</sapn>
+								<span id="description-cell2">Description</span>
 								<p id="description-inner2">
 									국회는 헌법개정안이 공고된 날로부터 60일 이내에 의결하여야
 									하며, 국회의 의결은 재적의원 3분의 2 이상의 찬성을 얻어야
@@ -110,67 +110,77 @@
 		</div>
 
 		<!-- 사진변환 Modal -->
-		<div
-			class="modal fade"
-			id="pictureModal"
-			tabindex="-1"
-			aria-labelledby="exampleModalLabel"
-			aria-hidden="true"
-		>
-			<div class="modal-dialog">
-				<div class="modal-content content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="exampleModalLabel">
-							변환할 사진을 선택해 주세요.
-						</h5>
-					</div>
-					<div class="modal-body">
-						<div>
-							<label
-								htmlFor="input-file"
-								@change="handleAddImage"
-								class="image-input"
-							>
-								<input type="file" accept="image/*" id="input-file" />
-								<input
-									class="image-upload"
-									:placeholder="state.imageName"
-									readOnly
-								/>
-								<span>사진추가</span>
-							</label>
-							<div class="show-image">
-								<div class="image-sample">
-									<img :src="state.imageUrl" alt="" id="sample-imag" />
+		<form @submit.prevent="onSubmit()">
+			<div
+				class="modal fade"
+				id="pictureModal"
+				tabindex="-1"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								변환할 사진을 선택해 주세요.
+							</h5>
+						</div>
+						<div class="modal-body">
+							<div>
+								<label
+									htmlFor="input-file"
+									@change="handleAddImage"
+									class="image-input"
+								>
+									<input type="file" accept="image/*" id="input-file" />
+									<input
+										class="image-upload"
+										:placeholder="state.imageName"
+										readOnly
+									/>
+									<span>사진추가</span>
+								</label>
+								<div class="show-image">
+									<div class="image-sample">
+										<img :src="state.imageUrl" alt="" id="sample-imag" />
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="change-button">변환하기</button>
-						<button type="button" class="change-button" data-bs-dismiss="modal">
-							닫기
-						</button>
+						<div class="modal-footer">
+							<button type="submit" class="change-button">변환하기</button>
+							<button
+								type="button"
+								class="change-button"
+								data-bs-dismiss="modal"
+							>
+								닫기
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</div>
 </template>
 
 <script>
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive } from 'vue'
+import { useStore } from 'vuex'
 // import jwt_decode from 'jwt-decode'
 
 export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
+		const store = useStore()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			imageName: '',
 			imageUrl: '',
+			image: null,
+			img: null,
 		})
 
 		const getImageModal = function () {
@@ -192,25 +202,36 @@ export default {
 
 		const handleAddImage = function (event) {
 			const image = event.target.files[0]
+			state.image = image
 			state.imageName = image.name
 			state.imageUrl = URL.createObjectURL(image)
 		}
-
-		// const url = new URLSearchParams(location.search)
-		// const test = url.get('accessToken')
-		// const decodeAccessToken = jwt_decode(test)
-		// console.log(decodeAccessToken)
-		// console.log(decodeAccessToken.id)
-		// console.log(test)
-
+		const encodeBase64ImageFile = function (image) {
+			console.log(image)
+			return new Promise((resolve, reject) => {
+				let reader = new FileReader()
+				reader.readAsDataURL(image)
+				reader.onload = event => {
+					resolve(event.target.result)
+				}
+				reader.onerror = error => {
+					reject(error)
+				}
+			})
+		}
+		const onSubmit = function () {
+			encodeBase64ImageFile(state.image)
+				.then(data => {
+					state.img = data
+				})
+				.then(store.dispatch('imageConvert', state.img))
+		}
 		return {
-			// decodeAccessToken,
-			// test,
-			// url,
 			state,
 			getImageModal,
 			outImageModal,
 			handleAddImage,
+			onSubmit,
 		}
 	},
 }

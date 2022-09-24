@@ -2,6 +2,8 @@ package com.artrend.authservice.service;
 
 import com.artrend.authservice.domain.Member;
 import com.artrend.authservice.dto.request.NicknameRequest;
+import com.artrend.authservice.exception.MemberException;
+import com.artrend.authservice.exception.MemberExceptionType;
 import com.artrend.authservice.global.common.MessageResponse;
 import com.artrend.authservice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +19,8 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
-    public void insertNickname(Long memberId, NicknameRequest nicknameRequest){
-        Member findMember = memberRepository.findById(memberId).orElseThrow(()-> new RuntimeException("멤버익셉션 구현아자아아앙"));
+    public void insertNickname(Long memberId, NicknameRequest nicknameRequest) throws MemberException{
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()-> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
 
         findMember.updateNickname(nicknameRequest.getNickname());
     }

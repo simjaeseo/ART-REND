@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,6 @@ import java.io.IOException;
 @Slf4j
 public class LikedPaintingController {
     private final LikedPaintingService likedPaintingService;
-    private final LikedPaintingRepository likedPaintingRepository;
 
     @Operation(summary = "그림 좋아요", description = "현재 접속한 회원 정보로 해당 그림을 좋아요합니다.")
     @ApiResponses({
@@ -37,10 +35,8 @@ public class LikedPaintingController {
     })
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
-            @RequestBody @Valid LikeDto likeDto,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
-        token = token.split(" ")[1].trim();
-        likedPaintingService.like(likeDto, token);
+            @RequestBody @Valid LikeDto likeDto) throws IOException {
+        likedPaintingService.like(likeDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(likeDto));
     }
 
@@ -53,10 +49,8 @@ public class LikedPaintingController {
     })
     @DeleteMapping
     public ResponseEntity<? extends DataResponse> cancelLike(
-            @RequestBody @Valid LikeDto likeDto,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
-        token = token.split(" ")[1].trim();
-        likedPaintingService.cancelLike(likeDto, token);
+            @RequestBody @Valid LikeDto likeDto) throws IOException {
+        likedPaintingService.cancelLike(likeDto);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likeDto));
     }
 

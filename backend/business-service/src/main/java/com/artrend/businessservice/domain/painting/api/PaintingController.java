@@ -1,6 +1,8 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.LikeDto;
+import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
+import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.global.common.CountDataResponse;
@@ -11,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,5 +63,17 @@ public class PaintingController {
                                                                @PathVariable("member_id") Long memberId) {
         PaintingDto findPainting = paintingService.findPainting(paintingId, memberId);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<? extends DataResponse> searchPaintings(SearchCondition condition, Pageable pageable) {
+        List<PaintingDto> paintings = paintingService.searchPaintings(condition, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
+    }
+
+    @GetMapping("/sort")
+    public ResponseEntity<? extends DataResponse> sortPaintings(PaintingCondition condition, Pageable pageable) {
+        List<PaintingDto> paintings = paintingService.sortPaintings(condition, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
     }
 }

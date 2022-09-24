@@ -53,7 +53,8 @@ public class PaintingController {
             @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
-    @GetMapping("/{painting_id}")
+
+    @GetMapping("/detail")
     public ResponseEntity<? extends DataResponse> findPainting(@RequestBody LikeDto likeDto) {
         PaintingDto findPainting = paintingService.findPainting(likeDto);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));

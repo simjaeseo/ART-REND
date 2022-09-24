@@ -477,3 +477,14 @@ INSERT INTO painting (painting_id,art_trend,artist,description,dimensions,genre,
 두 예술가는 인상파의 색채 사용과 유창한 붓놀림에 더 이상 만족하지 않습니다. 그들은 함께 색상이 흰색과만 혼합되고 캔버스에 작은 점으로 직접 적용되는 새롭고 구조화된 기법을 개발합니다. 이러한 방식으로 색상은 관찰자의 눈에서만 합쳐져 반짝이는 빛의 진동 효과를 만듭니다. 특징적인 점(또는 점)으로 인해 스타일을 '점묘화'라고 합니다.
 
 Signac은 지중해에 있는 프랑스 마을인 Collioure의 이 전망과 같이 대부분 바다 풍경과 항구 전망을 그립니다. 창백한 색상은 예술가에 따르면 '그림자를 흐리게 하고 지역 색상을 부드럽게 하며 맑은 하늘을 더 얇게 만드는' 지중해 태양의 효과를 재현합니다.",'33.0 x 46.0 cm','풍경화',0,'Collioure의 종탑, Opus 164','유화','프랑스','Collioure, the belltower, Opus 164',0,0,'https://artrend.s3.ap-northeast-2.amazonaws.com/Paul+Signac/Paul+Signac_Collioure%2C+the+belltower%2C+Opus+164.jpg',1887);
+
+INSERT INTO favorite_style (painting_id) values (4);
+INSERT INTO favorite_style (painting_id) values (12);
+INSERT INTO favorite_style (painting_id) values (32);
+INSERT INTO favorite_style (painting_id) values (52);
+INSERT INTO favorite_style (painting_id) values (65);
+INSERT INTO favorite_style (painting_id) values (97);
+INSERT INTO favorite_style (painting_id) values (101);
+INSERT INTO favorite_style (painting_id) values (110);
+INSERT INTO favorite_style (painting_id) values (124);
+INSERT INTO favorite_style (painting_id) values (147);

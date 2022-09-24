@@ -10,9 +10,11 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByKakaoProviderId(String providerId);
     Optional<Member> findByGoogleProviderId(String providerId);
+
+    Optional<Member> findByKakaoProvider(String provider);
+    Optional<Member> findByGoogleProvider(String provider);
     Optional<Member> findById(Long memberId);
 
-    Optional<Member> findByDi(String di);
 
     Optional<Member> findByNickname(String nickname);
 

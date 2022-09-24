@@ -581,7 +581,8 @@ hr {
 }
 
 .image-sample > img {
-	height: 30vh;
+	max-width: 100%;
+	max-height: 30vh;
 }
 
 .change-button {

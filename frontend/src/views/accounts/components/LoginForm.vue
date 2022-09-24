@@ -32,7 +32,7 @@ export default {
 		const store = useStore()
 
 		const loginWithKakao = function () {
-			window.open(drf.auth.kakaoLogin())
+			window.open(drf.auth.kakaoLogin(), '_self')
 		}
 
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
@@ -71,5 +71,6 @@ export default {
 	height: 100vh;
 	width: 100%;
 	display: flex;
+	overflow-y: hidden;
 }
 </style>

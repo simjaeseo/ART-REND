@@ -6,7 +6,7 @@ import com.artrend.businessservice.domain.painting.dto.SelectedPaintingDto;
 import java.util.List;
 
 public interface SelectedPaintingService {
+    List<PaintingDto> findPaintings();
     SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto, String token);
-
     List<PaintingDto> findSelectedPaintings(Long memberId, String token);
 }

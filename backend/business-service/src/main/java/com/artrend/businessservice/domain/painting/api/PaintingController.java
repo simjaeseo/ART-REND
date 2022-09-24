@@ -48,7 +48,7 @@ public class PaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse(paintingList, paintingList.size()));
     }
 
-    @Operation(summary = "그림 전체 조회", description = "등록된 모든 그림의 데이터를 반환합니다.")
+    @Operation(summary = "그림 개별 조회", description = "선택한 그림 ID의 모든 그림 정보를 가져옵니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),

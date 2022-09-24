@@ -19,14 +19,12 @@
 						data-bs-target="#pictureModal"
 					/>
 					<img
-						v-if="!state.like"
-						src="@/assets/unlike.png"
+						src="@/assets/like.png"
 						alt="unlike-button"
 						id="unlike-button"
 						@click.prevent="likeArtWork"
 					/>
 					<img
-						v-if="state.like"
 						src="@/assets/unlike.png"
 						alt="like-button"
 						id="like-button"
@@ -166,14 +164,23 @@ export default {
 			image: null,
 			img: null,
 			like: false,
+			clickCnt: 0,
+			zoomCnt: 0,
+			time: {
+				inTime: null,
+				outTime: null,
+			},
 		})
+		state.clickCnt += 1
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
 		store.dispatch('getArtWorkDetail', payLoadId)
+		const detailData = computed(() => store.getters.detailData)
 
 		const getImageModal = function () {
+			state.zoomCnt += 1
 			const modal = document.getElementById('myModal')
-			const img = require('../../assets/main-img/5.jpg')
+			const img = detailData.value.url
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img
@@ -195,7 +202,6 @@ export default {
 			state.imageUrl = URL.createObjectURL(image)
 		}
 		const encodeBase64ImageFile = function (image) {
-			console.log(image)
 			return new Promise((resolve, reject) => {
 				let reader = new FileReader()
 				reader.readAsDataURL(image)
@@ -214,7 +220,6 @@ export default {
 				})
 				.then(store.dispatch('imageConvert', state.img))
 		}
-		const detailData = computed(() => store.getters.detailData)
 
 		const likeArtWork = function () {
 			store.dispatch('likeArtWork', payLoadId)
@@ -222,7 +227,11 @@ export default {
 		const unlikeArtWork = function () {
 			store.dispatch('unlikeArtWork', payLoadId)
 		}
-
+		state.time.inTime = new Date()
+		window.addEventListener('beforeunload', () => {
+			state.time.outTime = new Date()
+			store.dispatch('leave', state.time)
+		})
 		return {
 			state,
 			getImageModal,
@@ -272,7 +281,6 @@ export default {
 	height: 2.6vh;
 	cursor: pointer;
 	margin-right: 0.3vh;
-	background-color: red;
 }
 #description-cell {
 	font-family: 'Noto Sans', sans-serif;

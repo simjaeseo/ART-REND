@@ -27,9 +27,9 @@ public class PaintingServiceImpl implements PaintingService {
 
     @Override
     @Transactional
-    public PaintingDto findPainting(LikeDto likeDto) {
+    public PaintingDto findPainting(Long paintingId, Long memberId) {
         Painting findPainting = paintingRepository
-                .findById(likeDto.getPaintingId())
+                .findById(paintingId)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
         if (findPainting == null) {
@@ -37,7 +37,7 @@ public class PaintingServiceImpl implements PaintingService {
         }
 
         Optional<LikedPainting> likedPainting =
-                likedPaintingRepository.findByMemberIdAndPaintingId(likeDto.getMemberId(), likeDto.getPaintingId());
+                likedPaintingRepository.findByMemberIdAndPaintingId(memberId, paintingId);
 
         Boolean isLiked = true;
         if (likedPainting.isEmpty()) {

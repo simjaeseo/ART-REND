@@ -6,6 +6,6 @@ import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import java.util.List;
 
 public interface PaintingService {
-    PaintingDto findPainting(LikeDto likeDto);
+    PaintingDto findPainting(Long paintingId, Long memberId);
     List<PaintingDto> findAllPaintings();
 }

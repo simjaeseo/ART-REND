@@ -34,6 +34,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //        login 성공한 사용자 목록.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
+        System.out.println("oAuth2User.getAttributes() "+ oAuth2User.getAttributes());
         String providerId = "";
         Member findMember = null;
 
@@ -49,7 +50,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         String accessToken = tokenProvider.createToken(providerId, findMember.getId());
 
-        String url = makeRedirectUrl(accessToken);;
+        String url = makeRedirectUrl(accessToken, oAuth2User);
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -58,10 +59,19 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String accessToken) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                .queryParam("accessToken", accessToken)
-//                .queryParam("refreshToken", refreshToken)
-                .build().toUriString();
+    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+
+        if((boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("isSelectPainting", true)
+                    .build().toUriString();
+        }else{
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("isSelectPainting", false)
+                    .build().toUriString();
+        }
     }
+
 }

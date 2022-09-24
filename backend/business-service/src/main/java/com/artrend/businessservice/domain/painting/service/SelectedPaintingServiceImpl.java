@@ -86,10 +86,7 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
     }
 
     @Override
-    public List<PaintingDto> findSelectedPaintings(Long memberId, String token) {
-        token = token.split(" ")[1].trim();
-        tokenValidate.validateToken(memberId, token);
-
+    public List<PaintingDto> findSelectedPaintings(Long memberId) {
         List<SelectedPainting> findPaintings = selectedPaintingRepository.findAllByMemberId(memberId);
 
         List<PaintingDto> result = findPaintings.stream()

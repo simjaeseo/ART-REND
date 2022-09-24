@@ -294,11 +294,15 @@ export default {
 #wrap1 {
 	display: flex;
 	align-items: flex-end;
-	height: 20vh;
+	/* height: 20vh; */
+
+	height: 15vh;
 }
 #text1 {
 	color: white;
-	margin-bottom: 50px;
+	/* margin-bottom: 50px; */
+
+	margin-bottom: 20px;
 }
 img {
 	width: 100%;
@@ -309,6 +313,9 @@ img {
 	column-count: 4;
 	cursor: pointer;
 	margin-bottom: 16px;
+
+	height: 70vh;
+	overflow-y: hidden;
 }
 
 .masonry .mItem {
@@ -358,5 +365,33 @@ img {
 .modal-dialog {
 	width: auto;
 	height: 50vh;
+}
+
+.modal-body {
+	display: flex;
+	justify-content: center;
+}
+.modal-body > img {
+	width: auto;
+	max-width: 100%;
+	max-height: 90vh;
+}
+
+/* scroll */
+.masonry::-webkit-scrollbar {
+	height: 10px;
+}
+
+.masonry::-webkit-scrollbar-thumb {
+	background-color: rgb(255, 255, 255, 0.7);
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.masonry::-webkit-scrollbar-track {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px rgb(0, 0, 0);
 }
 </style>

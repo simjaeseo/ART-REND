@@ -19,10 +19,22 @@ export default {
 		const url = new URLSearchParams(location.search)
 		const token = url.get('accessToken')
 		const decodeAccessToken = jwt_decode(token)
-		// router.push({ name: 'Main' })
-		console.log(decodeAccessToken)
-		console.log(decodeAccessToken.id)
-		console.log(token)
+		const nickName = url.get('isNickname')
+		const selected = url.get('isPainting')
+
+		console.log(nickName, selected)
+		if (nickName == 'false') {
+			router.push({ name: 'SignUp' })
+		} else if (selected == 'false') {
+			router.push({ name: 'SelectImage' })
+		} else {
+			console.log(nickName, selected)
+			router.push({ name: 'Main' })
+		}
+
+		// console.log(decodeAccessToken)
+		// console.log(decodeAccessToken.id)
+		// console.log(token)
 
 		store.commit('SET_USER_ID', decodeAccessToken.id)
 		store.dispatch('saveToken', token)

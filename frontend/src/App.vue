@@ -2,11 +2,11 @@
 	<div>
 		<div class="fixed-top">
 			<div class="navbar">
-				<router-link :to="{ name: 'Main' }" id="brad-text">
+				<a href="http://localhost:3002/main" id="brad-text">
 					<h1 :style="[oneBlack ? { color: '#000000' } : { color: '#ffffff' }]">
 						ART-REND
 					</h1>
-				</router-link>
+				</a>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -50,9 +50,9 @@
 						<h5 id="menu-text">MENU</h5>
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 							<li class="nav-item">
-								<router-link :to="{ name: 'Main' }">
+								<a href="http://localhost:3002/main">
 									<p>HOME</p>
-								</router-link>
+								</a>
 							</li>
 							<li class="nav-item">
 								<p>PROFILE</p>

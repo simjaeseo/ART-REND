@@ -21,16 +21,23 @@ public class PaintingServiceImpl implements PaintingService {
     private final PaintingRepository paintingRepository;
 
     @Override
+    @Transactional
     public PaintingDto findPainting(Long id) {
         Painting findPainting = paintingRepository.findById(id)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
+        findPainting.updateHits();
         return new PaintingDto(findPainting);
     }
 
     @Override
     public List<PaintingDto> findAllPaintings() {
         List<Painting> findPaintings = paintingRepository.findAll();
+
+        if (findPaintings.isEmpty()) {
+            throw new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING);
+        }
+
         List<PaintingDto> result = findPaintings.stream()
                 .map(painting -> new PaintingDto(painting))
                 .collect(Collectors.toList());

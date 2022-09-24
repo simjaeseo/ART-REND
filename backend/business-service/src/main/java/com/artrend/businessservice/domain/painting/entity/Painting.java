@@ -58,4 +58,8 @@ public class Painting extends BaseEntity implements Serializable {
     public void updateTotalLikeCount(Integer count) {
         this.totalLikeCount += count;
     }
+
+    public void updateHits() {
+        this.hits++;
+    }
 }

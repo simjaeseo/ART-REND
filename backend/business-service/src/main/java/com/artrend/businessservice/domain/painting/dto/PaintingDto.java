@@ -30,6 +30,7 @@ public class PaintingDto {
     private Long totalLikeCount;
     private Long totalChangeCount;
 
+    @QueryProjection
     public PaintingDto(Painting painting) {
         this.id = painting.getId();
         this.title = painting.getTitle();

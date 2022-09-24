@@ -5,10 +5,11 @@ import com.artrend.businessservice.domain.painting.repository.DetailRecommendedP
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,8 +20,7 @@ public class DetailRecommendedPaintingServiceImpl implements DetailRecommendedPa
     private final PaintingRepository paintingRepository;
 
     @Override
-    public List<PaintingDto> findDetailRecommendedPaintings(Long id) {
-
-        return null;
+    public Page<PaintingDto> findDetailRecommendedPaintings(Long id, Pageable pageable) {
+        return detailRecommendedPaintingRepository.findDetailRecommendedPaintings(id, pageable);
     }
 }

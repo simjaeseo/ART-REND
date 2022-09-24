@@ -19,10 +19,20 @@
 						data-bs-target="#pictureModal"
 					/>
 					<img
+						v-if="!state.like"
 						src="@/assets/unlike.png"
 						alt="unlike-button"
 						id="unlike-button"
+						@click.prevent="likeArtWork"
 					/>
+					<img
+						v-if="state.like"
+						src="@/assets/unlike.png"
+						alt="like-button"
+						id="like-button"
+						@click.prevent="unlikeArtWork"
+					/>
+					<div>{{ detailData.totalLikeCount }}</div>
 				</div>
 			</div>
 			<div id="background-div">
@@ -155,6 +165,7 @@ export default {
 			imageUrl: '',
 			image: null,
 			img: null,
+			like: false,
 		})
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
@@ -204,6 +215,14 @@ export default {
 				.then(store.dispatch('imageConvert', state.img))
 		}
 		const detailData = computed(() => store.getters.detailData)
+
+		const likeArtWork = function () {
+			store.dispatch('likeArtWork', payLoadId)
+		}
+		const unlikeArtWork = function () {
+			store.dispatch('unlikeArtWork', payLoadId)
+		}
+
 		return {
 			state,
 			getImageModal,
@@ -213,6 +232,8 @@ export default {
 			artworkId,
 			payLoadId,
 			detailData,
+			likeArtWork,
+			unlikeArtWork,
 		}
 	},
 }
@@ -231,6 +252,9 @@ export default {
 	justify-content: flex-end;
 	margin-top: 1vw;
 }
+.button-box > div {
+	font-size: 2vh;
+}
 #upload-button {
 	width: 3vh;
 	height: 3vh;
@@ -241,6 +265,14 @@ export default {
 	width: 2.6vh;
 	height: 2.6vh;
 	cursor: pointer;
+	margin-right: 0.3vh;
+}
+#like-button {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	background-color: red;
 }
 #description-cell {
 	font-family: 'Noto Sans', sans-serif;

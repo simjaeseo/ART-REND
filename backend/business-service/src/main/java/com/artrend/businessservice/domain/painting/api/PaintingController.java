@@ -54,8 +54,9 @@ public class PaintingController {
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
 
-    @GetMapping("/detail")
-    public ResponseEntity<? extends DataResponse> findPainting(@RequestBody LikeDto likeDto) {
+    @GetMapping("/{painting_id}")
+    public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
+                                                               @RequestBody LikeDto likeDto) {
         PaintingDto findPainting = paintingService.findPainting(likeDto);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
     }

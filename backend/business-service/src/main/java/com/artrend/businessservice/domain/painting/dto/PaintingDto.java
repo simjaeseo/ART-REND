@@ -28,10 +28,12 @@ public class PaintingDto {
     private String dimensions;
     private String medium;
     private String place;
+    private String url;
     private Long hits;
     private Long totalLikeCount;
     private Long totalChangeCount;
 
+    @QueryProjection
     public PaintingDto(Painting painting) {
         this.id = painting.getId();
         this.title = painting.getTitle();
@@ -44,6 +46,7 @@ public class PaintingDto {
         this.dimensions = painting.getDimensions();
         this.medium = painting.getMedium();
         this.place = painting.getPlace();
+        this.url = painting.getUrl();
         this.hits = painting.getHits();
         this.totalLikeCount = painting.getTotalLikeCount();
         this.totalChangeCount = painting.getTotalChangeCount();
@@ -61,6 +64,7 @@ public class PaintingDto {
         this.dimensions = favoriteStyle.getPainting().getDimensions();
         this.medium = favoriteStyle.getPainting().getMedium();
         this.place = favoriteStyle.getPainting().getPlace();
+        this.url = favoriteStyle.getPainting().getUrl();
         this.hits = favoriteStyle.getPainting().getHits();
         this.totalLikeCount = favoriteStyle.getPainting().getTotalLikeCount();
         this.totalChangeCount = favoriteStyle.getPainting().getTotalChangeCount();
@@ -79,6 +83,7 @@ public class PaintingDto {
         this.dimensions = detailRecommendedPainting.getRecommended().getDimensions();
         this.medium = detailRecommendedPainting.getRecommended().getMedium();
         this.place = detailRecommendedPainting.getRecommended().getPlace();
+        this.url = detailRecommendedPainting.getRecommended().getUrl();
         this.hits = detailRecommendedPainting.getRecommended().getHits();
         this.totalLikeCount = detailRecommendedPainting.getRecommended().getTotalLikeCount();
         this.totalChangeCount = detailRecommendedPainting.getRecommended().getTotalChangeCount();

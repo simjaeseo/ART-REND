@@ -1,5 +1,6 @@
 package com.artrend.businessservice.domain.painting.api;
 
+import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.global.common.CountDataResponse;
@@ -12,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -56,8 +54,8 @@ public class PaintingController {
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
     @GetMapping("/{painting_id}")
-    public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long id) {
-        PaintingDto findPainting = paintingService.findPainting(id);
+    public ResponseEntity<? extends DataResponse> findPainting(@RequestBody LikeDto likeDto) {
+        PaintingDto findPainting = paintingService.findPainting(likeDto);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
     }
 }

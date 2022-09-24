@@ -2,7 +2,6 @@ package com.artrend.businessservice.domain.painting.service;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.repository.DetailRecommendedPaintingRepository;
-import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -17,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class DetailRecommendedPaintingServiceImpl implements DetailRecommendedPaintingService {
     private final DetailRecommendedPaintingRepository detailRecommendedPaintingRepository;
-    private final PaintingRepository paintingRepository;
 
     @Override
     public Page<PaintingDto> findDetailRecommendedPaintings(Long id, Pageable pageable) {

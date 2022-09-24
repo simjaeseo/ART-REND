@@ -52,6 +52,8 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
        // 소셜로부터 받아온 사용자 이름 + provider, providerId
         OAuthAttributes attributes = OAuthAttributes.of(provider, providerId, oAuth2User.getAttributes());
        Optional<Member> findMember = null;
+
+
        if(provider.equals("google")){
            findMember = memberRepository.findByGoogleProviderId(attributes.getProviderId());
 
@@ -63,24 +65,50 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                    findMemberByProvider.get().updateProviderAndProviderId(provider, providerId);
 
                    PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMemberByProvider.get().getId());
-                   //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
-                   if(!paintingDtoDataResponse.getData().toString().equals("[]")){
-                       attributes.putIsSelectPaintings(true);
-
+                   // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+                   if(findMemberByProvider.get().getNickname() != null && paintingDtoDataResponse.getData().toString().equals("[]")){
+                       attributes.putIsSelectPaintings(false);
+                       attributes.putIsAddNickname(true);
                        return new DefaultOAuth2User(null,
                                attributes.getAttributes(),
                                userNameAttributeName);
+                   }else if(findMemberByProvider.get().getNickname() != null && !paintingDtoDataResponse.getData().toString().equals("[]")){
+                            // 이미 회원가입 + 닉네임까지 추가 + 선호그림까지 선택 o
+                           attributes.putIsSelectPaintings(true);
+                           attributes.putIsAddNickname(true);
+                           return new DefaultOAuth2User(null,
+                                   attributes.getAttributes(),
+                                   userNameAttributeName);
                    }
+
+//                   //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
+//                   if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+//                       attributes.putIsSelectPaintings(true);
+//
+//                       return new DefaultOAuth2User(null,
+//                               attributes.getAttributes(),
+//                               userNameAttributeName);
+//                   }
 
                }else{
                    memberRepository.save(attributes.toGoogleEntity());
                }
            }else{
                PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMember.get().getId());
-               //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
-               if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+
+               // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+               if(findMember.get().getNickname() != null && paintingDtoDataResponse.getData().toString().equals("[]")){
+                   attributes.putIsSelectPaintings(false);
+                   attributes.putIsAddNickname(true);
+               }else if(findMember.get().getNickname() != null && !paintingDtoDataResponse.getData().toString().equals("[]")){
+                   // 이미 회원가입 + 닉네임까지 추가 + 선호그림까지 선택 o
                    attributes.putIsSelectPaintings(true);
+                   attributes.putIsAddNickname(true);
                }
+//               //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
+//               if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+//                   attributes.putIsSelectPaintings(true);
+//               }
 
            }
 
@@ -97,28 +125,52 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                    findMemberByProvider.get().updateProviderAndProviderId(provider, providerId);
 
                    PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMemberByProvider.get().getId());
-                   //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
-                   if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+                   // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+                   if(findMemberByProvider.get().getNickname() != null && paintingDtoDataResponse.getData().toString().equals("[]")){
+                       attributes.putIsSelectPaintings(false);
+                       attributes.putIsAddNickname(true);
+                       return new DefaultOAuth2User(null,
+                               attributes.getAttributes(),
+                               userNameAttributeName);
+                   }else if(findMemberByProvider.get().getNickname() != null && !paintingDtoDataResponse.getData().toString().equals("[]")){
+                       // 이미 회원가입 + 닉네임까지 추가 + 선호그림까지 선택 o
                        attributes.putIsSelectPaintings(true);
-
+                       attributes.putIsAddNickname(true);
                        return new DefaultOAuth2User(null,
                                attributes.getAttributes(),
                                userNameAttributeName);
                    }
+//                   //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
+//                   if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+//                       attributes.putIsSelectPaintings(true);
+//
+//                       return new DefaultOAuth2User(null,
+//                               attributes.getAttributes(),
+//                               userNameAttributeName);
+//                   }
 
                }else{
                    memberRepository.save(attributes.toKakaoEntity());
                }
            }else{
                PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMember.get().getId());
-               //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
-               if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+               // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+               if(findMember.get().getNickname() != null && paintingDtoDataResponse.getData().toString().equals("[]")){
+                   attributes.putIsSelectPaintings(false);
+                   attributes.putIsAddNickname(true);
+               }else if(findMember.get().getNickname() != null && !paintingDtoDataResponse.getData().toString().equals("[]")){
+                   // 이미 회원가입 + 닉네임까지 추가 + 선호그림까지 선택 o
                    attributes.putIsSelectPaintings(true);
-
-                   return new DefaultOAuth2User(null,
-                           attributes.getAttributes(),
-                           userNameAttributeName);
+                   attributes.putIsAddNickname(true);
                }
+//               //이미 회원가입이 되어있고 선호 그림까지 선택되어있는 상태라면
+//               if(!paintingDtoDataResponse.getData().toString().equals("[]")){
+//                   attributes.putIsSelectPaintings(true);
+//
+//                   return new DefaultOAuth2User(null,
+//                           attributes.getAttributes(),
+//                           userNameAttributeName);
+//               }
            }
        }
 

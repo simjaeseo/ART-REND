@@ -6,6 +6,6 @@ import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepos
 import java.io.IOException;
 
 public interface LikedPaintingService extends LikedPaintingRepositoryCustom {
-    void like(LikeDto likeDto, String token) throws IOException;
-    void cancelLike(LikeDto likeDto, String token) throws IOException;
+    void like(LikeDto likeDto) throws IOException;
+    void cancelLike(LikeDto likeDto) throws IOException;
 }

@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface SelectedPaintingService {
     List<PaintingDto> findPaintings();
-    SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto, String token);
+    SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto);
     List<PaintingDto> findSelectedPaintings(Long memberId);
 }

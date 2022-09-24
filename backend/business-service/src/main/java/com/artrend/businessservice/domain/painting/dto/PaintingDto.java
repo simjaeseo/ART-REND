@@ -27,9 +27,9 @@ public class PaintingDto {
     private String medium;
     private String place;
     private String url;
-    private Long hits;
-    private Long totalLikeCount;
-    private Long totalChangeCount;
+    private Integer hits;
+    private Integer totalLikeCount;
+    private Integer totalChangeCount;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Boolean isLiked;
 

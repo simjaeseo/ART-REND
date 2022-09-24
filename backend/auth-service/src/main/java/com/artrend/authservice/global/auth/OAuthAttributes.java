@@ -40,6 +40,7 @@ public class OAuthAttributes {
         }
 
         CustomAttributes.put("isSelectPainting", false);
+        CustomAttributes.put("isAddNickname", false);
 
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
@@ -55,6 +56,7 @@ public class OAuthAttributes {
             CustomAttributes.put(key, attributes.get(key));
         }
         CustomAttributes.put("isSelectPainting", false);
+        CustomAttributes.put("isAddNickname", false);
 
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
@@ -83,6 +85,10 @@ public class OAuthAttributes {
     // puy
     public void putIsSelectPaintings (boolean isSelectPainting){
         this.attributes.put("isSelectPainting", isSelectPainting);
+    }
+
+    public void putIsAddNickname (boolean isAddNickname){
+        this.attributes.put("isAddNickname", isAddNickname);
     }
 
 }

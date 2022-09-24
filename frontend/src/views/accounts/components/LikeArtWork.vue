@@ -14,7 +14,9 @@
 			>
 				<a href="#" target="_blank" rel="noopener">
 					<div class="image-box">
-						<button class="delete">delete</button>
+						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+							delete
+						</button>
 						<img :src="image.url" alt="image" />
 						<div class="image-info">
 							<div class="title">{{ image.title }}</div>
@@ -44,8 +46,14 @@ export default {
 
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
 
+		// 좋아요 취소
+		const unlikeArtWork = function (artworkId) {
+			store.dispatch('unlikeArtWork', artworkId)
+		}
+
 		return {
 			state,
+			unlikeArtWork,
 		}
 	},
 }

@@ -94,7 +94,6 @@ export default {
 				},
 			})
 				.then(res => {
-					console.log(res.data.data.content)
 					commit('SET_LIKE_ART_WORK_LIST', res.data.data.content)
 				})
 				.catch(() => {

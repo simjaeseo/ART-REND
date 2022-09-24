@@ -33,19 +33,23 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 //        login 성공한 사용자 목록.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String providerId = oAuth2User.getAttributes().get("id").toString();
-        System.out.println(oAuth2User.getAttributes());
 
-        // 카카오 로그인일때
-        Member findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        String providerId = "";
+        Member findMember = null;
 
-        // 구글 로그인일때 나누기
+        // 토큰 발급하기위해서는 memberId를 알아야하지만, 카카오로 로그인했는지, 구글로 로그인했는지 모르기때문에 if문으로 나누기
+        // 카카오로 로그인했을때
+        if( oAuth2User.getAttributes().get("id") == null){
+            providerId = oAuth2User.getAttributes().get("sub").toString();
+            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        }else{
+            providerId = oAuth2User.getAttributes().get("id").toString();
+            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        }
 
         String accessToken = tokenProvider.createToken(providerId, findMember.getId());
 
         String url = makeRedirectUrl(accessToken);;
-
-//        String url = "http://localhost:3002/auth";
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");

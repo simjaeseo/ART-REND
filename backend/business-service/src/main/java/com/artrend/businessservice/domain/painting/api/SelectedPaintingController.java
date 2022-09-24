@@ -72,9 +72,8 @@ public class SelectedPaintingController {
     })
     @GetMapping("/{memberId}")
     public ResponseEntity<? extends DataResponse> findSelectedPaintings(
-            @PathVariable("memberId") Long memberId,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
-        List<PaintingDto> selectedPaintings = selectedPaintingService.findSelectedPaintings(memberId, token);
+            @PathVariable("memberId") Long memberId) {
+        List<PaintingDto> selectedPaintings = selectedPaintingService.findSelectedPaintings(memberId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(selectedPaintings));
     }

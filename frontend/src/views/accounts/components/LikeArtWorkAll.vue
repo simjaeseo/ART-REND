@@ -1,17 +1,11 @@
 <template>
-	<div class="external">
-		<div class="horizontal-scroll-wrapper">
-			<div class="title-wrapper1">
-				<h2 id="title-text1">
-					Art of Trend <br />
-					<h4>Favorite Artwork</h4>
-				</h2>
-			</div>
-			<div
-				v-for="image in state.likeArtWorkList"
-				:key="image.id"
-				class="img-wrapper"
-			>
+	<div class="masonry-container">
+		<div
+			v-for="image in state.likeArtWorkList"
+			:key="image.id"
+			class="masonry-item"
+		>
+			<div class="pseudo-img">
 				<a href="#" target="_blank" rel="noopener">
 					<div class="image-box">
 						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
@@ -51,6 +45,30 @@ export default {
 			store.dispatch('unlikeArtWork', artworkId)
 		}
 
+		window.onload = function () {
+			function masonryLayout() {
+				const masonryContainerStyle = getComputedStyle(
+					document.querySelector('.masonry-container'),
+				)
+				const columnGap = parseInt(
+					masonryContainerStyle.getPropertyValue('column-gap'),
+				)
+				const autoRows = parseInt(
+					masonryContainerStyle.getPropertyValue('grid-auto-rows'),
+				)
+
+				document.querySelectorAll('.masonry-item').forEach(elt => {
+					elt.style.gridRowEnd = `span ${Math.ceil(
+						elt.querySelector('.pseudo-img').scrollHeight / autoRows +
+							columnGap / autoRows,
+					)}`
+				})
+			}
+
+			masonryLayout()
+			window.addEventListener('resize', masonryLayout)
+		}
+
 		return {
 			state,
 			unlikeArtWork,
@@ -63,80 +81,52 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 
-/* hide scrollbar */
-::-webkit-scrollbar {
-	width: 1px;
-	height: 1px;
+.masonry-container {
+	--gap: 10px;
+
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	column-gap: var(--gap);
+	grid-auto-rows: 10px;
+	margin: 0px 300px;
 }
 
-::-webkit-scrollbar-button {
-	width: 1px;
-	height: 1px;
+@media screen and (max-width: 2100px) {
+	.masonry-container {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
-.external {
-	height: 100vh;
-	animation: slideInRight 2s ease-out;
+@media screen and (max-width: 1900px) {
+	.masonry-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 0 15vw;
+	}
 }
 
-.horizontal-scroll-wrapper {
+@media screen and (max-width: 1300px) {
+	.masonry-container {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.masonry-container {
+		display: block;
+	}
+
+	.masonry-item {
+		margin-bottom: var(--gap);
+	}
+}
+
+/* ignore this */
+.pseudo-img {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100vh;
-	transform: rotate(-90deg) translate3d(10vh, -100vh, 0);
-	transform-origin: right top;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding: 0;
-	height: 100vw;
-	transform-style: preserve-3d;
-	perspective: 1px;
-	padding-bottom: 10rem;
-}
-
-.title-wrapper1 {
-	transform: rotate(90deg);
-	display: flex;
-	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
-	min-width: 900px;
-	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0px) translateX(0px);
-	transition: 1s;
-	z-index: -1;
-}
-
-#title-text1 {
-	font-size: 60px;
-	position: relative;
-	font-family: 'Playfair Display', serif;
-	animation: fadeInLeft 5s ease-out;
-}
-
-.img-wrapper {
-	transform: rotate(90deg);
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	min-height: 60vh;
-	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0px) translateX(0px);
-	transition: 1s;
-}
-
-.img-wrapper:hover {
-	min-height: 75vh;
-	transform: rotate(90deg) translateZ(0px) translateX(0px) scale(1.2);
-}
-
-.img-wrapper a {
-	overflow: hidden;
-	display: block;
-	box-shadow: 15px 15px 60px rgba(0, 0, 0, 1);
-	/* background-color: rgba(255, 255, 255, 0.8);
-	padding: 0.5vh; */
+	font-size: 2rem;
 }
 
 .image-box {
@@ -146,8 +136,7 @@ export default {
 }
 
 img {
-	max-width: 45vh;
-	max-height: 50vh;
+	width: 100%;
 }
 
 a:hover .image-box {

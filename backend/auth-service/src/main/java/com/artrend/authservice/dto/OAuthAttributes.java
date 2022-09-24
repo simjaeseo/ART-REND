@@ -29,7 +29,6 @@ public class OAuthAttributes {
         return ofGoogle(providerId, attributes);
     }
 
-    // (new!)
     private static OAuthAttributes ofKakao(String providerId, Map<String, Object> attributes) {
         // kakao는 kakao_account에 유저정보가 있다. (email)
         Map<String, Object> kakaoAccount = (Map<String, Object>)attributes.get("kakao_account");
@@ -58,7 +57,6 @@ public class OAuthAttributes {
                 .name(name)
                 .kakaoProvider(provider)
                 .kakaoProviderId(providerId)
-                .di(getDi(name))
                 .build();
     }
 
@@ -67,18 +65,7 @@ public class OAuthAttributes {
                 .name(name)
                 .googleProvider(provider)
                 .googleProviderId(providerId)
-                .di(getDi(name))
                 .build();
-    }
-
-    public String getDi(String name) {
-        SHA256 sha256 = new SHA256();
-
-        try {
-            return sha256.encrypt(name);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

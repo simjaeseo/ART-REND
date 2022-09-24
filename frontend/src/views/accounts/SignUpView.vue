@@ -36,7 +36,7 @@ export default {
 	height: 100vh;
 }
 #background-img {
-	height: 110vh;
+	height: 100vh;
 	width: 100%;
 	filter: brightness(20%);
 	position: absolute;

@@ -7,13 +7,13 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 import jwt_decode from 'jwt-decode'
 
 export default {
 	name: 'KakaoAuthView',
 	setup() {
-		const router = useRouter()
+		// const router = useRouter()
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		const url = new URLSearchParams(location.search)

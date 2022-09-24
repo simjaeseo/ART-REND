@@ -1,9 +1,12 @@
 package com.artrend.businessservice.domain.painting.service;
 
+import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
 import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
+import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,15 +23,29 @@ import java.util.stream.Collectors;
 @Slf4j
 public class PaintingServiceImpl implements PaintingService {
     private final PaintingRepository paintingRepository;
+    private final LikedPaintingRepository likedPaintingRepository;
 
     @Override
     @Transactional
-    public PaintingDto findPainting(Long id) {
-        Painting findPainting = paintingRepository.findById(id)
+    public PaintingDto findPainting(LikeDto likeDto) {
+        Painting findPainting = paintingRepository
+                .findById(likeDto.getPaintingId())
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
+        if (findPainting == null) {
+            throw new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING);
+        }
+
+        Optional<LikedPainting> likedPainting =
+                likedPaintingRepository.findByMemberIdAndPaintingId(likeDto.getMemberId(), likeDto.getPaintingId());
+
+        Boolean isLiked = true;
+        if (likedPainting.isEmpty()) {
+            isLiked = false;
+        }
+
         findPainting.updateHits();
-        return new PaintingDto(findPainting);
+        return new PaintingDto(findPainting, isLiked);
     }
 
     @Override

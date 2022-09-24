@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,13 +50,12 @@ public class SelectedPaintingController {
     })
     @PostMapping
     public ResponseEntity<? extends DataResponse> selectPaintings(
-            @RequestBody SelectedPaintingDto request,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) {
+            @RequestBody SelectedPaintingDto request) {
         if (request.getPaintings().size() > 2) {
             throw new PaintingException(PaintingExceptionType.TOO_MANY_ARGUMENTS);
         }
         SelectedPaintingDto selectedPaintingDto
-                = selectedPaintingService.selectPaintings(request, token);
+                = selectedPaintingService.selectPaintings(request);
 
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(selectedPaintingDto));
     }

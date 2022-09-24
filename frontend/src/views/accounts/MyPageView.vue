@@ -34,7 +34,7 @@
 						<like-art-work />
 					</div>
 					<div class="tab2">
-						<my-page-art-work-all />
+						<like-art-work-all />
 					</div>
 				</div>
 			</div>
@@ -46,10 +46,11 @@
 import MyPageArtWork from '@/views/accounts/components/MyPageArtWork.vue'
 import MyPageArtWorkAll from '@/views/accounts/components/MyPageArtWorkAll.vue'
 import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
+import LikeArtWorkAll from '@/views/accounts/components/LikeArtWorkAll.vue'
 
 export default {
 	name: 'MyPageView',
-	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll },
+	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll, LikeArtWorkAll },
 	setup() {},
 }
 </script>

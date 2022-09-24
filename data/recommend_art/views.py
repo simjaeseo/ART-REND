@@ -20,3 +20,8 @@ def index(request):
     # print(paintings)
     serializer = PaintingListSerializer(paintings, many=True)
     return Response(serializer.data)
+
+
+# @api_view(['POST'])
+# def change_photo(request, pk):
+    

@@ -52,6 +52,5 @@ def art_recommend():
                 detail.save()
 
         except ValueError:
-            print('save실패')
             continue
         

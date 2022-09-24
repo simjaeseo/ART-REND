@@ -10,7 +10,8 @@ export default {
 	},
 	business: {
 		select: () => `${BUSINESS}api/select`,
-		detail: artworkId => `${BUSINESS}api/paintings/${artworkId}`,
+		detail: (artworkId, memberId) =>
+			`${BUSINESS}api/paintings/${artworkId}/${memberId}`,
 		like: () => `${BUSINESS}api/like`,
 	},
 }

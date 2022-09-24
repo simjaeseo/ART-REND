@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     @GetMapping("/ccccccc")
-    public String status(){
-        return "It's Working in User Service";
+    public ResponseEntity<MessageResponse> status(){
+        return ResponseEntity.ok().body(new MessageResponse("aaaaaa"));
     }
-
 
 
 

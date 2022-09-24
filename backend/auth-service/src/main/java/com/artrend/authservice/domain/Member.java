@@ -30,7 +30,6 @@ public class Member extends BaseEntity {
 
     private String googleProviderId;
 
-    private String di;
 
     public void updateProviderAndProviderId(String provider, String providerId){
 
@@ -46,15 +45,5 @@ public class Member extends BaseEntity {
     public void updateNickname(String nickname){
         this.nickname = nickname;
     }
-
-//    @Column(nullable = false)
-//    private String email;
-
-//    @Column
-//    private String picture;
-
-//    @Enumerated(EnumType.STRING)
-//    @Column(nullable = false)
-//    private Role role;
 
 }

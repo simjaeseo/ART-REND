@@ -8,8 +8,10 @@
 			<div class="pseudo-img">
 				<a href="#" target="_blank" rel="noopener">
 					<div class="image-box">
-						<button class="delete">delete</button>
-						<img :src="require(`@/assets/main-img/1.jpg`)" alt="image" />
+						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+							delete
+						</button>
+						<img :src="image.url" alt="image" />
 						<div class="image-info">
 							<div class="title">{{ image.title }}</div>
 							<div class="name">{{ image.year }}</div>
@@ -38,6 +40,11 @@ export default {
 
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
 
+		// 좋아요 취소
+		const unlikeArtWork = function (artworkId) {
+			store.dispatch('unlikeArtWork', artworkId)
+		}
+
 		window.onload = function () {
 			function masonryLayout() {
 				const masonryContainerStyle = getComputedStyle(
@@ -64,6 +71,7 @@ export default {
 
 		return {
 			state,
+			unlikeArtWork,
 		}
 	},
 }

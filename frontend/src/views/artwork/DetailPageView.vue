@@ -4,7 +4,7 @@
 			<div id="img-wrap">
 				<div class="img-box">
 					<img
-						src="@/assets/main-img/5.jpg"
+						:src="detailData.url"
 						alt="img"
 						id="selected-img"
 						@click="getImageModal"

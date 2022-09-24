@@ -19,6 +19,7 @@ public class LikedPaintingDto {
     private String dimensions;
     private String medium;
     private String place;
+    private String url;
     private Long hits;
     private Long totalLikeCount;
     private Long totalChangeCount;
@@ -36,6 +37,7 @@ public class LikedPaintingDto {
         this.dimensions = painting.getDimensions();
         this.medium = painting.getMedium();
         this.place = painting.getPlace();
+        this.url = painting.getUrl();
         this.hits = painting.getHits();
         this.totalLikeCount = painting.getTotalLikeCount();
         this.totalChangeCount = painting.getTotalChangeCount();

@@ -1,10 +1,8 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.dto.SearchCondition;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

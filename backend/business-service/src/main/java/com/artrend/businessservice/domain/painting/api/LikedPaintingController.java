@@ -2,7 +2,6 @@ package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.LikeDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
-import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.service.LikedPaintingService;
 import com.artrend.businessservice.global.common.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;

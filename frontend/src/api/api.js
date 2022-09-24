@@ -11,5 +11,6 @@ export default {
 	business: {
 		select: () => `${BUSINESS}api/select`,
 		detail: artworkId => `${BUSINESS}api/paintings/${artworkId}`,
+		like: () => `${BUSINESS}api/like`,
 	},
 }

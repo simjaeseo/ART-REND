@@ -31,5 +31,41 @@ export default {
 					alert('에러가발생했다')
 				})
 		},
+		likeArtWork({ getters, dispatch }, artworkId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.like(),
+				method: 'post',
+				data: {
+					paintingId: artworkId,
+					memberId: getters.userId,
+				},
+			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		unlikeArtWork({ getters, dispatch }, artworkId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.like(),
+				method: 'delete',
+				data: {
+					paintingId: artworkId,
+					memberId: getters.userId,
+				},
+			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
 	},
 }

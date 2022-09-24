@@ -49,7 +49,7 @@ const routes = [
 		// beforeEnter: requireAuth(),
 	},
 	{
-		path: '/detail',
+		path: '/detail/:artworkId',
 		name: 'Detail',
 		component: DetailPageView,
 		// beforeEnter: requireAuth(),

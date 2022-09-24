@@ -4,6 +4,8 @@ package com.artrend.businessservice.domain.painting.service;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.entity.FavoriteStyle;
 import com.artrend.businessservice.domain.painting.entity.SelectedPainting;
+import com.artrend.businessservice.domain.painting.exception.PaintingException;
+import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.FavoriteStyleRepository;
 import com.artrend.businessservice.domain.painting.repository.SelectedPaintingRepository;
 import com.artrend.businessservice.domain.painting.util.TokenValidate;
@@ -26,12 +28,31 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
     private final TokenValidate tokenValidate;
 
     @Override
+    public List<PaintingDto> findPaintings() {
+        List<FavoriteStyle> list = favoriteStyleRepository.findAll();
+
+        if (list.isEmpty()) {
+            throw new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING);
+        }
+
+        List<PaintingDto> result = list.stream()
+                .map(favoriteStyle-> new PaintingDto(favoriteStyle))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @Override
     @Transactional
     public SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto, String token) {
         token = token.split(" ")[1].trim();
         tokenValidate.validateToken(selectedPaintingDto.getMemberId(), token);
 
         List<FavoriteStyle> list = favoriteStyleRepository.findAll();
+
+        if (list.isEmpty()) {
+            throw new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING);
+        }
 
         FavoriteStyle firstFavorite = null;
         FavoriteStyle secondFavorite = null;

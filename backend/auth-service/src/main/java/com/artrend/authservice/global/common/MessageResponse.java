@@ -11,4 +11,7 @@ public class MessageResponse<T> {
     public MessageResponse(String message) {
         this.message = message;
     }
+
+    public MessageResponse() {
+    }
 }

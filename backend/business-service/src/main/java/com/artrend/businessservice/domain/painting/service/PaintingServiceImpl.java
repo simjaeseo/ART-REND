@@ -1,7 +1,9 @@
 package com.artrend.businessservice.domain.painting.service;
 
 import com.artrend.businessservice.domain.painting.dto.LikeDto;
+import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
 import com.artrend.businessservice.domain.painting.exception.PaintingException;
@@ -10,6 +12,10 @@ import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepos
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,5 +69,28 @@ public class PaintingServiceImpl implements PaintingService {
         return result;
     }
 
+    @Override
+    public List<PaintingDto> searchPaintings(SearchCondition condition, Pageable pageable) {
+        Page<Painting> list = paintingRepository.searchPaintings(condition, pageable);
 
+        List<PaintingDto> result = list.stream()
+                .map(painting -> new PaintingDto(painting))
+                .collect(Collectors.toList());
+
+        return result;
+    }
+
+    @Override
+    public List<PaintingDto> sortPaintings(PaintingCondition condition, Pageable pageable) {
+        PageRequest pageRequest = PageRequest.of(0, 20,
+                Sort.by(Sort.Direction.DESC, condition.getType()));
+
+        Page<Painting> list = paintingRepository.sortPaintings(condition, pageRequest);
+
+        List<PaintingDto> result = list.stream()
+                .map(painting -> new PaintingDto(painting))
+                .collect(Collectors.toList());
+
+        return result;
+    }
 }

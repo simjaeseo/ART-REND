@@ -1,10 +1,9 @@
-package com.artrend.authservice.dto;
+package com.artrend.authservice.global.auth;
 
 import com.artrend.authservice.domain.Member;
-import com.artrend.authservice.global.auth.SHA256;
 import lombok.*;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -35,18 +34,31 @@ public class OAuthAttributes {
         // kakao_account안에 또 profile이라는 JSON객체가 있다. (nickname, profile_image)
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
 
+        Map<String, Object> CustomAttributes = new HashMap<>();
+        for ( String key : attributes.keySet() ) {
+            CustomAttributes.put(key, attributes.get(key));
+        }
+
+        CustomAttributes.put("isSelectPainting", false);
+
         return OAuthAttributes.builder()
                 .name((String) kakaoProfile.get("nickname"))
-                .attributes(attributes)
+                .attributes(CustomAttributes)
                 .provider("kakao")
                 .providerId(providerId)
                 .build();
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        Map<String, Object> CustomAttributes = new HashMap<>();
+        for ( String key : attributes.keySet() ) {
+            CustomAttributes.put(key, attributes.get(key));
+        }
+        CustomAttributes.put("isSelectPainting", false);
+
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
-                .attributes(attributes)
+                .attributes(CustomAttributes)
                 .provider("google")
                 .providerId(userNameAttributeName)
                 .build();
@@ -66,6 +78,11 @@ public class OAuthAttributes {
                 .googleProvider(provider)
                 .googleProviderId(providerId)
                 .build();
+    }
+
+    // puy
+    public void putIsSelectPaintings (boolean isSelectPainting){
+        this.attributes.put("isSelectPainting", isSelectPainting);
     }
 
 }

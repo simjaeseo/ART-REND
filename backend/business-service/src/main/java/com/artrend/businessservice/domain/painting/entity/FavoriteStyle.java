@@ -1,17 +1,22 @@
 package com.artrend.businessservice.domain.painting.entity;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
-@Getter
+@Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class FavoriteStyle {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "favorite_style_id")
     private Long id;
+
+    @OneToOne(fetch = LAZY)
+    @MapsId
+    @JoinColumn(name = "painting_id")
+    private Painting painting;
 }

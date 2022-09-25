@@ -6,8 +6,8 @@ import lombok.Getter;
 public class CountDataResponse<T> extends DataResponse {
     private int count;
 
-    public CountDataResponse(T data, int count) {
-        super(data);
+    public CountDataResponse(String message, T data, int count) {
+        super(message, data);
         this.count = count;
     }
 }

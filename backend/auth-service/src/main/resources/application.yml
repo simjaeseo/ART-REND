@@ -6,16 +6,13 @@ server:
 #    key-store-password: ssafyartrendpjt
 
 spring:
-  #  sql:
-  #    init:
-  #      mode: always
   profiles:
     include: oauth
   application:
     name: auth-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/artrend?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://mysql:3306/artrend?serverTimezone=UTC&characterEncoding=UTF-8
     username: root
     password: ssafy
   jpa:
@@ -28,6 +25,7 @@ spring:
         format_sql: true
         default_batch_fetch_size: 100
     defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -39,16 +37,14 @@ spring:
 
 logging:
   level:
-    org:
-      com.artrend.authservice: DEBUG
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+    com.artrend.authservice: DEBUG
+
+gateway:
+  ip: 172.25.0.5
 
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance-id:${random.value}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true

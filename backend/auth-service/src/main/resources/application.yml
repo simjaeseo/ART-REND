@@ -38,6 +38,9 @@ logging:
   level:
     com.artrend.authservice: DEBUG
 
+gateway:
+  ip: 172.25.0.6
+
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

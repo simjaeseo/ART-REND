@@ -78,7 +78,6 @@ export default {
 		store.dispatch('getArtisDetail', name)
 		const detail = computed(() => store.getters.artistDetail)
 		const backImg = computed(() => store.getters.artistDetailBackImg)
-		console.log(backImg)
 		const goArtist = function () {
 			router.push({ name: 'ArtistPage' })
 		}

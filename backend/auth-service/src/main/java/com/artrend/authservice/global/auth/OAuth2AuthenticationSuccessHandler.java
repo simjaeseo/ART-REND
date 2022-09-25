@@ -62,19 +62,19 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
 
         if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+            return UriComponentsBuilder.fromUriString("http://j7c104.p.ssafy.io/auth")
                     .queryParam("accessToken", accessToken)
                     .queryParam("isPainting", true)
                     .queryParam("isNickname", true)
                     .build().toUriString();
         }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+            return UriComponentsBuilder.fromUriString("http://j7c104.p.ssafy.io/auth")
                     .queryParam("accessToken", accessToken)
                     .queryParam("isPainting", false)
                     .queryParam("isNickname", true)
                     .build().toUriString();
         }else {
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+            return UriComponentsBuilder.fromUriString("http://j7c104.p.ssafy.io/auth")
                     .queryParam("accessToken", accessToken)
                     .queryParam("isPainting", false)
                     .queryParam("isNickname", false)

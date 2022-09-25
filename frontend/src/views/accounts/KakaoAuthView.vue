@@ -7,13 +7,13 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-// import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 import jwt_decode from 'jwt-decode'
 
 export default {
 	name: 'KakaoAuthView',
 	setup() {
-		// const router = useRouter()
+		const router = useRouter()
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		const url = new URLSearchParams(location.search)
@@ -22,13 +22,11 @@ export default {
 		const nickName = url.get('isNickname')
 		const selected = url.get('isPainting')
 
-		console.log(nickName, selected)
 		if (nickName == 'false') {
 			router.push({ name: 'SignUp' })
 		} else if (selected == 'false') {
 			router.push({ name: 'SelectImage' })
 		} else {
-			console.log(nickName, selected)
 			router.push({ name: 'Main' })
 		}
 

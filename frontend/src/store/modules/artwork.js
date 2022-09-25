@@ -6,9 +6,19 @@ export default {
 		detailData: [],
 		inTime: '',
 		outTime: '',
+		orderByView: [],
+		orderByLike: [],
+		orderByTranslation: [],
+		artistDetail: [],
+		artistDetailBackImg: '',
 	},
 	getters: {
 		detailData: state => state.detailData,
+		orderByView: state => state.orderByView,
+		orderByLike: state => state.orderByLike,
+		orderByTranslation: state => state.orderByTranslation,
+		artistDetail: state => state.artistDetail,
+		artistDetailBackImg: state => state.artistDetailBackImg,
 	},
 	mutations: {
 		SET_DETAIL_DATA(state, data) {
@@ -19,6 +29,20 @@ export default {
 		},
 		SET_OUT_TIME_DATA(state, time) {
 			state.outTime = time
+		},
+		SET_HITS_LIST(state, data) {
+			state.orderByView = data
+		},
+		SET_LIKES_LIST(state, data) {
+			state.orderByLike = data
+		},
+		SET_TRANS_LIST(state, data) {
+			state.orderByTranslation = data
+		},
+		SET_ARTIST_DETAIL(state, data) {
+			state.artistDetail = data
+			state.artistDetailBackImg = data[0].url
+			console.log(state.artistDetailBackImg)
 		},
 	},
 	actions: {
@@ -70,6 +94,73 @@ export default {
 		leave({ commit }, time) {
 			commit('SET_IN_TIME_DATA', time.inTime)
 			commit('SET_OUT_TIME_DATA', time.outTime)
+		},
+		getHits({ getters, commit }, hits) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getHits(),
+				method: 'get',
+				params: {
+					type: hits,
+				},
+			})
+				.then(res => {
+					commit('SET_HITS_LIST', res.data.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		getLikes({ getters, commit }, hits) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getHits(),
+				method: 'get',
+				params: {
+					type: hits,
+				},
+			})
+				.then(res => {
+					commit('SET_LIKES_LIST', res.data.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		getTrans({ getters, commit }, hits) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getHits(),
+				method: 'get',
+				params: {
+					type: hits,
+				},
+			})
+				.then(res => {
+					commit('SET_TRANS_LIST', res.data.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		getArtisDetail({ getters, commit }, name) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getArtisDetail(),
+				method: 'get',
+				params: {
+					artist: name,
+					page: '0',
+					size: '20',
+					sort: 'DESC',
+				},
+			})
+				.then(res => {
+					commit('SET_ARTIST_DETAIL', res.data.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
 		},
 	},
 }

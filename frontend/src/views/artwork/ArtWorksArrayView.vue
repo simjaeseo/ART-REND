@@ -5,13 +5,13 @@
 		<input type="radio" name="tabmenu" id="trans-picture" />
 		<div class="tabmenu">
 			<label for="my-picture" class="my-picture">
-				<div>View</div>
+				<div>Views TOP 20</div>
 			</label>
 			<label for="like-picture" class="like-picture">
-				<div>Like</div>
+				<div @click="getLikes">Likes TOP 20</div>
 			</label>
 			<label for="trans-picture" class="trans-picture">
-				<div>Translation</div>
+				<div @click="getTrans">Translations TOP 20</div>
 			</label>
 		</div>
 		<div class="tab-inner">
@@ -34,10 +34,24 @@
 import OrderByLike from '@/views/artwork/components/OrderByLike.vue'
 import OrderByView from '@/views/artwork/components/OrderByView.vue'
 import OrderByTrans from '@/views/artwork/components/OrderByTrans.vue'
+import { useStore } from 'vuex'
 export default {
 	name: 'MyPageView',
 	components: { OrderByLike, OrderByView, OrderByTrans },
-	setup() {},
+	setup() {
+		const store = useStore()
+		store.dispatch('getHits', 'hits')
+		const getLikes = function () {
+			store.dispatch('getLikes', 'totalLikeCount')
+		}
+		const getTrans = function () {
+			store.dispatch('getTrans', 'totalChangeCount')
+		}
+		return {
+			getLikes,
+			getTrans,
+		}
+	},
 }
 </script>
 

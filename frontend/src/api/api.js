@@ -13,6 +13,7 @@ export default {
 		detail: (artworkId, memberId) =>
 			`${BUSINESS}api/paintings/${artworkId}/${memberId}`,
 		like: () => `${BUSINESS}api/like`,
-		getHits: hits => `${BUSINESS}api/paintings/${hits}`,
+		getHits: () => `${BUSINESS}api/paintings/sort`,
+		getArtisDetail: () => `${BUSINESS}api/paintings/search`,
 	},
 }

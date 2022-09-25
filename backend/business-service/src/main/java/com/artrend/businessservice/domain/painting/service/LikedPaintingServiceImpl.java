@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -67,8 +69,14 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     }
 
     @Override
-    public Page<LikedPaintingDto> findLikedPaintings(Long memberId, Pageable pageable) {
-        return likedPaintingRepository.findLikedPaintings(memberId, pageable);
+    public List<LikedPaintingDto> findLikedPaintings(Long memberId, Pageable pageable) {
+        Page<LikedPainting> list = likedPaintingRepository.findLikedPaintings(memberId, pageable);
+
+        List<LikedPaintingDto> result = list.stream()
+                .map(painting -> new LikedPaintingDto(painting.getPainting()))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     // 회원 ID와 그림 ID로 좋아요 여부 확인

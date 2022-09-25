@@ -33,17 +33,19 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import router from '@/router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
+		const router = useRouter()
+		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
 			likeArtWorkList: [],
 		})
-
-		store.dispatch('likeArtWorkList')
+		const memberId = route.params.memberId
+		store.dispatch('likeArtWorkList', memberId)
 
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
 

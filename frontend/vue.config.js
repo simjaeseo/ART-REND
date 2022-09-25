@@ -11,7 +11,7 @@ module.exports = defineConfig({
 			},
 			'/business-service': {
 				target: 'http://localhost:8080/',
-				pathRewrite: { '^/detail': '/' },
+				pathRewrite: { '^/detail': '/', '^/mypage': '/', '^/artist': '/' },
 				changeOrigin: true,
 				logLevel: 'debug',
 			},

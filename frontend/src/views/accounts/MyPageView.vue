@@ -14,7 +14,7 @@
 						<div>Favorite Artwork</div>
 					</label>
 				</div>
-				<button class="move-button">파도타기</button>
+				<button class="move-button" @click="goOtherProfile">파도타기</button>
 			</div>
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { useRoute } from 'vue-router'
 import MyPageArtWork from '@/views/accounts/components/MyPageArtWork.vue'
 import MyPageArtWorkAll from '@/views/accounts/components/MyPageArtWorkAll.vue'
 import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
@@ -51,7 +52,20 @@ import LikeArtWorkAll from '@/views/accounts/components/LikeArtWorkAll.vue'
 export default {
 	name: 'MyPageView',
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll, LikeArtWorkAll },
-	setup() {},
+	setup() {
+		// const router = useRouter()
+		const route = useRoute()
+		const memberId = route.params.memberId
+		console.log(memberId)
+		const goOtherProfile = function () {
+			const random = Math.floor(Math.random() * 38279)
+			console.log(random)
+			location.href = `http://localhost:3002/mypage/${random}`
+		}
+		return {
+			goOtherProfile,
+		}
+	},
 }
 </script>
 

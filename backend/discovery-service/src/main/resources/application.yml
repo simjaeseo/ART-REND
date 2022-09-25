@@ -5,6 +5,9 @@ spring:
   application:
     name: discovery-service
 
+gateway:
+  ip: 172.25.0.5
+
 eureka:
   client:
     register-with-eureka: false

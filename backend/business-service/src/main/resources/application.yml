@@ -38,7 +38,7 @@ spring:
       mode: always
 
 gateway:
-  ip: 172.25.0.6
+  ip: 172.25.0.5
 
 logging:
   level:

@@ -55,10 +55,14 @@
 								</a>
 							</li>
 							<li class="nav-item">
-								<p>PROFILE</p>
+								<a :href="`http://localhost:3002/mypage/${userId}`">
+									<p>PROFILE</p>
+								</a>
 							</li>
 							<li class="nav-item">
-								<p>PAINTING</p>
+								<a href="http://localhost:3002/artworks">
+									<p>TOP ARTWORKS</p>
+								</a>
 							</li>
 							<li class="nav-item2">
 								<p>LOGOUT</p>
@@ -80,6 +84,7 @@ export default {
 	setup() {
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
+		const userId = computed(() => store.getters.userId)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -98,6 +103,7 @@ export default {
 			oneBlack,
 			twoBlack,
 			isLoggedIn,
+			userId,
 		}
 	},
 }

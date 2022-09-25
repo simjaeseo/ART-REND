@@ -1,14 +1,14 @@
 <template>
 	<div class="external">
 		<div class="horizontal-scroll-wrapper">
-			<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-				<a href="#" target="_blank" rel="noopener">
-					<div class="image-box">
-						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+			<div v-for="(image, index) in LikeArr" :key="index" class="img-wrapper">
+				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail(image.id)">
+						<img :src="image.url" alt="image" />
 						<div class="image-info">
-							<div class="title">Street Man Fighter</div>
-							<div class="name">2022</div>
-							<div class="name">Tom Smith</div>
+							<div class="title">{{ image.title }}</div>
+							<div class="name">{{ image.year }}</div>
+							<div class="name">{{ image.artist }}</div>
 						</div>
 					</div>
 				</a>
@@ -18,7 +18,9 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
@@ -26,9 +28,16 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-
+		const router = useRouter()
+		const store = useStore()
+		const LikeArr = computed(() => store.getters.orderByLike)
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 		return {
 			state,
+			LikeArr,
+			goDetail,
 		}
 	},
 }

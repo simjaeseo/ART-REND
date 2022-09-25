@@ -1,0 +1,98 @@
+<template>
+	<div>
+		<div id="wrap1">
+			<div id="wrap2">
+				<div id="wrap3">
+					<h2 id="text1">Please enter your nickname.</h2>
+				</div>
+				<div>
+					<form action="">
+						<label for="user-nick-name">
+							<input
+								type="text"
+								id="user-nick-name"
+								v-model="state.userNickName"
+							/>
+						</label>
+						<div id="btn-wrap">
+							<button
+								class="btn"
+								id="nick-name-check-btn"
+								type="submit"
+								@click.prevent="doubleCheck"
+							>
+								CHECK
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+import { useStore } from 'vuex'
+import { reactive } from 'vue'
+
+export default {
+	name: 'NickNameForm',
+	setup() {
+		const state = reactive({
+			userNickName: null,
+		})
+		const store = useStore()
+
+		// 닉네임 중복검사
+		const doubleCheck = function () {
+			store.dispatch('doubleCheck', state.userNickName)
+		}
+		return {
+			doubleCheck,
+			state,
+		}
+	},
+}
+</script>
+
+<style scoped>
+#btn-wrap {
+	width: 100%;
+	text-align: end;
+	margin-top: 20px;
+}
+#nick-name-check-btn {
+	background: white;
+	color: black;
+	text-align: end;
+}
+input {
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid white;
+	width: 50vw;
+	color: white;
+	font-size: 30px;
+}
+input:focus {
+	outline: none;
+	background-color: transparent;
+}
+#wrap3 {
+	text-align: start;
+	width: 50vw;
+}
+#text1 {
+	color: white;
+	margin-bottom: 50px;
+}
+#wrap2 {
+	margin: auto;
+}
+#wrap1 {
+	height: 100vh;
+	width: 100%;
+	display: flex;
+	overflow-y: hidden;
+}
+</style>

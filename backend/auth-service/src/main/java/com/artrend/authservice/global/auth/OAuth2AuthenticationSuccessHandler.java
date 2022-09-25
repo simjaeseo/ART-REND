@@ -33,13 +33,24 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 //        login 성공한 사용자 목록.
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
-        String providerId = oAuth2User.getAttributes().get("id").toString();
 
-        Member findMember = memberRepository.findByProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        System.out.println("oAuth2User.getAttributes() "+ oAuth2User.getAttributes());
+        String providerId = "";
+        Member findMember = null;
+
+        // 토큰 발급하기위해서는 memberId를 알아야하지만, 카카오로 로그인했는지, 구글로 로그인했는지 모르기때문에 if문으로 나누기
+        // 카카오로 로그인했을때
+        if( oAuth2User.getAttributes().get("id") == null){
+            providerId = oAuth2User.getAttributes().get("sub").toString();
+            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        }else{
+            providerId = oAuth2User.getAttributes().get("id").toString();
+            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+        }
 
         String accessToken = tokenProvider.createToken(providerId, findMember.getId());
 
-        String url = makeRedirectUrl(accessToken);;
+        String url = makeRedirectUrl(accessToken, oAuth2User);
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -48,10 +59,27 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String accessToken) {
-        return UriComponentsBuilder.fromUriString("http://localhost:3002/detail")
-                .queryParam("accessToken", accessToken)
-//                .queryParam("refreshToken", refreshToken)
-                .build().toUriString();
+    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+
+        if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("isPainting", true)
+                    .queryParam("isNickname", true)
+                    .build().toUriString();
+        }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("isPainting", false)
+                    .queryParam("isNickname", true)
+                    .build().toUriString();
+        }else {
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("accessToken", accessToken)
+                    .queryParam("isPainting", false)
+                    .queryParam("isNickname", false)
+                    .build().toUriString();
+        }
     }
+
 }

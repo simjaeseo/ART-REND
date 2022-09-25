@@ -1,6 +1,6 @@
 package com.artrend.businessservice.domain.painting.api;
 
-import com.artrend.businessservice.domain.painting.dto.LikeDto;
+import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.service.LikedPaintingService;
 import com.artrend.businessservice.global.common.DataResponse;
@@ -34,9 +34,9 @@ public class LikedPaintingController {
     })
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
-            @RequestBody @Valid LikeDto likeDto) throws IOException {
-        likedPaintingService.like(likeDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(likeDto));
+            @RequestBody @Valid MemberDto memberDto) throws IOException {
+        likedPaintingService.like(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(memberDto));
     }
 
     @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다.")
@@ -48,9 +48,9 @@ public class LikedPaintingController {
     })
     @DeleteMapping
     public ResponseEntity<? extends DataResponse> cancelLike(
-            @RequestBody @Valid LikeDto likeDto) throws IOException {
-        likedPaintingService.cancelLike(likeDto);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likeDto));
+            @RequestBody @Valid MemberDto memberDto) throws IOException {
+        likedPaintingService.cancelLike(memberDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(memberDto));
     }
 
     @Operation(summary = "좋아요한 그림 조회", description = "회원 정보로 좋아요한 그림 목록을 조회합니다.")

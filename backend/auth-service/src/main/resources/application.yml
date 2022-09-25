@@ -48,7 +48,7 @@ logging:
 
 eureka:
   instance:
-    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance-id:${random.value}}
+    instance_id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true

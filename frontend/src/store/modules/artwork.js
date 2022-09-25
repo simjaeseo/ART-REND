@@ -31,12 +31,8 @@ export default {
 			const memberId = getters.userId
 			axios({
 				headers: getters.authHeader,
-				url: drf.business.detail(artworkId),
+				url: drf.business.detail(artworkId, memberId),
 				method: 'get',
-				data: {
-					painting_id: artworkId,
-					member_id: memberId,
-				},
 			})
 				.then(res => {
 					console.log(res)

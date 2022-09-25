@@ -7,9 +7,6 @@ server:
 
 
 spring:
-  #  sql:
-  #    init:
-  #      mode: always
   application:
     name: business-service
   datasource:
@@ -39,14 +36,10 @@ spring:
     init:
       mode: always
 
+
 logging:
   level:
     com.artrend.businessservice: DEBUG
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
 
 jwt:
   secret: c2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQtc2lsdmVybmluZS10ZWNoLXNwcmluZy1ib290LWp3dC10dXRvcmlhbC1zZWNyZXQK
@@ -54,7 +47,7 @@ jwt:
 
 eureka:
   instance:
-    instance_id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true

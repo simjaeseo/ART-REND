@@ -6,9 +6,6 @@ server:
 #    key-store-password: ssafyartrendpjt
 
 spring:
-  #  sql:
-  #    init:
-  #      mode: always
   profiles:
     include: oauth
   application:
@@ -39,16 +36,11 @@ spring:
 
 logging:
   level:
-    org:
-      com.artrend.authservice: DEBUG
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+    com.artrend.authservice: DEBUG
 
 eureka:
   instance:
-    instance_id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true

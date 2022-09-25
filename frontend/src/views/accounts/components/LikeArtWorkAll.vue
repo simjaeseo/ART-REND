@@ -36,8 +36,6 @@ export default {
 			likeArtWorkList: [],
 		})
 
-		store.dispatch('likeArtWorkList')
-
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
 
 		// 좋아요 취소

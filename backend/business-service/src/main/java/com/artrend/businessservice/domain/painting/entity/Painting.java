@@ -1,16 +1,20 @@
 package com.artrend.businessservice.domain.painting.entity;
 
 import com.artrend.businessservice.global.common.BaseEntity;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
+import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Painting extends BaseEntity {
+@AllArgsConstructor
+@Builder
+@ToString
+public class Painting extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +29,10 @@ public class Painting extends BaseEntity {
 
     private String artist;
 
+    @Column(length = 5000)
     private String description;
+
+    private String genre;
 
     private String year;
 
@@ -37,9 +44,24 @@ public class Painting extends BaseEntity {
 
     private String url;
 
-    private Long hits;
+    private Integer hits;
 
-    private Long totalLikeCount;
+    private Integer totalLikeCount;
 
-    private Long totalChangeCount;
+    private Integer totalChangeCount;
+
+    @OneToMany(mappedBy = "painting")
+    private List<LikedPainting> likedPainting;
+
+    public void updateTotalLikeCount(Integer count) {
+        this.totalLikeCount += count;
+    }
+
+    public void updateTotalChangeCount(Integer count) {
+        this.totalChangeCount++;
+    }
+
+    public void updateHits() {
+        this.hits++;
+    }
 }

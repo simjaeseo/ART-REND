@@ -32,10 +32,11 @@ export default {
 
 <style scoped>
 #background-img {
-	height: 110vh;
+	height: 100vh;
 	width: 100%;
 	filter: brightness(40%);
 	position: absolute;
 	z-index: -1;
+	overflow: hidden;
 }
 </style>

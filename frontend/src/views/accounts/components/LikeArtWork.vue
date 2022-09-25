@@ -12,8 +12,8 @@
 				:key="image.id"
 				class="img-wrapper"
 			>
-				<a href="#" target="_blank" rel="noopener">
-					<div class="image-box">
+				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail(image.id)">
 						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
 							delete
 						</button>
@@ -33,6 +33,7 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
+import router from '@/router'
 
 export default {
 	name: 'MyPageArtWork',
@@ -50,10 +51,13 @@ export default {
 		const unlikeArtWork = function (artworkId) {
 			store.dispatch('unlikeArtWork', artworkId)
 		}
-
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 		return {
 			state,
 			unlikeArtWork,
+			goDetail,
 		}
 	},
 }
@@ -137,6 +141,7 @@ export default {
 	box-shadow: 15px 15px 60px rgba(0, 0, 0, 1);
 	/* background-color: rgba(255, 255, 255, 0.8);
 	padding: 0.5vh; */
+	cursor: pointer;
 }
 
 .image-box {

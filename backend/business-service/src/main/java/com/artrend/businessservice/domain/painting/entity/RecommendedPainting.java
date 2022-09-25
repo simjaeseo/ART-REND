@@ -14,7 +14,7 @@ import static javax.persistence.FetchType.LAZY;
 public class RecommendedPainting {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "liked_painting_id")
+    @Column(name = "recommended_painting_id")
     private Long id;
 
     private Long memberId;

@@ -22,13 +22,11 @@ export default {
 		const nickName = url.get('isNickname')
 		const selected = url.get('isPainting')
 
-		console.log(nickName, selected)
 		if (nickName == 'false') {
 			router.push({ name: 'SignUp' })
 		} else if (selected == 'false') {
 			router.push({ name: 'SelectImage' })
 		} else {
-			console.log(nickName, selected)
 			router.push({ name: 'Main' })
 		}
 

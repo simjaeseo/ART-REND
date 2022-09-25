@@ -10,7 +10,14 @@ import numpy as np
 
 import torchvision.models as models
 import torchvision.transforms as transforms    
-    
+
+
+def unnorm(img, mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]):
+    for t, m, s in zip(img, mean, std):
+        t.mul_(s).add_(s)
+        
+    return img
+
 def init_weights(net, init_type='normal', gain=0.02):
     def init_func(m):
         classname = m.__class__.__name__

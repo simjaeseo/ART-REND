@@ -26,7 +26,7 @@ spring:
       hibernate:
         format_sql: true
         default_batch_fetch_size: 100
-    defer-datasource-initialization: true
+    defer-datasource-initialization: false
   rabbitmq:
     host: 127.0.0.1
     port: 5672

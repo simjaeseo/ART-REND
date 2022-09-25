@@ -36,6 +36,7 @@ spring:
   sql:
     init:
       mode: always
+      encoding: UTF-8
 
 gateway:
   ip: 172.25.0.5

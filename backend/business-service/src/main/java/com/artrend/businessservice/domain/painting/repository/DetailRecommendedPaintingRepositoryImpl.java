@@ -1,47 +1,38 @@
 package com.artrend.businessservice.domain.painting.repository;
 
-import com.artrend.businessservice.domain.painting.dto.PaintingDto;
-import com.artrend.businessservice.domain.painting.dto.QPaintingDto;
+import com.artrend.businessservice.domain.painting.entity.DetailRecommendedPainting;
+import com.artrend.businessservice.domain.painting.repository.support.QuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
-import javax.persistence.EntityManager;
-import java.util.List;
 
 import static com.artrend.businessservice.domain.painting.entity.QDetailRecommendedPainting.detailRecommendedPainting;
 import static com.artrend.businessservice.domain.painting.entity.QPainting.painting;
 
-public class DetailRecommendedPaintingRepositoryImpl implements DetailRecommendedPaintingRepositoryCustom {
-    private final JPAQueryFactory queryFactory;
+public class DetailRecommendedPaintingRepositoryImpl extends QuerydslRepositorySupport implements DetailRecommendedPaintingRepositoryCustom {
 
-    public DetailRecommendedPaintingRepositoryImpl(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
+    public DetailRecommendedPaintingRepositoryImpl() {
+        super(DetailRecommendedPainting.class);
     }
 
-    @Override
-    public Page<PaintingDto> findDetailRecommendedPaintings(Long paintingId, Pageable pageable) {
-        List<PaintingDto> content = queryFactory
-                .select(new QPaintingDto(detailRecommendedPainting))
-                .from(detailRecommendedPainting)
-                .leftJoin(detailRecommendedPainting.painting, painting)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-
-        JPAQuery<Long> count = queryFactory
-                .select(detailRecommendedPainting.count())
-                .from(detailRecommendedPainting)
-                .leftJoin(detailRecommendedPainting.painting, painting)
-                .where(paintingIdEq(paintingId));
-
-        return PageableExecutionUtils.getPage(content, pageable, count::fetchOne);
+    public Page<DetailRecommendedPainting> findDetailRecommendedPaintings(Long paintingId, Pageable pageable) {
+        return applyPagination(pageable, contentQuery -> contentQuery
+                .selectFrom(detailRecommendedPainting)
+                .leftJoin(detailRecommendedPainting.recommended, painting)
+                .where(
+                        paintingIdEq(paintingId)
+                ),
+                countQuery -> countQuery
+                        .selectFrom(detailRecommendedPainting)
+                        .leftJoin(detailRecommendedPainting.recommended, painting)
+                        .where(
+                                paintingIdEq(paintingId)
+                        )
+        );
     }
 
     private BooleanExpression paintingIdEq(Long paintingId) {
-        return paintingId != null ? detailRecommendedPainting.id.eq(paintingId) : null;
+        return paintingId != null ? detailRecommendedPainting.painting.id.eq(paintingId) : null;
     }
 }

@@ -100,5 +100,6 @@ export default {
 					alert('에러가발생했다')
 				})
 		},
+		// getHits({ commit }, )
 	},
 }

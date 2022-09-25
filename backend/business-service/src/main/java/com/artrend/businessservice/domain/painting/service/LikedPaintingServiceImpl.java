@@ -1,6 +1,6 @@
 package com.artrend.businessservice.domain.painting.service;
 
-import com.artrend.businessservice.domain.painting.dto.LikeDto;
+import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
@@ -31,41 +31,41 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     @Override
     @Transactional
-    public void like(LikeDto likeDto) throws IOException {
+    public void like(MemberDto memberDto) throws IOException {
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
-        if (findLikedPaintingWithMemberAndPaintingId(likeDto).isPresent()) {
+        if (findLikedPaintingWithMemberAndPaintingId(memberDto).isPresent()) {
             throw new PaintingException(PaintingExceptionType.ALREADY_LIKED_PAINTING);
         }
 
         // 3. 좋아요 한 그림 ID와 회원 ID로 DB에 저장하기
-        Painting painting = paintingRepository.findById(likeDto.getPaintingId())
+        Painting painting = paintingRepository.findById(memberDto.getPaintingId())
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
         LikedPainting likedPainting = LikedPainting.builder()
                 .painting(painting)
-                .memberId(likeDto.getMemberId())
+                .memberId(memberDto.getMemberId())
                 .build();
 
-        likedPainting.update(likeDto.getMemberId());
+        likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
 
         // 4. 그림의 총 좋아요 수 증가
-        updateLikeCount(likeDto.getPaintingId(), 1);
+        updateLikeCount(memberDto.getPaintingId(), 1);
     }
 
     @Override
     @Transactional
-    public void cancelLike(LikeDto likeDto) throws IOException {
+    public void cancelLike(MemberDto memberDto) throws IOException {
         // 2. 좋아요 된 그림이 아닌 경우 409 에러 호출하기
         LikedPainting likedPainting
-                = findLikedPaintingWithMemberAndPaintingId(likeDto)
+                = findLikedPaintingWithMemberAndPaintingId(memberDto)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_LIKED_PAINTING));
 
         // 3. DB 에서 좋아요 된 그림 객체 제거
         likedPaintingRepository.delete(likedPainting);
 
         // 4. 그림의 총 좋아요 수 감소
-        updateLikeCount(likeDto.getPaintingId(), -1);
+        updateLikeCount(memberDto.getPaintingId(), -1);
     }
 
     @Override
@@ -80,9 +80,9 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
     }
 
     // 회원 ID와 그림 ID로 좋아요 여부 확인
-    public Optional<LikedPainting> findLikedPaintingWithMemberAndPaintingId(LikeDto likeDto) {
+    public Optional<LikedPainting> findLikedPaintingWithMemberAndPaintingId(MemberDto memberDto) {
         return likedPaintingRepository
-                .findByMemberIdAndPaintingId(likeDto.getMemberId(), likeDto.getPaintingId());
+                .findByMemberIdAndPaintingId(memberDto.getMemberId(), memberDto.getPaintingId());
     }
 
     public void updateLikeCount(Long paintingId, Integer count) throws IOException {

@@ -5,12 +5,12 @@ module.exports = defineConfig({
 	devServer: {
 		proxy: {
 			'/auth-service': {
-				target: 'http://localhost:8080/',
+				target: 'http://j7c104.p.ssafy.io:8080/',
 				changeOrigin: true,
 				logLevel: 'debug',
 			},
 			'/business-service': {
-				target: 'http://localhost:8080/',
+				target: 'http://j7c104.p.ssafy.io:8080/',
 				pathRewrite: { '^/detail': '/' },
 				changeOrigin: true,
 				logLevel: 'debug',

@@ -2,7 +2,7 @@
 	<div>
 		<div class="fixed-top">
 			<div class="navbar">
-				<a href="http://localhost:3002/main" id="brad-text">
+				<a href="http://j7c104.p.ssafy.io:80/main" id="brad-text">
 					<h1 :style="[oneBlack ? { color: '#000000' } : { color: '#ffffff' }]">
 						ART-REND
 					</h1>
@@ -50,7 +50,7 @@
 						<h5 id="menu-text">MENU</h5>
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 							<li class="nav-item">
-								<a href="http://localhost:3002/main">
+								<a href="http://j7c104.p.ssafy.io:80/main">
 									<p>HOME</p>
 								</a>
 							</li>

@@ -1,24 +1,29 @@
 <template>
-	<div class="masonry-container">
-		<div
-			v-for="image in state.likeArtWorkList"
-			:key="image.id"
-			class="masonry-item"
-		>
-			<div class="pseudo-img">
-				<a href="#" target="_blank" rel="noopener">
-					<div class="image-box">
-						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
-							delete
-						</button>
-						<img :src="image.url" alt="image" />
-						<div class="image-info">
-							<div class="title">{{ image.title }}</div>
-							<div class="name">{{ image.year }}</div>
-							<div class="name">{{ image.artist }}</div>
+	<div>
+		<div class="like-count">
+			You like {{ state.likeArtWorkList.length }} artworks.
+		</div>
+		<div class="masonry-container">
+			<div
+				v-for="image in state.likeArtWorkList"
+				:key="image.id"
+				class="masonry-item"
+			>
+				<div class="pseudo-img">
+					<a target="_blank" rel="noopener">
+						<div class="image-box" @click.prevent="goDetail(image.id)">
+							<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+								delete
+							</button>
+							<img :src="image.url" alt="image" />
+							<div class="image-info">
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.year }}</div>
+								<div class="name">{{ image.artist }}</div>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -27,10 +32,12 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
+		const router = useRouter()
 		const store = useStore()
 		const state = reactive({
 			likeArtWorkList: [],
@@ -41,6 +48,9 @@ export default {
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
 			store.dispatch('unlikeArtWork', artworkId)
+		}
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
 		}
 
 		window.onload = function () {
@@ -70,6 +80,7 @@ export default {
 		return {
 			state,
 			unlikeArtWork,
+			goDetail,
 		}
 	},
 }
@@ -78,6 +89,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&display=swap');
 
 .masonry-container {
 	--gap: 10px;
@@ -86,7 +98,15 @@ export default {
 	grid-template-columns: repeat(5, 1fr);
 	column-gap: var(--gap);
 	grid-auto-rows: 10px;
+	margin: 10px 300px;
+}
+
+.like-count {
 	margin: 0px 300px;
+	text-align: end;
+	color: rgba(0, 0, 0, 0.5);
+	font-family: 'Playfair Display', serif;
+	font-weight: 600;
 }
 
 @media screen and (max-width: 2100px) {
@@ -98,6 +118,9 @@ export default {
 @media screen and (max-width: 1900px) {
 	.masonry-container {
 		grid-template-columns: repeat(3, 1fr);
+		margin: 10px 15vw;
+	}
+	.like-count {
 		margin: 0 15vw;
 	}
 }
@@ -105,6 +128,9 @@ export default {
 @media screen and (max-width: 1300px) {
 	.masonry-container {
 		grid-template-columns: repeat(2, 1fr);
+		margin: 10px 13vw;
+	}
+	.like-count {
 		margin: 0 13vw;
 	}
 }
@@ -125,6 +151,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	font-size: 2rem;
+	cursor: pointer;
 }
 
 .image-box {

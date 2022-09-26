@@ -11,6 +11,8 @@ export default {
 		orderByTranslation: [],
 		artistDetail: [],
 		artistDetailBackImg: '',
+		color1: false,
+		color2: false,
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -19,6 +21,8 @@ export default {
 		orderByTranslation: state => state.orderByTranslation,
 		artistDetail: state => state.artistDetail,
 		artistDetailBackImg: state => state.artistDetailBackImg,
+		color1: state => state.color1,
+		color2: state => state.color2,
 	},
 	mutations: {
 		SET_DETAIL_DATA(state, data) {
@@ -43,6 +47,12 @@ export default {
 			state.artistDetail = data
 			state.artistDetailBackImg = data[0].url
 			console.log(state.artistDetailBackImg)
+		},
+		SET_COLOR1(state, value) {
+			state.color1 = value
+		},
+		SET_COLOR2(state, value) {
+			state.color2 = value
 		},
 	},
 	actions: {

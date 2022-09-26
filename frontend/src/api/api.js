@@ -1,20 +1,23 @@
+const HOST = 'http://localhost:8080/'
+
 const AUTH = 'auth-service/'
 const BUSINESS = 'business-service/'
 // const RECOMMEND = 'recommend-service/'
 
 export default {
 	auth: {
-		kakaoLogin: () => `${AUTH}oauth2/authorization/kakao`,
-		googleLogin: () => `${AUTH}oauth2/authorization/google`,
-		nickNameForm: memberId => `${AUTH}signup/${memberId}/nickname`,
-		nickNameCheck: memberId => `${AUTH}signup/${memberId}/nickname/duplicate`,
+		kakaoLogin: () => `${HOST + AUTH}oauth2/authorization/kakao`,
+		googleLogin: () => `${HOST + AUTH}oauth2/authorization/google`,
+		nickNameForm: memberId => `${HOST + AUTH}signup/${memberId}/nickname`,
+		nickNameCheck: memberId =>
+			`${HOST + AUTH}signup/${memberId}/nickname/duplicate`,
 	},
 	business: {
-		select: () => `${BUSINESS}api/select`,
+		select: () => `${HOST + BUSINESS}api/select`,
 		detail: (artworkId, memberId) =>
-			`${BUSINESS}api/paintings/${artworkId}/${memberId}`,
-		like: () => `${BUSINESS}api/like`,
-		getHits: () => `${BUSINESS}api/paintings/sort`,
-		getArtisDetail: () => `${BUSINESS}api/paintings/search`,
+			`${HOST + BUSINESS}api/paintings/${artworkId}/${memberId}`,
+		like: () => `${HOST + BUSINESS}api/like`,
+		getHits: () => `${HOST + BUSINESS}api/paintings/sort`,
+		getArtisDetail: () => `${HOST + BUSINESS}api/paintings/search`,
 	},
 }

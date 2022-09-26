@@ -3,6 +3,7 @@ package com.artrend.businessservice.domain.painting.dto;
 import com.artrend.businessservice.domain.painting.entity.DetailRecommendedPainting;
 import com.artrend.businessservice.domain.painting.entity.FavoriteStyle;
 import com.artrend.businessservice.domain.painting.entity.Painting;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,9 +30,11 @@ public class PaintingDto {
     private String medium;
     private String place;
     private String url;
-    private Long hits;
-    private Long totalLikeCount;
-    private Long totalChangeCount;
+    private Integer hits;
+    private Integer totalLikeCount;
+    private Integer totalChangeCount;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Boolean isLiked;
 
     @QueryProjection
     public PaintingDto(Painting painting) {
@@ -50,6 +53,25 @@ public class PaintingDto {
         this.hits = painting.getHits();
         this.totalLikeCount = painting.getTotalLikeCount();
         this.totalChangeCount = painting.getTotalChangeCount();
+    }
+
+    public PaintingDto(Painting painting, Boolean isLiked) {
+        this.id = painting.getId();
+        this.title = painting.getTitle();
+        this.koreanTitle = painting.getKoreanTitle();
+        this.artTrend = painting.getArtTrend();
+        this.artist = painting.getArtist();
+        this.description = painting.getDescription();
+        this.genre = painting.getGenre();
+        this.year = painting.getYear();
+        this.dimensions = painting.getDimensions();
+        this.medium = painting.getMedium();
+        this.place = painting.getPlace();
+        this.url = painting.getUrl();
+        this.hits = painting.getHits();
+        this.totalLikeCount = painting.getTotalLikeCount();
+        this.totalChangeCount = painting.getTotalChangeCount();
+        this.isLiked = isLiked;
     }
 
     public PaintingDto(FavoriteStyle favoriteStyle) {

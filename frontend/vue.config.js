@@ -4,16 +4,16 @@ module.exports = defineConfig({
 	transpileDependencies: true,
 	devServer: {
 		proxy: {
-			// 이부분 추가
 			'/auth-service': {
-				target: 'http://localhost:8080/', // 요청할 서버 주소
+				target: 'http://localhost:8080/',
 				changeOrigin: true,
-				logLevel: 'debug', // 터미널에 proxy 로그가 찍힌다.
+				logLevel: 'debug',
 			},
 			'/business-service': {
-				target: 'http://localhost:8080/', // 요청할 서버 주소
+				target: 'http://localhost:8080/',
+				pathRewrite: { '^/detail': '/', '^/mypage': '/', '^/artist': '/' },
 				changeOrigin: true,
-				logLevel: 'debug', // 터미널에 proxy 로그가 찍힌다.
+				logLevel: 'debug',
 			},
 		},
 	},

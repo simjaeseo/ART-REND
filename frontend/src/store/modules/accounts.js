@@ -6,11 +6,13 @@ export default {
 	state: {
 		token: localStorage.getItem('token') || '',
 		userId: null,
+		likeArtWorkList: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
 		isLoggedIn: state => !!state.token,
 		userId: state => state.userId,
+		likeArtWorkList: state => state.likeArtWorkList,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -18,6 +20,9 @@ export default {
 		},
 		SET_USER_ID(state, id) {
 			state.userId = id
+		},
+		SET_LIKE_ART_WORK_LIST(state, data) {
+			state.likeArtWorkList = data
 		},
 	},
 	actions: {
@@ -75,6 +80,24 @@ export default {
 				})
 				.catch(() => {
 					alert('그림을 2개 선택해주세요.')
+				})
+		},
+
+		likeArtWorkList({ getters, commit }, memberId) {
+			console.log(memberId)
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.like(),
+				method: 'get',
+				params: {
+					memberId: memberId,
+				},
+			})
+				.then(res => {
+					commit('SET_LIKE_ART_WORK_LIST', res.data.data)
+				})
+				.catch(() => {
+					alert('에러가발생했다')
 				})
 		},
 	},

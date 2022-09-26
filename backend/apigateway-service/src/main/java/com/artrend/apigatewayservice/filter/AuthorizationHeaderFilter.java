@@ -29,10 +29,11 @@ import java.util.Map;
 public class AuthorizationHeaderFilter extends AbstractGatewayFilterFactory<AuthorizationHeaderFilter.Config> {
     private final String secret;
     private final ObjectMapper objectMapper;
+    private Environment env;
 
-    public AuthorizationHeaderFilter(@Value("${jwt.secret}") String secret, ObjectMapper objectMapper) {
+    public AuthorizationHeaderFilter(Environment env, ObjectMapper objectMapper) {
         super(Config.class);
-        this.secret = secret;
+        this.secret = env.getProperty("secret");
         this.objectMapper = objectMapper;
     }
 

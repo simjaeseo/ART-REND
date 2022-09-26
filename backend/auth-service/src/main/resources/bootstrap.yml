@@ -5,3 +5,4 @@ spring:
       name: auth-service
   profiles:
     active: dev
+    include: oauth

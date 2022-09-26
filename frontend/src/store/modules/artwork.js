@@ -42,7 +42,7 @@ export default {
 		SET_ARTIST_DETAIL(state, data) {
 			state.artistDetail = data
 			state.artistDetailBackImg = data[0].url
-			console.log(state.artistDetailBackImg)
+			// console.log(state.artistDetailBackImg)
 		},
 	},
 	actions: {
@@ -103,13 +103,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_HITS_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_HITS_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getLikes({ getters, commit }, hits) {
 			axios({
@@ -119,13 +115,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_LIKES_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_LIKES_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getTrans({ getters, commit }, hits) {
 			axios({
@@ -135,13 +127,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_TRANS_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_TRANS_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getArtisDetail({ getters, commit }, name) {
 			axios({
@@ -154,13 +142,9 @@ export default {
 					size: '20',
 					sort: 'DESC',
 				},
+			}).then(res => {
+				commit('SET_ARTIST_DETAIL', res.data.data)
 			})
-				.then(res => {
-					commit('SET_ARTIST_DETAIL', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 	},
 }

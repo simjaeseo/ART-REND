@@ -14,7 +14,7 @@ def make_recommend_art(df, art_title, weight_cosine_sim, top=20):
     result = result[['painting_id','title']]
     return result
 
-def art_recommend():
+def art_recommend(top):
     paintings = Painting.objects.all()
     artist_df = read_frame(paintings)
     
@@ -37,7 +37,7 @@ def art_recommend():
         title = painting.title
 
         try:
-            recommend_art = make_recommend_art(artist_df, title, weight_cosine_sim)
+            recommend_art = make_recommend_art(artist_df, title, weight_cosine_sim, top)
             
             for art_id in recommend_art['painting_id']:
                 a = Painting.objects.get(painting_id=art_id)

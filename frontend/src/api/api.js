@@ -1,6 +1,6 @@
 const AUTH = 'auth-service/'
 const BUSINESS = 'business-service/'
-// const RECOMMEND = 'recommend-service/'
+const RECOMMEND = 'recommend-service/'
 
 export default {
 	auth: {
@@ -15,5 +15,8 @@ export default {
 		like: () => `${BUSINESS}api/like`,
 		getHits: () => `${BUSINESS}api/paintings/sort`,
 		getArtisDetail: () => `${BUSINESS}api/paintings/search`,
+	},
+	recommend: {
+		mainpage: () => `${RECOMMEND}api/v1/painting/main_recommend_painting/`,
 	},
 }

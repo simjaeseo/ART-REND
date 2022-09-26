@@ -5,6 +5,7 @@ const BUSINESS = 'business-service/'
 export default {
 	auth: {
 		kakaoLogin: () => `${AUTH}oauth2/authorization/kakao`,
+		googleLogin: () => `${AUTH}oauth2/authorization/google`,
 		nickNameForm: memberId => `${AUTH}signup/${memberId}/nickname`,
 		nickNameCheck: memberId => `${AUTH}signup/${memberId}/nickname/duplicate`,
 	},

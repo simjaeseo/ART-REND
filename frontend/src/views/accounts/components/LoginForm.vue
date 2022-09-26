@@ -35,9 +35,14 @@ export default {
 			window.open(drf.auth.kakaoLogin(), '_self')
 		}
 
+		const loginWithGoogle = function () {
+			window.open(drf.auth.googleLogin(), '_self')
+		}
+
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		return {
 			loginWithKakao,
+			loginWithGoogle,
 			isLoggedIn,
 		}
 	},

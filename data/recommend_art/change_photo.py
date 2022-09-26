@@ -18,7 +18,7 @@ def change_p():
     gan.desc_p.load_state_dict(ckpt['desc_p'])
     gan.adam_gen.load_state_dict(ckpt['optimizer_gen'])
     gan.adam_desc.load_state_dict(ckpt['optimizer_desc'])
-
+    
 
 if __name__ == '__main__':
     change_p()

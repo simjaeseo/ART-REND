@@ -136,7 +136,7 @@ class RecommendedPainting(models.Model):
         db_table = 'recommended_painting'
 
 
-class SelectedPainting(models.Model):
+class SelectedPainting(models.Model): # 고른 정보
     selected_painting_id = models.BigAutoField(primary_key=True)
     member_id = models.BigIntegerField(blank=True, null=True)
     painting = models.ForeignKey(FavoriteStyle, models.DO_NOTHING, blank=True, null=True)

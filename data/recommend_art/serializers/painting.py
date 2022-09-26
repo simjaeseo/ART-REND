@@ -6,4 +6,4 @@ from rest_framework import serializers
 class PaintingListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Painting
-        fields = '__all__'
+        fields = ('title','artist')

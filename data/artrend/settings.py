@@ -90,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'artrend',
         'USER': 'root',
-        'PASSWORD': 'marine1006@',
+        'PASSWORD': 'ssafy',
         'HOST': 'localhost',
         'PORT': '3306'
     }

@@ -85,6 +85,8 @@ export default {
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		const userId = computed(() => store.getters.userId)
+		const color1 = computed(() => store.getters.color1)
+		const color2 = computed(() => store.getters.color2)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -93,6 +95,9 @@ export default {
 		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
 			twoBlack = true
+		} else if (now.includes('main') && color1 && color2) {
+			oneBlack = color1
+			twoBlack = color2
 		} else {
 			oneBlack = false
 			twoBlack = false

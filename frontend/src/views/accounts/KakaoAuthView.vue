@@ -31,8 +31,8 @@ export default {
 		}
 
 		// console.log(decodeAccessToken)
-		// console.log(decodeAccessToken.id)
-		// console.log(token)
+		// console.log(nickName)
+		// console.log(selected)
 
 		store.commit('SET_USER_ID', decodeAccessToken.id)
 		store.dispatch('saveToken', token)
@@ -47,4 +47,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped></style>

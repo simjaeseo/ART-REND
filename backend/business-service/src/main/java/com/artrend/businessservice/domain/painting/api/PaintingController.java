@@ -1,5 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
+import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
+import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.global.common.CountDataResponse;
@@ -10,12 +12,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,9 +55,36 @@ public class PaintingController {
             @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
-    @GetMapping("/{painting_id}")
-    public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long id) {
-        PaintingDto findPainting = paintingService.findPainting(id);
+    @GetMapping("/{painting_id}/{member_id}")
+    public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
+                                                               @PathVariable("member_id") Long memberId) {
+        PaintingDto findPainting = paintingService.findPainting(paintingId, memberId);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
+    }
+
+    @Operation(summary = "그림 장르별 조회", description = "genre, artTrend, artist 별로 그림을 조회할 수 있습니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+    })
+    @GetMapping("/search")
+    public ResponseEntity<? extends DataResponse> searchPaintings(SearchCondition condition, Pageable pageable) {
+        List<PaintingDto> paintings = paintingService.searchPaintings(condition, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
+    }
+
+    @Operation(summary = "그림 통계별 조회", description = "조회수, 좋아요수, 변환수 별로 그림을 조회할 수 있습니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+    })
+    @GetMapping("/sort")
+    public ResponseEntity<? extends DataResponse> sortPaintings(PaintingCondition condition, Pageable pageable) {
+        List<PaintingDto> paintings = paintingService.sortPaintings(condition, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
     }
 }

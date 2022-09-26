@@ -8,7 +8,6 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.FavoriteStyleRepository;
 import com.artrend.businessservice.domain.painting.repository.SelectedPaintingRepository;
-import com.artrend.businessservice.domain.painting.util.TokenValidate;
 import com.artrend.businessservice.domain.painting.dto.SelectedPaintingDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
 public class SelectedPaintingServiceImpl implements SelectedPaintingService {
     private final SelectedPaintingRepository selectedPaintingRepository;
     private final FavoriteStyleRepository favoriteStyleRepository;
-    private final TokenValidate tokenValidate;
 
     @Override
     public List<PaintingDto> findPaintings() {
@@ -44,10 +42,7 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
 
     @Override
     @Transactional
-    public SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto, String token) {
-        token = token.split(" ")[1].trim();
-        tokenValidate.validateToken(selectedPaintingDto.getMemberId(), token);
-
+    public SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto) {
         List<FavoriteStyle> list = favoriteStyleRepository.findAll();
 
         if (list.isEmpty()) {
@@ -86,10 +81,7 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
     }
 
     @Override
-    public List<PaintingDto> findSelectedPaintings(Long memberId, String token) {
-        token = token.split(" ")[1].trim();
-        tokenValidate.validateToken(memberId, token);
-
+    public List<PaintingDto> findSelectedPaintings(Long memberId) {
         List<SelectedPainting> findPaintings = selectedPaintingRepository.findAllByMemberId(memberId);
 
         List<PaintingDto> result = findPaintings.stream()

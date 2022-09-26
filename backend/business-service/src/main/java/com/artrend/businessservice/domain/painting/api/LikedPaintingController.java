@@ -1,8 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
-import com.artrend.businessservice.domain.painting.dto.LikeDto;
+import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
-import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.service.LikedPaintingService;
 import com.artrend.businessservice.global.common.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,15 +9,14 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +24,6 @@ import java.io.IOException;
 @Slf4j
 public class LikedPaintingController {
     private final LikedPaintingService likedPaintingService;
-    private final LikedPaintingRepository likedPaintingRepository;
 
     @Operation(summary = "그림 좋아요", description = "현재 접속한 회원 정보로 해당 그림을 좋아요합니다.")
     @ApiResponses({
@@ -37,11 +34,9 @@ public class LikedPaintingController {
     })
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
-            @RequestBody @Valid LikeDto likeDto,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
-        token = token.split(" ")[1].trim();
-        likedPaintingService.like(likeDto, token);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(likeDto));
+            @RequestBody @Valid MemberDto memberDto) throws IOException {
+        likedPaintingService.like(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(memberDto));
     }
 
     @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다.")
@@ -53,11 +48,9 @@ public class LikedPaintingController {
     })
     @DeleteMapping
     public ResponseEntity<? extends DataResponse> cancelLike(
-            @RequestBody @Valid LikeDto likeDto,
-            @RequestHeader(value = HttpHeaders.AUTHORIZATION) String token) throws IOException {
-        token = token.split(" ")[1].trim();
-        likedPaintingService.cancelLike(likeDto, token);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likeDto));
+            @RequestBody @Valid MemberDto memberDto) throws IOException {
+        likedPaintingService.cancelLike(memberDto);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(memberDto));
     }
 
     @Operation(summary = "좋아요한 그림 조회", description = "회원 정보로 좋아요한 그림 목록을 조회합니다.")
@@ -68,7 +61,7 @@ public class LikedPaintingController {
     })
     @GetMapping
     public ResponseEntity<? extends DataResponse> findLikedPaintings(Long memberId, Pageable pageable) {
-        Page<LikedPaintingDto> likedPaintings = likedPaintingService.findLikedPaintings(memberId, pageable);
+        List<LikedPaintingDto> likedPaintings = likedPaintingService.findLikedPaintings(memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(likedPaintings));
     }
 }

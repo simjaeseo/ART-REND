@@ -7,15 +7,21 @@
 					<h4>Favorite Artwork</h4>
 				</h2>
 			</div>
-			<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-				<a href="#" target="_blank" rel="noopener">
-					<div class="image-box">
-						<button class="delete">delete</button>
-						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+			<div
+				v-for="image in state.likeArtWorkList"
+				:key="image.id"
+				class="img-wrapper"
+			>
+				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail(image.id)">
+						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+							delete
+						</button>
+						<img :src="image.url" alt="image" />
 						<div class="image-info">
-							<div class="title">Street Man Fighter</div>
-							<div class="name">2022</div>
-							<div class="name">Tom Smith</div>
+							<div class="title">{{ image.title }}</div>
+							<div class="name">{{ image.year }}</div>
+							<div class="name">{{ image.artist }}</div>
 						</div>
 					</div>
 				</a>
@@ -25,17 +31,35 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
+		const router = useRouter()
+		const route = useRoute()
+		const store = useStore()
 		const state = reactive({
-			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+			likeArtWorkList: [],
 		})
+		const memberId = route.params.memberId
+		store.dispatch('likeArtWorkList', memberId)
 
+		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
+
+		// 좋아요 취소
+		const unlikeArtWork = function (artworkId) {
+			store.dispatch('unlikeArtWork', artworkId)
+		}
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 		return {
 			state,
+			unlikeArtWork,
+			goDetail,
 		}
 	},
 }
@@ -119,6 +143,7 @@ export default {
 	box-shadow: 15px 15px 60px rgba(0, 0, 0, 1);
 	/* background-color: rgba(255, 255, 255, 0.8);
 	padding: 0.5vh; */
+	cursor: pointer;
 }
 
 .image-box {

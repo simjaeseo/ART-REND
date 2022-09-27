@@ -108,11 +108,18 @@ export default {
 			localStorage.setItem('token', '')
 		},
 		logout({ dispatch, commit, getters }) {
-			dispatch('removeToken')
-			commit('REMOVE_TOKEN')
-			confirm('로그아웃하시겠습니까?')
-			console.log(getters.isLoggedIn)
-			router.push({ name: 'Login' })
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.logout(),
+				method: 'get',
+			})
+				.then(() => {
+					dispatch('removeToken')
+					commit('REMOVE_TOKEN')
+					confirm('로그아웃하시겠습니까?')
+					router.push({ name: 'Login' })
+				})
+				.catch(err => console.log(err))
 		},
 	},
 }

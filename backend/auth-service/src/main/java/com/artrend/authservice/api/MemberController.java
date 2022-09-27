@@ -2,7 +2,9 @@ package com.artrend.authservice.api;
 
 import com.artrend.authservice.domain.Member;
 import com.artrend.authservice.dto.request.NicknameRequest;
+import com.artrend.authservice.dto.response.SelectNicknameResponse;
 import com.artrend.authservice.global.common.CountResponse;
+import com.artrend.authservice.global.common.DataResponse;
 import com.artrend.authservice.global.common.MessageResponse;
 import com.artrend.authservice.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -46,5 +48,13 @@ public class MemberController {
     public ResponseEntity selectMemberCount(){
         int memberCount = memberService.selectMemberCount();
         return ResponseEntity.status(HttpStatus.OK).body(new CountResponse("총 회원 수 조회 성공", memberCount));
+    }
+
+    @GetMapping("/{memberId}/nickname")
+    public ResponseEntity selectNickname(@PathVariable Long memberId){
+        String selectNickname = memberService.selectNickname(memberId);
+        SelectNicknameResponse selectNicknameResponse = new SelectNicknameResponse(selectNickname);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse<>("닉네임 조회 완료", selectNicknameResponse));
     }
 }

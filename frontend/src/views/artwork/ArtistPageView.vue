@@ -4,7 +4,7 @@
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend <br />
-					<h4>The Artist</h4>
+					<h4>The ARTIST</h4>
 				</h2>
 			</div>
 			<div class="img-wrapper">

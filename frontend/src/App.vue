@@ -8,6 +8,7 @@
 					</h1>
 				</a>
 				<button
+					v-if="isLoggedIn"
 					class="navbar-toggler"
 					type="button"
 					data-bs-toggle="offcanvas"
@@ -65,7 +66,7 @@
 								</a>
 							</li>
 							<li class="nav-item2">
-								<p>LOGOUT</p>
+								<p @click="logout()">LOGOUT</p>
 							</li>
 						</ul>
 					</div>
@@ -102,13 +103,17 @@ export default {
 			oneBlack = false
 			twoBlack = false
 		}
-
+		const logout = function () {
+			store.dispatch('logout')
+			document.getElementById('close-btn').click()
+		}
 		return {
 			now,
 			oneBlack,
 			twoBlack,
 			isLoggedIn,
 			userId,
+			logout,
 		}
 	},
 }
@@ -154,6 +159,7 @@ export default {
 	font-weight: 900;
 	font-size: 80px;
 	color: gray;
+	cursor: pointer;
 }
 .nav-item {
 	font-weight: 900;

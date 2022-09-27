@@ -24,6 +24,9 @@ export default {
 		SET_LIKE_ART_WORK_LIST(state, data) {
 			state.likeArtWorkList = data
 		},
+		REMOVE_TOKEN(state) {
+			state.userId = null
+		},
 	},
 	actions: {
 		saveToken({ commit }, token) {
@@ -99,6 +102,17 @@ export default {
 				.catch(() => {
 					alert('에러가발생했다')
 				})
+		},
+		removeToken({ commit }) {
+			commit('SET_TOKEN', '')
+			localStorage.setItem('token', '')
+		},
+		logout({ dispatch, commit, getters }) {
+			dispatch('removeToken')
+			commit('REMOVE_TOKEN')
+			confirm('로그아웃하시겠습니까?')
+			console.log(getters.isLoggedIn)
+			router.push({ name: 'Login' })
 		},
 	},
 }

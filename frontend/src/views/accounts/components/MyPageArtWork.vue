@@ -7,7 +7,7 @@
 						Art of Trend <br />
 						<h4>My Own Exhibition</h4>
 						<hr />
-						<h5 class="nickname">세룽룽</h5>
+						<h5 class="nickname">{{ state.nickName }}</h5>
 					</h2>
 				</div>
 				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
@@ -32,14 +32,20 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
+		const store = useStore()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+			nickName: '',
 		})
+
+		state.nickName = computed(() => store.getters.userNickName)
+
 		return {
 			state,
 		}

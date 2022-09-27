@@ -6,6 +6,8 @@
 					<h2 id="title-text1">
 						Art of Trend <br />
 						<h4>My Own Exhibition</h4>
+						<hr />
+						<h5 class="nickname">세룽룽</h5>
 					</h2>
 				</div>
 				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
@@ -99,6 +101,10 @@ export default {
 	position: relative;
 	font-family: 'Playfair Display', serif;
 	animation: fadeInLeft 5s ease-out;
+}
+
+.nickname {
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .img-wrapper {

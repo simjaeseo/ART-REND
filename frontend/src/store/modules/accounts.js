@@ -7,12 +7,14 @@ export default {
 		token: localStorage.getItem('token') || '',
 		userId: null,
 		likeArtWorkList: [],
+		allUsers: 0,
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
 		isLoggedIn: state => !!state.token,
 		userId: state => state.userId,
 		likeArtWorkList: state => state.likeArtWorkList,
+		allUsers: state => state.allUsers,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -26,6 +28,9 @@ export default {
 		},
 		REMOVE_TOKEN(state) {
 			state.userId = null
+		},
+		SET_ALL_USERS(state, users) {
+			state.allUsers = users
 		},
 	},
 	actions: {
@@ -87,7 +92,6 @@ export default {
 		},
 
 		likeArtWorkList({ getters, commit }, memberId) {
-			console.log(memberId)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.like(),
@@ -118,6 +122,18 @@ export default {
 					commit('REMOVE_TOKEN')
 					confirm('로그아웃하시겠습니까?')
 					router.push({ name: 'Login' })
+				})
+				.catch(err => console.log(err))
+		},
+
+		getUsersNumber({ commit, getters }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getUsersNumber(),
+				method: 'get',
+			})
+				.then(res => {
+					commit('SET_ALL_USERS', res.data.count)
 				})
 				.catch(err => console.log(err))
 		},

@@ -37,6 +37,6 @@ def recommend_like_painting():
     like_painting_matrix_T = like_painting_matrix.transpose()
     
     item_sim = cosine_similarity(like_painting_matrix_T, like_painting_matrix_T)
-    itme_sim_df = pd.DataFrame(data=item_sim, index=like_painting_matrix.columns, columns=like_painting_matrix.columns)
+    item_sim_df = pd.DataFrame(data=item_sim, index=like_painting_matrix.columns, columns=like_painting_matrix.columns)
     
     return item_sim_df

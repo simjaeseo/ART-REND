@@ -4,8 +4,8 @@ import drf from '@/api/api'
 export default {
 	state: {
 		detailData: [],
-		inTime: '',
-		outTime: '',
+		inTime: null,
+		outTime: null,
 		orderByView: [],
 		orderByLike: [],
 		orderByTranslation: [],
@@ -16,6 +16,8 @@ export default {
 	},
 	getters: {
 		detailData: state => state.detailData,
+		inTime: state => new Date(state.inTime),
+		outTime: state => new Date(state.outTime),
 		orderByView: state => state.orderByView,
 		orderByLike: state => state.orderByLike,
 		orderByTranslation: state => state.orderByTranslation,
@@ -33,6 +35,7 @@ export default {
 		},
 		SET_OUT_TIME_DATA(state, time) {
 			state.outTime = time
+			console.log(time)
 		},
 		SET_HITS_LIST(state, data) {
 			state.orderByView = data

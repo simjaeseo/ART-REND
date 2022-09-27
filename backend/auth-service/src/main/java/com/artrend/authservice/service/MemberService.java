@@ -52,4 +52,10 @@ public class MemberService {
 
         findMember.updateNickname(nicknameRequest.getNickname());
     }
+
+    public String selectNickname(Long memberId) throws MemberException{
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()-> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
+
+        return findMember.getNickname();
+    }
 }

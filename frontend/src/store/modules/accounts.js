@@ -84,7 +84,7 @@ export default {
 		},
 
 		likeArtWorkList({ getters, commit }, memberId) {
-			console.log(memberId)
+			// console.log(memberId)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.like(),

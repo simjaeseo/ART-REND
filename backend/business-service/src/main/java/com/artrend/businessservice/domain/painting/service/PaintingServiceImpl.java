@@ -11,12 +11,14 @@ import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepos
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +29,11 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class PaintingServiceImpl implements PaintingService {
+    private final static String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
+
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
+    private final WebClient webClient = WebClient.create(BASE_URL);
 
     @Override
     @Transactional
@@ -65,7 +70,17 @@ public class PaintingServiceImpl implements PaintingService {
                 .map(painting -> new PaintingDto(painting))
                 .collect(Collectors.toList());
 
+        recommendRequest();
         return result;
+    }
+
+    @Nullable
+    private void recommendRequest() {
+        webClient.post()
+                .uri(BASE_URL + "make_detail_recommend/")
+                .retrieve();
+//                .bodyToMono(void.class)
+//                .block();
     }
 
     @Override

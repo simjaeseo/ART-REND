@@ -14,16 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,19 +32,11 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final WebClient webClient = WebClient.builder()
-            .baseUrl(BASE_URL)
-            .defaultCookie("cookieKey", "cookieValue")
-            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-            .defaultUriVariables(Collections.singletonMap("url", BASE_URL))
-            .build();
-
+    private final WebClient webClient = WebClient.create(BASE_URL);
 
     @Override
     @Transactional
     public void like(MemberDto memberDto) throws IOException {
-        String url = null;
-
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(memberDto).isPresent()) {
             throw new PaintingException(PaintingExceptionType.ALREADY_LIKED_PAINTING);
@@ -67,26 +54,19 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
 
-        Mono<Object> result = recommendRequest(likedPainting);
-        System.out.println(result);
+        recommendRequest(likedPainting);
 
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
     }
 
     @Nullable
-    private Mono<Object> recommendRequest(LikedPainting likedPainting) {
-        Mono<Object> result = webClient.post()
-                .uri(BASE_URL + "like_recommend_painting/" + likedPainting.getPainting().getId())
-                .accept(MediaType.APPLICATION_JSON)
-                .exchangeToMono(response -> {
-                    if (response.statusCode().equals(HttpStatus.OK)) {
-                        return response.bodyToMono(Void.class);
-                    } else {
-                        return response.createException().flatMap(Mono::error);
-                    }
-                });
-        return result;
+    private void recommendRequest(LikedPainting likedPainting) {
+        webClient.post()
+                .uri("like_recommend_painting/" + likedPainting.getPainting().getId().intValue())
+                .retrieve();
+//                .bodyToMono(void.class)
+//                .block();
     }
 
     @Override

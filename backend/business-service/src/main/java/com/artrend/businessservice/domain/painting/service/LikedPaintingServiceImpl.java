@@ -11,10 +11,12 @@ import com.artrend.businessservice.domain.painting.repository.PaintingRepository
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,8 +28,11 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class LikedPaintingServiceImpl implements LikedPaintingService {
+    private final static String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
+
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
+    private final WebClient webClient = WebClient.create(BASE_URL);
 
     @Override
     @Transactional
@@ -49,8 +54,19 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
 
+        recommendRequest(likedPainting);
+
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
+    }
+
+    @Nullable
+    private void recommendRequest(LikedPainting likedPainting) {
+        webClient.post()
+                .uri("like_recommend_painting/" + likedPainting.getPainting().getId().intValue())
+                .retrieve();
+//                .bodyToMono(void.class)
+//                .block();
     }
 
     @Override
@@ -91,5 +107,4 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
         findPainting.updateTotalLikeCount(count);
     }
-
 }

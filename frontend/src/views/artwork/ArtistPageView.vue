@@ -227,17 +227,6 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('Paul Gauguin')">
-						<img src="@/assets/artist/폴고갱.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Paul Gauguin</div>
-							<div class="name">폴 고갱</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('Paul Cezanne')">
 						<img src="@/assets/artist/폴세잔.png" alt="image" />
 						<div class="image-info">

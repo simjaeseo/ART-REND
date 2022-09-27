@@ -2,7 +2,7 @@ package com.artrend.authservice.dto.response;
 
 import com.artrend.authservice.dto.FavoriteStyleDto;
 
-public class ResponseSelectedPainting {
+public class SelectedPaintingResponse {
 
     private Long id;
 

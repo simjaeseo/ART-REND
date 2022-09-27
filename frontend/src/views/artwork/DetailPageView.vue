@@ -166,21 +166,21 @@ export default {
 			image: null,
 			img: null,
 			like: false,
-			clickCnt: 0,
-			zoomCnt: 0,
-			time: {
+			actionLog: {
+				clickCnt: 0,
+				zoomCnt: 0,
 				inTime: null,
 				outTime: null,
 			},
 		})
-		state.clickCnt += 1
+		state.actionLog.clickCnt += 1
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
 		store.dispatch('getArtWorkDetail', payLoadId)
 		const detailData = computed(() => store.getters.detailData)
 
 		const getImageModal = function () {
-			state.zoomCnt += 1
+			state.actionLog.zoomCnt += 1
 			const modal = document.getElementById('myModal')
 			const img = detailData.value.url
 			const modalImg = document.getElementById('img01')
@@ -229,10 +229,10 @@ export default {
 		const unlikeArtWork = function () {
 			store.dispatch('unlikeArtWork', payLoadId)
 		}
-		state.time.inTime = new Date()
+		state.actionLog.inTime = new Date()
 		window.addEventListener('beforeunload', () => {
-			state.time.outTime = new Date()
-			store.dispatch('leave', state.time)
+			state.actionLog.outTime = new Date()
+			store.dispatch('leave', state.actionLog)
 		})
 		return {
 			state,

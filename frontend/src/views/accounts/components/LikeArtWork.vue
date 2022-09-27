@@ -5,16 +5,26 @@
 				<h2 id="title-text1">
 					Art of Trend <br />
 					<h4>Favorite Artwork</h4>
+					<hr />
+					<h5 class="nickname">{{ state.nickName }}</h5>
 				</h2>
+			</div>
+			<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
+				you like {{ state.likeArtWorkList.length }} artworks.
 			</div>
 			<div
 				v-for="image in state.likeArtWorkList"
+				v-else
 				:key="image.id"
 				class="img-wrapper"
 			>
 				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail(image.id)">
-						<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+						<button
+							class="delete"
+							@click.prevent="unlikeArtWork(image.id)"
+							v-if="state.myPage"
+						>
 							delete
 						</button>
 						<img :src="image.url" alt="image" />
@@ -43,11 +53,18 @@ export default {
 		const store = useStore()
 		const state = reactive({
 			likeArtWorkList: [],
+			nickName: '',
+			myPage: false,
 		})
 		const memberId = route.params.memberId
-		store.dispatch('likeArtWorkList', memberId)
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
+		}
 
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
+
+		state.nickName = computed(() => store.getters.userNickName)
 
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
@@ -68,6 +85,21 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+
+.text-wrapper {
+	transform: rotate(90deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	transform-origin: 50% 50%;
+	transform: rotate(90deg) translateZ(0px) translateX(0px);
+	transition: 1s;
+	font-family: 'Playfair Display', serif;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.3);
+}
 
 /* hide scrollbar */
 ::-webkit-scrollbar {
@@ -119,6 +151,10 @@ export default {
 	position: relative;
 	font-family: 'Playfair Display', serif;
 	animation: fadeInLeft 5s ease-out;
+}
+
+.nickname {
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .img-wrapper {

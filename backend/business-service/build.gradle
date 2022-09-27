@@ -61,7 +61,6 @@ dependencies {
 
 	// WebClient
 	implementation 'org.springframework.boot:spring-boot-starter-webflux:'
-	implementation 'org.projectreactor:reactor-spring'
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

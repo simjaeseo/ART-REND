@@ -20,6 +20,28 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail('풍속화')">
+						<img src="@/assets/artist/라파엘로.png" alt="image" />
+						<div class="image-info">
+							<div class="title">Genre Painting</div>
+							<div class="name">풍속화</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="img-wrapper">
+				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail('풍경화')">
+						<img src="@/assets/artist/라파엘로.png" alt="image" />
+						<div class="image-info">
+							<div class="title">Landscape</div>
+							<div class="name">풍경화</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="img-wrapper">
+				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('초상화')">
 						<img src="@/assets/artist/클로드모네.png" alt="image" />
 						<div class="image-info">
@@ -97,33 +119,11 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('우화')">
-						<img src="@/assets/artist/미켈란젤로.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Fable</div>
-							<div class="name">우화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('구상화')">
 						<img src="@/assets/artist/반고흐.png" alt="image" />
 						<div class="image-info">
 							<div class="title">Representational</div>
 							<div class="name">구상화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('동물화')">
-						<img src="@/assets/artist/알프레드시슬레.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Animal</div>
-							<div class="name">동물화</div>
 						</div>
 					</div>
 				</a>

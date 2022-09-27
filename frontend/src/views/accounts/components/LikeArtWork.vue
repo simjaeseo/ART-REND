@@ -5,6 +5,8 @@
 				<h2 id="title-text1">
 					Art of Trend <br />
 					<h4>Favorite Artwork</h4>
+					<hr />
+					<h5 class="nickname">{{ state.nickName }}</h5>
 				</h2>
 			</div>
 			<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
@@ -37,21 +39,20 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const router = useRouter()
-		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
 			likeArtWorkList: [],
+			nickName: '',
 		})
-		const memberId = route.params.memberId
-		store.dispatch('likeArtWorkList', memberId)
-
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
+
+		state.nickName = computed(() => store.getters.userNickName)
 
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
@@ -138,6 +139,10 @@ export default {
 	position: relative;
 	font-family: 'Playfair Display', serif;
 	animation: fadeInLeft 5s ease-out;
+}
+
+.nickname {
+	font-family: 'Noto Sans KR', sans-serif;
 }
 
 .img-wrapper {

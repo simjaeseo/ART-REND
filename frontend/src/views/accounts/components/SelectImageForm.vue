@@ -23,16 +23,16 @@
 				<div class="masonry">
 					<div
 						class="mItem filter"
-						@dblclick.prevent="selectedImage(147)"
-						@mouseover="plusClass(147)"
-						@mouseleave="deleteClass(147)"
-						id="147"
+						@dblclick.prevent="selectedImage(146)"
+						@mouseover="plusClass(146)"
+						@mouseleave="deleteClass(146)"
+						id="146"
 					>
-						<img src="@/assets/select-img/147.jpg" alt="img147" />
+						<img src="@/assets/select-img/146.jpg" alt="img146" />
 						<img
-							id="btn147"
+							id="btn146"
 							class="zoom-btn"
-							@click="zoomImage(147)"
+							@click="zoomImage(146)"
 							data-bs-toggle="modal"
 							data-bs-target="#exampleModal"
 						/>

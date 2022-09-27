@@ -11,14 +11,19 @@ import com.artrend.businessservice.domain.painting.repository.PaintingRepository
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,9 +33,16 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class LikedPaintingServiceImpl implements LikedPaintingService {
+    private final static String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
+
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder()
+            .baseUrl(BASE_URL)
+            .defaultCookie("cookieKey", "cookieValue")
+            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+            .defaultUriVariables(Collections.singletonMap("url", BASE_URL))
+            .build();
 
 
     @Override
@@ -55,10 +67,26 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
 
-        url = "http://localhost:8000/api/v1/paintings/like_recommend_painting/";
+        Mono<Object> result = recommendRequest(likedPainting);
+        System.out.println(result);
 
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
+    }
+
+    @Nullable
+    private Mono<Object> recommendRequest(LikedPainting likedPainting) {
+        Mono<Object> result = webClient.post()
+                .uri(BASE_URL + "like_recommend_painting/" + likedPainting.getPainting().getId())
+                .accept(MediaType.APPLICATION_JSON)
+                .exchangeToMono(response -> {
+                    if (response.statusCode().equals(HttpStatus.OK)) {
+                        return response.bodyToMono(Void.class);
+                    } else {
+                        return response.createException().flatMap(Mono::error);
+                    }
+                });
+        return result;
     }
 
     @Override
@@ -98,12 +126,5 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
         findPainting.updateTotalLikeCount(count);
-    }
-
-    public Mono<Void> recommend(Long paintingId) {
-        return webClient.post()
-                .uri("http://127.0.0.1:8000/api/v1/paintings/like_recommend_painting/" + paintingId)
-                .retrieve()
-                .bodyToMono(Void.class);
     }
 }

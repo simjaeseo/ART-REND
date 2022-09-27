@@ -19,8 +19,16 @@
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
 			</label>
+			<label for="my-picture" class="my-picture-top">
+				<div class="top">ᐱ</div>
+				<div>PHOTO CARD</div>
+			</label>
 			<label for="like-picture-all" class="like-picture-all">
 				<div>ALL Favorite Artwork</div>
+			</label>
+			<label for="like-picture" class="like-picture-top">
+				<div class="top">ᐱ</div>
+				<div>Favorite Artwork</div>
 			</label>
 			<div class="tab-inner">
 				<div class="tabs">
@@ -44,24 +52,30 @@
 
 <script>
 import { useRoute } from 'vue-router'
+import { computed } from 'vue'
 import MyPageArtWork from '@/views/accounts/components/MyPageArtWork.vue'
 import MyPageArtWorkAll from '@/views/accounts/components/MyPageArtWorkAll.vue'
 import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
 import LikeArtWorkAll from '@/views/accounts/components/LikeArtWorkAll.vue'
+import { useStore } from 'vuex'
 
 export default {
 	name: 'MyPageView',
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll, LikeArtWorkAll },
 	setup() {
-		// const router = useRouter()
+		const store = useStore()
 		const route = useRoute()
 		const memberId = route.params.memberId
 		console.log(memberId)
+
+		const usersNumber = computed(() => store.getters.allUsers)
+		store.dispatch('getUsersNumber')
 		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * 38279)
-			console.log(random)
+			console.log(usersNumber.value)
+			const random = Math.floor(Math.random() * usersNumber.value) + 1
 			location.href = `http://localhost:3002/mypage/${random}`
 		}
+
 		return {
 			goOtherProfile,
 		}
@@ -130,13 +144,15 @@ input[name='tabmenu'] {
 }
 
 .my-picture-all,
-.like-picture-all {
+.like-picture-all,
+.my-picture-top,
+.like-picture-top {
 	display: none;
-	width: 100%;
 	text-align: center;
 	position: absolute;
 	bottom: 30px;
 	z-index: 1;
+	width: 100%;
 
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 600;
@@ -144,8 +160,14 @@ input[name='tabmenu'] {
 	color: rgb(0, 0, 0, 0.2);
 }
 
+.top {
+	margin-bottom: -7px;
+}
+
 .my-picture-all:hover,
-.like-picture-all:hover {
+.like-picture-all:hover,
+.my-picture-top:hover,
+.like-picture-top:hover {
 	color: rgb(0, 0, 0);
 	cursor: pointer;
 }
@@ -188,7 +210,15 @@ input[id='my-picture']:checked ~ .my-picture-all {
 	display: block;
 }
 
+input[id='my-picture-all']:checked ~ .my-picture-top {
+	display: block;
+}
+
 input[id='like-picture']:checked ~ .like-picture-all {
+	display: block;
+}
+
+input[id='like-picture-all']:checked ~ .like-picture-top {
 	display: block;
 }
 

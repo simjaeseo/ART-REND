@@ -11,7 +11,7 @@ def find_sim_painting_item(df, title_name, top=20):
     
     try:
         title_painting_sim =df[[title_name]].drop(title_name, axis=0)
-        title_painting_sim = title_painting_sim.sort_values(title_name, ascending=False)[:top_n]
+        title_painting_sim = title_painting_sim.sort_values(title_name, ascending=False)[:top]
     except:
         return like_rmd_lst
     for i in range(len(title_painting_sim)):
@@ -37,6 +37,6 @@ def recommend_like_painting():
     like_painting_matrix_T = like_painting_matrix.transpose()
     
     item_sim = cosine_similarity(like_painting_matrix_T, like_painting_matrix_T)
-    itme_sim_df = pd.DataFrame(data=item_sim, index=like_painting_matrix.columns, columns=like_painting_matrix.columns)
+    item_sim_df = pd.DataFrame(data=item_sim, index=like_painting_matrix.columns, columns=like_painting_matrix.columns)
     
     return item_sim_df

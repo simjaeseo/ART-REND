@@ -65,6 +65,21 @@
 									<p>TOP ARTWORKS</p>
 								</a>
 							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/artist">
+									<p>ARTIST</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/genre">
+									<p>GENRE</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/movement">
+									<p>MOVEMENT</p>
+								</a>
+							</li>
 							<li class="nav-item2">
 								<p @click="logout()">LOGOUT</p>
 							</li>

@@ -53,6 +53,17 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail('초현실주의')">
+						<img src="@/assets/artist/귀스타브쿠르베.png" alt="image" />
+						<div class="image-info">
+							<div class="title">Surrealism</div>
+							<div class="name">초현실주의</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="img-wrapper">
+				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('르네상스')">
 						<img src="@/assets/artist/살바도르달리.png" alt="image" />
 						<div class="image-info">
@@ -69,6 +80,17 @@
 						<div class="image-info">
 							<div class="title">Cubism</div>
 							<div class="name">입체주의</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="img-wrapper">
+				<a target="_blank" rel="noopener">
+					<div class="image-box" @click.prevent="goDetail('팝아트')">
+						<img src="@/assets/artist/르네.png" alt="image" />
+						<div class="image-info">
+							<div class="title">POP ART</div>
+							<div class="name">팝아트</div>
 						</div>
 					</div>
 				</a>

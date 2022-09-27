@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,6 +37,19 @@ public class MemberService {
             isDuplicateNickname = false;
         }
 
-        return isDuplicateNickname;}
+        return isDuplicateNickname;
+    }
 
+    public int selectMemberCount(){
+        List<Member> findMemberAll = memberRepository.findAll();
+
+        return findMemberAll.size();
+
+    }
+
+    public void updateNickname(Long memberId, NicknameRequest nicknameRequest) throws MemberException{
+        Member findMember = memberRepository.findById(memberId).orElseThrow(()-> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
+
+        findMember.updateNickname(nicknameRequest.getNickname());
+    }
 }

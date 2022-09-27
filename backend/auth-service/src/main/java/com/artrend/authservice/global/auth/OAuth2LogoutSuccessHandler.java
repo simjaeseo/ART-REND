@@ -29,7 +29,7 @@ public class OAuth2LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
         String authorization = request.getHeader("Authorization");
 
-        authService.logout(authorization.replace("Bearer ", ""));
+//        authService.logout(authorization.replace("Bearer ", ""));
 
         if (response.isCommitted()) {
             log.debug("응답이 이미 커밋된 상태입니다. " + "/logout-success" + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -40,7 +40,6 @@ public class OAuth2LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
         response.getWriter().write(objectMapper.writeValueAsString(
                 JsonDto.builder()
-                        .success(true)
                         .message("로그아웃이 정상적으로 처리되었습니다.")
                         .build()
         ));

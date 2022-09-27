@@ -144,23 +144,24 @@ export default {
 			myPage: false,
 		})
 		const memberId = route.params.memberId
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
+		}
 
 		const usersNumber = computed(() => store.getters.allUsers)
 		store.dispatch('getUsersNumber')
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * usersNumber.value) + 1
-			location.href = `http://localhost:3002/mypage/${random}`
+			if (random !== userId.value) {
+				location.href = `http://localhost:3002/mypage/${random}`
+			}
 		}
 
 		store.dispatch('likeArtWorkList', memberId)
 		store.dispatch('getUserNickname', memberId)
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
-
-		const userId = computed(() => store.getters.userId)
-		if (memberId == userId.value) {
-			state.myPage = true
-		}
 
 		// 닉네임 중복검사
 		const doubleCheck = function () {

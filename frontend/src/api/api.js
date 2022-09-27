@@ -2,7 +2,7 @@ const HOST = 'http://localhost:8080/'
 
 const AUTH = 'auth-service/'
 const BUSINESS = 'business-service/'
-// const RECOMMEND = 'recommend-service/'
+const RECOMMEND = 'recommend-service/'
 
 export default {
 	auth: {

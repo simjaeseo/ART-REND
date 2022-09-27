@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +35,7 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
         }
 
         List<PaintingDto> result = list.stream()
-                .map(favoriteStyle-> new PaintingDto(favoriteStyle))
+                .map(favoriteStyle -> new PaintingDto(favoriteStyle))
                 .collect(Collectors.toList());
 
         return result;
@@ -52,16 +53,27 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
         FavoriteStyle firstFavorite = null;
         FavoriteStyle secondFavorite = null;
 
-        for (FavoriteStyle favoriteStyle : list) {
-            if (favoriteStyle.getId() == selectedPaintingDto.getPaintings().get(0)) {
+
+        for (int i = 0; i < list.size(); i++) {
+            FavoriteStyle favoriteStyle = list.get(i);
+
+            if (favoriteStyle.getPainting().getId() == selectedPaintingDto.getPaintings().get(0)) {
                 firstFavorite = favoriteStyle;
-            } else if (favoriteStyle.getId() == selectedPaintingDto.getPaintings().get(1)) {
+            } else if (favoriteStyle.getPainting().getId() == selectedPaintingDto.getPaintings().get(1)) {
                 secondFavorite = favoriteStyle;
             }
 
             if (firstFavorite != null && secondFavorite != null) {
                 break;
             }
+        }
+
+        Optional<FavoriteStyle> last = favoriteStyleRepository.findById(146L);
+
+        if (firstFavorite == null && secondFavorite != null) {
+            firstFavorite = last.get();
+        } else if (firstFavorite != null && secondFavorite == null) {
+            secondFavorite = last.get();
         }
 
         SelectedPainting firstSelectedPainting = SelectedPainting.builder()

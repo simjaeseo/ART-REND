@@ -12,6 +12,7 @@ export default {
 		nickNameCheck: memberId =>
 			`${HOST + AUTH}signup/${memberId}/nickname/duplicate`,
 		logout: () => `${HOST + AUTH}logout`,
+		getUsersNumber: () => `${HOST + AUTH}members/count`,
 	},
 	business: {
 		select: () => `${HOST + BUSINESS}api/select`,

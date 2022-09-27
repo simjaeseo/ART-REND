@@ -2,11 +2,11 @@
 	<div>
 		<div class="fixed-top">
 			<div class="navbar">
-				<router-link :to="{ name: 'Main' }" id="brad-text">
+				<a href="http://localhost:3002/main" id="brad-text">
 					<h1 :style="[oneBlack ? { color: '#000000' } : { color: '#ffffff' }]">
 						ART-REND
 					</h1>
-				</router-link>
+				</a>
 				<button
 					class="navbar-toggler"
 					type="button"
@@ -50,15 +50,19 @@
 						<h5 id="menu-text">MENU</h5>
 						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 							<li class="nav-item">
-								<router-link :to="{ name: 'Main' }">
+								<a href="http://localhost:3002/main">
 									<p>HOME</p>
-								</router-link>
+								</a>
 							</li>
 							<li class="nav-item">
-								<p>PROFILE</p>
+								<a :href="`http://localhost:3002/mypage/${userId}`">
+									<p>PROFILE</p>
+								</a>
 							</li>
 							<li class="nav-item">
-								<p>PAINTING</p>
+								<a href="http://localhost:3002/artworks">
+									<p>TOP ARTWORKS</p>
+								</a>
 							</li>
 							<li class="nav-item2">
 								<p>LOGOUT</p>
@@ -80,6 +84,7 @@ export default {
 	setup() {
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
+		const userId = computed(() => store.getters.userId)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -98,6 +103,7 @@ export default {
 			oneBlack,
 			twoBlack,
 			isLoggedIn,
+			userId,
 		}
 	},
 }

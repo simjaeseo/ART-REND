@@ -83,18 +83,18 @@ export default {
 				})
 		},
 
-		likeArtWorkList({ getters, commit }, artworkId) {
+		likeArtWorkList({ getters, commit }, memberId) {
+			// console.log(memberId)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.like(),
 				method: 'get',
-				data: {
-					paintingId: artworkId,
-					memberId: getters.userId,
+				params: {
+					memberId: memberId,
 				},
 			})
 				.then(res => {
-					commit('SET_LIKE_ART_WORK_LIST', res.data.data.content)
+					commit('SET_LIKE_ART_WORK_LIST', res.data.data)
 				})
 				.catch(() => {
 					alert('에러가발생했다')

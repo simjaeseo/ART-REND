@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +22,7 @@ public class PaintingDto {
     private String koreanTitle;
     private String artTrend;
     private String artist;
+    @Column(length = 5000)
     private String description;
     private String genre;
     private String year;

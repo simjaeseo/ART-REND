@@ -59,7 +59,7 @@ export default {
 		const router = useRouter()
 		const name = route.params.name
 		const store = useStore()
-		store.dispatch('getGenreDetail', name)
+		store.dispatch('getMovementDetail', name)
 		const detail = computed(() => store.getters.movementDetail)
 		const goArtist = function () {
 			router.push({ name: 'ArtistPage' })

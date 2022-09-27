@@ -28,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
-
+        log.info("요청 잘 들어왔음!");
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         // 헤더에 있는 토큰 파싱
         String jwt = resolveToken(httpServletRequest);

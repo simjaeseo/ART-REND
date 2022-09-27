@@ -24,15 +24,15 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
         // 유효한 자격증명을 제공하지 않고 접근하려 할때 401
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-        response.getWriter().write(objectMapper.writeValueAsString(
-                JsonDto.builder()
-                        .success(false)
-                        .message(String.valueOf(request.getAttribute("exception")))
-                        .build()
-        ));
+//        response.setContentType("application/json;charset=UTF-8");
+//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//
+//        response.getWriter().write(objectMapper.writeValueAsString(
+//                JsonDto.builder()
+////                        .success(false)
+//                        .message(String.valueOf(request.getAttribute("exception")))
+//                        .build()
+//        ));
     }
 
 }

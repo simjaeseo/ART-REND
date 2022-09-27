@@ -25,8 +25,7 @@ public class BusinessServiceApplication {
         String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
         WebClient webClient = WebClient.create(BASE_URL);
         webClient.post()
-                .uri(BASE_URL + "make_detail_recommend/")
-                .retrieve();
+                .uri(BASE_URL + "make_detail_recommend/");
         log.debug("*****************Post -> {} ", "호출 언제?");
     }
 

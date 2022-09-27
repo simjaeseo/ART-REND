@@ -77,10 +77,7 @@ public class PaintingServiceImpl implements PaintingService {
     @Nullable
     private void recommendRequest() {
         webClient.post()
-                .uri(BASE_URL + "make_detail_recommend/")
-                .retrieve();
-//                .bodyToMono(void.class)
-//                .block();
+                .uri(BASE_URL + "make_detail_recommend/");
     }
 
     @Override

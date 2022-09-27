@@ -15,6 +15,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,10 +30,14 @@ import java.util.stream.Collectors;
 public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
+    private final WebClient webClient;
+
 
     @Override
     @Transactional
     public void like(MemberDto memberDto) throws IOException {
+        String url = null;
+
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(memberDto).isPresent()) {
             throw new PaintingException(PaintingExceptionType.ALREADY_LIKED_PAINTING);
@@ -48,6 +54,8 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
         likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
+
+        url = "http://localhost:8000/api/v1/paintings/like_recommend_painting/";
 
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
@@ -92,4 +100,10 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         findPainting.updateTotalLikeCount(count);
     }
 
+    public Mono<Void> recommend(Long paintingId) {
+        return webClient.post()
+                .uri("http://127.0.0.1:8000/api/v1/paintings/like_recommend_painting/" + paintingId)
+                .retrieve()
+                .bodyToMono(Void.class);
+    }
 }

@@ -75,17 +75,6 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('디자인')">
-						<img src="@/assets/artist/마네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Design</div>
-							<div class="name">디자인</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('신화')">
 						<img src="@/assets/artist/막스.png" alt="image" />
 						<div class="image-info">

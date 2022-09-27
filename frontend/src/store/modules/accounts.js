@@ -8,6 +8,7 @@ export default {
 		userId: null,
 		likeArtWorkList: [],
 		allUsers: 0,
+		userNickName: '',
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -15,6 +16,7 @@ export default {
 		userId: state => state.userId,
 		likeArtWorkList: state => state.likeArtWorkList,
 		allUsers: state => state.allUsers,
+		userNickName: state => state.userNickName,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -31,6 +33,9 @@ export default {
 		},
 		SET_ALL_USERS(state, users) {
 			state.allUsers = users
+		},
+		SET_USER_NICKNAME(state, nickname) {
+			state.userNickName = nickname
 		},
 	},
 	actions: {
@@ -136,6 +141,35 @@ export default {
 					commit('SET_ALL_USERS', res.data.count)
 				})
 				.catch(err => console.log(err))
+		},
+
+		getUserNickname({ commit, getters }, memberId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getUserNickname(memberId),
+				method: 'get',
+			})
+				.then(res => {
+					commit('SET_USER_NICKNAME', res.data.data.nickname)
+				})
+				.catch(err => console.log(err))
+		},
+
+		modifyNickName({ getters }, userNickName) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getUserNickname(getters.userId),
+				method: 'put',
+				data: {
+					nickname: userNickName,
+				},
+			})
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => {
+					console.log(err)
+				})
 		},
 	},
 }

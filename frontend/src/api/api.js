@@ -13,6 +13,7 @@ export default {
 			`${HOST + AUTH}signup/${memberId}/nickname/duplicate`,
 		logout: () => `${HOST + AUTH}logout`,
 		getUsersNumber: () => `${HOST + AUTH}members/count`,
+		getUserNickname: memberId => `${HOST + AUTH}${memberId}/nickname`,
 	},
 	business: {
 		select: () => `${HOST + BUSINESS}api/select`,

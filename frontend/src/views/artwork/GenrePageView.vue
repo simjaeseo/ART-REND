@@ -117,17 +117,6 @@
 					</div>
 				</a>
 			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('구상화')">
-						<img src="@/assets/artist/반고흐.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Representational</div>
-							<div class="name">구상화</div>
-						</div>
-					</div>
-				</a>
-			</div>
 		</div>
 	</div>
 </template>

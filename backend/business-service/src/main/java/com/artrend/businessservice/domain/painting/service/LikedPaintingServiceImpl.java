@@ -3,6 +3,7 @@ package com.artrend.businessservice.domain.painting.service;
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
 import com.artrend.businessservice.domain.painting.exception.PaintingException;
@@ -24,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -58,6 +60,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         likedPaintingRepository.save(likedPainting);
 
 //        recommendRequestV2(likedPainting.getPainting().getId());
+
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
     }

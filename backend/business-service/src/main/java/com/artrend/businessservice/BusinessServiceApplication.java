@@ -11,7 +11,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @EnableDiscoveryClient
 @EnableFeignClients
 public class BusinessServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(BusinessServiceApplication.class, args);
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(BusinessServiceApplication.class, args);
+	}
+
 }

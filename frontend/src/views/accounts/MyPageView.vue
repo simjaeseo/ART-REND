@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
+// import { useRoute } from 'vue-router'
 import MyPageArtWork from '@/views/accounts/components/MyPageArtWork.vue'
 import MyPageArtWorkAll from '@/views/accounts/components/MyPageArtWorkAll.vue'
 import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
@@ -54,13 +54,12 @@ export default {
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll, LikeArtWorkAll },
 	setup() {
 		// const router = useRouter()
-		const route = useRoute()
-		const memberId = route.params.memberId
-		console.log(memberId)
+		// const route = useRoute()
+		// const memberId = route.params.memberId
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * 38279)
-			console.log(random)
-			location.href = `http://localhost:3002/mypage/${random}`
+			// console.log(random)
+			location.href = `http://j7c104.p.ssafy.io/mypage/${random}`
 		}
 		return {
 			goOtherProfile,

@@ -12,7 +12,11 @@
 				<div class="pseudo-img">
 					<a target="_blank" rel="noopener">
 						<div class="image-box" @click.prevent="goDetail(image.id)">
-							<button class="delete" @click.prevent="unlikeArtWork(image.id)">
+							<button
+								class="delete"
+								@click.prevent="unlikeArtWork(image.id)"
+								v-if="state.myPage"
+							>
 								delete
 							</button>
 							<img :src="image.url" alt="image" />
@@ -32,16 +36,23 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const router = useRouter()
+		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
 			likeArtWorkList: [],
+			myPage: false,
 		})
+		const memberId = route.params.memberId
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
+		}
 
 		state.likeArtWorkList = computed(() => store.getters.likeArtWorkList)
 

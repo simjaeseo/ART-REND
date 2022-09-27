@@ -14,16 +14,19 @@
 						<div>Favorite Artwork</div>
 					</label>
 				</div>
-				<button class="move-button" @click="goOtherProfile">파도타기</button>
-				<button
-					class="move-button"
-					alt="upload-button"
-					id="upload-button"
-					data-bs-toggle="modal"
-					data-bs-target="#pictureModal"
-				>
-					닉네임 수정
-				</button>
+				<div class="btn-box">
+					<button
+						class="move-button"
+						alt="upload-button"
+						id="upload-button"
+						data-bs-toggle="modal"
+						data-bs-target="#pictureModal"
+						v-if="state.myPage"
+					>
+						닉네임 수정
+					</button>
+					<button class="move-button" @click="goOtherProfile">파도타기</button>
+				</div>
 			</div>
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
@@ -138,13 +141,13 @@ export default {
 			nickName: '',
 			modifyNickName: null,
 			success: false,
+			myPage: false,
 		})
 		const memberId = route.params.memberId
 
 		const usersNumber = computed(() => store.getters.allUsers)
 		store.dispatch('getUsersNumber')
 		const goOtherProfile = function () {
-			console.log(usersNumber.value)
 			const random = Math.floor(Math.random() * usersNumber.value) + 1
 			location.href = `http://localhost:3002/mypage/${random}`
 		}
@@ -153,6 +156,11 @@ export default {
 		store.dispatch('getUserNickname', memberId)
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
+
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
+		}
 
 		// 닉네임 중복검사
 		const doubleCheck = function () {
@@ -227,7 +235,7 @@ input[name='tabmenu'] {
 }
 
 .move-button {
-	margin-right: 25px;
+	margin-right: 10px;
 	align-items: center;
 	background-color: transparent;
 	border: 2px solid rgb(0, 0, 0, 0.2);
@@ -247,6 +255,10 @@ input[name='tabmenu'] {
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	color: rgba(0, 0, 0);
 	border: 2px solid rgb(0, 0, 0);
+}
+
+.btn-box {
+	margin-right: 10px;
 }
 
 .my-picture-all,

@@ -13,7 +13,7 @@
 				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
 					<a href="#" target="_blank" rel="noopener">
 						<div class="image-box">
-							<button class="delete">delete</button>
+							<button class="delete" v-if="state.myPage">delete</button>
 							<img
 								:src="require(`@/assets/main-img/${image}.jpg`)"
 								alt="image"
@@ -33,16 +33,24 @@
 
 <script>
 import { reactive, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const store = useStore()
+		const route = useRoute()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			nickName: '',
+			myPage: false,
 		})
+		const memberId = route.params.memberId
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
+		}
 
 		state.nickName = computed(() => store.getters.userNickName)
 

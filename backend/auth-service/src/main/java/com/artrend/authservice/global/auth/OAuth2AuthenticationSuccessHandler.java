@@ -1,6 +1,8 @@
 package com.artrend.authservice.global.auth;
 
 import com.artrend.authservice.domain.Member;
+import com.artrend.authservice.exception.MemberException;
+import com.artrend.authservice.exception.MemberExceptionType;
 import com.artrend.authservice.global.jwt.TokenProvider;
 import com.artrend.authservice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,13 +41,13 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         Member findMember = null;
 
         // 토큰 발급하기위해서는 memberId를 알아야하지만, 카카오로 로그인했는지, 구글로 로그인했는지 모르기때문에 if문으로 나누기
-        // 카카오로 로그인했을때
+        // 구글로 로그인했을때
         if( oAuth2User.getAttributes().get("id") == null){
             providerId = oAuth2User.getAttributes().get("sub").toString();
-            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
         }else{
             providerId = oAuth2User.getAttributes().get("id").toString();
-            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
         }
 
         String accessToken = tokenProvider.createToken(providerId, findMember.getId());

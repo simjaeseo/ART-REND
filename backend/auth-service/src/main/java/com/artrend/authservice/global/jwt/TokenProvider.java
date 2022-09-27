@@ -1,5 +1,7 @@
 package com.artrend.authservice.global.jwt;
 
+import com.artrend.authservice.exception.TokenException;
+import com.artrend.authservice.exception.TokenExceptionType;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -46,7 +48,7 @@ public class TokenProvider implements InitializingBean {
         // 토큰 만료시간 설정
         Date now = new Date();
         Date validity = new Date(now.getTime() + this.tokenValidityInSeconds);
-
+        System.out.println("key.toString()  " + key.toString());
         // jwt 생성하여 리턴턴
        return Jwts.builder()
                 .setSubject(providerId)
@@ -69,17 +71,16 @@ public class TokenProvider implements InitializingBean {
     public String getMemberProviderId(String token) {
         try {
             if (token == null || token.isEmpty()) {
-//                throw new TokenNotFoundException();
-                log.info("TokenNotFoundException{}","예외생성해야한다아앙아");
+                log.info("TokenException {}",TokenExceptionType.NOT_FOUND_TOKEN.getErrorMessage());
+                throw new TokenException(TokenExceptionType.NOT_FOUND_TOKEN);
             }
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().get("id").toString();
 
         }
-//        catch (TokenNotFoundException e) {
-////            throw new TokenNotFoundException();
-//            log.info("TokenNotFoundException{}","예외생성해야한다아앙아");
-//
-//        }
+        catch (TokenException e) {
+            log.info("TokenException {}",TokenExceptionType.NOT_FOUND_TOKEN.getErrorMessage());
+            throw new TokenException(TokenExceptionType.NOT_FOUND_TOKEN);
+        }
         catch (ExpiredJwtException e) {
             throw new ExpiredJwtException(e.getHeader(), e.getClaims(), e.getMessage());
         } catch (SignatureException e) {

@@ -77,6 +77,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public ResponseEntity handleEx(Exception exception) {
         log.error("Exception 발생 ! {}", exception.getMessage());
+        log.error("getStackTrace ! {}", exception.getStackTrace());
         return new ResponseEntity<>(new ExceptionDto(
                 "Exception이 발생했습니다. 적절한 호출인지 확인하세요"
         ), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -7,6 +7,8 @@ import MainPageView from '@/views/artwork/MainPageView.vue'
 import DetailPageView from '@/views/artwork/DetailPageView.vue'
 import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
 import KakaoAuthView from '@/views/accounts/KakaoAuthView.vue'
+import ArtistPageView from '@/views/artwork/ArtistPageView.vue'
+import ArtistDetailPageView from '@/views/artwork/ArtistDetailPageView.vue'
 
 // 라우터가드는 개발 끝나고 주석 풀면 됨
 // const requireAuth = () => (from, to, next) => {
@@ -37,7 +39,7 @@ const routes = [
 		// beforeEnter: requireAuth(),
 	},
 	{
-		path: '/mypage',
+		path: '/mypage/:memberId',
 		name: 'MyPage',
 		component: MyPageView,
 		// beforeEnter: requireAuth(),
@@ -64,6 +66,16 @@ const routes = [
 		path: '/auth',
 		name: 'KakaoAuth',
 		component: KakaoAuthView,
+	},
+	{
+		path: '/artist',
+		name: 'ArtistPage',
+		component: ArtistPageView,
+	},
+	{
+		path: '/artist/:name',
+		name: 'ArtistDetailPage',
+		component: ArtistDetailPageView,
 	},
 ]
 

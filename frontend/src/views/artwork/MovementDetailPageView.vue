@@ -3,23 +3,7 @@
 		<div class="external">
 			<div class="horizontal-scroll-wrapper">
 				<div class="title-wrapper1">
-					<h2 id="title-text1">
-						Art of {{ name }}, <br />
-						<p id="h2-inner">About {{ name }}</p>
-					</h2>
-				</div>
-				<div
-					class="title-wrapper2"
-					:style="{
-						'background-image': `url(${backImg})`,
-						'min-width': '1500px',
-						'min-height': '100vh',
-						'background-size': 'cover',
-					}"
-				>
-					<h2 id="title-text2">
-						{{ detail[1].title }} , {{ detail[1].year }} <br />
-					</h2>
+					<h2 id="title-text1">{{ name }}, <br /></h2>
 				</div>
 				<div class="title-wrapper3 masonry">
 					<div v-for="(image, index) in detail" :key="index">
@@ -75,10 +59,8 @@ export default {
 		const router = useRouter()
 		const name = route.params.name
 		const store = useStore()
-		store.dispatch('getArtisDetail', name)
-		const detail = computed(() => store.getters.artistDetail)
-		const backImg = computed(() => store.getters.artistDetailBackImg)
-		console.log(backImg.value)
+		store.dispatch('getMovementDetail', name)
+		const detail = computed(() => store.getters.movementDetail)
 		const goArtist = function () {
 			router.push({ name: 'ArtistPage' })
 		}
@@ -92,7 +74,6 @@ export default {
 			name,
 			state,
 			detail,
-			backImg,
 			goArtist,
 			goMain,
 			goDetail,

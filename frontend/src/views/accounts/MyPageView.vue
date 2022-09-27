@@ -14,13 +14,33 @@
 						<div>Favorite Artwork</div>
 					</label>
 				</div>
-				<button class="move-button" @click="goOtherProfile">파도타기</button>
+				<div class="btn-box">
+					<button
+						class="move-button"
+						alt="upload-button"
+						id="upload-button"
+						data-bs-toggle="modal"
+						data-bs-target="#pictureModal"
+						v-if="state.myPage"
+					>
+						닉네임 수정
+					</button>
+					<button class="move-button" @click="goOtherProfile">파도타기</button>
+				</div>
 			</div>
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
 			</label>
+			<label for="my-picture" class="my-picture-top">
+				<div class="top">ᐱ</div>
+				<div>PHOTO CARD</div>
+			</label>
 			<label for="like-picture-all" class="like-picture-all">
 				<div>ALL Favorite Artwork</div>
+			</label>
+			<label for="like-picture" class="like-picture-top">
+				<div class="top">ᐱ</div>
+				<div>Favorite Artwork</div>
 			</label>
 			<div class="tab-inner">
 				<div class="tabs">
@@ -39,30 +59,140 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- 사진변환 Modal -->
+		<form>
+			<div
+				class="modal fade"
+				id="pictureModal"
+				tabindex="-1"
+				aria-labelledby="exampleModalLabel"
+				aria-hidden="true"
+			>
+				<div class="modal-dialog">
+					<div class="modal-content content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">닉네임 수정</h5>
+						</div>
+						<div class="modal-body">
+							<form action="">
+								<label for="user-nick-name">
+									<input
+										type="text"
+										id="user-nick-name"
+										:placeholder="state.nickName"
+										v-model="state.modifyNickName"
+									/>
+								</label>
+								<div id="btn-wrap">
+									<button
+										class="btn"
+										id="nick-name-check-btn"
+										type="submit"
+										@click.prevent="doubleCheck"
+									>
+										CHECK
+									</button>
+								</div>
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="submit"
+								class="change-button"
+								@click="modify"
+								v-if="state.success"
+							>
+								수정하기
+							</button>
+							<button
+								type="button"
+								class="change-button"
+								data-bs-dismiss="modal"
+							>
+								닫기
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
 </template>
 
 <script>
-// import { useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
+import { reactive, computed } from 'vue'
 import MyPageArtWork from '@/views/accounts/components/MyPageArtWork.vue'
 import MyPageArtWorkAll from '@/views/accounts/components/MyPageArtWorkAll.vue'
 import LikeArtWork from '@/views/accounts/components/LikeArtWork.vue'
 import LikeArtWorkAll from '@/views/accounts/components/LikeArtWorkAll.vue'
+import { useStore } from 'vuex'
+import axios from 'axios'
+import drf from '@/api/api'
 
 export default {
 	name: 'MyPageView',
 	components: { MyPageArtWork, LikeArtWork, MyPageArtWorkAll, LikeArtWorkAll },
 	setup() {
-		// const router = useRouter()
-		// const route = useRoute()
-		// const memberId = route.params.memberId
-		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * 38279)
-			// console.log(random)
-			location.href = `http://j7c104.p.ssafy.io/mypage/${random}`
+		const store = useStore()
+		const route = useRoute()
+		const state = reactive({
+			nickName: '',
+			modifyNickName: null,
+			success: false,
+			myPage: false,
+		})
+		const memberId = route.params.memberId
+		const userId = computed(() => store.getters.userId)
+		if (memberId == userId.value) {
+			state.myPage = true
 		}
+
+		const usersNumber = computed(() => store.getters.allUsers)
+		store.dispatch('getUsersNumber')
+		const goOtherProfile = function () {
+			const random = Math.floor(Math.random() * usersNumber.value) + 1
+			if (random !== userId.value) {
+				location.href = `http://localhost:3002/mypage/${random}`
+			}
+		}
+
+		store.dispatch('likeArtWorkList', memberId)
+		store.dispatch('getUserNickname', memberId)
+		state.nickName = computed(() => store.getters.userNickName)
+		const header = computed(() => store.getters.authHeader)
+
+		// 닉네임 중복검사
+		const doubleCheck = function () {
+			console.log(state.modifyNickName)
+			axios({
+				headers: header.value,
+				url: drf.auth.nickNameCheck(memberId),
+				method: 'post',
+				data: {
+					nickname: state.modifyNickName,
+				},
+			})
+				.then(() => {
+					alert('사용할 수 있는 닉네임입니다.')
+					state.success = true
+				})
+				.catch(err => {
+					console.log(err)
+					alert('사용할 수 없는 닉네임입니다.')
+				})
+		}
+
+		const modify = function () {
+			store.dispatch('modifyNickName', state.modifyNickName)
+		}
+
 		return {
+			state,
 			goOtherProfile,
+			doubleCheck,
+			modify,
 		}
 	},
 }
@@ -106,7 +236,7 @@ input[name='tabmenu'] {
 }
 
 .move-button {
-	margin-right: 25px;
+	margin-right: 10px;
 	align-items: center;
 	background-color: transparent;
 	border: 2px solid rgb(0, 0, 0, 0.2);
@@ -122,29 +252,41 @@ input[name='tabmenu'] {
 }
 
 .move-button:hover {
-	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	color: rgba(0, 0, 0);
 	border: 2px solid rgb(0, 0, 0);
 }
 
+.btn-box {
+	margin-right: 10px;
+}
+
 .my-picture-all,
-.like-picture-all {
+.like-picture-all,
+.my-picture-top,
+.like-picture-top {
 	display: none;
-	width: 100%;
 	text-align: center;
 	position: absolute;
 	bottom: 30px;
 	z-index: 1;
+	width: 100%;
 
 	font-family: 'Noto Sans', sans-serif;
 	font-weight: 600;
 	font-size: 20px;
-	color: rgb(0, 0, 0, 0.2);
+	color: rgb(220, 220, 220);
+}
+
+.top {
+	margin-bottom: -7px;
 }
 
 .my-picture-all:hover,
-.like-picture-all:hover {
+.like-picture-all:hover,
+.my-picture-top:hover,
+.like-picture-top:hover {
 	color: rgb(0, 0, 0);
 	cursor: pointer;
 }
@@ -154,7 +296,7 @@ input[id='my-picture-all']:checked ~ .tabmenu .my-picture,
 input[id='like-picture']:checked ~ .tabmenu .like-picture,
 input[id='like-picture-all']:checked ~ .tabmenu .like-picture {
 	color: rgb(0, 0, 0);
-	text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 	border-bottom: 2px solid black;
 }
 
@@ -187,7 +329,15 @@ input[id='my-picture']:checked ~ .my-picture-all {
 	display: block;
 }
 
+input[id='my-picture-all']:checked ~ .my-picture-top {
+	display: block;
+}
+
 input[id='like-picture']:checked ~ .like-picture-all {
+	display: block;
+}
+
+input[id='like-picture-all']:checked ~ .like-picture-top {
 	display: block;
 }
 
@@ -223,5 +373,53 @@ input[id='like-picture-all']:checked ~ .tab-inner .tabs {
 	background-color: rgb(0, 0, 0, 0.2);
 	border-radius: 10px;
 	box-shadow: inset 0px 0px 5px white;
+}
+
+/* Modal */
+.modal-dialog {
+	width: 40vw;
+	max-width: 40vw;
+}
+
+.content {
+	height: auto;
+	background-color: white;
+	padding: 20px;
+	border-radius: 20px;
+}
+
+.change-button {
+	border: none;
+	border-radius: 10px;
+	background-color: rgb(200, 200, 200);
+	color: white;
+	padding: 5px 10px;
+}
+
+.change-button:hover {
+	background-color: rgb(0, 0, 0);
+}
+
+#btn-wrap {
+	width: 100%;
+	text-align: end;
+	margin-top: 20px;
+}
+#nick-name-check-btn {
+	background: white;
+	color: black;
+	text-align: end;
+}
+input {
+	background-color: transparent;
+	border: none;
+	border-bottom: 1px solid rgb(0, 0, 0);
+	width: 100%;
+	color: rgb(0, 0, 0);
+	font-size: 20px;
+}
+input:focus {
+	outline: none;
+	background-color: transparent;
 }
 </style>

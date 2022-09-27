@@ -4,7 +4,7 @@
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend <br />
-					<h4>The Artist</h4>
+					<h4>The ARTIST</h4>
 				</h2>
 			</div>
 			<div class="img-wrapper">
@@ -40,7 +40,7 @@
 					</div>
 				</a>
 			</div>
-			<!-- <div class="img-wrapper">
+			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('Gustav Courbet')">
 						<img src="@/assets/artist/귀스타브쿠르베.png" alt="image" />
@@ -257,7 +257,7 @@
 						</div>
 					</div>
 				</a>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </template>

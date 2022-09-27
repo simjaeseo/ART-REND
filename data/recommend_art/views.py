@@ -57,9 +57,11 @@ def main_recommend_painting(request):
             user_recommend_painting.update(detail_recommend_painting)
 
         for paint in user_recommend_painting:
+            print(paint.recommended_painting_id)
             recommended_painting = RecommendedPainting()
             recommended_painting.member_id = user_decode['id']
             recommended_painting.painting = paint.recommended_painting_id
+            print(recommended_painting)
             recommended_painting.save()
         return HttpResponse(status=200)
     except:
@@ -68,21 +70,20 @@ def main_recommend_painting(request):
 @api_view(['POST'])
 def like_recommend_painting(request, pk):
     painting = Painting.objects.get(painting_id = pk)
-    # recommend_like_painting()
+    recommend_like_painting()
     item_sim_df = recommend_like_painting()
     like_rmd_lst = find_sim_painting_item(item_sim_df, painting.title, 20)
-    rmd_id_lst = set()
+    rmd_id_lst = []
     for rmd_title in like_rmd_lst:
         art = Painting.objects.get(title=rmd_title)
-        rmd_id_lst.add(art)
+        rmd_id_lst.append(art)
     if len(rmd_id_lst) < 20:
         recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=pk)
         for rmd_id in recommend_painting:
-            rmd_id_lst.add(rmd_id.recommended_painting_id)
+            rmd_id_lst.append(rmd_id)
             if len(rmd_id_lst) == 20:
                 break
-    rmd_id_lst = list(rmd_id_lst)
-    serializer = LikePaintSerailizer(rmd_id_lst, many=True)
+    serializer = LikePaintSerailizer(rmd_id_lst)
     return Response(serializer.data)
 
 

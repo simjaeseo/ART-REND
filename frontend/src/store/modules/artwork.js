@@ -52,8 +52,10 @@ export default {
 		},
 		SET_ARTIST_DETAIL(state, data) {
 			state.artistDetail = data
-			state.artistDetailBackImg = data[0].url
+			state.artistDetailBackImg = data[1].url
+			console.log('엥')
 			console.log(state.artistDetailBackImg)
+			console.log('엥')
 		},
 		SET_GENRE_DETAIL(state, data) {
 			state.genreDetail = data
@@ -179,6 +181,7 @@ export default {
 				},
 			})
 				.then(res => {
+					console.log(res)
 					commit('SET_ARTIST_DETAIL', res.data.data)
 				})
 				.catch(err => {

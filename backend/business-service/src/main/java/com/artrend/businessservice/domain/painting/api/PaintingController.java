@@ -13,10 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class PaintingController {
     private final Environment env;
 
     @GetMapping("/health_check")
-    public String check(){
+    public String check() {
         log.info("Server port={}", env.getProperty("local.server.port"));
 
         return String.format("This Service port is %s", env.getProperty("local.server.port"));
@@ -86,5 +87,19 @@ public class PaintingController {
     public ResponseEntity<? extends DataResponse> sortPaintings(PaintingCondition condition, Pageable pageable) {
         List<PaintingDto> paintings = paintingService.sortPaintings(condition, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
+    }
+
+    @PostMapping("/client")
+    public void api() {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+            headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            Object response = restTemplate.exchange("http://127.0.0.1:8000/api/v1/paintings/make_detail_recommend/", HttpMethod.GET, entity, Object.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

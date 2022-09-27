@@ -11,6 +11,7 @@ export default {
 		nickNameForm: memberId => `${HOST + AUTH}signup/${memberId}/nickname`,
 		nickNameCheck: memberId =>
 			`${HOST + AUTH}signup/${memberId}/nickname/duplicate`,
+		logout: () => `${HOST + AUTH}logout`,
 	},
 	business: {
 		select: () => `${HOST + BUSINESS}api/select`,

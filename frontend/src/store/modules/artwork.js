@@ -128,13 +128,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_HITS_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_HITS_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getLikes({ getters, commit }, hits) {
 			axios({
@@ -144,13 +140,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_LIKES_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_LIKES_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getTrans({ getters, commit }, hits) {
 			axios({
@@ -160,13 +152,9 @@ export default {
 				params: {
 					type: hits,
 				},
+			}).then(res => {
+				commit('SET_TRANS_LIST', res.data.data)
 			})
-				.then(res => {
-					commit('SET_TRANS_LIST', res.data.data)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getArtisDetail({ getters, commit }, name) {
 			axios({
@@ -179,6 +167,8 @@ export default {
 					size: '20',
 					sort: 'DESC',
 				},
+			}).then(res => {
+				commit('SET_ARTIST_DETAIL', res.data.data)
 			})
 				.then(res => {
 					console.log(res)

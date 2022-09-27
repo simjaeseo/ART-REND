@@ -269,7 +269,6 @@ export default {
 	setup() {
 		const router = useRouter()
 		const goDetail = function (name) {
-			console.log(name)
 			router.push({ name: 'ArtistDetailPage', params: { name: name } })
 		}
 		return {

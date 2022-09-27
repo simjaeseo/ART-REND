@@ -1,6 +1,10 @@
 <template>
 	<div class="external">
-		<div class="horizontal-scroll-wrapper">
+		<div
+			class="horizontal-scroll-wrapper"
+			id="main"
+			@scroll.prevent="getScroll()"
+		>
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend, <br />
@@ -52,6 +56,7 @@
 </template>
 
 <script>
+import { useStore } from 'vuex'
 import { reactive } from 'vue'
 
 export default {
@@ -60,8 +65,29 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
+		const store = useStore()
+
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+
+			// ART-REND color
+			if (x >= 4393) {
+				store.commit('SET_COLOR1', true)
+			} else {
+				store.commit('SET_COLOR1', false)
+			}
+			// 햄버거 color
+			if (x >= 3332) {
+				store.commit('SET_COLOR2', true)
+			} else {
+				store.commit('SET_COLOR2', false)
+			}
+		}
+
 		return {
 			state,
+			getScroll,
 		}
 	},
 }

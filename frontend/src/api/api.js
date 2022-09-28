@@ -8,12 +8,13 @@ export default {
 	auth: {
 		kakaoLogin: () => `${HOST + AUTH}oauth2/authorization/kakao`,
 		googleLogin: () => `${HOST + AUTH}oauth2/authorization/google`,
-		nickNameForm: memberId => `${HOST + AUTH}signup/${memberId}/nickname`,
+		memberInfo: () => `${HOST + AUTH}api/signup/members/info`,
+		nickNameForm: memberId => `${HOST + AUTH}api/signup/${memberId}/nickname`,
 		nickNameCheck: memberId =>
-			`${HOST + AUTH}signup/${memberId}/nickname/duplicate`,
-		logout: () => `${HOST + AUTH}logout`,
-		getUsersNumber: () => `${HOST + AUTH}members/count`,
-		getUserNickname: memberId => `${HOST + AUTH}${memberId}/nickname`,
+			`${HOST + AUTH}api/signup/${memberId}/nickname/duplicate`,
+		logout: () => `${HOST + AUTH}api/logout`,
+		getUsersNumber: () => `${HOST + AUTH}api/members/count`,
+		getUserNickname: memberId => `${HOST + AUTH}api/${memberId}/nickname`,
 	},
 	business: {
 		select: () => `${HOST + BUSINESS}api/select`,

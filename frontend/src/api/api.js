@@ -15,6 +15,8 @@ export default {
 		logout: () => `${HOST + AUTH}api/logout`,
 		getUsersNumber: () => `${HOST + AUTH}api/members/count`,
 		getUserNickname: memberId => `${HOST + AUTH}api/${memberId}/nickname`,
+		beforeUnregister: memberId => `${HOST + AUTH}api/${memberId}/check`,
+		unRegister: memberId => `${HOST + AUTH}api/withdrawal/${memberId}`,
 	},
 	business: {
 		select: () => `${HOST + BUSINESS}api/select`,

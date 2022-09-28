@@ -70,7 +70,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             }
         }
 
-        String url = makeRedirectUrl(provider ,providerId, isExisted, isSelectPainting,isNickname );
+        String url = makeRedirectUrl(provider ,providerId, isExisted, isSelectPainting,isNickname, findMember );
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -79,7 +79,21 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String provider, String providerId, boolean isExisted, boolean isSelectPainting, boolean isNickname) {
+    private String makeRedirectUrl(String provider, String providerId, boolean isExisted, boolean isSelectPainting, boolean isNickname, Optional<Member> findMember) {
+
+        if(isExisted == true && isSelectPainting == true && isNickname == true){
+            String accessToken = tokenProvider.createToken(providerId, findMember.get().getId());
+
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                    .queryParam("provider", provider)
+                    .queryParam("providerId", providerId)
+                    .queryParam("isExisted",isExisted)
+                    .queryParam("isSelectPainting",isSelectPainting)
+                    .queryParam("isNickname",isNickname)
+                    .queryParam("accessToken",accessToken)
+                    .build().toUriString();
+        }
+
 
         return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("provider", provider)
@@ -87,7 +101,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .queryParam("isExisted",isExisted)
                 .queryParam("isSelectPainting",isSelectPainting)
                 .queryParam("isNickname",isNickname)
-//                .queryParam("name", oAuthName)
                 .build().toUriString();
     }
 //    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {

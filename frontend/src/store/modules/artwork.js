@@ -82,9 +82,11 @@ export default {
 				method: 'get',
 			})
 				.then(res => {
+					console.log(res)
 					commit('SET_DETAIL_DATA', res.data.data)
 				})
-				.catch(() => {
+				.catch(err => {
+					console.log(err)
 					alert('존재하지 않는 데이터입니다.')
 				})
 		},

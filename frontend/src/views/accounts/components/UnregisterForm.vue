@@ -69,7 +69,7 @@ export default {
 		const isSix = function () {
 			const name_pattern = /^[가-힣]{2,5}$/
 			const date_pattern =
-				/^(19|20)\d{2}([1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
+				/^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
 			if (
 				!date_pattern.test(state.userBirthday) ||
 				!name_pattern.test(state.userName)
@@ -82,9 +82,7 @@ export default {
 				date_pattern.test(state.userBirthday) &&
 				name_pattern.test(state.userName)
 			) {
-				const next = confirm(
-					`${state.userName} ${state.userBirthday} 로 가입하시겠습니까?`,
-				)
+				const next = true
 				if (next == true) {
 					state.next = true
 				} else {
@@ -97,8 +95,8 @@ export default {
 		const authHeader = computed(() => store.getters.authHeader)
 		const memberInfo = function () {
 			axios({
-				headers: authHeader,
-				url: drf.auth.beforeUnregister(memberId),
+				headers: authHeader.value,
+				url: drf.auth.beforeUnregister(memberId.value),
 				method: 'post',
 				data: {
 					name: state.userName,
@@ -112,8 +110,8 @@ export default {
 					)
 					if (result == true) {
 						axios({
-							headers: authHeader,
-							url: drf.auth.unRegister(memberId),
+							headers: authHeader.value,
+							url: drf.auth.unRegister(memberId.value),
 							method: 'delete',
 						})
 							.then(res => {

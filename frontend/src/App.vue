@@ -83,6 +83,11 @@
 							<li class="nav-item2">
 								<p @click="logout()">LOGOUT</p>
 							</li>
+							<li class="nav-item2">
+								<a href="http://localhost:3002/unregister" id="withdraw">
+									<p>WITHDRAW</p>
+								</a>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -243,5 +248,13 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+#withdraw {
+	color: gray;
+	font-size: 20px;
 }
 </style>

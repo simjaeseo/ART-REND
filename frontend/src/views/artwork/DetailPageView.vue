@@ -4,7 +4,7 @@
 			<div id="img-wrap">
 				<div class="img-box">
 					<img
-						:src="detailData.url"
+						:src="detailData.painting.url"
 						alt="img"
 						id="selected-img"
 						@click="getImageModal"
@@ -19,20 +19,20 @@
 						data-bs-target="#pictureModal"
 					/>
 					<img
-						v-if="detailData.isLiked === true"
+						v-if="detailData.painting.isLiked === true"
 						src="@/assets/like.png"
 						alt="unlike-button"
 						id="unlike-button"
 						@click.prevent="likeArtWork"
 					/>
 					<img
-						v-if="detailData.isLiked === false"
+						v-if="detailData.painting.isLiked === false"
 						src="@/assets/unlike.png"
 						alt="like-button"
 						id="like-button"
 						@click.prevent="likeArtWork"
 					/>
-					<div>{{ detailData.totalLikeCount }}</div>
+					<div>{{ detailData.painting.totalLikeCount }}</div>
 				</div>
 			</div>
 			<div id="background-div">
@@ -40,37 +40,45 @@
 					<div class="horizontal-scroll-wrapper">
 						<div id="img-title-wrap">
 							<div class="title-wrapper">
-								<h1 id="img-title">{{ detailData.title }}</h1>
-								<h5 id="img-title2">{{ detailData.koreanTitle }}</h5>
-								<h4 id="img-title3">{{ detailData.artist }}</h4>
+								<h1 id="img-title">{{ detailData.painting.title }}</h1>
+								<h5 id="img-title2">{{ detailData.painting.koreanTitle }}</h5>
+								<h4 id="img-title3">{{ detailData.painting.artist }}</h4>
 								<hr />
 								<div>
 									<span id="description-cell">Place</span>
-									<span id="description-inner">{{ detailData.place }} </span>
+									<span id="description-inner"
+										>{{ detailData.painting.place }}
+									</span>
 								</div>
 								<div>
 									<span id="description-cell">Genre</span>
-									<span id="description-inner">{{ detailData.genre }} </span>
+									<span id="description-inner"
+										>{{ detailData.painting.genre }}
+									</span>
 								</div>
 								<div>
 									<span id="description-cell">Date</span>
-									<span id="description-inner">{{ detailData.year }}</span>
+									<span id="description-inner">{{
+										detailData.painting.year
+									}}</span>
 								</div>
 								<div>
 									<span id="description-cell">Oil on Canvas</span>
-									<span id="description-inner">{{ detailData.medium }} </span>
+									<span id="description-inner"
+										>{{ detailData.painting.medium }}
+									</span>
 								</div>
 								<div>
 									<span id="description-cell">Dimensions</span>
 									<span id="description-inner">{{
-										detailData.dimensions
+										detailData.painting.dimensions
 									}}</span>
 								</div>
 							</div>
 							<div class="title-wrapper">
 								<span id="description-cell2">Description</span>
 								<p id="description-inner2">
-									{{ detailData.description }}
+									{{ detailData.painting.description }}
 								</p>
 							</div>
 							<div class="title-wrapper2">

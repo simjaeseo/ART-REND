@@ -11,6 +11,7 @@ export default {
 		userNickName: '',
 		provider: null,
 		providerId: null,
+		isExisted: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -48,6 +49,10 @@ export default {
 		SET_PROVIDER_ID(state, providerId) {
 			state.providerId = providerId
 			console.log(state.providerId)
+		},
+		SET_USER_IS_EXISTED(state, data) {
+			state.isExisted = data
+			console.log(state.isExisted)
 		},
 	},
 	actions: {

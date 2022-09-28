@@ -12,7 +12,7 @@ export default {
 		nickNameForm: memberId => `${HOST + AUTH}api/signup/${memberId}/nickname`,
 		nickNameCheck: memberId =>
 			`${HOST + AUTH}api/signup/${memberId}/nickname/duplicate`,
-		logout: () => `${HOST + AUTH}api/logout`,
+		logout: () => `${HOST + AUTH}/logout`,
 		getUsersNumber: () => `${HOST + AUTH}api/members/count`,
 		getUserNickname: memberId => `${HOST + AUTH}api/${memberId}/nickname`,
 		beforeUnregister: memberId => `${HOST + AUTH}api/${memberId}/check`,

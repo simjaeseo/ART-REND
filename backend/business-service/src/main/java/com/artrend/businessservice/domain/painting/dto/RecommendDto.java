@@ -22,4 +22,9 @@ public class RecommendDto {
         this.painting = painting;
         this.recommendedList = recommendedList.getBody();
     }
+
+    public RecommendDto(PaintingDto painting, Object object) {
+        this.painting = painting;
+        this.recommendedList = object;
+    }
 }

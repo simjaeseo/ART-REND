@@ -11,7 +11,7 @@ def make_recommend_art(df, art_title, weight_cosine_sim, top=20):
     sim_index = sim_index[sim_index != target_art_idx]
 
     result = df.iloc[sim_index][:top]
-    result = result[['painting_id','title']]
+    result = result[['paintingId','title']]
     return result
 
 def art_recommend(top):
@@ -23,7 +23,7 @@ def art_recommend(top):
     
     # genre_lst = set():
     #     for genre
-    artist_df['weight'] = artist_df['art_trend'] + ' ' + artist_df['genre']
+    artist_df['weight'] = artist_df['artTrend'] + ' ' + artist_df['genre']
     artist_df = artist_df.reset_index()
     
     count_vector = CountVectorizer(ngram_range=(1,3))
@@ -39,8 +39,8 @@ def art_recommend(top):
         try:
             recommend_art = make_recommend_art(artist_df, title, weight_cosine_sim, top)
             
-            for art_id in recommend_art['painting_id']:
-                a = Painting.objects.get(painting_id=art_id)
+            for art_id in recommend_art['paintingId']:
+                a = Painting.objects.get(paintingId=art_id)
                 paint = painting
 
                 detail = DetailRecommendedPainting(detail_recommended_painting_id= idx)

@@ -1,11 +1,13 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
+import com.artrend.businessservice.domain.painting.dto.RecommendDto;
 import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
+import com.artrend.businessservice.global.common.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,9 +17,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -59,8 +59,8 @@ public class PaintingController {
     @GetMapping("/{painting_id}/{member_id}")
     public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
                                                                @PathVariable("member_id") Long memberId) {
-        PaintingDto findPainting = paintingService.findPainting(paintingId, memberId);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(findPainting));
+        RecommendDto result = paintingService.findPainting(paintingId, memberId);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(result));
     }
 
     @Operation(summary = "그림 장르별 조회", description = "genre, artTrend, artist 별로 그림을 조회할 수 있습니다.")
@@ -89,17 +89,16 @@ public class PaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
     }
 
-    @PostMapping("/client")
-    public void api() {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-            headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
-            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-            Object response = restTemplate.exchange("http://127.0.0.1:8000/api/v1/paintings/make_detail_recommend/", HttpMethod.GET, entity, Object.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @Operation(summary = "그림선택후 후 메인 그림 추천받기(구현중)", description = "그림 선택 후 회원가입시 메인 페이지 그림들은 추천 받음")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+    })
+    @GetMapping("/main")
+    public ResponseEntity<? extends MessageResponse> getMainPaintings(@RequestHeader HttpHeaders headers) {
+        paintingService.getMainPaintings(headers);
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
     }
 }

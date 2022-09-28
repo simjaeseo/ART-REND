@@ -37,7 +37,7 @@ def index(request):
     return Response(serializer.data)
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def recommend_detail_painting(request):
     try:
         art_recommend(10)
@@ -45,7 +45,7 @@ def recommend_detail_painting(request):
     except:
         return HttpResponse(status=404)
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def main_recommend_painting(request):
     try:
         user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
@@ -65,7 +65,7 @@ def main_recommend_painting(request):
     except:
         return HttpResponse(status=403)
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def like_recommend_painting(request, pk):
     painting = Painting.objects.get(painting_id = pk)
     # recommend_like_painting()

@@ -50,9 +50,11 @@
 
 <script>
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 import { reactive, computed } from 'vue'
 import axios from 'axios'
 import drf from '@/api/api'
+import jwt_decode from 'jwt-decode'
 
 export default {
 	name: 'InfoForm',
@@ -63,6 +65,7 @@ export default {
 			next: false,
 		})
 		const store = useStore()
+		const router = useRouter()
 		const isSix = function () {
 			const name_pattern = /^[가-힣]{2,5}$/
 			const date_pattern =
@@ -89,12 +92,14 @@ export default {
 				}
 			}
 		}
-
+		const data = {
+			isExisted: true,
+			isNickName: null,
+			isSelected: null,
+		}
 		const provider = computed(() => store.getters.provider)
 		const providerId = computed(() => store.getters.providerId)
 		const memberInfo = function () {
-			console.log(provider)
-			console.log(providerId)
 			axios({
 				url: drf.auth.memberInfo(),
 				method: 'post',
@@ -105,8 +110,25 @@ export default {
 					providerId: providerId.value,
 				},
 			})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
+				.then(res => {
+					const isNickName = res.data.data.isNickname
+					const isSelected = res.data.data.isSelectPainting
+					data.isNickName = isNickName
+					data.isSelected = isSelected
+					const token = res.data.data.accessToken
+					const decodeAccessToken = jwt_decode(token)
+					store.commit('SET_USER_ID', decodeAccessToken.id)
+					store.dispatch('saveToken', token)
+					store.commit('SET_USER_IS_EXISTED', data)
+					if (data.isNickName == false && data.isSelected == false) {
+						router.push({ name: 'SignUp' })
+					} else if (data.isNickName == true && data.isSelected == false) {
+						router.push({ name: 'SelectImage' })
+					} else if (data.isNickName == true && data.isSelected == true) {
+						router.push({ name: 'Main' })
+					}
+				})
+				.catch(() => alert('서비스가 비정상적입니다.'))
 		}
 		return {
 			isSix,

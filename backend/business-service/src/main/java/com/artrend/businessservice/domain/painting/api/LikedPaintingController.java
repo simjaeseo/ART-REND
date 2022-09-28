@@ -35,8 +35,8 @@ public class LikedPaintingController {
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
             @RequestBody @Valid MemberDto memberDto) throws IOException {
-        likedPaintingService.like(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(memberDto));
+        ResponseEntity<Object> result = likedPaintingService.like(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result.getBody()));
     }
 
     @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다.")

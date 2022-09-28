@@ -167,9 +167,10 @@ export default {
 					size: '20',
 					sort: 'DESC',
 				},
-			}).then(res => {
-				commit('SET_ARTIST_DETAIL', res.data.data)
 			})
+				.then(res => {
+					commit('SET_ARTIST_DETAIL', res.data.data)
+				})
 				.then(res => {
 					console.log(res)
 					commit('SET_ARTIST_DETAIL', res.data.data)

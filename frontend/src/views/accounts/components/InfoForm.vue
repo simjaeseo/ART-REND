@@ -3,7 +3,7 @@
 		<div id="wrap1">
 			<div id="wrap2">
 				<div id="wrap3">
-					<h2 id="text1">Please enter your Name And Birthday.</h2>
+					<h2 id="text1">For Sign up, Please enter your Name And Birthday.</h2>
 				</div>
 				<div>
 					<form @submit.prevent="signupForm">
@@ -66,7 +66,7 @@ export default {
 		const isSix = function () {
 			const name_pattern = /^[가-힣]{2,5}$/
 			const date_pattern =
-				/^(19|20)\d{2}([1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
+				/^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
 			if (
 				!date_pattern.test(state.userBirthday) ||
 				!name_pattern.test(state.userName)
@@ -89,17 +89,20 @@ export default {
 				}
 			}
 		}
+
 		const provider = computed(() => store.getters.provider)
 		const providerId = computed(() => store.getters.providerId)
 		const memberInfo = function () {
+			console.log(provider)
+			console.log(providerId)
 			axios({
 				url: drf.auth.memberInfo(),
 				method: 'post',
 				data: {
 					name: state.userName,
 					birth: state.userBirthday,
-					provider: provider,
-					providerId: providerId,
+					provider: provider.value,
+					providerId: providerId.value,
 				},
 			})
 				.then(res => console.log(res))

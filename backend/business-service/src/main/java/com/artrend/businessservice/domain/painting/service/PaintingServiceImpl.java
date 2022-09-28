@@ -2,6 +2,7 @@ package com.artrend.businessservice.domain.painting.service;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendDto;
 import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
@@ -15,13 +16,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,11 +33,11 @@ public class PaintingServiceImpl implements PaintingService {
     private final static String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final WebClient webClient;
+    private final LikedPaintingService likedPaintingService;
 
     @Override
     @Transactional
-    public PaintingDto findPainting(Long paintingId, Long memberId) {
+    public RecommendDto findPainting(Long paintingId, Long memberId) {
         Painting findPainting = paintingRepository
                 .findById(paintingId)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
@@ -54,7 +55,15 @@ public class PaintingServiceImpl implements PaintingService {
         }
 
         findPainting.updateHits();
-        return new PaintingDto(findPainting, isLiked);
+
+        ResponseEntity<Object> objectResponseEntity = null;
+
+        if (isLiked == true) {
+            objectResponseEntity = likedPaintingService.recommendRequestV2(likedPainting.get().getId());
+            return new RecommendDto(new PaintingDto(findPainting, true), objectResponseEntity);
+        }
+
+        return new RecommendDto(new PaintingDto(findPainting, false));
     }
 
     @Override
@@ -97,12 +106,13 @@ public class PaintingServiceImpl implements PaintingService {
         return result;
     }
 
-    public Mono<PaintingDto> getPaintings() {
-        return webClient.mutate()
-                .build()
-                .get()
-                .uri("http://127.0.0.1:8000/api/v1/paintings/make_detail_recommend/")
-                .retrieve()
-                .bodyToMono(PaintingDto.class);
+    @Override
+    public void getMainPaintings(HttpHeaders requestHeader) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        restTemplate.exchange("http://127.0.0.1:8000/api/v1/paintings/main_recommend_painting/", HttpMethod.POST, entity, Object.class);
     }
 }

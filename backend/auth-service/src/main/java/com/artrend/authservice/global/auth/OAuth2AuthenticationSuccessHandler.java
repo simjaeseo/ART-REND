@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -35,19 +36,25 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         System.out.println("oAuth2User.getAttributes() "+ oAuth2User.getAttributes());
         String providerId = "";
-        Member findMember = null;
+        Optional<Member> findMember = null;
 
         // 토큰 발급하기위해서는 memberId를 알아야하지만, 카카오로 로그인했는지, 구글로 로그인했는지 모르기때문에 if문으로 나누기
         // 카카오로 로그인했을때
         if( oAuth2User.getAttributes().get("id") == null){
             providerId = oAuth2User.getAttributes().get("sub").toString();
-            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByGoogleProviderId(providerId);
         }else{
             providerId = oAuth2User.getAttributes().get("id").toString();
-            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByKakaoProviderId(providerId);
         }
 
-        String url = makeRedirectUrl(String.valueOf(oAuth2User.getAttributes().get("provider")) ,providerId, String.valueOf(oAuth2User.getAttributes().get("name")));
+        boolean isExisted = false;
+        if(findMember.isPresent()){
+            // 멤버가 존재하면
+            isExisted = true;
+        }
+
+        String url = makeRedirectUrl(String.valueOf(oAuth2User.getAttributes().get("provider")) ,providerId, String.valueOf(oAuth2User.getAttributes().get("name")), isExisted);
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -56,11 +63,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String provider, String providerId, String oAuthName) {
+    private String makeRedirectUrl(String provider, String providerId, String oAuthName, boolean isExisted) {
 
-        return UriComponentsBuilder.fromUriString("http://localhost:3002/oauth")
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("provider", provider)
                 .queryParam("providerId", providerId)
+                .queryParam("isExisted",isExisted)
 //                .queryParam("name", oAuthName)
                 .build().toUriString();
     }

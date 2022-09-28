@@ -1,6 +1,13 @@
 package com.artrend.authservice.dto.kafka;
 
-public class KafkaMemberDto {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+import java.io.Serializable;
+
+@Data
+@AllArgsConstructor
+public class KafkaMemberDto implements Serializable {
     private Schema schema;
     private MemberPayload payload;
 }

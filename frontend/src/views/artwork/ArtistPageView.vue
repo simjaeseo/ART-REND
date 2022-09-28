@@ -236,7 +236,7 @@
 					</div>
 				</a>
 			</div>
-			<!-- <div class="img-wrapper">
+			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail('Paul Signac')">
 						<img src="@/assets/artist/폴시냑.png" alt="image" />
@@ -246,7 +246,7 @@
 						</div>
 					</div>
 				</a>
-			</div> -->
+			</div>
 		</div>
 	</div>
 </template>

@@ -17,6 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +29,10 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 @Slf4j
 public class PaintingServiceImpl implements PaintingService {
+    private final static String BASE_URL = "http://127.0.0.1:8000/api/v1/paintings/";
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
+    private final WebClient webClient;
 
     @Override
     @Transactional
@@ -91,5 +95,14 @@ public class PaintingServiceImpl implements PaintingService {
                 .collect(Collectors.toList());
 
         return result;
+    }
+
+    public Mono<PaintingDto> getPaintings() {
+        return webClient.mutate()
+                .build()
+                .get()
+                .uri("http://127.0.0.1:8000/api/v1/paintings/make_detail_recommend/")
+                .retrieve()
+                .bodyToMono(PaintingDto.class);
     }
 }

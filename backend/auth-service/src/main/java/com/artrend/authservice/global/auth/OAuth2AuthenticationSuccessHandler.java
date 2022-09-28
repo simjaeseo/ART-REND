@@ -41,10 +41,10 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // 카카오로 로그인했을때
         if( oAuth2User.getAttributes().get("id") == null){
             providerId = oAuth2User.getAttributes().get("sub").toString();
-            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+//            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
         }else{
             providerId = oAuth2User.getAttributes().get("id").toString();
-            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+//            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
         }
 
         String url = makeRedirectUrl(String.valueOf(oAuth2User.getAttributes().get("provider")) ,providerId, String.valueOf(oAuth2User.getAttributes().get("name")));
@@ -58,7 +58,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private String makeRedirectUrl(String provider, String providerId, String oAuthName) {
 
-        return UriComponentsBuilder.fromUriString("http://localhost:3002/oauth")
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("provider", provider)
                 .queryParam("providerId", providerId)
 //                .queryParam("name", oAuthName)

@@ -1,6 +1,8 @@
 package com.artrend.authservice.global.auth;
 
+import com.artrend.authservice.client.BusinessServiceClient;
 import com.artrend.authservice.domain.Member;
+import com.artrend.authservice.dto.PaintingDtoDataResponse;
 import com.artrend.authservice.global.jwt.TokenProvider;
 import com.artrend.authservice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     private final Environment env;
-
+    private final BusinessServiceClient businessServiceClient;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -35,6 +37,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
         System.out.println("oAuth2User.getAttributes() "+ oAuth2User.getAttributes());
+        String provider = String.valueOf(oAuth2User.getAttributes().get("provider"));
         String providerId = "";
         Optional<Member> findMember = null;
 
@@ -49,12 +52,25 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         }
 
         boolean isExisted = false;
+        boolean isSelectPainting = false;
+        boolean isNickname = false;
+
         if(findMember.isPresent()){
             // 멤버가 존재하면
             isExisted = true;
+
+            if(findMember.get().getNickname() != null){
+                isNickname = true;
+            }
+
+            PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMember.get().getId());
+            // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+            if (!paintingDtoDataResponse.getData().toString().equals("[]")) {
+                isSelectPainting = true;
+            }
         }
 
-        String url = makeRedirectUrl(String.valueOf(oAuth2User.getAttributes().get("provider")) ,providerId, String.valueOf(oAuth2User.getAttributes().get("name")), isExisted);
+        String url = makeRedirectUrl(provider ,providerId, isExisted, isSelectPainting,isNickname );
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -63,12 +79,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String provider, String providerId, String oAuthName, boolean isExisted) {
+    private String makeRedirectUrl(String provider, String providerId, boolean isExisted, boolean isSelectPainting, boolean isNickname) {
 
         return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("provider", provider)
                 .queryParam("providerId", providerId)
                 .queryParam("isExisted",isExisted)
+                .queryParam("isSelectPainting",isSelectPainting)
+                .queryParam("isNickname",isNickname)
 //                .queryParam("name", oAuthName)
                 .build().toUriString();
     }

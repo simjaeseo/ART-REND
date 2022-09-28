@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -48,9 +47,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
         }
 
-        String accessToken = tokenProvider.createToken(providerId, findMember.getId());
-
-        String url = makeRedirectUrl(accessToken, oAuth2User);
+        String url = makeRedirectUrl(String.valueOf(oAuth2User.getAttributes().get("provider")) ,providerId, String.valueOf(oAuth2User.getAttributes().get("name")));
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -59,27 +56,35 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+    private String makeRedirectUrl(String provider, String providerId, String oAuthName) {
 
-        if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", true)
-                    .queryParam("isNickname", true)
-                    .build().toUriString();
-        }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", false)
-                    .queryParam("isNickname", true)
-                    .build().toUriString();
-        }else {
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", false)
-                    .queryParam("isNickname", false)
-                    .build().toUriString();
-        }
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/oauth")
+                .queryParam("provider", provider)
+                .queryParam("providerId", providerId)
+//                .queryParam("name", oAuthName)
+                .build().toUriString();
     }
+//    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+//
+//        if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", true)
+//                    .queryParam("isNickname", true)
+//                    .build().toUriString();
+//        }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", false)
+//                    .queryParam("isNickname", true)
+//                    .build().toUriString();
+//        }else {
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", false)
+//                    .queryParam("isNickname", false)
+//                    .build().toUriString();
+//        }
+//    }
 
 }

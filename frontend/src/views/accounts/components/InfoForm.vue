@@ -36,7 +36,7 @@
 								CHECK
 							</button>
 						</div>
-						<div id="btn-wrap" v-if="state.next">
+						<div id="btn-wrap" v-if="state.next" @click="memberInfo">
 							<button class="btn" id="nick-name-check-btn" type="submit">
 								SIGN UP
 							</button>
@@ -49,8 +49,10 @@
 </template>
 
 <script>
-// import { useStore } from 'vuex'
-import { reactive } from 'vue'
+import { useStore } from 'vuex'
+import { reactive, computed } from 'vue'
+import axios from 'axios'
+import drf from '@/api/api'
 
 export default {
 	name: 'InfoForm',
@@ -60,11 +62,11 @@ export default {
 			userBirthday: '',
 			next: false,
 		})
-		// const store = useStore()
+		const store = useStore()
 		const isSix = function () {
 			const name_pattern = /^[가-힣]{2,5}$/
 			const date_pattern =
-				/^(19|20)\d{2}(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
+				/^(19|20)\d{2}([1-9]|1[012])(0[1-9]|[12][0-9]|3[0-1])$/
 			if (
 				!date_pattern.test(state.userBirthday) ||
 				!name_pattern.test(state.userName)
@@ -87,9 +89,26 @@ export default {
 				}
 			}
 		}
+		const provider = computed(() => store.getters.provider)
+		const providerId = computed(() => store.getters.providerId)
+		const memberInfo = function () {
+			axios({
+				url: drf.auth.memberInfo(),
+				method: 'post',
+				data: {
+					name: state.userName,
+					birth: state.userBirthday,
+					provider: provider,
+					providerId: providerId,
+				},
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+		}
 		return {
 			isSix,
 			state,
+			memberInfo,
 		}
 	},
 }

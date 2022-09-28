@@ -1,6 +1,7 @@
 package com.artrend.authservice.api;
 
 import com.artrend.authservice.domain.Member;
+import com.artrend.authservice.dto.request.MemberInfoCheckRequest;
 import com.artrend.authservice.dto.request.MemberInfoRequest;
 import com.artrend.authservice.dto.request.NicknameRequest;
 import com.artrend.authservice.dto.response.SelectNicknameResponse;
@@ -102,6 +103,20 @@ public class MemberController {
         memberService.memberWithdrawal(memberId);
 
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse<>("회원탈퇴가 완료되었습니다."));
+    }
+
+    @Operation(summary = "이름, 생년월일로 본인인증하기", description = "해당 회원의 이름, 생년월일로 본인인증을 진행합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "닉네임 조회 완료"),
+            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원입니다."),
+            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+    })
+    @PostMapping("/{memberId}/check")
+    public ResponseEntity checkMember(@PathVariable Long memberId, @RequestBody MemberInfoCheckRequest memberInfoCheckRequest) throws NoSuchAlgorithmException {
+        memberService.checkMember(memberId, memberInfoCheckRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse("본인 인증 완료"));
     }
 
     @Operation(summary = "닉네임 조회하기", description = "해당 회원의 닉네임을 조회합니다.")

@@ -6,8 +6,6 @@ import lombok.Data;
 @Data
 @Builder
 public class MemberPayload {
-    private Long id;
-
     private String name;
 
     private String nickname;
@@ -19,4 +17,5 @@ public class MemberPayload {
     private String google_provider;
 
     private String google_provider_id;
+    private String di;
 }

@@ -3,6 +3,7 @@ package com.artrend.authservice.service;
 import com.artrend.authservice.client.BusinessServiceClient;
 import com.artrend.authservice.domain.Member;
 import com.artrend.authservice.dto.PaintingDtoDataResponse;
+import com.artrend.authservice.dto.request.MemberInfoCheckRequest;
 import com.artrend.authservice.dto.request.MemberInfoRequest;
 import com.artrend.authservice.dto.request.NicknameRequest;
 import com.artrend.authservice.exception.MemberException;
@@ -70,6 +71,17 @@ public class MemberService {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
 
         return findMember.getNickname();
+    }
+
+    public void checkMember(Long memberId, MemberInfoCheckRequest memberInfoCheckRequest) throws MemberException, NoSuchAlgorithmException {
+        String name = memberInfoCheckRequest.getName();
+        String birth = memberInfoCheckRequest.getBirth();
+
+        SHA256 sha256 = new SHA256();
+        String di = sha256.getDI(name + birth);
+
+        Member findMember = memberRepository.findByDi(di).orElseThrow(() -> new MemberException(MemberExceptionType.NOT_FOUND_MEMBER));
+
     }
 
     public Map<String, Object> insertMemberInfo(MemberInfoRequest memberInfoRequest) throws NoSuchAlgorithmException {

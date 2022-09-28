@@ -9,6 +9,8 @@ export default {
 		likeArtWorkList: [],
 		allUsers: 0,
 		userNickName: '',
+		provider: null,
+		providerId: null,
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -17,6 +19,8 @@ export default {
 		likeArtWorkList: state => state.likeArtWorkList,
 		allUsers: state => state.allUsers,
 		userNickName: state => state.userNickName,
+		provider: state => state.provider,
+		providerId: state => state.providerId,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -36,6 +40,14 @@ export default {
 		},
 		SET_USER_NICKNAME(state, nickname) {
 			state.userNickName = nickname
+		},
+		SET_PROVIDER(state, provider) {
+			state.provider = provider
+			console.log(state.provider)
+		},
+		SET_PROVIDER_ID(state, providerId) {
+			state.providerId = providerId
+			console.log(state.providerId)
 		},
 	},
 	actions: {

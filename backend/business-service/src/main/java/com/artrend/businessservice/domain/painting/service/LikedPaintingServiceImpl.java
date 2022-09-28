@@ -2,7 +2,6 @@ package com.artrend.businessservice.domain.painting.service;
 
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
-import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import com.artrend.businessservice.domain.painting.entity.Painting;
@@ -19,7 +18,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
@@ -37,7 +35,6 @@ import java.util.stream.Collectors;
 public class LikedPaintingServiceImpl implements LikedPaintingService {
     private final PaintingRepository paintingRepository;
     private final LikedPaintingRepository likedPaintingRepository;
-    private final WebClient webClient;
 
     @Override
     @Transactional

@@ -36,7 +36,7 @@ public class LikedPaintingController {
     public ResponseEntity<? extends DataResponse> like(
             @RequestBody @Valid MemberDto memberDto) throws IOException {
         ResponseEntity<Object> result = likedPaintingService.like(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result.getBody()));
     }
 
     @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다.")
@@ -59,7 +59,6 @@ public class LikedPaintingController {
                     "parameter - size : 한 번에 조회할 그림의 개수\n" +
                     "parameter - page : 조회할 페이지(시작 인덱스 : 0)")
     })
-
     @GetMapping
     public ResponseEntity<? extends DataResponse> findLikedPaintings(Long memberId, Pageable pageable) {
         List<LikedPaintingDto> likedPaintings = likedPaintingService.findLikedPaintings(memberId, pageable);

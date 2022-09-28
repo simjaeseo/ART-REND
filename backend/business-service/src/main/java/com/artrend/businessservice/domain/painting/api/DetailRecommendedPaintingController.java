@@ -9,8 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,4 +38,18 @@ public class DetailRecommendedPaintingController {
                 detailRecommendedPaintingService.findDetailRecommendedPaintings(id, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(detailRecommendedPaintings));
     }
+
+//    @Operation(summary = "추천 페이지 그림 추천 받기", description = "영화 상세페이지의 추천 그림들이 저장됩니다.")
+//    @ApiResponses({
+//            @ApiResponse(responseCode = "200", description = "성공"),
+//            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+//            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+//            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+//    })
+//    @GetMapping
+//    public ResponseEntity<? extends MessageResponse> getDetailPaintings() {
+//        detailRecommendedPaintingService.recommendDetailPaintings();
+//        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
+//    }
+
 }

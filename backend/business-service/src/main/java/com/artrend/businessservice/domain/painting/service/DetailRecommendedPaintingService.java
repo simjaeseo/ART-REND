@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DetailRecommendedPaintingService {
     List<PaintingDto> findDetailRecommendedPaintings(Long id, Pageable pageable);
+    void recommendDetailPaintings();
 }

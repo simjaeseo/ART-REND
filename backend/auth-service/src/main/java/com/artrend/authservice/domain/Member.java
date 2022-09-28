@@ -30,6 +30,8 @@ public class Member extends BaseEntity {
 
     private String googleProviderId;
 
+    private String di;
+
 
     public void updateProviderAndProviderId(String provider, String providerId){
 

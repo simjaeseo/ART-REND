@@ -1,7 +1,9 @@
 package com.artrend.businessservice.domain.painting.api;
 
+import com.artrend.businessservice.domain.painting.dto.DetailResponse;
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendDto;
 import com.artrend.businessservice.domain.painting.service.LikedPaintingService;
 import com.artrend.businessservice.global.common.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +27,8 @@ import java.util.List;
 public class LikedPaintingController {
     private final LikedPaintingService likedPaintingService;
 
-    @Operation(summary = "그림 좋아요", description = "현재 접속한 회원 정보로 해당 그림을 좋아요합니다.")
+    @Operation(summary = "그림 좋아요", description = "현재 접속한 회원 정보로 해당 그림을 좋아요합니다." +
+            " 좋아요시 CF 기반 추천 그림 리스트를 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
@@ -35,11 +38,12 @@ public class LikedPaintingController {
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
             @RequestBody @Valid MemberDto memberDto) throws IOException {
-        ResponseEntity<Object> result = likedPaintingService.like(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result.getBody()));
+        RecommendDto result = likedPaintingService.like(memberDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result));
     }
 
-    @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다.")
+    @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다." +
+            " 좋아요 취소시 CBF 기반 추천 그림 리스트를 반환합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
@@ -48,9 +52,9 @@ public class LikedPaintingController {
     })
     @DeleteMapping
     public ResponseEntity<? extends DataResponse> cancelLike(
-            @RequestBody @Valid MemberDto memberDto) throws IOException {
-        likedPaintingService.cancelLike(memberDto);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(memberDto));
+            @RequestBody @Valid MemberDto memberDto, Pageable pageable) throws IOException {
+        DetailResponse response = likedPaintingService.cancelLike(memberDto, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(response));
     }
 
     @Operation(summary = "좋아요한 그림 조회", description = "회원 정보로 좋아요한 그림 목록을 조회합니다.")

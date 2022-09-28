@@ -91,17 +91,4 @@ public class PaintingController {
         List<PaintingDto> paintings = paintingService.sortPaintings(condition, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
     }
-
-    @Operation(summary = "그림선택후 후 메인 그림 추천받기(구현중)", description = "그림 선택 후 회원가입시 메인 페이지 그림들은 추천 받음")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
-            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
-            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
-    })
-    @GetMapping("/main")
-    public ResponseEntity<? extends MessageResponse> getMainPaintings(@RequestHeader HttpHeaders headers) {
-        paintingService.getMainPaintings(headers);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
-    }
 }

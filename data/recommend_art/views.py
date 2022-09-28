@@ -49,6 +49,7 @@ def recommend_detail_painting(request):
 @api_view(['GET', 'POST'])
 def main_recommend_painting(request):
     # try:
+    print(request.META)
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])

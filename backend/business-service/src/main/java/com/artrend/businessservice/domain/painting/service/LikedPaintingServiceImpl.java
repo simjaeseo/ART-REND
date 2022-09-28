@@ -11,6 +11,7 @@ import com.artrend.businessservice.domain.painting.repository.DetailRecommendedP
 import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
 
+import com.artrend.businessservice.domain.painting.vo.DetailResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
 
     @Override
     @Transactional
-    public RecommendDto like(MemberDto memberDto) throws IOException {
+    public PaintingDto like(MemberDto memberDto) throws IOException {
         // 2. 이미 좋아요 된 그림인 경우 409 에러 호출하기
         if (findLikedPaintingWithMemberAndPaintingId(memberDto).isPresent()) {
             throw new PaintingException(PaintingExceptionType.ALREADY_LIKED_PAINTING);
@@ -58,12 +59,10 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         likedPainting.update(memberDto.getMemberId());
         likedPaintingRepository.save(likedPainting);
 
-        ResponseEntity<Object> result = recommendRequestV2(likedPainting.getPainting().getId());
-
         // 4. 그림의 총 좋아요 수 증가
         updateLikeCount(memberDto.getPaintingId(), 1);
 
-        return new RecommendDto(new PaintingDto(likedPainting.getPainting()), result);
+        return new PaintingDto(likedPainting.getPainting());
     }
 
     @Override

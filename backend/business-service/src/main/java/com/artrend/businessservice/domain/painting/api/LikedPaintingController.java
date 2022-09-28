@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
-import com.artrend.businessservice.domain.painting.dto.DetailResponse;
+import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.vo.DetailResponse;
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
 import com.artrend.businessservice.domain.painting.dto.RecommendDto;
@@ -38,8 +39,11 @@ public class LikedPaintingController {
     @PostMapping
     public ResponseEntity<? extends DataResponse> like(
             @RequestBody @Valid MemberDto memberDto) throws IOException {
-        RecommendDto result = likedPaintingService.like(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(result));
+        PaintingDto result = likedPaintingService.like(memberDto);
+        Object list = likedPaintingService.recommendRequestV2(memberDto.getPaintingId()).getBody();
+        RecommendDto response = new RecommendDto(result, list);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(response));
     }
 
     @Operation(summary = "그림 좋아요 취소", description = "현재 접속한 회원 정보로 해당 그림을 좋아요 취소합니다." +

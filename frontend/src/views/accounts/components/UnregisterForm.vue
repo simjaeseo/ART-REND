@@ -124,6 +124,9 @@ export default {
 							.catch(err => {
 								console.log(err)
 							})
+					} else if (result == false) {
+						alert('회원탈퇴를 취소합니다. 메인페이지로 돌아갑니다.')
+						router.push({ name: 'Main' })
 					}
 				})
 				.catch(err => console.log(err))

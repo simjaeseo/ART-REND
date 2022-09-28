@@ -49,7 +49,9 @@ public class PaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse(paintingList, paintingList.size()));
     }
 
-    @Operation(summary = "그림 개별 조회", description = "선택한 그림 ID의 모든 그림 정보를 가져옵니다.")
+    @Operation(summary = "그림 개별 조회", description = "선택한 그림 ID의 모든 그림 정보를 가져옵니다." +
+            " 추천된 그림이라면 CF 기반 추천 그림 리스트가, 추천되지 않은 그림이라면 CBF 기반 추천 그림 리스트가" +
+            " 반환됩니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
@@ -58,8 +60,9 @@ public class PaintingController {
     })
     @GetMapping("/{painting_id}/{member_id}")
     public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
-                                                               @PathVariable("member_id") Long memberId) {
-        RecommendDto result = paintingService.findPainting(paintingId, memberId);
+                                                               @PathVariable("member_id") Long memberId,
+                                                               Pageable pageable) {
+        RecommendDto result = paintingService.findPainting(paintingId, memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(result));
     }
 

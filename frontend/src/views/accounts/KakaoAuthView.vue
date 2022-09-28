@@ -21,10 +21,10 @@ export default {
 		// const decodeAccessToken = jwt_decode(token)
 		// const nickName = url.get('isNickname')
 		// const selected = url.get('isPainting')
+		console.log(url)
 		const provider = url.get('provider')
 		const providerId = url.get('providerId')
-		console.log(provider)
-		console.log(providerId)
+
 		store.commit('SET_PROVIDER', provider)
 		store.commit('SET_PROVIDER_ID', providerId)
 		// if (nickName == 'false') {

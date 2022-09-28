@@ -14,6 +14,7 @@ import GenreDetailPageView from '@/views/artwork/GenreDetailPageView.vue'
 import MovementPageView from '@/views/artwork/MovementPageView.vue'
 import MovementDetailPageView from '@/views/artwork/MovementDetailPageView.vue'
 import UserInfoView from '@/views/accounts/UserInfoView.vue'
+import UnregisterView from '@/views/accounts/UnregisterView.vue'
 
 // 라우터가드는 개발 끝나고 주석 풀면 됨
 // const requireAuth = () => (from, to, next) => {
@@ -106,6 +107,11 @@ const routes = [
 		path: '/user/form',
 		name: 'UserInfo',
 		component: UserInfoView,
+	},
+	{
+		path: '/unregister',
+		name: 'Unregister',
+		component: UnregisterView,
 	},
 ]
 

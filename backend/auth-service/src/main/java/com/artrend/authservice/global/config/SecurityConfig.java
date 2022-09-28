@@ -28,6 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2LogoutSuccessHandler oAuth2LogoutSuccessHandler;
 
     private static final String[] PERMIT_URL_ARRAY = {
+            /* swagger v2 */
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
             "/favicon.ico",
             /* custom oauth api */
             "/oauth2/authorization/kakao",
@@ -39,7 +50,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/token/reissuance/*",
             "/signup/**",
             "/api/**",
-            "/ccccccc"
+            "/ccccccc",
+            "/swagger-ui/index.html",
+            "/auth-service/swagger-ui/index.html",
+            "signup/members/info"
     };
 
 

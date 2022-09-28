@@ -91,4 +91,11 @@ public class OAuthAttributes {
         this.attributes.put("isAddNickname", isAddNickname);
     }
 
+    public void putIsExisted (boolean isExisted){
+        this.attributes.put("isExisted", isExisted);
+    }
+    public void putProvider (String provider){
+        this.attributes.put("provider", provider);
+    }
+
 }

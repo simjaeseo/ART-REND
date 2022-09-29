@@ -31,7 +31,7 @@
 			</div>
 			<div class="img-wrapper">
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('인상주의, 점묘법')">
+					<div class="image-box" @click.prevent="goDetail('점묘법')">
 						<img src="@/assets/artist/피카소.png" alt="image" />
 						<div class="image-info">
 							<div class="title">Pointage</div>

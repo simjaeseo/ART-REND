@@ -24,4 +24,5 @@ public class Artist {
 
     private String birth;
     private String death;
+    private String url;
 }

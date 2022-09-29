@@ -89,6 +89,10 @@
 						</div>
 					</div>
 				</div>
+				<div class="btn-class">
+					<button class="btn1" @click="goProfile">PROFILE</button>
+					<button class="btn2" @click="goMain">MAIN</button>
+				</div>
 			</div>
 		</div>
 		<div id="myModal" class="modal">
@@ -159,13 +163,14 @@
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
 		const store = useStore()
+		const router = useRouter()
 		const route = useRoute()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -175,6 +180,7 @@ export default {
 			img: null,
 			like: false,
 			actionLog: {
+				paintingId: 0,
 				clickCnt: 0,
 				zoomCnt: 0,
 				inTime: null,
@@ -184,8 +190,10 @@ export default {
 		state.actionLog.clickCnt += 1
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
+		state.actionLog.paintingId = payLoadId
 		store.dispatch('getArtWorkDetail', payLoadId)
 		const detailData = computed(() => store.getters.detailData)
+		const userId = computed(() => store.getters.userId)
 
 		const getImageModal = function () {
 			state.actionLog.zoomCnt += 1
@@ -240,8 +248,16 @@ export default {
 		state.actionLog.inTime = new Date()
 		window.addEventListener('beforeunload', () => {
 			state.actionLog.outTime = new Date()
-			store.dispatch('leave', state.actionLog)
+			store.dispatch('actionLog', state.actionLog)
 		})
+
+		const goMain = function () {
+			router.push({ name: 'Main' })
+		}
+		const goProfile = function () {
+			location.href = `http://localhost:3002/mypage/${userId.value}`
+		}
+
 		return {
 			state,
 			getImageModal,
@@ -253,6 +269,8 @@ export default {
 			detailData,
 			likeArtWork,
 			unlikeArtWork,
+			goMain,
+			goProfile,
 		}
 	},
 }
@@ -479,6 +497,7 @@ hr {
 	height: 100vh;
 	color: white;
 	/* height: 100vw; */
+	margin: 100px 0px;
 }
 
 .horizontal-scroll-wrapper {
@@ -603,5 +622,33 @@ hr {
 
 .change-button:hover {
 	background-color: rgb(0, 0, 0);
+}
+
+/* go main */
+.btn1 {
+	background: none;
+	color: rgb(150, 150, 150);
+	font-size: 20px;
+	margin: 20px;
+	cursor: pointer;
+}
+.btn2 {
+	background: none;
+	color: rgb(150, 150, 150);
+	font-size: 20px;
+	margin: 20px;
+	cursor: pointer;
+}
+.btn1:hover,
+.btn2:hover {
+	color: rgb(255, 255, 255);
+}
+.btn-class {
+	cursor: pointer;
+	margin-left: -20%;
+	width: 80%;
+	position: fixed;
+	bottom: 10px;
+	text-align: center;
 }
 </style>

@@ -5,6 +5,7 @@ import com.artrend.businessservice.domain.painting.dto.RecommendDto;
 import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.vo.SearchResponse;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
 import com.artrend.businessservice.global.common.MessageResponse;
@@ -75,8 +76,8 @@ public class PaintingController {
     })
     @GetMapping("/search")
     public ResponseEntity<? extends DataResponse> searchPaintings(SearchCondition condition, Pageable pageable) {
-        List<PaintingDto> paintings = paintingService.searchPaintings(condition, pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
+        SearchResponse response = paintingService.searchPaintings(condition, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(response));
     }
 
     @Operation(summary = "그림 통계별 조회", description = "조회수, 좋아요수, 변환수 별로 그림을 조회할 수 있습니다.")

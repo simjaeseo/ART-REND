@@ -17,10 +17,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework import authentication, exceptions
 
-# from cycleGAN.model import CycleGAN
-# from cycleGAN.checkpoint import load_checkpoint
-# from cycleGAN.load_data import PhotoDataset
-# from torch.utils.data import DataLoader
+
+from .cycleGAN.model import CycleGAN
+from .cycleGAN.checkpoint import load_checkpoint
+from .cycleGAN.load_data import PhotoDataset, stringtoRGB
+from torch.utils.data import DataLoader
 # Create your views here.
 import base64
 from .jwt_secret_key import JWT_SECRET_KEY, jwt_options
@@ -40,34 +41,34 @@ def index(request):
 @api_view(['GET', 'POST'])
 def recommend_detail_painting(request):
     try:
-        art_recommend(10)
+        art_recommend(20)
         return HttpResponse(status=200)
     except:
         return HttpResponse(status=404)
 
 @api_view(['GET', 'POST'])
 def main_recommend_painting(request):
-    try:
-        user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
-        user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
-        selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])
-        user_recommend_painting = set()
-        for painting_object in selected_painting:
-            detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting_object.painting.painting)
-            user_recommend_painting.update(detail_recommend_painting)
+    # try:
+    user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])
+    user_recommend_painting = set()
+    for painting_object in selected_painting:
+        detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting_object.painting.painting)
+        user_recommend_painting.update(detail_recommend_painting)
 
-        for paint in user_recommend_painting:
-            recommended_painting = RecommendedPainting()
-            recommended_painting.member_id = user_decode['id']
-            recommended_painting.painting = paint.recommended_painting_id
-            recommended_painting.save()
-        return HttpResponse(status=200)
-    except:
-        return HttpResponse(status=403)
+    for paint in user_recommend_painting:
+        recommended_painting = RecommendedPainting()
+        recommended_painting.member_id = user_decode['id']
+        recommended_painting.painting = paint.recommended_painting_id
+        recommended_painting.save()
+    return HttpResponse(status=200)
+    # except:
+    #     return HttpResponse(status=404)
 
 @api_view(['GET', 'POST'])
 def like_recommend_painting(request, pk):
-    painting = Painting.objects.get(painting_id = pk)
+    painting = Painting.objects.get(paintingId = pk)
     # recommend_like_painting()
     item_sim_df = recommend_like_painting()
     like_rmd_lst = find_sim_painting_item(item_sim_df, painting.title, 20)
@@ -89,6 +90,7 @@ def like_recommend_painting(request, pk):
 @api_view(['POST'])
 def change_photo(request, pk):
     print(request)
+    image = stringtoRGB(request.data['image'])
     return
 
 

@@ -4,21 +4,21 @@ from django.db import models
 from django.conf import settings
 
 class Painting(models.Model):
-    painting_id = models.BigAutoField(primary_key=True)
+    paintingId = models.BigAutoField(primary_key=True, db_column="painting_id")
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
-    art_trend = models.CharField(max_length=255, blank=True, null=True)
+    artTrend = models.CharField(max_length=255, blank=True, null=True, db_column="art_trend")
     artist = models.CharField(max_length=255, blank=True, null=True)
     description = models.CharField(max_length=5000, blank=True, null=True)
     dimensions = models.CharField(max_length=255, blank=True, null=True)
     genre = models.CharField(max_length=255, blank=True, null=True)
     hits = models.BigIntegerField(blank=True, null=True)
-    korean_title = models.CharField(max_length=255, blank=True, null=True)
+    koreanTitle = models.CharField(max_length=255, blank=True, null=True, db_column="korean_title")
     medium = models.CharField(max_length=255, blank=True, null=True)
     place = models.CharField(max_length=255, blank=True, null=True)
     title = models.CharField(max_length=255, blank=True, null=True)
-    total_change_count = models.BigIntegerField(blank=True, null=True)
-    total_like_count = models.BigIntegerField(blank=True, null=True)
+    totalChangeCount = models.BigIntegerField(blank=True, null=True, db_column="total_change_count")
+    totalLikeCount = models.BigIntegerField(blank=True, null=True, db_column="total_like_count")
     url = models.CharField(max_length=255, blank=True, null=True)
     year = models.CharField(max_length=255, blank=True, null=True)
 
@@ -107,7 +107,7 @@ class FavoriteStyle(models.Model):
 class LikedPainting(models.Model):
     liked_painting_id = models.BigAutoField(primary_key=True)
     member_id = models.BigIntegerField(blank=True, null=True)
-    painting_id = models.BigIntegerField(blank=True, null=True)
+    paintingId = models.BigIntegerField(blank=True, null=True, db_column="painting_id")
 
     class Meta:
         managed = False

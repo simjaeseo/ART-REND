@@ -11,8 +11,11 @@ export default {
 		genreDetail: [],
 		movementDetail: [],
 		artistDetailBackImg: '',
+		movementDetailBackImg: '',
 		color1: false,
 		color2: false,
+		artistData: [],
+		movementData: [],
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -23,10 +26,13 @@ export default {
 		orderByTranslation: state => state.orderByTranslation,
 		artistDetail: state => state.artistDetail,
 		artistDetailBackImg: state => state.artistDetailBackImg,
+		movementDetailBackImg: state => state.movementDetailBackImg,
 		genreDetail: state => state.genreDetail,
 		movementDetail: state => state.movementDetail,
 		color1: state => state.color1,
 		color2: state => state.color2,
+		artistData: state => state.artistData,
+		movementData: state => state.movementData,
 	},
 	mutations: {
 		SET_DETAIL_DATA(state, data) {
@@ -43,22 +49,26 @@ export default {
 		},
 		SET_ARTIST_DETAIL(state, data) {
 			state.artistDetail = data
-			state.artistDetailBackImg = data[1].url
-			console.log('엥')
-			console.log(state.artistDetailBackImg)
-			console.log('엥')
+			state.artistDetailBackImg = data.paintings[1].url
 		},
 		SET_GENRE_DETAIL(state, data) {
 			state.genreDetail = data
 		},
 		SET_MOVEMENT_DETAIL(state, data) {
 			state.movementDetail = data
+			state.movementDetailBackImg = data.paintings[1].url
 		},
 		SET_COLOR1(state, value) {
 			state.color1 = value
 		},
 		SET_COLOR2(state, value) {
 			state.color2 = value
+		},
+		SET_ARTIST_LIST(state, data) {
+			state.artistData = data
+		},
+		SET_MOVEMENT_LIST(state, data) {
+			state.movementData = data
 		},
 	},
 	actions: {
@@ -145,10 +155,27 @@ export default {
 				commit('SET_TRANS_LIST', res.data.data)
 			})
 		},
-		getArtisDetail({ getters, commit }, name) {
+		getArtistList({ getters, commit }) {
 			axios({
 				headers: getters.authHeader,
-				url: drf.business.getArtisDetail(),
+				url: drf.business.getArtistList(),
+				method: 'get',
+			}).then(res => {
+				commit('SET_ARTIST_LIST', res.data.data)
+			})
+		},
+		getMovementList({ getters, commit }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMovementList(),
+				method: 'get',
+			}).then(res => {
+				commit('SET_MOVEMENT_LIST', res.data.data)
+			})
+		},
+		getArtistDetail({ commit }, name) {
+			axios({
+				url: drf.business.getDetail(),
 				method: 'get',
 				params: {
 					artist: name,
@@ -160,18 +187,13 @@ export default {
 				.then(res => {
 					commit('SET_ARTIST_DETAIL', res.data.data)
 				})
-				.then(res => {
-					console.log(res)
-					commit('SET_ARTIST_DETAIL', res.data.data)
-				})
 				.catch(err => {
 					console.log(err)
 				})
 		},
-		getGenreDetail({ getters, commit }, name) {
+		getGenreDetail({ commit }, name) {
 			axios({
-				headers: getters.authHeader,
-				url: drf.business.getArtisDetail(),
+				url: drf.business.getDetail(),
 				method: 'get',
 				params: {
 					genre: name,
@@ -181,17 +203,16 @@ export default {
 				},
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_GENRE_DETAIL', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)
 				})
 		},
-		getMovementDetail({ getters, commit }, name) {
+		getMovementDetail({ commit }, name) {
+			console.log('왔냐?')
 			axios({
-				headers: getters.authHeader,
-				url: drf.business.getArtisDetail(),
+				url: drf.business.getDetail(),
 				method: 'get',
 				params: {
 					artTrend: name,

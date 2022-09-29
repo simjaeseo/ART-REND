@@ -10,6 +10,7 @@ public class ArtistDto {
     private String description;
     private String birth;
     private String death;
+    private String url;
 
     @QueryProjection
     public ArtistDto(Artist artist) {
@@ -17,5 +18,6 @@ public class ArtistDto {
         this.description = artist.getDescription();
         this.birth = artist.getBirth();
         this.death = artist.getDeath();
+        this.url = artist.getUrl();
     }
 }

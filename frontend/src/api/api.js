@@ -24,7 +24,10 @@ export default {
 			`${HOST + BUSINESS}api/paintings/${artworkId}/${memberId}`,
 		like: () => `${HOST + BUSINESS}api/like`,
 		getHits: () => `${HOST + BUSINESS}api/paintings/sort`,
-		getArtisDetail: () => `${HOST + BUSINESS}api/paintings/search`,
+		getArtistList: () => `${HOST + BUSINESS}api/description/artist`,
+		getGenreList: () => `${HOST + BUSINESS}api/description/genre`,
+		getMovementList: () => `${HOST + BUSINESS}api/description/art-trend`,
+		getDetail: () => `${HOST + BUSINESS}api/paintings/search`,
 		actionLog: () => `${HOST + BUSINESS}api/log`,
 	},
 }

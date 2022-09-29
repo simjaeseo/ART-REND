@@ -13,7 +13,7 @@ export default {
 		nickNameCheck: memberId =>
 			`${HOST + AUTH}api/signup/${memberId}/nickname/duplicate`,
 		logout: () => `${HOST + AUTH}/logout`,
-		getUsersNumber: () => `${HOST + AUTH}api/members/count`,
+		getAllUsers: () => `${HOST + AUTH}api/members/id`,
 		getUserNickname: memberId => `${HOST + AUTH}api/${memberId}/nickname`,
 		beforeUnregister: memberId => `${HOST + AUTH}api/${memberId}/check`,
 		unRegister: memberId => `${HOST + AUTH}api/withdrawal/${memberId}`,
@@ -25,5 +25,6 @@ export default {
 		like: () => `${HOST + BUSINESS}api/like`,
 		getHits: () => `${HOST + BUSINESS}api/paintings/sort`,
 		getArtisDetail: () => `${HOST + BUSINESS}api/paintings/search`,
+		actionLog: () => `${HOST + BUSINESS}api/log`,
 	},
 }

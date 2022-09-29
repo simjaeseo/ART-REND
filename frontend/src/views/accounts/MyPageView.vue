@@ -145,12 +145,12 @@ export default {
 			state.myPage = true
 		}
 
-		const usersNumber = computed(() => store.getters.allUsers)
-		store.dispatch('getUsersNumber')
+		const allUsers = computed(() => store.getters.allUsers).value.data
+		store.dispatch('getAllUsers')
 		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * usersNumber.value) + 1
-			if (random !== userId.value) {
-				location.href = `http://localhost:3002/mypage/${random}`
+			const random = Math.floor(Math.random() * allUsers.length)
+			if (allUsers[random] !== userId.value) {
+				location.href = `http://localhost:3002/mypage/${allUsers[random]}`
 			}
 		}
 

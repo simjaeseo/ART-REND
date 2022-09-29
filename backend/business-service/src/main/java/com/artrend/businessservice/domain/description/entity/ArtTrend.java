@@ -21,4 +21,5 @@ public class ArtTrend {
 
     @Column(length = 5000)
     private String description;
+    private String url;
 }

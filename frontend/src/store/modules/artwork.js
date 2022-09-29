@@ -4,8 +4,6 @@ import drf from '@/api/api'
 export default {
 	state: {
 		detailData: [],
-		inTime: null,
-		outTime: null,
 		orderByView: [],
 		orderByLike: [],
 		orderByTranslation: [],
@@ -15,6 +13,7 @@ export default {
 		artistDetailBackImg: '',
 		color1: false,
 		color2: false,
+		log: null,
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -33,13 +32,6 @@ export default {
 	mutations: {
 		SET_DETAIL_DATA(state, data) {
 			state.detailData = data
-		},
-		SET_IN_TIME_DATA(state, time) {
-			state.inTime = time
-		},
-		SET_OUT_TIME_DATA(state, time) {
-			state.outTime = time
-			console.log(time)
 		},
 		SET_HITS_LIST(state, data) {
 			state.orderByView = data
@@ -68,6 +60,9 @@ export default {
 		},
 		SET_COLOR2(state, value) {
 			state.color2 = value
+		},
+		SET_LOG(state, log) {
+			state.log = log
 		},
 	},
 	actions: {
@@ -117,10 +112,6 @@ export default {
 				dispatch('getArtWorkDetail', artworkId)
 				dispatch('likeArtWorkList')
 			})
-		},
-		leave({ commit }, time) {
-			commit('SET_IN_TIME_DATA', time.inTime)
-			commit('SET_OUT_TIME_DATA', time.outTime)
 		},
 		getHits({ getters, commit }, hits) {
 			axios({
@@ -216,6 +207,29 @@ export default {
 				.then(res => {
 					console.log(res)
 					commit('SET_MOVEMENT_DETAIL', res.data.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		actionLog({ getters }, actionLog) {
+			console.log(actionLog)
+			console.log('함수실행!')
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.actionLog(),
+				method: 'post',
+				data: {
+					memberId: getters.userId,
+					paintingId: actionLog.paintingId,
+					clickCount: actionLog.clickCnt,
+					zoomCount: actionLog.zoomCnt,
+					inTime: actionLog.inTime,
+					outTime: actionLog.outTime,
+				},
+			})
+				.then(res => {
+					console.log(res)
 				})
 				.catch(err => {
 					console.log(err)

@@ -17,7 +17,7 @@ public class ArtTrend {
     @Column(name = "art_trend_id")
     private Long id;
 
-    private String artTrend;
+    private String name;
 
     @Column(length = 5000)
     private String description;

@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.repository;
 
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
+import com.artrend.businessservice.domain.painting.repository.support.LikedPaintingRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

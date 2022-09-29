@@ -17,7 +17,8 @@ public class Artist {
     @Column(name = "artist_id")
     private Long id;
 
-    private String artist;
+    private String name;
+    private String koreanName;
 
     @Column(length = 5000)
     private String description;

@@ -3,24 +3,39 @@
 		<div class="external">
 			<div class="horizontal-scroll-wrapper">
 				<div class="title-wrapper1">
-					<h2 id="title-text1">{{ name }}, <br /></h2>
+					<h2 id="title-text1">{{ detail.artTrend.name }},</h2>
+				</div>
+				<div
+					class="title-wrapper2"
+					:style="{
+						'background-image': `url(${backImg})`,
+						'min-width': '1800px',
+						'min-height': '100vh',
+						'background-size': 'cover',
+					}"
+				>
+					<h2 id="title-text2">
+						{{ detail.paintings[1].title }} , {{ detail.paintings[1].year }}
+						<br />
+					</h2>
+				</div>
+				<div class="title-wrapper">
+					<span id="description-cell2">Description</span>
+					<p id="description-inner2">
+						{{ detail.artTrend.name }} <br />
+						{{ detail.artTrend.description }}
+					</p>
 				</div>
 				<div class="title-wrapper3 masonry">
-					<div v-for="(image, index) in detail" :key="index">
+					<div v-for="(image, index) in detail.paintings" :key="index">
 						<div class="mItem">
 							<img :src="image.url" alt="image" id="m-image" />
 						</div>
 					</div>
 				</div>
-				<div>
-					<h5 id="text-saying">
-						All the arts we practice are apprenticeship. The big art is our
-						life. - M. C. Richards
-					</h5>
-				</div>
 				<div id="title-wrapper4">
 					<div
-						v-for="(image, index) in detail"
+						v-for="(image, index) in detail.paintings"
 						:key="index"
 						class="img-wrapper"
 					>
@@ -50,7 +65,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 export default {
-	name: 'ArtistDetailPage',
+	name: 'MovementDetailPage',
 	setup() {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -58,11 +73,14 @@ export default {
 		const route = useRoute()
 		const router = useRouter()
 		const name = route.params.name
+		console.log(name)
 		const store = useStore()
 		store.dispatch('getMovementDetail', name)
 		const detail = computed(() => store.getters.movementDetail)
+		const backImg = computed(() => store.getters.movementDetailBackImg)
+
 		const goArtist = function () {
-			router.push({ name: 'ArtistPage' })
+			router.push({ name: 'MovementPage' })
 		}
 		const goMain = function () {
 			router.push({ name: 'Main' })
@@ -76,6 +94,7 @@ export default {
 			detail,
 			goArtist,
 			goMain,
+			backImg,
 			goDetail,
 		}
 	},
@@ -83,6 +102,7 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 .detail-bg {
 	background-color: rgb(0, 0, 0);
 	height: 100vh;
@@ -161,8 +181,8 @@ export default {
 	transform: rotate(90deg) translateZ(0px) translateX(0px);
 	transition: 1s;
 	z-index: -1;
-	margin-top: 600px;
-	margin-bottom: 600px;
+	margin-top: 800px;
+	margin-bottom: 1000px;
 }
 .title-wrapper3 {
 	transform: rotate(90deg);
@@ -290,5 +310,36 @@ a:hover .image-info {
 .btn-class {
 	cursor: pointer;
 	width: 100%;
+}
+.title-wrapper {
+	transform-origin: 50% 50%;
+	transform: rotate(90deg) translateZ(0px) translateX(200px);
+	transition: 1s;
+	min-height: 60vh;
+
+	height: 50vw;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-bottom: 500px;
+}
+#description-cell2 {
+	/* font-size: 35px; */
+	/* width: 300px; */
+	font-size: 2.5vh;
+	width: 15vw;
+	font-family: 'Noto Sans', sans-serif;
+	font-weight: 500;
+	display: inline-block;
+	margin-top: 50px;
+	color: white;
+}
+#description-inner2 {
+	/* font-size: 23px; */
+	font-size: 1.5vh;
+	margin-top: 20px;
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 100;
+	color: white;
 }
 </style>

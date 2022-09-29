@@ -49,7 +49,9 @@ public class PaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse(paintingList, paintingList.size()));
     }
 
-    @Operation(summary = "그림 개별 조회", description = "선택한 그림 ID의 모든 그림 정보를 가져옵니다.")
+    @Operation(summary = "그림 개별 조회", description = "선택한 그림 ID의 모든 그림 정보를 가져옵니다." +
+            " 추천된 그림이라면 CF 기반 추천 그림 리스트가, 추천되지 않은 그림이라면 CBF 기반 추천 그림 리스트가" +
+            " 반환됩니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
@@ -58,8 +60,9 @@ public class PaintingController {
     })
     @GetMapping("/{painting_id}/{member_id}")
     public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
-                                                               @PathVariable("member_id") Long memberId) {
-        RecommendDto result = paintingService.findPainting(paintingId, memberId);
+                                                               @PathVariable("member_id") Long memberId,
+                                                               Pageable pageable) {
+        RecommendDto result = paintingService.findPainting(paintingId, memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(result));
     }
 
@@ -87,18 +90,5 @@ public class PaintingController {
     public ResponseEntity<? extends DataResponse> sortPaintings(PaintingCondition condition, Pageable pageable) {
         List<PaintingDto> paintings = paintingService.sortPaintings(condition, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(paintings));
-    }
-
-    @Operation(summary = "그림선택후 후 메인 그림 추천받기(구현중)", description = "그림 선택 후 회원가입시 메인 페이지 그림들은 추천 받음")
-    @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "성공"),
-            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
-            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
-            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
-    })
-    @GetMapping("/main")
-    public ResponseEntity<? extends MessageResponse> getMainPaintings(@RequestHeader HttpHeaders headers) {
-        paintingService.getMainPaintings(headers);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
     }
 }

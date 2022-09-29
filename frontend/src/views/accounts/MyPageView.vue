@@ -76,24 +76,20 @@
 						</div>
 						<div class="modal-body">
 							<form action="">
-								<label for="user-nick-name">
-									<input
-										type="text"
-										id="user-nick-name"
-										:placeholder="state.nickName"
-										v-model="state.modifyNickName"
-									/>
-								</label>
-								<div id="btn-wrap">
-									<button
-										class="btn"
-										id="nick-name-check-btn"
-										type="submit"
-										@click.prevent="doubleCheck"
-									>
-										CHECK
-									</button>
-								</div>
+								<input
+									type="text"
+									id="user-nick-name"
+									:placeholder="state.nickName"
+									v-model="state.modifyNickName"
+								/>
+								<button
+									class="btn"
+									id="nick-name-check-btn"
+									type="submit"
+									@click.prevent="doubleCheck"
+								>
+									CHECK
+								</button>
 							</form>
 						</div>
 						<div class="modal-footer">
@@ -239,23 +235,24 @@ input[name='tabmenu'] {
 	margin-right: 10px;
 	align-items: center;
 	background-color: transparent;
-	border: 2px solid rgb(0, 0, 0, 0.2);
+	border: 1px solid rgb(0, 0, 0, 0.2);
 	padding: 2px 12px;
-	border-radius: 20px;
+	border-radius: 10px;
+	/* border: none; */
 
 	font-family: 'Noto Sans KR', sans-serif;
 	color: rgba(0, 0, 0, 0.2);
 	text-align: center;
-	font-weight: 600;
+	font-weight: 400;
 	font-size: 15px;
 	white-space: nowrap;
 }
 
 .move-button:hover {
 	text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 	color: rgba(0, 0, 0);
-	border: 2px solid rgb(0, 0, 0);
+	border: 1px solid rgb(0, 0, 0);
 }
 
 .btn-box {
@@ -388,38 +385,66 @@ input[id='like-picture-all']:checked ~ .tab-inner .tabs {
 	border-radius: 20px;
 }
 
-.change-button {
-	border: none;
-	border-radius: 10px;
-	background-color: rgb(200, 200, 200);
-	color: white;
-	padding: 5px 10px;
+.modal-title {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 600;
 }
 
-.change-button:hover {
-	background-color: rgb(0, 0, 0);
+.modal-body {
+	padding: 50px;
+}
+.modal-body > form {
+	display: flex;
 }
 
-#btn-wrap {
-	width: 100%;
-	text-align: end;
-	margin-top: 20px;
-}
-#nick-name-check-btn {
-	background: white;
-	color: black;
-	text-align: end;
-}
-input {
+#user-nick-name {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-size: 20px;
+	width: 90%;
 	background-color: transparent;
 	border: none;
 	border-bottom: 1px solid rgb(0, 0, 0);
-	width: 100%;
 	color: rgb(0, 0, 0);
-	font-size: 20px;
 }
-input:focus {
+#user-nick-name::placeholder {
+	color: rgb(200, 200, 200);
+	font-weight: 200;
+	font-size: 18px;
+}
+#user-nick-name:focus {
 	outline: none;
 	background-color: transparent;
+}
+
+#user-nick-name:placeholder-shown ~ #nick-name-check-btn {
+	visibility: hidden;
+}
+#nick-name-check-btn {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 200;
+	background: white;
+	color: black;
+	padding: 0px 10px;
+	text-align: center;
+}
+#nick-name-check-btn:hover {
+	color: black;
+	border: 1px solid black;
+}
+
+.change-button {
+	font-family: 'Noto Sans KR', sans-serif;
+	font-weight: 400;
+	border: 1px solid rgb(255, 255, 255);
+	border-radius: 10px;
+	background-color: white;
+	color: rgb(200, 200, 200);
+	padding: 2px 10px;
+}
+
+.change-button:hover {
+	font-weight: 400;
+	color: rgb(0, 0, 0);
+	border: 1px solid black;
 }
 </style>

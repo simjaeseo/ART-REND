@@ -1,13 +1,17 @@
 <template>
 	<div>
-		<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
+		<div
+			v-for="(image, index) in detailData.recommendedList"
+			:key="index"
+			class="img-wrapper"
+		>
 			<a href="#" target="_blank" rel="noopener">
-				<div class="image-box">
-					<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+				<div class="image-box" @click.prevent="goDetail(image.paintingId)">
+					<img :src="image.url" alt="image" />
 					<div class="image-info">
-						<div class="title">Street Man Fighter</div>
-						<div class="name">2022</div>
-						<div class="name">Tom Smith</div>
+						<div class="title">{{ image.title }}</div>
+						<div class="name">{{ image.year }}</div>
+						<div class="name">{{ image.artist }}</div>
 					</div>
 				</div>
 			</a>
@@ -16,7 +20,9 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { reactive, computed } from 'vue'
+import { useStore } from 'vuex'
 
 export default {
 	name: 'MainPageArtWork',
@@ -24,9 +30,16 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-
+		const router = useRouter()
+		const store = useStore()
+		const detailData = computed(() => store.getters.detailData)
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 		return {
 			state,
+			detailData,
+			goDetail,
 		}
 	},
 }

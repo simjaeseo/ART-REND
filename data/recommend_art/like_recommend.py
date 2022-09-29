@@ -30,7 +30,7 @@ def recommend_like_painting():
     like_df = read_frame(like_painting)
     like_df['like'] = 1
     
-    like_painting_df = pd.merge(like_df, painting_df, on="painting_id")
+    like_painting_df = pd.merge(like_df, painting_df, on="paintingId")
     
     like_painting_matrix = like_painting_df.pivot_table('like', index='member_id', columns="title")
     like_painting_matrix.fillna(0, inplace=True)

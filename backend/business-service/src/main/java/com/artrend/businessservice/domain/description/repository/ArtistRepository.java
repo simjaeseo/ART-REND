@@ -1,20 +1,8 @@
 package com.artrend.businessservice.domain.description.repository;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.stereotype.Repository;
+import com.artrend.businessservice.domain.description.entity.Artist;
+import com.artrend.businessservice.domain.description.repository.custom.ArtistRepositoryCustom;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.EntityManager;
-
-@Repository
-public class ArtistRepository {
-
-    private final JPAQueryFactory queryFactory;
-
-    public ArtistRepository(EntityManager em) {
-        this.queryFactory = new JPAQueryFactory(em);
-    }
-
-    public String getDescription() {
-        return null;
-    }
+public interface ArtistRepository extends JpaRepository<Artist, Long> , ArtistRepositoryCustom {
 }

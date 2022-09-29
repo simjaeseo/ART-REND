@@ -7,7 +7,7 @@ export default {
 		token: localStorage.getItem('token') || '',
 		userId: null,
 		likeArtWorkList: [],
-		allUsers: 0,
+		allUsers: [],
 		userNickName: '',
 		provider: null,
 		providerId: null,
@@ -145,14 +145,14 @@ export default {
 				.catch(err => console.log(err))
 		},
 
-		getUsersNumber({ commit, getters }) {
+		getAllUsers({ commit, getters }) {
 			axios({
 				headers: getters.authHeader,
-				url: drf.auth.getUsersNumber(),
+				url: drf.auth.getAllUsers(),
 				method: 'get',
 			})
 				.then(res => {
-					commit('SET_ALL_USERS', res.data.count)
+					commit('SET_ALL_USERS', res.data)
 				})
 				.catch(err => console.log(err))
 		},

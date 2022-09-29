@@ -190,7 +190,7 @@ export default {
 		const getImageModal = function () {
 			state.actionLog.zoomCnt += 1
 			const modal = document.getElementById('myModal')
-			const img = detailData.value.url
+			const img = detailData.value.painting.url
 			const modalImg = document.getElementById('img01')
 			modal.style.display = 'block'
 			modalImg.src = img

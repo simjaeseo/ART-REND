@@ -7,101 +7,16 @@
 					<h4>The MOVEMENT</h4>
 				</h2>
 			</div>
-			<div class="img-wrapper">
+			<div
+				v-for="(image, index) in movementData"
+				:key="index"
+				class="img-wrapper"
+			>
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('인상주의')">
-						<img src="@/assets/artist/라파엘로.png" alt="image" />
+					<div class="image-box" @click.prevent="goDetail(image.name)">
+						<img :src="image.url" alt="image" />
 						<div class="image-info">
-							<div class="title">Impressionism</div>
-							<div class="name">인상주의</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('후기 인상주의')">
-						<img src="@/assets/artist/클로드모네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Post-Impressionism</div>
-							<div class="name">후기 인상주의</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('점묘법')">
-						<img src="@/assets/artist/피카소.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Pointage</div>
-							<div class="name">점묘법</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('표현주의')">
-						<img src="@/assets/artist/귀스타브쿠르베.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Expressionismus</div>
-							<div class="name">표현주의</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('초현실주의')">
-						<img src="@/assets/artist/귀스타브쿠르베.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Surrealism</div>
-							<div class="name">초현실주의</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('르네상스')">
-						<img src="@/assets/artist/살바도르달리.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Renaissance</div>
-							<div class="name">르네상스</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('입체주의')">
-						<img src="@/assets/artist/르네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Cubism</div>
-							<div class="name">입체주의</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('팝아트')">
-						<img src="@/assets/artist/르네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">POP ART</div>
-							<div class="name">팝아트</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('사실주의')">
-						<img src="@/assets/artist/마네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Realism</div>
-							<div class="name">사실주의</div>
+							<div class="title">{{ image.name }}</div>
 						</div>
 					</div>
 				</a>
@@ -112,16 +27,24 @@
 
 <script>
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 export default {
-	name: 'GenrePage',
+	name: 'ArtistPage',
 	setup() {
 		const router = useRouter()
+		const store = useStore()
+		store.dispatch('getMovementList')
+
+		const movementData = computed(() => store.getters.movementData)
+
 		const goDetail = function (name) {
-			console.log(name)
 			router.push({ name: 'MovementDetailPage', params: { name: name } })
 		}
 		return {
 			goDetail,
+			movementData,
 		}
 	},
 }
@@ -148,7 +71,7 @@ export default {
 	background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
 	min-width: 100vw;
 	min-height: 100vh;
-	background-color: #233243;
+	background-color: #00524c;
 }
 
 .horizontal-scroll-wrapper {

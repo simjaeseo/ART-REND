@@ -1,5 +1,10 @@
 package com.artrend.businessservice.domain.painting.service;
 
+import com.artrend.businessservice.domain.description.dto.ArtTrendDto;
+import com.artrend.businessservice.domain.description.dto.ArtistDto;
+import com.artrend.businessservice.domain.description.dto.DetailCondition;
+import com.artrend.businessservice.domain.description.dto.GenreDto;
+import com.artrend.businessservice.domain.description.repository.DescriptionQueryRepository;
 import com.artrend.businessservice.domain.painting.dto.*;
 import com.artrend.businessservice.domain.painting.entity.DetailRecommendedPainting;
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
@@ -9,6 +14,7 @@ import com.artrend.businessservice.domain.painting.exception.PaintingExceptionTy
 import com.artrend.businessservice.domain.painting.repository.DetailRecommendedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.LikedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
+import com.artrend.businessservice.domain.painting.vo.SearchResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -18,7 +24,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.RestTemplate;
 
 
 import java.util.*;
@@ -33,6 +38,7 @@ public class PaintingServiceImpl implements PaintingService {
     private final LikedPaintingRepository likedPaintingRepository;
     private final LikedPaintingService likedPaintingService;
     private final DetailRecommendedPaintingRepository detailRecommendedPaintingRepository;
+    private final DescriptionQueryRepository descriptionQueryRepository;
 
     @Override
     @Transactional
@@ -88,14 +94,25 @@ public class PaintingServiceImpl implements PaintingService {
     }
 
     @Override
-    public List<PaintingDto> searchPaintings(SearchCondition condition, Pageable pageable) {
+    public SearchResponse searchPaintings(SearchCondition condition, Pageable pageable) {
         Page<Painting> list = paintingRepository.searchPaintings(condition, pageable);
 
         List<PaintingDto> result = list.stream()
                 .map(painting -> new PaintingDto(painting))
                 .collect(Collectors.toList());
 
-        return result;
+        if (condition.getArtist() != null) {
+            ArtistDto artistDto = descriptionQueryRepository.searchArtist(new DetailCondition(condition.getArtist()));
+            return new SearchResponse(result, artistDto);
+        } else if (condition.getGenre() != null) {
+            GenreDto genreDto = descriptionQueryRepository.searchGenreV1(new DetailCondition(condition.getGenre()));
+            return new SearchResponse(result, genreDto);
+        } else if (condition.getArtTrend() != null) {
+            ArtTrendDto artTrendDto = descriptionQueryRepository.searchArtTrendV1(new DetailCondition(condition.getArtTrend()));
+            return new SearchResponse(result, artTrendDto);
+        }
+
+        return new SearchResponse(result);
     }
 
     @Override

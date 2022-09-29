@@ -80,13 +80,16 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
                 .map(painting -> new DetailDto(painting))
                 .collect(Collectors.toList());
 
+        DetailResponse response
+                = new DetailResponse(new PaintingDto(likedPainting.getPainting()), result);
+
         // 3. DB 에서 좋아요 된 그림 객체 제거
         likedPaintingRepository.delete(likedPainting);
 
         // 4. 그림의 총 좋아요 수 감소
         updateLikeCount(memberDto.getPaintingId(), -1);
 
-        return new DetailResponse(new PaintingDto(likedPainting.getPainting()), result);
+        return response;
     }
 
     @Override

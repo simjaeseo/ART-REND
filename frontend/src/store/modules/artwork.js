@@ -12,10 +12,12 @@ export default {
 		movementDetail: [],
 		artistDetailBackImg: '',
 		movementDetailBackImg: '',
+		genreDetailBackImg: '',
 		color1: false,
 		color2: false,
 		artistData: [],
 		movementData: [],
+		genreData: [],
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -27,12 +29,14 @@ export default {
 		artistDetail: state => state.artistDetail,
 		artistDetailBackImg: state => state.artistDetailBackImg,
 		movementDetailBackImg: state => state.movementDetailBackImg,
+		genreDetailBackImg: state => state.genreDetailBackImg,
 		genreDetail: state => state.genreDetail,
 		movementDetail: state => state.movementDetail,
 		color1: state => state.color1,
 		color2: state => state.color2,
 		artistData: state => state.artistData,
 		movementData: state => state.movementData,
+		genreData: state => state.genreData,
 	},
 	mutations: {
 		SET_DETAIL_DATA(state, data) {
@@ -49,10 +53,11 @@ export default {
 		},
 		SET_ARTIST_DETAIL(state, data) {
 			state.artistDetail = data
-			state.artistDetailBackImg = data.paintings[1].url
+			state.artistDetailBackImg = data.paintings[0].url
 		},
 		SET_GENRE_DETAIL(state, data) {
 			state.genreDetail = data
+			state.genreDetailBackImg = data.paintings[1].url
 		},
 		SET_MOVEMENT_DETAIL(state, data) {
 			state.movementDetail = data
@@ -69,6 +74,9 @@ export default {
 		},
 		SET_MOVEMENT_LIST(state, data) {
 			state.movementData = data
+		},
+		SET_GENRE_LIST(state, data) {
+			state.genreData = data
 		},
 	},
 	actions: {
@@ -173,6 +181,15 @@ export default {
 				commit('SET_MOVEMENT_LIST', res.data.data)
 			})
 		},
+		getGenreList({ getters, commit }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getGenreList(),
+				method: 'get',
+			}).then(res => {
+				commit('SET_GENRE_LIST', res.data.data)
+			})
+		},
 		getArtistDetail({ commit }, name) {
 			axios({
 				url: drf.business.getDetail(),
@@ -203,6 +220,7 @@ export default {
 				},
 			})
 				.then(res => {
+					console.log(res)
 					commit('SET_GENRE_DETAIL', res.data.data)
 				})
 				.catch(err => {

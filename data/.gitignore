@@ -2,7 +2,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django
 
 
-recommend_art/checkpoint_art/*.ckpt
+# recommend_art/checkpoint_art/*.ckpt
 ### Django ###
 *.log
 *.pot

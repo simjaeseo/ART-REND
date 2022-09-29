@@ -69,6 +69,7 @@ def main_recommend_painting(request):
 @api_view(['GET', 'POST'])
 def like_recommend_painting(request, pk):
     painting = Painting.objects.get(paintingId = pk)
+    print(painting)
     # recommend_like_painting()
     item_sim_df = recommend_like_painting()
     like_rmd_lst = find_sim_painting_item(item_sim_df, painting.title, 20)

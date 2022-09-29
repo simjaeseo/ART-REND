@@ -7,112 +7,12 @@
 					<h4>The GENRE</h4>
 				</h2>
 			</div>
-			<div class="img-wrapper">
+			<div v-for="(image, index) in genreData" :key="index" class="img-wrapper">
 				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('정물화')">
-						<img src="@/assets/artist/라파엘로.png" alt="image" />
+					<div class="image-box" @click.prevent="goDetail(image.name)">
+						<img :src="image.url" alt="image" />
 						<div class="image-info">
-							<div class="title">Still life</div>
-							<div class="name">정물화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('풍속화')">
-						<img src="@/assets/artist/라파엘로.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Genre Painting</div>
-							<div class="name">풍속화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('풍경화')">
-						<img src="@/assets/artist/라파엘로.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Landscape</div>
-							<div class="name">풍경화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('초상화')">
-						<img src="@/assets/artist/클로드모네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Portrait</div>
-							<div class="name">초상화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('역사화')">
-						<img src="@/assets/artist/피카소.png" alt="image" />
-						<div class="image-info">
-							<div class="title">History</div>
-							<div class="name">역사화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('나체화')">
-						<img src="@/assets/artist/귀스타브쿠르베.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Nudity</div>
-							<div class="name">나체화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('자화상')">
-						<img src="@/assets/artist/살바도르달리.png" alt="image" />
-						<div class="image-info">
-							<div class="title">self-portrait</div>
-							<div class="name">자화상</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('종교화')">
-						<img src="@/assets/artist/르네.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Religious</div>
-							<div class="name">종교화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('신화')">
-						<img src="@/assets/artist/막스.png" alt="image" />
-						<div class="image-info">
-							<div class="title">mythological</div>
-							<div class="name">신화</div>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="img-wrapper">
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail('상징화')">
-						<img src="@/assets/artist/뭉크.png" alt="image" />
-						<div class="image-info">
-							<div class="title">Representative</div>
-							<div class="name">상징화</div>
+							<div class="title">{{ image.name }}</div>
 						</div>
 					</div>
 				</a>
@@ -123,16 +23,24 @@
 
 <script>
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { computed } from 'vue'
+
 export default {
 	name: 'GenrePage',
 	setup() {
 		const router = useRouter()
+		const store = useStore()
+		store.dispatch('getGenreList')
+
+		const genreData = computed(() => store.getters.genreData)
+
 		const goDetail = function (name) {
-			console.log(name)
 			router.push({ name: 'GenreDetailPage', params: { name: name } })
 		}
 		return {
 			goDetail,
+			genreData,
 		}
 	},
 }
@@ -159,7 +67,7 @@ export default {
 	background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
 	min-width: 100vw;
 	min-height: 100vh;
-	background-color: #00524c;
+	background-color: #233243;
 }
 
 .horizontal-scroll-wrapper {

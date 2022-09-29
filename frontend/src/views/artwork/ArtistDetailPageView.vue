@@ -18,7 +18,7 @@
 					}"
 				>
 					<h2 id="title-text2">
-						{{ detail.paintings[1].title }} , {{ detail.paintings[1].year }}
+						{{ detail.paintings[0].title }} , {{ detail.paintings[0].year }}
 						<br />
 					</h2>
 				</div>
@@ -85,7 +85,7 @@ export default {
 		store.dispatch('getArtistDetail', name)
 		const detail = computed(() => store.getters.artistDetail)
 		const backImg = computed(() => store.getters.artistDetailBackImg)
-
+		console.log(backImg.value)
 		const goArtist = function () {
 			router.push({ name: 'ArtistPage' })
 		}

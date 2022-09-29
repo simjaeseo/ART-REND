@@ -49,18 +49,18 @@ public class MemberProducer {
                 .di(googleSignupDto.getDi())
                 .build();
 
-        KafkaMemberDto kafkaOrderDto = new KafkaMemberDto(schema, payload);
+        KafkaMemberDto kafkaMemberDto = new KafkaMemberDto(schema, payload);
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonInString = "";
         try {
-            jsonInString = mapper.writeValueAsString(kafkaOrderDto);
+            jsonInString = mapper.writeValueAsString(kafkaMemberDto);
         } catch (JsonProcessingException ex) {
             ex.printStackTrace();
         }
 
         kafkaTemplate.send(topic, jsonInString);
-        log.info("Order Producer sent data from the Order microservice: " + kafkaOrderDto);
+        log.info("Order Producer sent data from the Order microservice: " + kafkaMemberDto);
 
         return googleSignupDto;
     }

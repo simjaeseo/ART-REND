@@ -5,6 +5,7 @@ import com.artrend.authservice.dto.request.MemberInfoCheckRequest;
 import com.artrend.authservice.dto.request.MemberInfoRequest;
 import com.artrend.authservice.dto.request.NicknameRequest;
 import com.artrend.authservice.dto.response.SelectNicknameResponse;
+import com.artrend.authservice.global.common.CountDataResponse;
 import com.artrend.authservice.global.common.CountResponse;
 import com.artrend.authservice.global.common.DataResponse;
 import com.artrend.authservice.global.common.MessageResponse;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 import java.util.Map;
 
 @Tag(name = "member", description = "회원 API")
@@ -82,13 +84,26 @@ public class MemberController {
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "총 회원 수 조회 성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
-            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+            @ApiResponse(responseCode = "404", description = "존재하지 않는 회원입니다."),
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
     @GetMapping("/members/count")
     public ResponseEntity selectMemberCount(){
         int memberCount = memberService.selectMemberCount();
         return ResponseEntity.status(HttpStatus.OK).body(new CountResponse("총 회원 수 조회 성공", memberCount));
+    }
+
+    @Operation(summary = "모든 회원 id 값 조회하기", description = "현재 가입되어있는 회원의 id값을 모두 조회합니다.")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "총 회원 수 조회 성공"),
+            @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
+            @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
+            @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
+    })
+    @GetMapping("/members/id")
+    public ResponseEntity selectAllMemberId(){
+        List<Long> membersId = memberService.selectAllMemberId();
+        return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse<>("모든 회원 id 값 조회 성공", membersId, membersId.size()));
     }
 
     @Operation(summary = "회원 탈퇴하기", description = "해당 회원을 탈퇴처리합니다.")

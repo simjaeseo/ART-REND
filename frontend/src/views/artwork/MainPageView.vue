@@ -31,4 +31,15 @@ export default {
 	width: 100%;
 	overflow-y: hidden;
 }
+
+/* hide scrollbar */
+::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+::-webkit-scrollbar-button {
+	width: 0px;
+	height: 0px;
+}
 </style>

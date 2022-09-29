@@ -51,13 +51,21 @@
 					</a>
 				</div>
 			</div>
+			<div class="btn-class">
+				<button class="btn1" @click="goProfile">PROFILE</button>
+				<button class="btn2" @click="goArtworks">TOP10</button>
+			</div>
+		</div>
+		<div class="topbutton">
+			<img src="@/assets/left.png" class="leftButton" @click="toTop" />
 		</div>
 	</div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
+import { computed, reactive } from 'vue'
 
 export default {
 	name: 'MainPageArtWork',
@@ -65,29 +73,47 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
+		const router = useRouter()
 		const store = useStore()
+
+		const userId = computed(() => store.getters.userId)
 
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-
+			console.log(x)
 			// ART-REND color
-			if (x >= 4393) {
+			if (x >= 4850) {
 				store.commit('SET_COLOR1', true)
 			} else {
 				store.commit('SET_COLOR1', false)
 			}
 			// 햄버거 color
-			if (x >= 3332) {
+			if (x >= 3555) {
 				store.commit('SET_COLOR2', true)
 			} else {
 				store.commit('SET_COLOR2', false)
 			}
 		}
 
+		const goProfile = function () {
+			location.href = `http://localhost:3002/mypage/${userId.value}`
+		}
+		const goArtworks = function () {
+			router.push({ name: 'Artworks' })
+		}
+
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			state,
 			getScroll,
+			goProfile,
+			goArtworks,
+			toTop,
 		}
 	},
 }
@@ -189,15 +215,16 @@ export default {
 	width: 60%;
 	background-color: black;
 }
+
 /* hide scrollbar */
 ::-webkit-scrollbar {
-	width: 1px;
-	height: 1px;
+	width: 0px;
+	height: 0px;
 }
 
 ::-webkit-scrollbar-button {
-	width: 1px;
-	height: 1px;
+	width: 0px;
+	height: 0px;
 }
 
 .external {
@@ -282,5 +309,35 @@ a:hover .image-info {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 1.5vh;
 	font-weight: 200;
+}
+
+.btn1 {
+	background: none;
+	color: white;
+	cursor: pointer;
+}
+.btn2 {
+	background: none;
+	color: white;
+	cursor: pointer;
+}
+.btn-class {
+	cursor: pointer;
+	width: 100%;
+}
+
+.topbutton {
+	position: absolute;
+	right: 30px;
+	top: 50%;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
 }
 </style>

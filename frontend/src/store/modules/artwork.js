@@ -13,7 +13,6 @@ export default {
 		artistDetailBackImg: '',
 		color1: false,
 		color2: false,
-		log: null,
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -60,9 +59,6 @@ export default {
 		},
 		SET_COLOR2(state, value) {
 			state.color2 = value
-		},
-		SET_LOG(state, log) {
-			state.log = log
 		},
 	},
 	actions: {
@@ -213,8 +209,6 @@ export default {
 				})
 		},
 		actionLog({ getters }, actionLog) {
-			console.log(actionLog)
-			console.log('함수실행!')
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),

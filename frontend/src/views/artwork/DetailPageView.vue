@@ -184,7 +184,7 @@ export default {
 				clickCnt: 0,
 				zoomCnt: 0,
 				inTime: null,
-				outTime: '음',
+				outTime: null,
 			},
 		})
 		state.actionLog.clickCnt += 1

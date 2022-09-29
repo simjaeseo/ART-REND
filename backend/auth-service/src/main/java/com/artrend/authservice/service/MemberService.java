@@ -20,10 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -58,6 +55,20 @@ public class MemberService {
         List<Member> findMemberAll = memberRepository.findAll();
 
         return findMemberAll.size();
+
+    }
+
+    public List<Long> selectAllMemberId() {
+        List<Member> findMemberAll = memberRepository.findAll();
+
+        List<Long> membersId = new ArrayList<>();
+
+        for(Member findMember : findMemberAll){
+            membersId.add(findMember.getId());
+        }
+
+
+        return membersId;
 
     }
 

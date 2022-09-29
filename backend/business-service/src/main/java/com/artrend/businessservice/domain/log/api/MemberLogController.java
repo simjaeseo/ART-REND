@@ -1,4 +1,4 @@
-package com.artrend.businessservice.domain.log.controller;
+package com.artrend.businessservice.domain.log.api;
 
 import com.artrend.businessservice.domain.log.service.MemberLogService;
 import com.artrend.businessservice.domain.log.vo.MemberLogRequest;

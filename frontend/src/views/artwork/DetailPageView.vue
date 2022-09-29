@@ -23,7 +23,7 @@
 						src="@/assets/like.png"
 						alt="unlike-button"
 						id="unlike-button"
-						@click.prevent="likeArtWork"
+						@click.prevent="unlikeArtWork"
 					/>
 					<img
 						v-if="detailData.painting.isLiked === false"

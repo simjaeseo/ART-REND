@@ -314,8 +314,8 @@ img {
 	cursor: pointer;
 	margin-bottom: 16px;
 
-	height: 70vh;
-	overflow-y: hidden;
+	height: 80vh;
+	overflow: auto;
 }
 
 .masonry .mItem {
@@ -393,5 +393,29 @@ img {
 	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 10px;
 	box-shadow: inset 0px 0px 5px rgb(0, 0, 0);
+}
+
+@media (max-height: 1140px) {
+	.container {
+		max-width: 1140px;
+	}
+}
+
+@media (max-height: 985px) {
+	.container {
+		max-width: 960px;
+	}
+}
+
+@media (max-height: 825px) {
+	.container {
+		max-width: 720px;
+	}
+}
+
+@media (max-height: 630px) {
+	.container {
+		max-width: 720px;
+	}
 }
 </style>

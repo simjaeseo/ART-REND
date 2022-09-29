@@ -27,6 +27,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="btn-class">
+			<button class="btn2" @click="goMain">MAIN</button>
+			<button class="btn1" @click="goProfile">PROFILE</button>
+		</div>
 	</div>
 </template>
 
@@ -35,11 +39,18 @@ import OrderByLike from '@/views/artwork/components/OrderByLike.vue'
 import OrderByView from '@/views/artwork/components/OrderByView.vue'
 import OrderByTrans from '@/views/artwork/components/OrderByTrans.vue'
 import { useStore } from 'vuex'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+
 export default {
 	name: 'MyPageView',
 	components: { OrderByLike, OrderByView, OrderByTrans },
 	setup() {
+		const router = useRouter()
 		const store = useStore()
+
+		const userId = computed(() => store.getters.userId)
+
 		store.dispatch('getHits', 'hits')
 		const getLikes = function () {
 			store.dispatch('getLikes', 'totalLikeCount')
@@ -47,9 +58,18 @@ export default {
 		const getTrans = function () {
 			store.dispatch('getTrans', 'totalChangeCount')
 		}
+
+		const goMain = function () {
+			router.push({ name: 'Main' })
+		}
+		const goProfile = function () {
+			location.href = `http://localhost:3002/mypage/${userId.value}`
+		}
 		return {
 			getLikes,
 			getTrans,
+			goMain,
+			goProfile,
 		}
 	},
 }
@@ -142,5 +162,33 @@ input[id='like-picture']:checked ~ .tab-inner .tabs {
 }
 input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	top: -200%;
+}
+
+.btn1 {
+	background: none;
+	color: rgb(150, 150, 150);
+	cursor: pointer;
+	border: none;
+	margin: 20px;
+	font-size: 20px;
+}
+.btn2 {
+	background: none;
+	color: rgb(150, 150, 150);
+	cursor: pointer;
+	border: none;
+	margin: 20px;
+	font-size: 20px;
+}
+.btn1:hover,
+.btn2:hover {
+	color: black;
+}
+.btn-class {
+	cursor: pointer;
+	width: 100%;
+	text-align: center;
+	position: absolute;
+	bottom: 30px;
 }
 </style>

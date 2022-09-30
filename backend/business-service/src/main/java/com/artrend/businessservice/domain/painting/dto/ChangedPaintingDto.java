@@ -2,9 +2,15 @@ package com.artrend.businessservice.domain.painting.dto;
 
 import com.artrend.businessservice.domain.painting.entity.ChangedPainting;
 import com.querydsl.core.annotations.QueryProjection;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.sql.Blob;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChangedPaintingDto {
     private Long id;
     private Long originalId;
@@ -12,7 +18,7 @@ public class ChangedPaintingDto {
     private String title;
     private String koreanTitle;
     private String artist;
-    private String url;
+    private Blob url;
 
     @QueryProjection
     public ChangedPaintingDto(ChangedPainting changedPainting) {

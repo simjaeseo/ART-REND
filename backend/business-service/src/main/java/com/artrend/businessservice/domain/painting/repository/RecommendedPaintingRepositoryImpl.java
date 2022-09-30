@@ -2,6 +2,7 @@ package com.artrend.businessservice.domain.painting.repository;
 
 import com.artrend.businessservice.domain.painting.entity.RecommendedPainting;
 import com.artrend.businessservice.domain.painting.repository.support.QuerydslRepositorySupport;
+import com.artrend.businessservice.domain.painting.repository.support.RecommendedPaintingRepositoryCustom;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -2,6 +2,14 @@
 	<div class="detail">
 		<div>
 			<div id="img-wrap">
+				<div class="topbutton">
+					<img
+						src="@/assets/left.png"
+						class="leftButton"
+						id="top"
+						@click="toTop"
+					/>
+				</div>
 				<div class="img-box">
 					<img
 						:src="detailData.painting.url"
@@ -37,9 +45,13 @@
 			</div>
 			<div id="background-div">
 				<div class="external">
-					<div class="horizontal-scroll-wrapper">
+					<div
+						class="horizontal-scroll-wrapper"
+						id="main"
+						@scroll.prevent="getScroll()"
+					>
 						<div id="img-title-wrap">
-							<div class="title-wrapper">
+							<div class="title-wrapper margin-left">
 								<h1 id="img-title">{{ detailData.painting.title }}</h1>
 								<h5 id="img-title2">{{ detailData.painting.koreanTitle }}</h5>
 								<h4 id="img-title3">{{ detailData.painting.artist }}</h4>
@@ -258,6 +270,25 @@ export default {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 
+		// 스크롤 가져오기
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			// top 버튼
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+		}
+
+		// top 버튼
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			state,
 			getImageModal,
@@ -271,6 +302,8 @@ export default {
 			unlikeArtWork,
 			goMain,
 			goProfile,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -281,6 +314,11 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+
+#img01 {
+	max-width: 90vw;
+	max-height: 90vh;
+}
 
 .button-box {
 	color: white;
@@ -372,9 +410,6 @@ hr {
 	margin-bottom: 3vw;
 	font-family: 'Noto Serif Georgian', serif;
 }
-#img-title-wrap {
-	margin-left: 10%;
-}
 
 .img-box {
 	height: 70%;
@@ -411,7 +446,7 @@ hr {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	/* z-index: 2; Sit on top */
-	padding-top: 100px; /* Location of the box */
+	padding-top: 5vh;
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -497,7 +532,7 @@ hr {
 	height: 100vh;
 	color: white;
 	/* height: 100vw; */
-	margin: 100px 0px;
+	/* margin: 100px 0px; */
 }
 
 .horizontal-scroll-wrapper {
@@ -520,26 +555,30 @@ hr {
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(200px);
 	transition: 1s;
-	min-height: 60vh;
+	min-height: 100vh;
 
-	height: 50vw;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+.margin-left {
+	margin-top: -10%;
 }
 
 .title-wrapper2 {
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(200px);
 	transition: 1s;
-	min-height: 60vh;
+	min-height: 100vh;
 
-	height: 50vw;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-end;
 	padding-right: 10%;
+	margin-top: -20%;
 }
 
 /* Modal */
@@ -631,6 +670,7 @@ hr {
 	font-size: 20px;
 	margin: 20px;
 	cursor: pointer;
+	border: none;
 }
 .btn2 {
 	background: none;
@@ -638,6 +678,7 @@ hr {
 	font-size: 20px;
 	margin: 20px;
 	cursor: pointer;
+	border: none;
 }
 .btn1:hover,
 .btn2:hover {
@@ -650,5 +691,25 @@ hr {
 	position: fixed;
 	bottom: 10px;
 	text-align: center;
+}
+
+/* top button */
+.topbutton {
+	position: absolute;
+	right: -50px;
+	top: 50%;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

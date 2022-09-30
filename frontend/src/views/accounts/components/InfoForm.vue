@@ -83,7 +83,7 @@ export default {
 				name_pattern.test(state.userName)
 			) {
 				const next = confirm(
-					`${state.userName} ${state.userBirthday} 로 가입하시겠습니까?`,
+					`성명 ${state.userName} / 생년월일 ${state.userBirthday} (이)가 맞습니까?`,
 				)
 				if (next == true) {
 					state.next = true

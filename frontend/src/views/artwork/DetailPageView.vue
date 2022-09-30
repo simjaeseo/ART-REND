@@ -249,9 +249,10 @@ export default {
 		}
 		const onSubmit = function () {
 			encodeBase64ImageFile(state.image).then(data => {
-				const formData = new FormData()
-				formData.append('file', data)
-				state.payload.img = formData
+				// const formData = new FormData()
+				// formData.append('file', data)
+				// state.payload.img = formData
+				state.payload.img = data
 				store.dispatch('imageConvert', state.payload)
 			})
 		}

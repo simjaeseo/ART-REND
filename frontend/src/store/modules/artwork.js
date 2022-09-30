@@ -80,9 +80,19 @@ export default {
 		},
 	},
 	actions: {
-		// imageConvert(data) {
-		// 	console.log(data)
-		// },
+		imageConvert({ getters }, payload) {
+			console.log(payload)
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.imageConvert(payload.artworkId),
+				method: 'post',
+				data: {
+					file: payload.img,
+				},
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+		},
 		getArtWorkDetail({ getters, commit }, artworkId) {
 			const memberId = getters.userId
 			axios({

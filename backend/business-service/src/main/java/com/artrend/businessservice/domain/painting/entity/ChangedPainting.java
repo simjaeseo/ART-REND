@@ -26,6 +26,6 @@ public class ChangedPainting extends BaseEntity {
     @JoinColumn(name = "painting_id")
     private Painting painting;
 
-    @Lob
-    private Blob url;
+    @Column(columnDefinition = "LONGTEXT")
+    private String url;
 }

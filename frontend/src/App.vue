@@ -116,7 +116,12 @@ export default {
 		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
 			twoBlack = true
-		} else if (now.includes('main') && color1 && color2) {
+		} else if (
+			(now.includes('main') && color1 && color2) ||
+			(now.includes('artist') && color1 && color2) ||
+			(now.includes('genre') && color1 && color2) ||
+			(now.includes('movement') && color1 && color2)
+		) {
 			oneBlack = color1
 			twoBlack = color2
 		} else {

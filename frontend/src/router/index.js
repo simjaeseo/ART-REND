@@ -15,6 +15,7 @@ import MovementPageView from '@/views/artwork/MovementPageView.vue'
 import MovementDetailPageView from '@/views/artwork/MovementDetailPageView.vue'
 import UserInfoView from '@/views/accounts/UserInfoView.vue'
 import UnregisterView from '@/views/accounts/UnregisterView.vue'
+import NotFoundView from '@/views/accounts/NotFoundView.vue'
 
 // 라우터가드는 개발 끝나고 주석 풀면 됨
 // const requireAuth = () => (from, to, next) => {
@@ -112,6 +113,15 @@ const routes = [
 		path: '/unregister',
 		name: 'Unregister',
 		component: UnregisterView,
+	},
+	{
+		path: '/404',
+		name: 'NotFound',
+		component: NotFoundView,
+	},
+	{
+		path: '/:pathMatch(.*)*',
+		redirect: '/404',
 	},
 ]
 

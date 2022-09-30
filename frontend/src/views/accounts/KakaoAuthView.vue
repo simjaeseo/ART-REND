@@ -17,34 +17,44 @@ export default {
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		const url = new URLSearchParams(location.search)
-		const token = url.get('accessToken')
-		const decodeAccessToken = jwt_decode(token)
-		const nickName = url.get('isNickname')
-		const selected = url.get('isPainting')
+		const provider = url.get('provider')
+		const providerId = url.get('providerId')
+		const isExisted = url.get('isExisted')
+		const isNickName = url.get('isNickname')
+		const isSelected = url.get('isSelectPainting')
 
-		if (nickName == 'false') {
+		const data = {
+			isExisted: isExisted,
+			isNickName: isNickName,
+			isSelected: isSelected,
+		}
+		store.commit('SET_USER_IS_EXISTED', data)
+		store.commit('SET_PROVIDER', provider)
+		store.commit('SET_PROVIDER_ID', providerId)
+
+		if (isExisted == 'false') {
+			router.push({ name: 'UserInfo' })
+		} else if (isNickName == 'false') {
 			router.push({ name: 'SignUp' })
-		} else if (selected == 'false') {
+		} else if (isSelected == 'false') {
 			router.push({ name: 'SelectImage' })
-		} else {
+		} else if (
+			isExisted == 'true' &&
+			isNickName == 'true' &&
+			isSelected == 'true'
+		) {
+			const token = url.get('accessToken')
+			const decodeAccessToken = jwt_decode(token)
+			store.commit('SET_USER_ID', decodeAccessToken.id)
+			store.dispatch('saveToken', token)
 			router.push({ name: 'Main' })
 		}
-
-		// console.log(decodeAccessToken)
-		// console.log(decodeAccessToken.id)
-		// console.log(token)
-
-		store.commit('SET_USER_ID', decodeAccessToken.id)
-		store.dispatch('saveToken', token)
-
 		return {
 			isLoggedIn,
-			decodeAccessToken,
-			token,
 			url,
 		}
 	},
 }
 </script>
 
-<style></style>
+<style scoped></style>

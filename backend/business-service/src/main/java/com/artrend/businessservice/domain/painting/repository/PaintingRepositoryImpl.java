@@ -56,15 +56,15 @@ public class PaintingRepositoryImpl extends QuerydslRepositorySupport implements
     }
 
     private BooleanExpression artistEq(String artist) {
-        return hasText(artist) ? painting.artist.eq(artist) : null;
+        return hasText(artist) ? painting.artist.contains(artist) : null;
     }
 
     private BooleanExpression artTrendEq(String artTrend) {
-        return hasText(artTrend) ? painting.artTrend.eq(artTrend) : null;
+        return hasText(artTrend) ? painting.artTrend.contains(artTrend) : null;
     }
 
     private BooleanExpression genreEq(String genre) {
-        return hasText(genre) ? painting.genre.eq(genre) : null;
+        return hasText(genre) ? painting.genre.contains(genre) : null;
     }
 
     private OrderSpecifier<?> paintingSort(Pageable pageable) {

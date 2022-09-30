@@ -7,13 +7,12 @@
 				</div>
 				<div>
 					<form action="">
-						<label for="user-nick-name">
-							<input
-								type="text"
-								id="user-nick-name"
-								v-model="state.userNickName"
-							/>
-						</label>
+						<input
+							type="text"
+							id="user-nick-name"
+							v-model="state.userNickName"
+							placeholder=" "
+						/>
 						<div id="btn-wrap">
 							<button
 								class="btn"
@@ -78,6 +77,10 @@ input:focus {
 	outline: none;
 	background-color: transparent;
 }
+input:placeholder-shown ~ #btn-wrap {
+	visibility: hidden;
+}
+
 #wrap3 {
 	text-align: start;
 	width: 50vw;

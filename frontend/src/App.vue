@@ -8,6 +8,7 @@
 					</h1>
 				</a>
 				<button
+					v-if="isLoggedIn"
 					class="navbar-toggler"
 					type="button"
 					data-bs-toggle="offcanvas"
@@ -64,15 +65,35 @@
 									<p>TOP ARTWORKS</p>
 								</a>
 							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/artist">
+									<p>ARTIST</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/genre">
+									<p>GENRE</p>
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="http://localhost:3002/movement">
+									<p>MOVEMENT</p>
+								</a>
+							</li>
 							<li class="nav-item2">
-								<p>LOGOUT</p>
+								<p @click="logout()">LOGOUT</p>
+							</li>
+							<li class="nav-item2">
+								<a href="http://localhost:3002/unregister" id="withdraw">
+									<p>WITHDRAW</p>
+								</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		<router-view />
+		<router-view :key="$route.fullPath" />
 	</div>
 </template>
 
@@ -85,6 +106,8 @@ export default {
 		const store = useStore()
 		const isLoggedIn = computed(() => store.getters.isLoggedIn)
 		const userId = computed(() => store.getters.userId)
+		const color1 = computed(() => store.getters.color1)
+		const color2 = computed(() => store.getters.color2)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -93,17 +116,24 @@ export default {
 		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
 			twoBlack = true
+		} else if (now.includes('main') && color1 && color2) {
+			oneBlack = color1
+			twoBlack = color2
 		} else {
 			oneBlack = false
 			twoBlack = false
 		}
-
+		const logout = function () {
+			store.dispatch('logout')
+			document.getElementById('close-btn').click()
+		}
 		return {
 			now,
 			oneBlack,
 			twoBlack,
 			isLoggedIn,
 			userId,
+			logout,
 		}
 	},
 }
@@ -149,6 +179,7 @@ export default {
 	font-weight: 900;
 	font-size: 80px;
 	color: gray;
+	cursor: pointer;
 }
 .nav-item {
 	font-weight: 900;
@@ -217,5 +248,13 @@ export default {
 	align-items: center;
 	justify-content: space-between;
 	padding: var(--bs-navbar-padding-y) var(--bs-navbar-padding-x);
+}
+a {
+	text-decoration: none;
+	color: white;
+}
+#withdraw {
+	color: gray;
+	font-size: 20px;
 }
 </style>

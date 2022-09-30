@@ -11,7 +11,7 @@
 			>
 				<div class="pseudo-img">
 					<a target="_blank" rel="noopener">
-						<div class="image-box" @click.prevent="goDetail(image.id)">
+						<div class="image-box">
 							<button
 								class="delete"
 								@click.prevent="unlikeArtWork(image.id)"
@@ -19,7 +19,11 @@
 							>
 								delete
 							</button>
-							<img :src="image.url" alt="image" />
+							<img
+								:src="image.url"
+								alt="image"
+								@click.prevent="goDetail(image.id)"
+							/>
 							<div class="image-info">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>

@@ -6,6 +6,7 @@
 
 <script>
 import MainPageArtWork from '@/views/artwork/components/MainPageArtWork.vue'
+
 export default {
 	name: 'MainPageView',
 	components: { MainPageArtWork },
@@ -21,5 +22,16 @@ export default {
 	height: 100vh;
 	width: 100%;
 	overflow-y: hidden;
+}
+
+/* hide scrollbar */
+::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+::-webkit-scrollbar-button {
+	width: 0px;
+	height: 0px;
 }
 </style>

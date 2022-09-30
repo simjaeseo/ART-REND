@@ -7,12 +7,21 @@ export default {
 		token: localStorage.getItem('token') || '',
 		userId: null,
 		likeArtWorkList: [],
+		allUsers: [],
+		userNickName: '',
+		provider: null,
+		providerId: null,
+		isExisted: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
 		isLoggedIn: state => !!state.token,
 		userId: state => state.userId,
 		likeArtWorkList: state => state.likeArtWorkList,
+		allUsers: state => state.allUsers,
+		userNickName: state => state.userNickName,
+		provider: state => state.provider,
+		providerId: state => state.providerId,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -23,6 +32,24 @@ export default {
 		},
 		SET_LIKE_ART_WORK_LIST(state, data) {
 			state.likeArtWorkList = data
+		},
+		REMOVE_TOKEN(state) {
+			state.userId = null
+		},
+		SET_ALL_USERS(state, users) {
+			state.allUsers = users
+		},
+		SET_USER_NICKNAME(state, nickname) {
+			state.userNickName = nickname
+		},
+		SET_PROVIDER(state, provider) {
+			state.provider = provider
+		},
+		SET_PROVIDER_ID(state, providerId) {
+			state.providerId = providerId
+		},
+		SET_USER_IS_EXISTED(state, data) {
+			state.isExisted = data
 		},
 	},
 	actions: {
@@ -84,7 +111,6 @@ export default {
 		},
 
 		likeArtWorkList({ getters, commit }, memberId) {
-			// console.log(memberId)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.like(),
@@ -98,6 +124,65 @@ export default {
 				})
 				.catch(() => {
 					alert('에러가발생했다')
+				})
+		},
+		removeToken({ commit }) {
+			commit('SET_TOKEN', '')
+			localStorage.setItem('token', '')
+		},
+		logout({ dispatch, commit, getters }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.logout(),
+				method: 'get',
+			})
+				.then(() => {
+					dispatch('removeToken')
+					commit('REMOVE_TOKEN')
+					confirm('로그아웃하시겠습니까?')
+					router.push({ name: 'Login' })
+				})
+				.catch(err => console.log(err))
+		},
+
+		getAllUsers({ commit, getters }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getAllUsers(),
+				method: 'get',
+			})
+				.then(res => {
+					commit('SET_ALL_USERS', res.data)
+				})
+				.catch(err => console.log(err))
+		},
+
+		getUserNickname({ commit, getters }, memberId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getUserNickname(memberId),
+				method: 'get',
+			})
+				.then(res => {
+					commit('SET_USER_NICKNAME', res.data.data.nickname)
+				})
+				.catch(err => console.log(err))
+		},
+
+		modifyNickName({ getters }, userNickName) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getUserNickname(getters.userId),
+				method: 'put',
+				data: {
+					nickname: userNickName,
+				},
+			})
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => {
+					console.log(err)
 				})
 		},
 	},

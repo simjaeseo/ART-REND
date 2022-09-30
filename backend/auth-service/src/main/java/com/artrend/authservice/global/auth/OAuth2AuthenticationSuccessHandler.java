@@ -1,6 +1,8 @@
 package com.artrend.authservice.global.auth;
 
+import com.artrend.authservice.client.BusinessServiceClient;
 import com.artrend.authservice.domain.Member;
+import com.artrend.authservice.dto.PaintingDtoDataResponse;
 import com.artrend.authservice.global.jwt.TokenProvider;
 import com.artrend.authservice.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
     private final Environment env;
-
+    private final BusinessServiceClient businessServiceClient;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -35,22 +37,40 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
 
         System.out.println("oAuth2User.getAttributes() "+ oAuth2User.getAttributes());
+        String provider = String.valueOf(oAuth2User.getAttributes().get("provider"));
         String providerId = "";
-        Member findMember = null;
+        Optional<Member> findMember = null;
 
         // 토큰 발급하기위해서는 memberId를 알아야하지만, 카카오로 로그인했는지, 구글로 로그인했는지 모르기때문에 if문으로 나누기
         // 카카오로 로그인했을때
         if( oAuth2User.getAttributes().get("id") == null){
             providerId = oAuth2User.getAttributes().get("sub").toString();
-            findMember = memberRepository.findByGoogleProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByGoogleProviderId(providerId);
         }else{
             providerId = oAuth2User.getAttributes().get("id").toString();
-            findMember = memberRepository.findByKakaoProviderId(providerId).orElseThrow(() -> new RuntimeException("멤버익셉션으로 구현하자"));
+            findMember = memberRepository.findByKakaoProviderId(providerId);
         }
 
-        String accessToken = tokenProvider.createToken(providerId, findMember.getId());
+        boolean isExisted = false;
+        boolean isSelectPainting = false;
+        boolean isNickname = false;
 
-        String url = makeRedirectUrl(accessToken, oAuth2User);
+        if(findMember.isPresent()){
+            // 멤버가 존재하면
+            isExisted = true;
+
+            if(findMember.get().getNickname() != null){
+                isNickname = true;
+            }
+
+            PaintingDtoDataResponse paintingDtoDataResponse = businessServiceClient.getSelectedPaintingList(findMember.get().getId());
+            // 이미 회원가입 + 닉네임까지 추가 + 선호그림은 선택 x
+            if (!paintingDtoDataResponse.getData().toString().equals("[]")) {
+                isSelectPainting = true;
+            }
+        }
+
+        String url = makeRedirectUrl(provider ,providerId, isExisted, isSelectPainting,isNickname, findMember );
 
         if (response.isCommitted()) {
             logger.debug("응답이 이미 커밋된 상태입니다. " + url + "로 리다이렉트하도록 바꿀 수 없습니다.");
@@ -59,27 +79,51 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         getRedirectStrategy().sendRedirect(request, response, url);
     }
 
-    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+    private String makeRedirectUrl(String provider, String providerId, boolean isExisted, boolean isSelectPainting, boolean isNickname, Optional<Member> findMember) {
 
-        if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+        if(isExisted == true && isSelectPainting == true && isNickname == true){
+            String accessToken = tokenProvider.createToken(providerId, findMember.get().getId());
+
             return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", true)
-                    .queryParam("isNickname", true)
-                    .build().toUriString();
-        }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", false)
-                    .queryParam("isNickname", true)
-                    .build().toUriString();
-        }else {
-            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
-                    .queryParam("accessToken", accessToken)
-                    .queryParam("isPainting", false)
-                    .queryParam("isNickname", false)
+                    .queryParam("provider", provider)
+                    .queryParam("providerId", providerId)
+                    .queryParam("isExisted",isExisted)
+                    .queryParam("isSelectPainting",isSelectPainting)
+                    .queryParam("isNickname",isNickname)
+                    .queryParam("accessToken",accessToken)
                     .build().toUriString();
         }
+
+
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+                .queryParam("provider", provider)
+                .queryParam("providerId", providerId)
+                .queryParam("isExisted",isExisted)
+                .queryParam("isSelectPainting",isSelectPainting)
+                .queryParam("isNickname",isNickname)
+                .build().toUriString();
     }
+//    private String makeRedirectUrl(String accessToken, OAuth2User oAuth2User) {
+//
+//        if((boolean) oAuth2User.getAttributes().get("isAddNickname") && (boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", true)
+//                    .queryParam("isNickname", true)
+//                    .build().toUriString();
+//        }else if((boolean) oAuth2User.getAttributes().get("isAddNickname") && !(boolean) oAuth2User.getAttributes().get("isSelectPainting")){
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", false)
+//                    .queryParam("isNickname", true)
+//                    .build().toUriString();
+//        }else {
+//            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
+//                    .queryParam("accessToken", accessToken)
+//                    .queryParam("isPainting", false)
+//                    .queryParam("isNickname", false)
+//                    .build().toUriString();
+//        }
+//    }
 
 }

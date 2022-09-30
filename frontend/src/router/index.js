@@ -9,6 +9,12 @@ import ArtWorksArrayView from '@/views/artwork/ArtWorksArrayView.vue'
 import KakaoAuthView from '@/views/accounts/KakaoAuthView.vue'
 import ArtistPageView from '@/views/artwork/ArtistPageView.vue'
 import ArtistDetailPageView from '@/views/artwork/ArtistDetailPageView.vue'
+import GenrePageView from '@/views/artwork/GenrePageView.vue'
+import GenreDetailPageView from '@/views/artwork/GenreDetailPageView.vue'
+import MovementPageView from '@/views/artwork/MovementPageView.vue'
+import MovementDetailPageView from '@/views/artwork/MovementDetailPageView.vue'
+import UserInfoView from '@/views/accounts/UserInfoView.vue'
+import UnregisterView from '@/views/accounts/UnregisterView.vue'
 
 // 라우터가드는 개발 끝나고 주석 풀면 됨
 // const requireAuth = () => (from, to, next) => {
@@ -76,6 +82,36 @@ const routes = [
 		path: '/artist/:name',
 		name: 'ArtistDetailPage',
 		component: ArtistDetailPageView,
+	},
+	{
+		path: '/genre',
+		name: 'GenrePage',
+		component: GenrePageView,
+	},
+	{
+		path: '/genre/:name',
+		name: 'GenreDetailPage',
+		component: GenreDetailPageView,
+	},
+	{
+		path: '/movement',
+		name: 'MovementPage',
+		component: MovementPageView,
+	},
+	{
+		path: '/movement/:name',
+		name: 'MovementDetailPage',
+		component: MovementDetailPageView,
+	},
+	{
+		path: '/user/form',
+		name: 'UserInfo',
+		component: UserInfoView,
+	},
+	{
+		path: '/unregister',
+		name: 'Unregister',
+		component: UnregisterView,
 	},
 ]
 

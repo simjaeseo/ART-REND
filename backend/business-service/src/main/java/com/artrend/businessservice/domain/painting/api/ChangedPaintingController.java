@@ -28,11 +28,11 @@ public class ChangedPaintingController {
     private final ChangedPaintingService changedPaintingService;
 
     @PostMapping("/{painting_id}")
-    public ResponseEntity<? extends MessageResponse> changePainting(@RequestPart(value = "file") MultipartFile file,
-                                                                    @PathVariable("painting_id") Long paintingId,
+    public ResponseEntity<? extends DataResponse> changePainting(@PathVariable("painting_id") Long paintingId,
+                                                                    @RequestBody String url,
                                                                     @RequestHeader(value = "Authorization") String authorization) {
-        changedPaintingService.changePainting(file, paintingId, authorization);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
+        String response = changedPaintingService.changePainting(url, paintingId, authorization);
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(response));
     }
 
     @Operation(summary = "회원별 변환한 그림 조회하기", description = "해당 회원의 변환한 그림 목록을 조회합니다.")

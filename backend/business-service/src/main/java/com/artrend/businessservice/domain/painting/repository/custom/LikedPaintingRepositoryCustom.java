@@ -1,4 +1,4 @@
-package com.artrend.businessservice.domain.painting.repository.support;
+package com.artrend.businessservice.domain.painting.repository.custom;
 
 import com.artrend.businessservice.domain.painting.entity.LikedPainting;
 import org.springframework.data.domain.Page;

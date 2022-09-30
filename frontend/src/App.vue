@@ -48,44 +48,44 @@
 					</div>
 					<div class="offcanvas-body">
 						<h2 id="logo-title">ART-REND</h2>
-						<h5 id="menu-text">MENU</h5>
-						<ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+						<div id="menu-text">MENU</div>
+						<ul class="navbar-nav justify-content-end">
 							<li class="nav-item">
 								<a href="http://localhost:3002/main">
-									<p>HOME</p>
+									<div>HOME</div>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a :href="`http://localhost:3002/mypage/${userId}`">
-									<p>PROFILE</p>
+									<div>PROFILE</div>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="http://localhost:3002/artworks">
-									<p>TOP ARTWORKS</p>
+									<div>TOP ARTWORKS</div>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="http://localhost:3002/artist">
-									<p>ARTIST</p>
+									<div>ARTIST</div>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="http://localhost:3002/genre">
-									<p>GENRE</p>
+									<div>GENRE</div>
 								</a>
 							</li>
 							<li class="nav-item">
 								<a href="http://localhost:3002/movement">
-									<p>MOVEMENT</p>
+									<div>MOVEMENT</div>
 								</a>
 							</li>
 							<li class="nav-item2">
-								<p @click="logout()">LOGOUT</p>
+								<div @click="logout()">LOGOUT</div>
 							</li>
-							<li class="nav-item2">
+							<li>
 								<a href="http://localhost:3002/unregister" id="withdraw">
-									<p>WITHDRAW</p>
+									<div>WITHDRAW</div>
 								</a>
 							</li>
 						</ul>
@@ -177,31 +177,38 @@ export default {
 .nav-item2 {
 	margin-top: 50px;
 	font-weight: 900;
-	font-size: 80px;
 	color: gray;
 	cursor: pointer;
+	font-size: 4.5vh;
+	/* font-size: 80px; */
 }
 .nav-item {
 	font-weight: 900;
-	font-size: 80px;
+	font-size: 6vh;
+	/* font-size: 80px; */
 }
 #menu-text {
+	white-space: nowrap;
 	color: gray;
 	font-weight: 900;
-	font-size: 30px;
+	font-size: 2.5vh;
+	/* font-size: 30px; */
 }
 #logo-title {
-	margin-bottom: 50px;
-	margin-top: 100px;
+	/* margin-top: 100px; */
+	/* margin-bottom: 50px; */
+	margin-bottom: 5vh;
 	font-weight: 400;
-	font-size: 100px;
 	font-family: 'DM Serif Display', serif;
+	font-size: 7.5vh;
+	/* font-size: 100px; */
 }
 .nav-link {
 	color: white;
 }
 .offcanvas-body {
 	text-align: center;
+	/* overflow: hidden; */
 }
 .offcanvas-body {
 	color: white;
@@ -255,6 +262,27 @@ a {
 }
 #withdraw {
 	color: gray;
-	font-size: 20px;
+	font-weight: 900;
+	cursor: pointer;
+	font-size: 1.5vh;
+	/* font-size: 20px; */
+}
+
+/* scroll */
+.offcanvas-body::-webkit-scrollbar {
+	width: 10px;
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+	background-color: rgb(255, 255, 255, 0.3);
+	border-radius: 10px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+
+.offcanvas-body::-webkit-scrollbar-track {
+	background-color: rgba(255, 255, 255, 0.2);
+	border-radius: 10px;
+	box-shadow: inset 0px 0px 5px rgb(0, 0, 0);
 }
 </style>

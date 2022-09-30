@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.repository;
 
 import com.artrend.businessservice.domain.painting.entity.ChangedPainting;
+import com.artrend.businessservice.domain.painting.repository.support.ChangedPaintingRepositoryCustom;
 import com.artrend.businessservice.domain.painting.repository.support.QuerydslRepositorySupport;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.data.domain.Page;

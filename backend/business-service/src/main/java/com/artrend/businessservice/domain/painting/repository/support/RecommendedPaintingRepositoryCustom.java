@@ -1,4 +1,4 @@
-package com.artrend.businessservice.domain.painting.repository;
+package com.artrend.businessservice.domain.painting.repository.support;
 
 import com.artrend.businessservice.domain.painting.entity.RecommendedPainting;
 import org.springframework.data.domain.Page;

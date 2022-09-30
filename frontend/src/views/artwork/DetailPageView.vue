@@ -318,6 +318,7 @@ export default {
 #img01 {
 	max-width: 90vw;
 	max-height: 90vh;
+	cursor: pointer;
 }
 
 .button-box {

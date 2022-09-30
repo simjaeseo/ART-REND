@@ -1,13 +1,15 @@
+from http.client import HTTPResponse
+import os
 import jwt
 
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
-from .models import ChangedPainting, DetailRecommendedPainting, FavoriteStyle, Painting, RecommendedPainting, SelectedPainting
+from .models import ChangedPainting, DetailRecommendedPainting, FavoriteStyle, Painting, RecommendedPainting, SelectedPainting, UploadImage
 
 from django.http import HttpResponse
 from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 
-from .serializers.painting import PaintingListSerializer, LikePaintSerailizer
+from .serializers.painting import PaintingListSerializer, LikePaintSerailizer, PhotoSerializer
 from .cbf_recommend import art_recommend
 from .like_recommend import recommend_like_painting, find_sim_painting_item
 
@@ -17,10 +19,13 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework import authentication, exceptions
 
+from PIL import Image
+# from .cycleGAN.model import CycleGAN
+# from .cycleGAN.checkpoint import load_checkpoint
+# from .cycleGAN.load_data import PhotoDataset, stringtoRGB
 
-from .cycleGAN.model import CycleGAN
-from .cycleGAN.checkpoint import load_checkpoint
-from .cycleGAN.load_data import PhotoDataset, stringtoRGB
+from .change_photo import change_p, image_encode_base64
+
 from torch.utils.data import DataLoader
 # Create your views here.
 import base64
@@ -51,6 +56,7 @@ def main_recommend_painting(request):
     # try:
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    # user_decode['id']
     selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])
     user_recommend_painting = set()
     for painting_object in selected_painting:
@@ -90,21 +96,22 @@ def like_recommend_painting(request, pk):
 
 @api_view(['POST'])
 def change_photo(request, pk):
-    print(request)
-    image = stringtoRGB(request.data['image'])
-    return
+    # member_ID 받아오기 위꺼 참고 모르시는거 있으면 물어보세용!
+    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    painting = Painting.objects.get(paintingId=pk)
+    base64_string = change_p(painting.artist, request.data['image'], 1)
+    image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것
+    return HttpResponse(status=200)
+    # return
 
 
-@api_view(['GET'])
-def test(request):
-    painting = Painting.objects.get(painting_id=1)
-    detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting)
-    print(detail_recommend_painting)
-    a = set()
-    for detail in detail_recommend_painting:
-        a.add(Painting.objects.get(painting_id=detail.recommended_painting_id.painting_id))
-    serializer = PaintingListSerializer(a, many=True)
-    return Response(serializer.data)
+@api_view(['POST'])
+def test(request, format=None):
+    serializers = PhotoSerializer(data = request.data)
+    if serializers.is_valid():
+        serializers.save()
+        return Response(serializers.data, status=status.HTTP_201_CREATED)
+    return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 

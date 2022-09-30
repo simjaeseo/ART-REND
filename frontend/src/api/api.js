@@ -29,5 +29,6 @@ export default {
 		getMovementList: () => `${HOST + BUSINESS}api/description/art-trend`,
 		getDetail: () => `${HOST + BUSINESS}api/paintings/search`,
 		actionLog: () => `${HOST + BUSINESS}api/log`,
+		imageConvert: artworkId => `${HOST + BUSINESS}api/changing/${artworkId}`,
 	},
 }

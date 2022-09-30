@@ -189,7 +189,10 @@ export default {
 			imageName: '',
 			imageUrl: '',
 			image: null,
-			img: null,
+			payload: {
+				img: null,
+				artworkId: 0,
+			},
 			like: false,
 			actionLog: {
 				paintingId: 0,
@@ -203,6 +206,7 @@ export default {
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
 		state.actionLog.paintingId = payLoadId
+		state.payload.artworkId = payLoadId
 		store.dispatch('getArtWorkDetail', payLoadId)
 		const detailData = computed(() => store.getters.detailData)
 		const userId = computed(() => store.getters.userId)
@@ -246,9 +250,9 @@ export default {
 		const onSubmit = function () {
 			encodeBase64ImageFile(state.image)
 				.then(data => {
-					state.img = data
+					state.payload.img = data
 				})
-				.then(store.dispatch('imageConvert', state.img))
+				.then(store.dispatch('imageConvert', state.payload))
 		}
 
 		const likeArtWork = function () {

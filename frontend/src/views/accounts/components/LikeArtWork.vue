@@ -4,11 +4,7 @@
 			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
 		</div> -->
 		<div class="external">
-			<div
-				class="horizontal-scroll-wrapper"
-				id="main"
-				@scroll.prevent="getScroll()"
-			>
+			<div class="horizontal-scroll-wrapper" id="main">
 				<div class="title-wrapper1">
 					<h2 id="title-text1">
 						Art of Trend <br />
@@ -27,7 +23,7 @@
 					class="img-wrapper"
 				>
 					<a target="_blank" rel="noopener">
-						<div class="image-box" @click.prevent="goDetail(image.id)">
+						<div class="image-box">
 							<button
 								class="delete"
 								@click.prevent="unlikeArtWork(image.id)"
@@ -35,7 +31,11 @@
 							>
 								delete
 							</button>
-							<img :src="image.url" alt="image" />
+							<img
+								:src="image.url"
+								alt="image"
+								@click.prevent="goDetail(image.id)"
+							/>
 							<div class="image-info">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>
@@ -83,30 +83,30 @@ export default {
 			router.push({ name: 'Detail', params: { artworkId: artworkId } })
 		}
 
-		// 스크롤 가져오기
-		const getScroll = function () {
-			const container = document.getElementById('main')
-			const x = container.scrollTop
-			// top 버튼
-			const top = document.getElementById('top')
-			if (x != 0) {
-				top.classList.add('block')
-			} else {
-				top.classList.remove('block')
-			}
-		}
-		// top 버튼
-		const toTop = function () {
-			const container = document.getElementById('main')
-			container.scrollTo({ top: 0, behavior: 'smooth' })
-		}
+		// // 스크롤 가져오기
+		// const getScroll = function () {
+		// 	const container = document.getElementById('main')
+		// 	const x = container.scrollTop
+		// 	// top 버튼
+		// 	const top = document.getElementById('top')
+		// 	if (x != 0) {
+		// 		top.classList.add('block')
+		// 	} else {
+		// 		top.classList.remove('block')
+		// 	}
+		// }
+		// // top 버튼
+		// const toTop = function () {
+		// 	const container = document.getElementById('main')
+		// 	container.scrollTo({ top: 0, behavior: 'smooth' })
+		// }
 
 		return {
 			state,
 			unlikeArtWork,
 			goDetail,
-			getScroll,
-			toTop,
+			// getScroll,
+			// toTop,
 		}
 	},
 }
@@ -243,7 +243,7 @@ a:hover .delete {
 }
 
 .delete {
-	position: absolute;
+	position: fixed;
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
@@ -256,6 +256,7 @@ a:hover .delete {
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+	z-index: 1;
 }
 
 .title {

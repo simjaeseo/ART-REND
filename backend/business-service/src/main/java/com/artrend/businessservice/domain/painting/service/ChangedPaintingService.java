@@ -13,5 +13,5 @@ public interface ChangedPaintingService {
 
     void deleteChangedPainting(MemberDto memberDto);
 
-    void changePainting(MultipartFile file, Long paintingId, String authorization);
+    String changePainting(String url, Long paintingId, String authorization);
 }

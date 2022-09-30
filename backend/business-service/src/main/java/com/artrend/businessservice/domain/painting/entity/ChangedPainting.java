@@ -23,6 +23,7 @@ public class ChangedPainting extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "painting_id")
     private Painting painting;
-    
+
+    @Column(length = 65535)
     private String url;
 }

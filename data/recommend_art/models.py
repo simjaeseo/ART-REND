@@ -144,3 +144,10 @@ class SelectedPainting(models.Model): # 고른 정보
     class Meta:
         managed = False
         db_table = 'selected_painting'
+        
+        
+        
+class UploadImage(models.Model):
+    # testfield = models.CharField(max_length = 200)
+    photo = models.ImageField()
+    

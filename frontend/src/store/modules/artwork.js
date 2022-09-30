@@ -81,13 +81,16 @@ export default {
 	},
 	actions: {
 		imageConvert({ getters }, payload) {
-			console.log(payload)
+			const img = payload.img
+			const id = payload.artworkId
+			console.log(img.get('file'))
+			console.log(id)
 			axios({
 				headers: getters.authHeader,
-				url: drf.business.imageConvert(payload.artworkId),
+				url: drf.business.imageConvert(id),
 				method: 'post',
 				data: {
-					file: payload.img,
+					file: img,
 				},
 			})
 				.then(res => console.log(res))

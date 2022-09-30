@@ -51,7 +51,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="btn-class">
+			<div class="btn-class" id="black">
 				<button class="btn1" @click="goProfile">PROFILE</button>
 				<button class="btn2" @click="goArtworks">TOP10</button>
 			</div>
@@ -81,18 +81,6 @@ export default {
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			// ART-REND color
-			if (x >= 4850) {
-				store.commit('SET_COLOR1', true)
-			} else {
-				store.commit('SET_COLOR1', false)
-			}
-			// 햄버거 color
-			if (x >= 3555) {
-				store.commit('SET_COLOR2', true)
-			} else {
-				store.commit('SET_COLOR2', false)
-			}
 			// top 버튼
 			const top = document.getElementById('top')
 			if (x != 0) {
@@ -100,7 +88,31 @@ export default {
 			} else {
 				top.classList.remove('block')
 			}
+
+			// Nav 색깔
+			const windowWidth = window.innerWidth
+			const white = document.getElementById('title-wrapper4')
+			const whiteLocation = white.getBoundingClientRect().left
+			const black = document.getElementById('black')
+			const blackLocation = black.getBoundingClientRect().left
+			// ART-REND color
+			if (whiteLocation <= 30) {
+				store.commit('SET_COLOR1', true)
+			} else {
+				store.commit('SET_COLOR1', false)
+			}
+			// 햄버거 버튼
+			if (whiteLocation <= windowWidth && blackLocation >= windowWidth) {
+				store.commit('SET_COLOR2', true)
+			} else {
+				store.commit('SET_COLOR2', false)
+			}
 		}
+		// 페이지 나가면 다시 false로 초기화
+		window.addEventListener('beforeunload', () => {
+			store.commit('SET_COLOR1', false)
+			store.commit('SET_COLOR2', false)
+		})
 
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
@@ -134,7 +146,7 @@ export default {
 }
 #title-wrapper4 {
 	background-color: white;
-	min-height: 15000px;
+	/* min-height: 15000px; */
 	min-width: 100%;
 }
 #m-image {

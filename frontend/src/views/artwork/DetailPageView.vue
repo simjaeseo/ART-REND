@@ -248,11 +248,12 @@ export default {
 			})
 		}
 		const onSubmit = function () {
-			encodeBase64ImageFile(state.image)
-				.then(data => {
-					state.payload.img = data
-				})
-				.then(store.dispatch('imageConvert', state.payload))
+			encodeBase64ImageFile(state.image).then(data => {
+				const formData = new FormData()
+				formData.append('file', data)
+				state.payload.img = formData
+				store.dispatch('imageConvert', state.payload)
+			})
 		}
 
 		const likeArtWork = function () {

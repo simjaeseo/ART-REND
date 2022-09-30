@@ -1,7 +1,19 @@
 <template>
 	<div class="detail-bg">
 		<div class="external">
-			<div class="horizontal-scroll-wrapper">
+			<div class="topbutton">
+				<img
+					src="@/assets/left.png"
+					class="leftButton"
+					id="top"
+					@click="toTop"
+				/>
+			</div>
+			<div
+				class="horizontal-scroll-wrapper"
+				id="main"
+				@scroll.prevent="getScroll()"
+			>
 				<div class="title-wrapper1">
 					<h2 id="title-text1">{{ detail.artTrend.name }},</h2>
 				</div>
@@ -88,6 +100,25 @@ export default {
 		const goDetail = function (artworkId) {
 			router.push({ name: 'Detail', params: { artworkId: artworkId } })
 		}
+
+		// 스크롤 가져오기
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			// top 버튼
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+		}
+		// top 버튼
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			name,
 			state,
@@ -96,6 +127,8 @@ export default {
 			goMain,
 			backImg,
 			goDetail,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -341,5 +374,26 @@ a:hover .image-info {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 	color: white;
+}
+
+/* top button */
+.topbutton {
+	position: absolute;
+	left: 30px;
+	top: 50%;
+	z-index: 1;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		<div class="topbutton">
-			<img src="@/assets/left.png" class="leftButton" @click="toTop" />
+			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
 		</div>
 	</div>
 </template>
@@ -81,7 +81,6 @@ export default {
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			console.log(x)
 			// ART-REND color
 			if (x >= 4850) {
 				store.commit('SET_COLOR1', true)
@@ -93,6 +92,13 @@ export default {
 				store.commit('SET_COLOR2', true)
 			} else {
 				store.commit('SET_COLOR2', false)
+			}
+			// top 버튼
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
 			}
 		}
 
@@ -328,7 +334,7 @@ a:hover .image-info {
 
 .topbutton {
 	position: absolute;
-	right: 30px;
+	left: 30px;
 	top: 50%;
 }
 .topbutton > button {
@@ -339,5 +345,10 @@ a:hover .image-info {
 	height: 2.6vh;
 	cursor: pointer;
 	margin-right: 0.3vh;
+	display: none;
+}
+
+.block {
+	display: block;
 }
 </style>

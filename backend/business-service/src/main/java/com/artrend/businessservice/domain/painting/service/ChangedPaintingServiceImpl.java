@@ -23,7 +23,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Blob;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +59,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     }
 
     @Override
-    public Blob changePainting(Blob url, Long paintingId, String authorization) {
+    public String changePainting(String url, Long paintingId, String authorization) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));

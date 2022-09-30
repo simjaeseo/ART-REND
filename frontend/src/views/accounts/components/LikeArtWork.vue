@@ -1,40 +1,49 @@
 <template>
-	<div class="external">
-		<div class="horizontal-scroll-wrapper">
-			<div class="title-wrapper1">
-				<h2 id="title-text1">
-					Art of Trend <br />
-					<h4>Favorite Artwork</h4>
-					<hr />
-					<h5 class="nickname">{{ state.nickName }}</h5>
-				</h2>
-			</div>
-			<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
-				you like {{ state.likeArtWorkList.length }} artworks.
-			</div>
+	<div>
+		<!-- <div class="topbutton">
+			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
+		</div> -->
+		<div class="external">
 			<div
-				v-for="image in state.likeArtWorkList"
-				v-else
-				:key="image.id"
-				class="img-wrapper"
+				class="horizontal-scroll-wrapper"
+				id="main"
+				@scroll.prevent="getScroll()"
 			>
-				<a target="_blank" rel="noopener">
-					<div class="image-box" @click.prevent="goDetail(image.id)">
-						<button
-							class="delete"
-							@click.prevent="unlikeArtWork(image.id)"
-							v-if="state.myPage"
-						>
-							delete
-						</button>
-						<img :src="image.url" alt="image" />
-						<div class="image-info">
-							<div class="title">{{ image.title }}</div>
-							<div class="name">{{ image.year }}</div>
-							<div class="name">{{ image.artist }}</div>
+				<div class="title-wrapper1">
+					<h2 id="title-text1">
+						Art of Trend <br />
+						<h4>Favorite Artwork</h4>
+						<hr />
+						<h5 class="nickname">{{ state.nickName }}</h5>
+					</h2>
+				</div>
+				<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
+					you like {{ state.likeArtWorkList.length }} artworks.
+				</div>
+				<div
+					v-for="image in state.likeArtWorkList"
+					v-else
+					:key="image.id"
+					class="img-wrapper"
+				>
+					<a target="_blank" rel="noopener">
+						<div class="image-box" @click.prevent="goDetail(image.id)">
+							<button
+								class="delete"
+								@click.prevent="unlikeArtWork(image.id)"
+								v-if="state.myPage"
+							>
+								delete
+							</button>
+							<img :src="image.url" alt="image" />
+							<div class="image-info">
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.year }}</div>
+								<div class="name">{{ image.artist }}</div>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -73,10 +82,31 @@ export default {
 		const goDetail = function (artworkId) {
 			router.push({ name: 'Detail', params: { artworkId: artworkId } })
 		}
+
+		// 스크롤 가져오기
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			// top 버튼
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+		}
+		// top 버튼
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			state,
 			unlikeArtWork,
 			goDetail,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -238,5 +268,26 @@ a:hover .delete {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 1.5vh;
 	font-weight: 200;
+}
+
+/* top button */
+.topbutton {
+	position: fixed;
+	left: 30px;
+	bottom: 50%;
+	z-index: 1;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 3vh;
+	height: 3vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

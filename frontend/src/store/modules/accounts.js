@@ -139,6 +139,7 @@ export default {
 				.then(() => {
 					dispatch('removeToken')
 					commit('REMOVE_TOKEN')
+					localStorage.setItem('vuex', '')
 					confirm('로그아웃하시겠습니까?')
 					router.push({ name: 'Login' })
 				})

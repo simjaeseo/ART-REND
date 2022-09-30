@@ -146,12 +146,12 @@ export default {
 		}
 
 		store.dispatch('getAllUsers')
-		const allUsers = computed(() => store.getters.allUsers).value.data
+		const allUsersData = computed(() => store.getters.allUsers).value.data
+		const allUsers = JSON.parse(JSON.stringify(allUsersData)) // Proxy -> 리스트
+		const members = allUsers.filter(item => item !== userId.value) // 내 id 값 삭제
 		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * allUsers.length)
-			if (allUsers[random] !== userId.value) {
-				location.href = `http://localhost:3002/mypage/${allUsers[random]}`
-			}
+			const random = Math.floor(Math.random() * members.length)
+			location.href = `http://localhost:3002/mypage/${members[random]}`
 		}
 
 		store.dispatch('likeArtWorkList', memberId)

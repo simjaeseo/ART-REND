@@ -145,8 +145,8 @@ export default {
 			state.myPage = true
 		}
 
-		const allUsers = computed(() => store.getters.allUsers).value.data
 		store.dispatch('getAllUsers')
+		const allUsers = computed(() => store.getters.allUsers).value.data
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * allUsers.length)
 			if (allUsers[random] !== userId.value) {

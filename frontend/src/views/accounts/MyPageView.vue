@@ -158,7 +158,7 @@ export default {
 		store.dispatch('getUserNickname', memberId)
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
-
+		store.dispatch('getImageConvert', memberId)
 		// 닉네임 중복검사
 		const doubleCheck = function () {
 			console.log(state.modifyNickName)

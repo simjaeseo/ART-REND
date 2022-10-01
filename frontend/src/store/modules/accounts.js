@@ -204,5 +204,14 @@ export default {
 					console.log(err)
 				})
 		},
+		getImageConvert({ getters }, memberId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getImageConvert(memberId),
+				method: 'get',
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+		},
 	},
 }

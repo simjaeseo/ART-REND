@@ -19,7 +19,8 @@ export default {
 		unRegister: memberId => `${HOST + AUTH}api/withdrawal/${memberId}`,
 	},
 	business: {
-		getMainBasedOnSelected: () => `${HOST + BUSINESS}api/recommend`,
+		getMainBasedOnSelected: memberId => `${HOST + BUSINESS}
+		api/recommend/${memberId}`,
 		getMainBasedOnActionLog: () => `${HOST + BUSINESS}api/recommend`,
 		select: () => `${HOST + BUSINESS}api/select`,
 		detail: (artworkId, memberId) =>

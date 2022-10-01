@@ -26,7 +26,15 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
     private final RecommendedPaintingRepository recommendedPaintingRepository;
 
     @Override
-    public List<PaintingDto> findRecommendedPaintings(Long memberId, HttpHeaders headers, Pageable pageable) {
+    public List<PaintingDto> findRecommendedPaintings(Long memberId, String authorization, Pageable pageable) {
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.add("Authorization", authorization);
+        headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
+        restTemplate.exchange("http://127.0.0.1:8000/api/v1/paintings/main_recommend_painting/", HttpMethod.POST, entity, Object.class);
+
         Page<RecommendedPainting> list = recommendedPaintingRepository.findRecommendedPaintings(memberId, pageable);
 
         List<PaintingDto> result = list.stream()
@@ -53,7 +61,8 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
-        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        headers.add("Authorization", authorization);
+        HttpEntity<String> entity = new HttpEntity<String>(headers);
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8000")
                 .path("/api/v1/paintings/main_page_recommend/")
@@ -61,7 +70,7 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
                 .build()
                 .toUri();
 
-        ResponseEntity<Object> result = restTemplate.exchange(uri, HttpMethod.GET, entity, Object.class);
+        ResponseEntity<Object> result = restTemplate.exchange(uri, HttpMethod.POST, entity, Object.class);
 
         return result;
     }

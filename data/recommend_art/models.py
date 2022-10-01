@@ -115,8 +115,15 @@ class LikedPainting(models.Model):
 
 
 class Member(models.Model):
-    member_id = models.BigAutoField(primary_key=True)
-    name = models.CharField(max_length=255, blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
+    created_date = models.DateTimeField(blank=True, null=True)
+    updated_date = models.DateTimeField(blank=True, null=True)
+    di = models.CharField(max_length=255, blank=True, null=True)
+    google_provider = models.CharField(max_length=255, blank=True, null=True)
+    google_provider_id = models.CharField(max_length=255, blank=True, null=True)
+    kakao_provider = models.CharField(max_length=255, blank=True, null=True)
+    kakao_provider_id = models.CharField(max_length=255, blank=True, null=True)
+    name = models.CharField(max_length=255)
     nickname = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -124,10 +131,21 @@ class Member(models.Model):
         db_table = 'member'
 
 
+class MemberLog(models.Model):
+    log_id = models.BigAutoField(primary_key=True)
+    click_count = models.BigIntegerField(blank=True, null=True)
+    in_time = models.CharField(max_length=255, blank=True, null=True)
+    member_id = models.BigIntegerField(blank=True, null=True)
+    out_time = models.CharField(max_length=255, blank=True, null=True)
+    painting_id = models.BigIntegerField(blank=True, null=True)
+    zoom_count = models.BigIntegerField(blank=True, null=True)
 
+    class Meta:
+        managed = False
+        db_table = 'member_log'
 
 class RecommendedPainting(models.Model):
-    liked_painting_id = models.BigAutoField(primary_key=True)
+    recommended_painting_id = models.BigAutoField(primary_key=True)
     member_id = models.BigIntegerField(blank=True, null=True)
     painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True)
 
@@ -144,3 +162,6 @@ class SelectedPainting(models.Model): # 고른 정보
     class Meta:
         managed = False
         db_table = 'selected_painting'
+        
+        
+    

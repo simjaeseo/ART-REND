@@ -22,6 +22,7 @@ public class MemberLogServiceImpl implements MemberLogService {
                 .memberId(memberLogRequest.getMemberId())
                 .paintingId(memberLogRequest.getPaintingId())
                 .clickCount(memberLogRequest.getClickCount())
+                .changeCount(memberLogRequest.getChangeCount())
                 .zoomCount(memberLogRequest.getZoomCount())
                 .inTime(memberLogRequest.getInTime())
                 .outTime(memberLogRequest.getOutTime())

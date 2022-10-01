@@ -1,4 +1,4 @@
-from ..models import ChangedPainting, FavoriteStyle, Painting, SelectedPainting, UploadImage
+from ..models import ChangedPainting, FavoriteStyle, Painting, SelectedPainting
 from rest_framework import serializers
 
 
@@ -17,7 +17,3 @@ class LikePaintSerailizer(serializers.ModelSerializer):
         exclude = ('created_at','updated_at','artTrend','dimensions', 'koreanTitle', 'place','totalChangeCount',)
         
         
-class PhotoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UploadImage
-        fields = '__all__'

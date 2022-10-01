@@ -41,7 +41,7 @@ class ChangedPainting(models.Model):
     updated_at = models.DateTimeField()
     member_id = models.BigIntegerField(blank=True, null=True)
     url = models.CharField(max_length=255, blank=True, null=True)
-    painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True)
+    painting = models.ForeignKey(Painting, models.DO_NOTHING, blank=True, null=True, db_column="painting_id")
 
     class Meta:
         managed = False

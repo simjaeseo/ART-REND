@@ -8,6 +8,7 @@ export default {
 	auth: {
 		kakaoLogin: () => `${HOST + AUTH}oauth2/authorization/kakao`,
 		googleLogin: () => `${HOST + AUTH}oauth2/authorization/google`,
+		getSelectImg: () => `${HOST + BUSINESS}api/select/list`,
 		memberInfo: () => `${HOST + AUTH}api/signup/members/info`,
 		nickNameForm: memberId => `${HOST + AUTH}api/signup/${memberId}/nickname`,
 		nickNameCheck: memberId =>

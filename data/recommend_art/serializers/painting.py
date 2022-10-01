@@ -15,3 +15,5 @@ class LikePaintSerailizer(serializers.ModelSerializer):
         model = Painting
         
         exclude = ('created_at','updated_at','artTrend','dimensions', 'koreanTitle', 'place','totalChangeCount',)
+        
+        

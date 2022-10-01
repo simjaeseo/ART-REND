@@ -108,6 +108,7 @@ export default {
 		const userId = computed(() => store.getters.userId)
 		const color1 = computed(() => store.getters.color1)
 		const color2 = computed(() => store.getters.color2)
+		const cnt = computed(() => store.getters.cnt)
 		let oneBlack = false
 		let twoBlack = false
 		let now = window.location.href
@@ -139,6 +140,7 @@ export default {
 			isLoggedIn,
 			userId,
 			logout,
+			cnt,
 		}
 	},
 }

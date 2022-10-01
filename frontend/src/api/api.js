@@ -33,5 +33,6 @@ export default {
 		getDetail: () => `${HOST + BUSINESS}api/paintings/search`,
 		actionLog: () => `${HOST + BUSINESS}api/log`,
 		imageConvert: artworkId => `${HOST + BUSINESS}api/changing/${artworkId}`,
+		getImageConvert: memberId => `${HOST + BUSINESS}api/changing/${memberId}`,
 	},
 }

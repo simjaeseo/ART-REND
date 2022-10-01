@@ -55,6 +55,7 @@ export default {
 		},
 		SET_MAIN_IMAGE(state, data) {
 			state.mainImage = data
+			console.log(state.mainImage)
 		},
 	},
 	actions: {
@@ -100,7 +101,7 @@ export default {
 			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
 			axios({
 				headers: getters.authHeader,
-				url: drf.business.getMainBasedOnSelected(),
+				url: drf.business.getMainBasedOnSelected(getters.userId),
 				method: 'get',
 			})
 				.then(res => {

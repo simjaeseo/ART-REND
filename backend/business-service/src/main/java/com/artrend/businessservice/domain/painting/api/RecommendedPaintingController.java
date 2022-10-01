@@ -36,10 +36,10 @@ public class RecommendedPaintingController {
     @GetMapping("/{memberId}")
     public ResponseEntity<? extends DataResponse> findRecommendedPaintings(@PathVariable("memberId")
                                                                                Long memberId,
-                                                                           @RequestHeader HttpHeaders headers,
+                                                                           @RequestHeader(value = "Authorization") String authorization,
                                                                            Pageable pageable) {
         List<PaintingDto> recommendedPaintings =
-                recommendedPaintingService.findRecommendedPaintings(memberId, headers, pageable);
+                recommendedPaintingService.findRecommendedPaintings(memberId, authorization, pageable);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

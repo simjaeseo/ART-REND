@@ -7,7 +7,6 @@
 <script>
 import MainPageArtWork from '@/views/artwork/components/MainPageArtWork.vue'
 import { useStore } from 'vuex'
-
 export default {
 	name: 'MainPageView',
 	components: { MainPageArtWork },

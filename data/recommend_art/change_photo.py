@@ -3,25 +3,30 @@ import cv2
 from PIL import Image
 
 import torch
-from cycleGAN.model import CycleGAN
-from cycleGAN.checkpoint import load_checkpoint
-from cycleGAN.load_data import PhotoDataset, stringtoRGB
-from cycleGAN.functions import unnorm
+from .cycleGAN.model import CycleGAN
+from .cycleGAN.checkpoint import load_checkpoint
+from .cycleGAN.load_data import PhotoDataset, stringtoRGB
+from .cycleGAN.functions import unnorm
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
+import os
+from recommend_art.models import ChangedPainting
 def check_artist(artist:str)-> str:
     return '{}.ckpt'.format(artist)
 
-def image_encode_base64(img):
-    img = cv2.imread(img)
+def image_encode_base64(path):
+    img = cv2.imread(path)
+    # print(img)
     jpg_img = cv2.imencode('.jpg',img)
     b64_string = base64.b64encode(jpg_img[1]).decode('utf-8')
     return b64_string
 
-def change_p(artist: str, request_image: base64):
+
+def change_p(artist: str, request_image: base64, member_id: int):
     ckpt = check_artist(artist)
-    device = device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    ckpt = load_checkpoint('./checkpoint_art/{}'.format(ckpt), map_location=device)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    ckpt = load_checkpoint(BASE_PATH+'\checkpoint_art\{}'.format(ckpt), map_location=device)
     gan = CycleGAN(3,3,100, device)
     gan.epochs=ckpt['epoch']
     gan.gen_mtp.load_state_dict(ckpt['gen_mtp'])
@@ -38,13 +43,8 @@ def change_p(artist: str, request_image: base64):
                 transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))                                
             ])
-    # print(image)
     image = custom_transform(image)
-    print(image.view([1,3,256,256]))
-    print(image.reshape(1,3,256,256))
     image = image.reshape(1,3,256,256)
-    print('통과')
-    # ph_ds = PhotoDataset(image)
     ph_dl = DataLoader(image, batch_size=1, pin_memory=True)
     trans = transforms.ToPILImage()
     for photo in ph_dl:
@@ -52,15 +52,16 @@ def change_p(artist: str, request_image: base64):
             pred_artist = gan.gen_ptm(photo.to(device)).cpu().detach()
         pred_artist = unnorm(pred_artist)
         img = trans(pred_artist[0]).convert("RGB")
-    print(img)
-    img.save('./test/1.jpg')
-    b64_string=image_encode_base64('./test/1.jpg')
+    img.save(BASE_PATH + f'\photo\{member_id} {artist}.jpg')
+    path = BASE_PATH + f'\photo\{member_id} {artist}.jpg'
+    # return path
+    b64_string=image_encode_base64(path)
     return b64_string
     
     
     
 
-if __name__ == '__main__':
-    b64_string = image_encode_base64('./test/1cdb990c46.jpg')
-    img = change_p('Van Gogh',b64_string)
-    print(img)
+# if __name__ == '__main__':
+#     b64_string = image_encode_base64('./test/1cdb990c46.jpg')
+#     img = change_p('Van Gogh',b64_string)
+#     print(img)

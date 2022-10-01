@@ -6,7 +6,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.sql.Blob;
 import java.util.List;
 
 public interface ChangedPaintingService {
@@ -14,5 +13,5 @@ public interface ChangedPaintingService {
 
     void deleteChangedPainting(MemberDto memberDto);
 
-    Blob changePainting(Blob url, Long paintingId, String authorization);
+    void changePainting(String url, Long paintingId, String authorization);
 }

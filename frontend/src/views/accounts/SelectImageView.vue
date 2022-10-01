@@ -11,6 +11,7 @@
 
 <script>
 import { reactive, onBeforeMount } from 'vue'
+import { useStore } from 'vuex'
 import SelectImageForm from '@/views/accounts/components/SelectImageForm.vue'
 
 export default {
@@ -20,6 +21,8 @@ export default {
 		const state = reactive({
 			randomNum: null,
 		})
+		const store = useStore()
+		store.dispatch('getSelectImg')
 		onBeforeMount(() => {
 			state.randomNum = Math.floor(Math.random() * (9 - 1) + 1)
 		})

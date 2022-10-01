@@ -59,7 +59,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     }
 
     @Override
-    public String changePainting(String url, Long paintingId, String authorization) {
+    public void changePainting(String url, Long paintingId, String authorization) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -68,10 +68,8 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("paintingId", paintingId);
         body.add("url", url);
-//        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
-//        restTemplate.postForEntity("http://127.0.0.1:8000/api/v1/paintings/change_painting/", entity, String.class);
-
-        return url;
+        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
+        restTemplate.postForEntity("http://127.0.0.1:8000/api/v1/paintings/change_photo/", entity, String.class);
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

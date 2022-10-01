@@ -22,7 +22,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -69,7 +71,15 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
         body.add("paintingId", paintingId);
         body.add("url", url);
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
-        restTemplate.postForEntity("http://127.0.0.1:8000/api/v1/paintings/change_photo/", entity, String.class);
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:8000")
+                .path("/api/v1/paintings/change_photo/{id}")
+                .encode()
+                .build()
+                .expand(paintingId)
+                .toUri();
+        
+        restTemplate.postForEntity(uri, entity, String.class);
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

@@ -110,7 +110,7 @@ def change_photo(request, pk):
 
 
 
-@api_view(['POST'])
+@api_view(['GET', 'POST'])
 def main_page_recommend(request):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])

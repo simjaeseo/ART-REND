@@ -279,6 +279,7 @@ export default {
 				})
 		},
 		actionLog({ getters }, actionLog) {
+			console.log(actionLog)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),
@@ -290,6 +291,7 @@ export default {
 					zoomCount: actionLog.zoomCnt,
 					inTime: actionLog.inTime,
 					outTime: actionLog.outTime,
+					changeCount: actionLog.change,
 				},
 			})
 				.then(res => {

@@ -200,6 +200,7 @@ export default {
 				zoomCnt: 0,
 				inTime: null,
 				outTime: null,
+				change: 0,
 			},
 		})
 		state.actionLog.clickCnt += 1
@@ -252,6 +253,7 @@ export default {
 				// const formData = new FormData()
 				// formData.append('file', data)
 				// state.payload.img = formData
+				state.actionLog.change += 1
 				state.payload.img = data
 				store.dispatch('imageConvert', state.payload)
 			})

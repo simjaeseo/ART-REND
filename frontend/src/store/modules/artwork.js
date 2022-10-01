@@ -18,6 +18,7 @@ export default {
 		artistData: [],
 		movementData: [],
 		genreData: [],
+		test: [],
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -102,7 +103,6 @@ export default {
 				method: 'get',
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_DETAIL_DATA', res.data.data)
 				})
 				.catch(err => {
@@ -239,7 +239,6 @@ export default {
 				})
 		},
 		getMovementDetail({ commit }, name) {
-			console.log('왔냐?')
 			axios({
 				url: drf.business.getDetail(),
 				method: 'get',
@@ -258,7 +257,7 @@ export default {
 					console.log(err)
 				})
 		},
-		actionLog({ getters }, actionLog) {
+		actionLog({ getters, commit }, actionLog) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),
@@ -274,6 +273,22 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
+					commit('TEST', res)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		getMainBasedOnActionLog({ getters, commit }) {
+			console.log('액션로그기반으로가져옵니다')
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMainBasedOnActionLog(),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)

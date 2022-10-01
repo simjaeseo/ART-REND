@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Blob;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -59,19 +60,19 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     }
 
     @Override
-    public void changePainting(MultipartFile file, Long paintingId, String authorization) {
+    public Blob changePainting(Blob url, Long paintingId, String authorization) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.add("Authorization", authorization);
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
         body.add("paintingId", paintingId);
-        body.add("file", file.getResource());
+        body.add("url", url);
+//        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
+//        restTemplate.postForEntity("http://127.0.0.1:8000/api/v1/paintings/change_painting/", entity, String.class);
 
-        HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
-        restTemplate.postForEntity("http://127.0.0.1:8000/api/v1/paintings/change_painting/", entity, String.class);
+        return url;
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

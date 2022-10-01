@@ -39,8 +39,6 @@ from django.contrib.auth import authenticate
 @api_view(['GET'])
 def index(request):
     paintings = get_list_or_404(Painting.objects.order_by('-painting_id'))
-    # art_recommend()
-    # print(paintings)
     serializer = PaintingListSerializer(paintings, many=True)
     return Response(serializer.data)
 
@@ -97,20 +95,25 @@ def like_recommend_painting(request, pk):
 
 @api_view(['POST'])
 def change_photo(request, pk):
-    # member_ID 받아오기 위꺼 참고 모르시는거 있으면 물어보세용!
-    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    id = user_decode['id']
+    path = request.data['image'].replace('data:image/png;base64,','',1)
+    # BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
     painting = Painting.objects.get(paintingId=pk)
-    b64_string = image_encode_base64(BASE_PATH+'\photo\photo.jpg')
-    # base64_string = change_p(painting.artist, request.data['image'], 1)
-    base64_string = change_p(painting.artist, b64_string, 1)
+    base64_string = change_p(painting.artist, path, id)
     image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것
-    print(image_path)
-    return HttpResponse(status=200)
-    # return
+    change_photo = ChangedPainting()
+    try:
+        change_photo.member_id = id
+        change_photo.url = image_path
+        change_photo.painting = painting
+        change_photo.save()
+        return HttpResponse(status=200)
+    except:
+        return HttpResponse(status=404)
 
-
-
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def main_page_recommend(request):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])

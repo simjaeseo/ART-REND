@@ -9,6 +9,5 @@ import java.util.List;
 
 public interface RecommendedPaintingService {
     List<PaintingDto> findRecommendedPaintings(Long memberId, String authorization, Pageable pageable);
-    void recommendMainPaintings(String authorization);
     ResponseEntity<Object> mainPageRecommend(String authorization);
 }

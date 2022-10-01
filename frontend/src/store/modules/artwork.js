@@ -119,10 +119,13 @@ export default {
 					paintingId: artworkId,
 					memberId: getters.userId,
 				},
-			}).then(() => {
-				dispatch('getArtWorkDetail', artworkId)
-				dispatch('likeArtWorkList')
 			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+					dispatch('likeArtWorkList')
+				})
+				.catch(err => console.log(err))
 		},
 		unlikeArtWork({ getters, dispatch }, artworkId) {
 			axios({
@@ -133,10 +136,13 @@ export default {
 					paintingId: artworkId,
 					memberId: getters.userId,
 				},
-			}).then(() => {
-				dispatch('getArtWorkDetail', artworkId)
-				dispatch('likeArtWorkList')
 			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+					dispatch('likeArtWorkList')
+				})
+				.catch(err => console.log(err))
 		},
 		getHits({ getters, commit }, hits) {
 			axios({
@@ -257,7 +263,22 @@ export default {
 					console.log(err)
 				})
 		},
-		actionLog({ getters, commit }, actionLog) {
+		getMainBasedOnActionLog({ getters, commit }) {
+			console.log('액션로그ㅋ')
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMainBasedOnActionLog(),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_MAIN_IMAGE', res.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
+		actionLog({ getters }, actionLog) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),
@@ -273,22 +294,6 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
-					commit('TEST', res)
-				})
-				.catch(err => {
-					console.log(err)
-				})
-		},
-		getMainBasedOnActionLog({ getters, commit }) {
-			console.log('액션로그기반으로가져옵니다')
-			axios({
-				headers: getters.authHeader,
-				url: drf.business.getMainBasedOnActionLog(),
-				method: 'get',
-			})
-				.then(res => {
-					console.log(res)
-					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)

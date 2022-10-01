@@ -9,6 +9,7 @@
 				<h2 id="title-text1">
 					Art of Trend, <br />
 					<p id="h2-inner">Recommended for you</p>
+					<p></p>
 				</h2>
 			</div>
 			<div class="title-wrapper2">
@@ -77,7 +78,8 @@ export default {
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
-
+		const mainImage = computed(() => store.getters.mainImage)
+		console.log(mainImage.value)
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
@@ -132,6 +134,7 @@ export default {
 			goProfile,
 			goArtworks,
 			toTop,
+			mainImage,
 		}
 	},
 }

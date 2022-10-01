@@ -55,7 +55,6 @@ export default {
 		},
 		SET_MAIN_IMAGE(state, data) {
 			state.mainImage = data
-			console.log(state.mainImage)
 		},
 	},
 	actions: {

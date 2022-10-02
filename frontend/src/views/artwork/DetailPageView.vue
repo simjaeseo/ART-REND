@@ -117,7 +117,7 @@
 		</div>
 
 		<!-- 사진변환 Modal -->
-		<form @submit.prevent="onSubmit()">
+		<form @submit.prevent="onSubmit()" enctype="multipart/form-data">
 			<div
 				class="modal fade"
 				id="pictureModal"
@@ -139,7 +139,12 @@
 									@change="handleAddImage"
 									class="image-input"
 								>
-									<input type="file" accept="image/*" id="input-file" />
+									<input
+										type="file"
+										accept="image/*"
+										id="input-file"
+										name="file"
+									/>
 									<input
 										class="image-upload"
 										:placeholder="state.imageName"
@@ -242,11 +247,13 @@ export default {
 			img = state.image
 			const formData = new FormData()
 			formData.append('file', img)
+			formData.append('artworkId', payLoadId)
 			console.log(formData.get('file'))
 			state.payload.img = formData
 			console.log(state.payload.img)
-			store.dispatch('imageConvert', state.payload)
+			store.dispatch('imageConvert', formData)
 		}
+
 		const likeArtWork = function () {
 			store.dispatch('likeArtWork', payLoadId)
 		}

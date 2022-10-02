@@ -33,7 +33,9 @@ export default {
 			state.token = token
 		},
 		SET_USER_ID(state, id) {
+			console.log(id)
 			state.userId = id
+			console.log(state.userId)
 		},
 		SET_LIKE_ART_WORK_LIST(state, data) {
 			state.likeArtWorkList = data

@@ -118,6 +118,7 @@ export default {
 					const token = res.data.data.accessToken
 					const decodeAccessToken = jwt_decode(token)
 					store.commit('SET_USER_ID', decodeAccessToken.id)
+					console.lgo(decodeAccessToken.id)
 					store.dispatch('saveToken', token)
 					store.commit('SET_USER_IS_EXISTED', data)
 					if (data.isNickName == false && data.isSelected == false) {

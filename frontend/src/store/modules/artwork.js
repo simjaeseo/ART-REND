@@ -86,7 +86,7 @@ export default {
 			axios({
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					Authorization: getters.authHeader,
+					Authorization: getters.authHeader.Authorization,
 				},
 				url: drf.business.imageConvert(id),
 				method: 'post',
@@ -274,7 +274,7 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
-					commit('SET_MAIN_IMAGE', res.data)
+					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)

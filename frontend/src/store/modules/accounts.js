@@ -26,6 +26,7 @@ export default {
 		providerId: state => state.providerId,
 		mainImage: state => state.mainImage,
 		selectList: state => state.selectList,
+		isExisted: state => state.isExisted,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -54,9 +55,11 @@ export default {
 		},
 		SET_USER_IS_EXISTED(state, data) {
 			state.isExisted = data
+			console.log(state.isExisted)
 		},
 		SET_MAIN_IMAGE(state, data) {
-			state.mainImage = data.data
+			state.mainImage = data
+			console.log(state.mainImage)
 		},
 		SET_SELECT_LIST(state, data) {
 			state.selectList = data
@@ -113,20 +116,7 @@ export default {
 				})
 				.catch(err => console.log(err))
 		},
-		getMainBasedOnSelected({ getters, commit }) {
-			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
-			axios({
-				headers: getters.authHeader,
-				url: drf.business.getMainBasedOnSelected(getters.userId),
-				method: 'get',
-			})
-				.then(res => {
-					console.log(res)
-					commit('SET_MAIN_IMAGE', res.data.data)
-				})
-				.catch(err => console.log(err))
-		},
-		selectForm({ getters, dispatch }, img) {
+		selectForm({ getters }, img) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.select(),
@@ -138,7 +128,6 @@ export default {
 			})
 				.then(() => {
 					router.push({ name: 'Main' })
-					dispatch('getMainBasedOnSelected')
 				})
 				.catch(() => {
 					alert('그림을 2개 선택해주세요.')

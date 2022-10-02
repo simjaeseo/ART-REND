@@ -82,15 +82,16 @@ export default {
 	},
 	actions: {
 		imageConvert({ getters }, payload) {
-			console.log(payload)
-			const img = payload.img
-			const id = payload.artworkId
+			const id = payload.get('artworkId')
 			axios({
-				headers: getters.authHeader,
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: getters.authHeader.Authorization,
+				},
 				url: drf.business.imageConvert(id),
 				method: 'post',
 				data: {
-					url: img,
+					file: payload.get('file'),
 				},
 			})
 				.then(res => console.log(res))
@@ -273,7 +274,7 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
-					commit('SET_MAIN_IMAGE', res.data)
+					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)

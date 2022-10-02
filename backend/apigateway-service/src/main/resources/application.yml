@@ -11,20 +11,6 @@ spring:
     password: guest
   cloud:
     gateway:
-      globalcors:
-        cors-configurations:
-          "[/**]":
-            allowedOrigins: "http://j7c104.p.ssafy.io"
-            allowedHeaders:
-              - authorization
-              - content-type
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - OPTIONS
-              - HEAD
-              - DELETE
       routes:
         - id: business-service
           uri: lb://BUSINESS-SERVICE

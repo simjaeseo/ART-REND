@@ -45,6 +45,6 @@ public class DetailRecommendedPaintingServiceImpl implements DetailRecommendedPa
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
-        restTemplate.exchange("http://127.0.0.1:8000/api/v1/paintings/make_detail_recommend/", HttpMethod.POST, entity, Object.class);
+        restTemplate.exchange("http://j7c104.p.ssafy.io:8000/api/v1/paintings/make_detail_recommend/", HttpMethod.POST, entity, Object.class);
     }
 }

@@ -60,14 +60,6 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
                 entity,
                 Object.class
         );
-//        URI uri = UriComponentsBuilder
-//                .fromUriString("http://localhost:8000")
-//                .path("/api/v1/paintings/main_page_recommend/")
-//                .encode()
-//                .build()
-//                .toUri();
-
-//        ResponseEntity<Object> result = restTemplate.exchange(uri, HttpMethod.POST, entity, Object.class);
 
         return result;
     }

@@ -98,7 +98,7 @@ def change_photo(request, pk):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     id = user_decode['id']
-    path = request.data['image'].replace('data:image/png;base64,','',1)
+    path = request.data['url'].replace('data:image/png;base64,','',1)
     # BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
     painting = Painting.objects.get(paintingId=pk)
     base64_string = change_p(painting.artist, path, id)

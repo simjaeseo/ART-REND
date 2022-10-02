@@ -81,12 +81,15 @@ def make_mainpage_recommend(member_id: int):
         change_df = change_df.groupby('painting_id').size().reset_index()
         log_df = pd.merge(log_df, change_df, how='outer', on='painting_id')
         log_df.rename(columns = {0:'change_cnt'},inplace=True)
-    
+        log_df['average_change_time'] = log_df['change_cnt'] / log_df['click_count']
+        log_df['average_invite_time'] = log_df['invite_time'] / log_df['click_count']
+        log_df['average_zoom_count'] = log_df['zoom_count'] / log_df['click_count']
+        log_df = log_df.sort_values(['click_count','average_change_time', 'average_zoom_count','average_invite_time'],ascending=False)
+    else:
+        log_df['average_invite_time'] = log_df['invite_time'] / log_df['click_count']
+        log_df['average_zoom_count'] = log_df['zoom_count'] / log_df['click_count']
+        log_df = log_df.sort_values(['click_count', 'average_zoom_count','average_invite_time'],ascending=False)
     log_df = log_df.fillna(0)
-    log_df['average_invite_time'] = log_df['invite_time'] / log_df['click_count']
-    log_df['average_change_time'] = log_df['change_cnt'] / log_df['click_count']
-    log_df['average_zoom_count'] = log_df['zoom_count'] / log_df['click_count']
-    log_df = log_df.sort_values(['average_change_time', 'average_zoom_count','average_invite_time'],ascending=False)
     # print(log_df)
     
     return log_df

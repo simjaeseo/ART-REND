@@ -39,7 +39,7 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
         Page<RecommendedPainting> list = recommendedPaintingRepository.findRecommendedPaintings(memberId, pageable);
 
         List<RecommendPaintingDto> result = list.stream()
-                .map(painting -> new RecommendPaintingDto(painting.getPainting()))
+                .map(painting -> new RecommendPaintingDto(painting))
                 .collect(Collectors.toList());
 
         return result;

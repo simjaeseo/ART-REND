@@ -14,9 +14,19 @@ from recommend_art.models import ChangedPainting
 def check_artist(artist:str)-> str:
     return '{}.ckpt'.format(artist)
 
+
+def upload_image_encode_base64(path):
+    # img = cv2.imread(path)
+    print(path)
+    print(type(path))
+    jpg_img = cv2.imencode('.jpg',path)
+    b64_string = base64.b64encode(jpg_img[1]).decode('utf-8')
+    return b64_string
+
 def image_encode_base64(path):
     img = cv2.imread(path)
-    # print(img)
+    print(img)
+    print(type(img))
     jpg_img = cv2.imencode('.jpg',img)
     b64_string = base64.b64encode(jpg_img[1]).decode('utf-8')
     return b64_string
@@ -36,7 +46,7 @@ def change_p(artist: str, request_image: base64, member_id: int):
     gan.adam_gen.load_state_dict(ckpt['optimizer_gen'])
     gan.adam_desc.load_state_dict(ckpt['optimizer_desc'])
     image = stringtoRGB(request_image)
-    print(image.shape)
+    # print(image.shape)
     image = Image.fromarray(image)
     custom_transform = transforms.Compose([
                 transforms.Resize((256,256)),

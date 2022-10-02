@@ -165,6 +165,7 @@
 								type="button"
 								class="change-button"
 								data-bs-dismiss="modal"
+								id="dismiss"
 							>
 								닫기
 							</button>
@@ -252,6 +253,15 @@ export default {
 			state.payload.img = formData
 			console.log(state.payload.img)
 			store.dispatch('imageConvert', formData)
+			const next = confirm(
+				'마이페이지에 저장되었습니다. 마이페이지로 이동하시겠습니까?',
+			)
+			if (next == true) {
+				document.getElementById('dismiss').click()
+				router.push({ name: 'MyPage', params: { memberId: userId.value } })
+			} else {
+				document.getElementById('dismiss').click()
+			}
 		}
 
 		const likeArtWork = function () {

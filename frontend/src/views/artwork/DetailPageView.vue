@@ -117,7 +117,7 @@
 		</div>
 
 		<!-- 사진변환 Modal -->
-		<form @submit.prevent="onSubmit()">
+		<form @submit.prevent="onSubmit()" enctype="multipart/form-data">
 			<div
 				class="modal fade"
 				id="pictureModal"
@@ -139,7 +139,12 @@
 									@change="handleAddImage"
 									class="image-input"
 								>
-									<input type="file" accept="image/*" id="input-file" />
+									<input
+										type="file"
+										accept="image/*"
+										id="input-file"
+										name="file"
+									/>
 									<input
 										class="image-upload"
 										:placeholder="state.imageName"
@@ -200,6 +205,7 @@ export default {
 				zoomCnt: 0,
 				inTime: null,
 				outTime: null,
+				change: 0,
 			},
 		})
 		state.actionLog.clickCnt += 1
@@ -235,26 +241,17 @@ export default {
 			state.imageName = image.name
 			state.imageUrl = URL.createObjectURL(image)
 		}
-		const encodeBase64ImageFile = function (image) {
-			return new Promise((resolve, reject) => {
-				let reader = new FileReader()
-				reader.readAsDataURL(image)
-				reader.onload = event => {
-					resolve(event.target.result)
-				}
-				reader.onerror = error => {
-					reject(error)
-				}
-			})
-		}
+
+		let img = null
 		const onSubmit = function () {
-			encodeBase64ImageFile(state.image).then(data => {
-				// const formData = new FormData()
-				// formData.append('file', data)
-				// state.payload.img = formData
-				state.payload.img = data
-				store.dispatch('imageConvert', state.payload)
-			})
+			img = state.image
+			const formData = new FormData()
+			formData.append('file', img)
+			formData.append('artworkId', payLoadId)
+			console.log(formData.get('file'))
+			state.payload.img = formData
+			console.log(state.payload.img)
+			store.dispatch('imageConvert', formData)
 		}
 
 		const likeArtWork = function () {

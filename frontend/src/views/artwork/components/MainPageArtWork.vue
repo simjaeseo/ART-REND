@@ -8,7 +8,8 @@
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend, <br />
-					<p id="h2-inner">Recommended for you</p>
+					<p id="h2-inner">Recommended for you{{ mainImage }}</p>
+					<p></p>
 				</h2>
 			</div>
 			<div class="title-wrapper2">
@@ -77,6 +78,7 @@ export default {
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
+		const mainImage = computed(() => store.getters.mainImage)
 
 		const getScroll = function () {
 			const container = document.getElementById('main')
@@ -132,6 +134,7 @@ export default {
 			goProfile,
 			goArtworks,
 			toTop,
+			mainImage,
 		}
 	},
 }

@@ -18,6 +18,7 @@ export default {
 		artistData: [],
 		movementData: [],
 		genreData: [],
+		test: [],
 	},
 	getters: {
 		detailData: state => state.detailData,
@@ -81,14 +82,16 @@ export default {
 	},
 	actions: {
 		imageConvert({ getters }, payload) {
-			const img = payload.img
-			const id = payload.artworkId
+			const id = payload.get('artworkId')
 			axios({
-				headers: getters.authHeader,
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: getters.authHeader,
+				},
 				url: drf.business.imageConvert(id),
 				method: 'post',
 				data: {
-					url: img,
+					file: payload.get('file'),
 				},
 			})
 				.then(res => console.log(res))
@@ -102,7 +105,6 @@ export default {
 				method: 'get',
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_DETAIL_DATA', res.data.data)
 				})
 				.catch(err => {
@@ -119,10 +121,13 @@ export default {
 					paintingId: artworkId,
 					memberId: getters.userId,
 				},
-			}).then(() => {
-				dispatch('getArtWorkDetail', artworkId)
-				dispatch('likeArtWorkList')
 			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+					dispatch('likeArtWorkList')
+				})
+				.catch(err => console.log(err))
 		},
 		unlikeArtWork({ getters, dispatch }, artworkId) {
 			axios({
@@ -133,10 +138,13 @@ export default {
 					paintingId: artworkId,
 					memberId: getters.userId,
 				},
-			}).then(() => {
-				dispatch('getArtWorkDetail', artworkId)
-				dispatch('likeArtWorkList')
 			})
+				.then(res => {
+					console.log(res)
+					dispatch('getArtWorkDetail', artworkId)
+					dispatch('likeArtWorkList')
+				})
+				.catch(err => console.log(err))
 		},
 		getHits({ getters, commit }, hits) {
 			axios({
@@ -239,7 +247,6 @@ export default {
 				})
 		},
 		getMovementDetail({ commit }, name) {
-			console.log('왔냐?')
 			axios({
 				url: drf.business.getDetail(),
 				method: 'get',
@@ -258,7 +265,23 @@ export default {
 					console.log(err)
 				})
 		},
+		getMainBasedOnActionLog({ getters, commit }) {
+			console.log('액션로그ㅋ')
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMainBasedOnActionLog(),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_MAIN_IMAGE', res.data)
+				})
+				.catch(err => {
+					console.log(err)
+				})
+		},
 		actionLog({ getters }, actionLog) {
+			console.log(actionLog)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),
@@ -270,6 +293,7 @@ export default {
 					zoomCount: actionLog.zoomCnt,
 					inTime: actionLog.inTime,
 					outTime: actionLog.outTime,
+					changeCount: actionLog.change,
 				},
 			})
 				.then(res => {

@@ -20,15 +20,7 @@ public class MemberLog {
     private Long paintingId;
     private Long clickCount;
     private Long zoomCount;
+    private Long changeCount;
     private String inTime;
     private String outTime;
-
-    public MemberLog(MemberLogRequest request) {
-        this.memberId = request.getMemberId();
-        this.paintingId = request.getPaintingId();
-        this.clickCount = request.getClickCount();
-        this.zoomCount = request.getZoomCount();
-        this.inTime = request.getInTime();
-        this.outTime = request.getOutTime();
-    }
 }

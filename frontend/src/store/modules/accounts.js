@@ -12,6 +12,8 @@ export default {
 		provider: null,
 		providerId: null,
 		isExisted: [],
+		mainImage: [],
+		selectList: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -22,6 +24,8 @@ export default {
 		userNickName: state => state.userNickName,
 		provider: state => state.provider,
 		providerId: state => state.providerId,
+		mainImage: state => state.mainImage,
+		selectList: state => state.selectList,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -50,6 +54,12 @@ export default {
 		},
 		SET_USER_IS_EXISTED(state, data) {
 			state.isExisted = data
+		},
+		SET_MAIN_IMAGE(state, data) {
+			state.mainImage = data.data
+		},
+		SET_SELECT_LIST(state, data) {
+			state.selectList = data
 		},
 	},
 	actions: {
@@ -91,8 +101,32 @@ export default {
 					alert('사용할 수 없는 닉네임입니다.')
 				})
 		},
-
-		selectForm({ getters }, img) {
+		getSelectImg({ getters, commit }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getSelectImg(),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_SELECT_LIST', res.data.data)
+				})
+				.catch(err => console.log(err))
+		},
+		getMainBasedOnSelected({ getters, commit }) {
+			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMainBasedOnSelected(getters.userId),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_MAIN_IMAGE', res.data.data)
+				})
+				.catch(err => console.log(err))
+		},
+		selectForm({ getters, dispatch }, img) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.select(),
@@ -104,6 +138,7 @@ export default {
 			})
 				.then(() => {
 					router.push({ name: 'Main' })
+					dispatch('getMainBasedOnSelected')
 				})
 				.catch(() => {
 					alert('그림을 2개 선택해주세요.')
@@ -185,6 +220,15 @@ export default {
 				.catch(err => {
 					console.log(err)
 				})
+		},
+		getImageConvert({ getters }, memberId) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.auth.getImageConvert(memberId),
+				method: 'get',
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
 		},
 	},
 }

@@ -95,17 +95,15 @@ def like_recommend_painting(request, pk):
 
 @api_view(['POST'])
 def change_photo(request, pk):
-    # user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
-    # user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
-    # id = user_decode['id']
-    # path = request.data['image'].replace('data:image/png;base64,','',1)
-    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    id = user_decode['id']
+    path = request.data['image'].replace('data:image/png;base64,','',1)
+    # BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
     
-    # path = 'iVBORw0KGgoAAAANSUhEUgAAArwAAAK8CAYAAAANumxDAAAgAElEQVR42uzdDZxU9Z3v+V9CkAYiNkSwE5hL+9yMGhvNFYwmNndMxGRyhexuxMnsCJnsCK+NkU7ujjCzI+BkAszsBpxkrzibGdrZJIB7R9qrGdrEO904EhpWQykhtI8UM6CFGrtsB7qh7eu+flW/sg5lNV1Vfc6pc/71eb9ebbdNd1edh6rzPf+H3/9DX5R794lIswAAAADuScgX5d73OLAAAABwkWbdD3NkAQAA4DICLwAAAJxG4AUAAIDTCLwAAABwGoEXAAAATiPwAgAAwGkEXgAAADiNwAsAAACnEXgBAADgNAIvAAAAnEbgBQAAgNMIvAAAAHAagRcAAABOI/ACAADAaQReAAAAOI3ACwAAAKcReAEAAOA0Ai8AAACcRuAFAACA0wi8AAAAcBqBFwAAAE4j8AIAAMBpBF4AAAA4jcALAAAApxF4AQAA4DQCLwAAAJxG4AUAAIDTCLwAAABwGoEXAAAATiPwAgAAwGkEXgAAADiNwAsAAACnEXgBAADgNAIvAAAAnEbgBQ/ACAAAgaAReAAAABI3ACwAAgKAReAEAABA0Ai8AAACCRuAFAABA0Ai8AAAACBqBFwAAAEEj8AIAACBoBF4AAAAEjcALAACAoBF4AQAAEDQCLwAAAIJG4AUAAEDQCLwAAAAIGoEXAAAAQSPwAgAAIGgEXgAAAASNwAsAAICgEXgBAAAQNAIvAAAAgkbgBQAAQNAufV8auUvfep/dDAAAgNC8L438P8KZ55vKJ7D0AAAAAElFTkSuQmCC'
-    path = image_encode_base64(BASE_PATH+'\photo\img.jpg')
-    print(len(path))
-    print(path)
-    id = 1
+    # path = image_encode_base64(BASE_PATH+'\photo\img.jpg')
+    # print(len(path))
+    # print(path)
     painting = Painting.objects.get(paintingId=pk)
     base64_string = change_p(painting.artist, path, id)
     image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것

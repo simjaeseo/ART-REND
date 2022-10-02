@@ -18,7 +18,7 @@
 						<img
 							:src="image.url"
 							alt="image"
-							@click.prevent="goDetail(image.id)"
+							@click.prevent="goDetail(image.originalId)"
 						/>
 						<div class="image-info">
 							<div class="title">{{ image.title }}</div>
@@ -150,6 +150,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(0%);
+	cursor: pointer;
 }
 
 img {

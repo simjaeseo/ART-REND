@@ -11,7 +11,7 @@
 			>
 				<div class="pseudo-img">
 					<a target="_blank" rel="noopener">
-						<div class="image-box" @click.prevent="goDetail(image.id)">
+						<div class="image-box">
 							<button
 								class="delete"
 								@click.prevent="unlikeArtWork(image.id)"
@@ -19,7 +19,11 @@
 							>
 								delete
 							</button>
-							<img :src="image.url" alt="image" />
+							<img
+								:src="image.url"
+								alt="image"
+								@click.prevent="goDetail(image.id)"
+							/>
 							<div class="image-info">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>
@@ -36,12 +40,11 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
-		const router = useRouter()
 		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
@@ -58,10 +61,13 @@ export default {
 
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
-			store.dispatch('unlikeArtWork', artworkId)
+			const next = confirm('좋아요를 취소하시겠습니까?')
+			if (next == true) {
+				store.dispatch('unlikeArtWork', artworkId)
+			}
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
 		window.onload = function () {

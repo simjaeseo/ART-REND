@@ -2,6 +2,9 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django
 
 
+recommend_art/photo/*
+
+
 # recommend_art/checkpoint_art/*.ckpt
 ### Django ###
 *.log

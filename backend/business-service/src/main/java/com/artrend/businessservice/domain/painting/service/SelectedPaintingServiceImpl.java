@@ -46,35 +46,17 @@ public class SelectedPaintingServiceImpl implements SelectedPaintingService {
     public SelectedPaintingDto selectPaintings(SelectedPaintingDto selectedPaintingDto) {
         List<FavoriteStyle> list = favoriteStyleRepository.findAll();
 
-        if (list.isEmpty()) {
+        if (list.size() < 2) {
             throw new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING);
         }
 
-        FavoriteStyle firstFavorite = null;
-        FavoriteStyle secondFavorite = null;
+        FavoriteStyle firstFavorite =
+                favoriteStyleRepository.findById(selectedPaintingDto.getPaintings().get(0))
+                        .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
-
-        for (int i = 0; i < list.size(); i++) {
-            FavoriteStyle favoriteStyle = list.get(i);
-
-            if (favoriteStyle.getPainting().getId() == selectedPaintingDto.getPaintings().get(0)) {
-                firstFavorite = favoriteStyle;
-            } else if (favoriteStyle.getPainting().getId() == selectedPaintingDto.getPaintings().get(1)) {
-                secondFavorite = favoriteStyle;
-            }
-
-            if (firstFavorite != null && secondFavorite != null) {
-                break;
-            }
-        }
-
-        Optional<FavoriteStyle> last = favoriteStyleRepository.findById(146L);
-
-        if (firstFavorite == null && secondFavorite != null) {
-            firstFavorite = last.get();
-        } else if (firstFavorite != null && secondFavorite == null) {
-            secondFavorite = last.get();
-        }
+        FavoriteStyle secondFavorite =
+                favoriteStyleRepository.findById(selectedPaintingDto.getPaintings().get(1))
+                        .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
         SelectedPainting firstSelectedPainting = SelectedPainting.builder()
                 .memberId(selectedPaintingDto.getMemberId())

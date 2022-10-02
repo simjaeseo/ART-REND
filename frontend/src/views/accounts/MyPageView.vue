@@ -145,23 +145,21 @@ export default {
 			state.myPage = true
 		}
 
-		const allUsers = computed(() => store.getters.allUsers).value.data
 		store.dispatch('getAllUsers')
+		const allUsersData = computed(() => store.getters.allUsers).value.data
+		const allUsers = JSON.parse(JSON.stringify(allUsersData)) // Proxy -> 리스트
+		const members = allUsers.filter(item => item !== userId.value) // 내 id 값 삭제
 		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * allUsers.length)
-			if (allUsers[random] !== userId.value) {
-				location.href = `http://localhost:3002/mypage/${allUsers[random]}`
-			}
+			const random = Math.floor(Math.random() * members.length)
+			window.location.href = `http://localhost:3002/mypage/${members[random]}`
 		}
 
 		store.dispatch('likeArtWorkList', memberId)
 		store.dispatch('getUserNickname', memberId)
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
-
-		// 닉네임 중복검사
+		store.dispatch('getImageConvert', memberId)
 		const doubleCheck = function () {
-			console.log(state.modifyNickName)
 			axios({
 				headers: header.value,
 				url: drf.auth.nickNameCheck(memberId),
@@ -174,8 +172,7 @@ export default {
 					alert('사용할 수 있는 닉네임입니다.')
 					state.success = true
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(() => {
 					alert('사용할 수 없는 닉네임입니다.')
 				})
 		}

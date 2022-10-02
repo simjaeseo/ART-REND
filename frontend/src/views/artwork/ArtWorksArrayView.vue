@@ -40,13 +40,11 @@ import OrderByView from '@/views/artwork/components/OrderByView.vue'
 import OrderByTrans from '@/views/artwork/components/OrderByTrans.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageView',
 	components: { OrderByLike, OrderByView, OrderByTrans },
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
@@ -60,7 +58,7 @@ export default {
 		}
 
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
@@ -137,7 +135,7 @@ input[id='trans-picture']:checked ~ .tabmenu .trans-picture {
 .tab-inner {
 	position: relative;
 	overflow: hidden;
-	height: 75%;
+	height: 90%;
 }
 
 .tabs {
@@ -169,7 +167,7 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	color: rgb(150, 150, 150);
 	cursor: pointer;
 	border: none;
-	margin: 20px;
+	margin: 0 20px;
 	font-size: 20px;
 }
 .btn2 {
@@ -177,7 +175,7 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	color: rgb(150, 150, 150);
 	cursor: pointer;
 	border: none;
-	margin: 20px;
+	margin: 0 20px;
 	font-size: 20px;
 }
 .btn1:hover,
@@ -189,6 +187,6 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	width: 100%;
 	text-align: center;
 	position: absolute;
-	bottom: 30px;
+	bottom: 3vh;
 }
 </style>

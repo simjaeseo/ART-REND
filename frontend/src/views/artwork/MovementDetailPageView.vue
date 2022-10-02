@@ -359,11 +359,13 @@ a:hover .image-info {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn2 {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn-class {
 	cursor: pointer;

@@ -303,5 +303,19 @@ export default {
 					console.log(err)
 				})
 		},
+		deleteConvert({ getters }, artworkId) {
+			console.log(getters.userId)
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.deleteConvert(),
+				method: 'delete',
+				data: {
+					paintingId: artworkId,
+					memberId: getters.userId,
+				},
+			})
+				.then(res => console.log(res))
+				.catch(err => console.log(err))
+		},
 	},
 }

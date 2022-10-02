@@ -35,5 +35,6 @@ export default {
 		actionLog: () => `${HOST + BUSINESS}api/log`,
 		imageConvert: artworkId => `${HOST + BUSINESS}api/changing/${artworkId}`,
 		getImageConvert: memberId => `${HOST + BUSINESS}api/changing/${memberId}`,
+		deleteConvert: () => `${HOST + BUSINESS}api/changing`,
 	},
 }

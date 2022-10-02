@@ -118,7 +118,7 @@ export default {
 				})
 				.catch(err => console.log(err))
 		},
-		getMainBasedOnSelected({ getters }) {
+		getMainBasedOnSelected({ getters, commit }) {
 			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
 			console.log(getters.userId)
 			axios({
@@ -128,6 +128,7 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
+					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => console.log(err))
 		},

@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.dto;
 
 import com.artrend.businessservice.domain.painting.entity.Painting;
+import com.artrend.businessservice.domain.painting.entity.RecommendedPainting;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,15 +20,15 @@ public class RecommendPaintingDto {
     private String url;
     private String year;
 
-    public RecommendPaintingDto(Painting painting) {
-        this.paintingId = painting.getId();
-        this.artist = painting.getArtist();
-        this.description = painting.getDescription();
-        this.genre = painting.getGenre();
-        this.medium = painting.getMedium();
-        this.title = painting.getTitle();
-        this.totalLikeCount = painting.getTotalLikeCount();
-        this.url = painting.getUrl();
-        this.year = painting.getYear();
+    public RecommendPaintingDto(RecommendedPainting recommendedPainting) {
+        this.paintingId = recommendedPainting.getPainting().getId();
+        this.artist = recommendedPainting.getPainting().getArtist();
+        this.description = recommendedPainting.getPainting().getDescription();
+        this.genre = recommendedPainting.getPainting().getGenre();
+        this.medium = recommendedPainting.getPainting().getMedium();
+        this.title = recommendedPainting.getPainting().getTitle();
+        this.totalLikeCount = recommendedPainting.getPainting().getTotalLikeCount();
+        this.url = recommendedPainting.getPainting().getUrl();
+        this.year = recommendedPainting.getPainting().getYear();
     }
 }

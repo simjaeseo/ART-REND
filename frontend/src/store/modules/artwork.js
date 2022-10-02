@@ -82,6 +82,7 @@ export default {
 	},
 	actions: {
 		imageConvert({ getters }, payload) {
+			console.log(payload)
 			const img = payload.img
 			const id = payload.artworkId
 			axios({

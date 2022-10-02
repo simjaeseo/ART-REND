@@ -323,6 +323,9 @@ export default {
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 1vw;
+	/* position: absolute;
+	z-index: 1;
+	padding: 10px; */
 }
 .button-box > div {
 	font-size: 2vh;
@@ -412,6 +415,7 @@ hr {
 	height: 70%;
 	display: flex;
 	justify-content: flex-end;
+	align-items: flex-end;
 }
 #selected-img {
 	position: relative;
@@ -579,11 +583,6 @@ hr {
 }
 
 /* Modal */
-.modal-dialog {
-	width: 40vw;
-	max-width: 40vw;
-}
-
 .content {
 	height: auto;
 	background-color: white;

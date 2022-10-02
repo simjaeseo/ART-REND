@@ -274,7 +274,7 @@ export default {
 			})
 				.then(res => {
 					console.log(res)
-					commit('SET_MAIN_IMAGE', res.data)
+					commit('SET_MAIN_IMAGE', res.data.data)
 				})
 				.catch(err => {
 					console.log(err)

@@ -33,7 +33,9 @@ export default {
 			state.token = token
 		},
 		SET_USER_ID(state, id) {
+			console.log(id)
 			state.userId = id
+			console.log(state.userId)
 		},
 		SET_LIKE_ART_WORK_LIST(state, data) {
 			state.likeArtWorkList = data
@@ -116,7 +118,20 @@ export default {
 				})
 				.catch(err => console.log(err))
 		},
-		selectForm({ getters }, img) {
+		getMainBasedOnSelected({ getters }) {
+			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
+			console.log(getters.userId)
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getMainBasedOnSelected(getters.userId),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+				})
+				.catch(err => console.log(err))
+		},
+		selectForm({ getters, dispatch }, img) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.select(),
@@ -128,6 +143,7 @@ export default {
 			})
 				.then(() => {
 					router.push({ name: 'Main' })
+					dispatch('getMainBasedOnSelected')
 				})
 				.catch(() => {
 					alert('그림을 2개 선택해주세요.')

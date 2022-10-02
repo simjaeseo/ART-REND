@@ -1,6 +1,8 @@
 from http.client import HTTPResponse
 import os
 import jwt
+import cv2
+import numpy as np
 
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import ChangedPainting, DetailRecommendedPainting, FavoriteStyle, Painting, RecommendedPainting, SelectedPainting
@@ -26,7 +28,7 @@ from PIL import Image
 
 import random
 
-from .change_photo import change_p, image_encode_base64
+from .change_photo import change_p, image_encode_base64, upload_image_encode_base64
 
 from torch.utils.data import DataLoader
 # Create your views here.
@@ -98,10 +100,16 @@ def change_photo(request, pk):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     id = user_decode['id']
-    path = request.data['image'].replace('data:image/png;base64,','',1)
-    # BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
-    
-    # path = image_encode_base64(BASE_PATH+'\photo\img.jpg')
+    print(type(request.data['image']))
+    image = cv2.imdecode(np.frombuffer(request.data['image'] , np.uint8), cv2.IMREAD_UNCHANGED)
+    # print(request.FILES.getlist('image'))
+    print(image)
+    path = upload_image_encode_base64(image)
+    # path = request.data['image'].replace('data:image/png;base64,','',1)
+    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    print('뭐니')
+    path = image_encode_base64(BASE_PATH+'\photo\img.jpg')
+    print('끝')
     # print(len(path))
     # print(path)
     painting = Painting.objects.get(paintingId=pk)

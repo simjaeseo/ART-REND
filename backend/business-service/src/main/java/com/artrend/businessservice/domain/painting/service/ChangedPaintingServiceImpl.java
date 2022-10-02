@@ -62,6 +62,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
 
     @Override
     public void changePainting(MultipartFile image, Long paintingId, String authorization) {
+//        System.out.println(image);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));

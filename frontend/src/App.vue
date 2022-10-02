@@ -182,7 +182,7 @@ export default {
 	color: white;
 }
 .nav-item2 {
-	margin-top: 50px;
+	margin-top: 4.5vh;
 	font-weight: 900;
 	color: gray;
 	cursor: pointer;
@@ -204,7 +204,7 @@ export default {
 #logo-title {
 	/* margin-top: 100px; */
 	/* margin-bottom: 50px; */
-	margin-bottom: 5vh;
+	margin-bottom: 4.5vh;
 	font-weight: 400;
 	font-family: 'DM Serif Display', serif;
 	font-size: 7.5vh;
@@ -219,6 +219,8 @@ export default {
 }
 .offcanvas-body {
 	color: white;
+	padding: 0;
+	overflow-x: hidden;
 }
 .offcanvas,
 .offcanvas-lg,

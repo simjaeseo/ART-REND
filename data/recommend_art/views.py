@@ -138,14 +138,14 @@ def main_page_recommend(request):
                 recommend_lst.append(recommend_id.recommended_painting_id)
                 if not len(recommend_lst)%5:
                     break
-    if len(recommend_lst) < 30:
+    if len(recommend_lst) < 20:
         recommend = RecommendedPainting.objects.filter(member_id=user_decode['id'])
         recommend = list(recommend)
         random.shuffle(recommend)
         # print(list(recommend))
         for i in recommend:
             recommend_lst.append(i.painting)
-            if len(recommend_lst) == 30:
+            if len(recommend_lst) == 20:
                 break
     serializer = LikePaintSerailizer(recommend_lst, many=True)     
     return Response(serializer.data)

@@ -14,6 +14,7 @@ export default {
 		isExisted: [],
 		mainImage: [],
 		selectList: [],
+		convertList: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -27,15 +28,14 @@ export default {
 		mainImage: state => state.mainImage,
 		selectList: state => state.selectList,
 		isExisted: state => state.isExisted,
+		convertList: state => state.convertList,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
 			state.token = token
 		},
 		SET_USER_ID(state, id) {
-			console.log(id)
 			state.userId = id
-			console.log(state.userId)
 		},
 		SET_LIKE_ART_WORK_LIST(state, data) {
 			state.likeArtWorkList = data
@@ -65,6 +65,10 @@ export default {
 		},
 		SET_SELECT_LIST(state, data) {
 			state.selectList = data
+		},
+		SET_CONVERT_LIST(state, data) {
+			state.convertList = data
+			console.log(state.convertList)
 		},
 	},
 	actions: {
@@ -227,14 +231,18 @@ export default {
 					console.log(err)
 				})
 		},
-		getImageConvert({ getters }, memberId) {
+		getImageConvert({ getters, commit }, memberId) {
 			axios({
 				headers: getters.authHeader,
-				url: drf.auth.getImageConvert(memberId),
+				url: drf.business.getImageConvert(memberId),
 				method: 'get',
 			})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
+				.then(res => {
+					commit('SET_CONVERT_LIST', res.data.data)
+				})
+				.catch(() => {
+					alert('서비스가 비정상적입니다.')
+				})
 		},
 	},
 }

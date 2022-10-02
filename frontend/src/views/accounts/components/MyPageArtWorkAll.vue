@@ -1,15 +1,29 @@
 <template>
 	<div class="masonry-container">
-		<div v-for="image in state.imageNum" :key="image" class="masonry-item">
+		<div
+			v-for="(image, index) in convertList"
+			:key="index"
+			class="masonry-item"
+		>
 			<div class="pseudo-img">
-				<a href="#" target="_blank" rel="noopener">
+				<a target="_blank" rel="noopener">
 					<div class="image-box">
-						<button class="delete" v-if="state.myPage">delete</button>
-						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+						<button
+							class="delete"
+							v-if="state.myPage"
+							@click.prevent="deleteConvert(image.id)"
+						>
+							delete
+						</button>
+						<img
+							:src="image.url"
+							alt="image"
+							@click.prevent="goDetail(image.id)"
+						/>
 						<div class="image-info">
-							<div class="title">Street Man Fighter</div>
-							<div class="name">2022</div>
-							<div class="name">Tom Smith</div>
+							<div class="title">{{ image.title }}</div>
+							<div class="name">{{ image.koreanTitle }}</div>
+							<div class="name">{{ image.artist }}</div>
 						</div>
 					</div>
 				</a>
@@ -21,12 +35,13 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const route = useRoute()
+		const router = useRouter()
 		const store = useStore()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -62,8 +77,18 @@ export default {
 			window.addEventListener('resize', masonryLayout)
 		}
 
+		const deleteConvert = function (artworkId) {
+			store.dispatch('deleteConvert', artworkId)
+		}
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
+		const convertList = computed(() => store.getters.convertList)
 		return {
 			state,
+			convertList,
+			deleteConvert,
+			goDetail,
 		}
 	},
 }

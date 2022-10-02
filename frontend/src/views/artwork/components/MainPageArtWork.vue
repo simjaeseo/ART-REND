@@ -8,7 +8,7 @@
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend, <br />
-					<p id="h2-inner">Recommended for you{{ mainImage }}</p>
+					<p id="h2-inner">Recommended for you</p>
 					<p></p>
 				</h2>
 			</div>
@@ -19,13 +19,9 @@
 				</h2>
 			</div>
 			<div class="title-wrapper3 masonry">
-				<div v-for="image in state.imageNum" :key="image">
+				<div v-for="(image, index) in mainImage" :key="index">
 					<div class="mItem">
-						<img
-							:src="require(`@/assets/main-img/${image}.jpg`)"
-							alt="image"
-							id="m-image"
-						/>
+						<img :src="image.url" alt="image" id="m-image" />
 					</div>
 				</div>
 			</div>
@@ -36,17 +32,18 @@
 				</h5>
 			</div>
 			<div id="title-wrapper4">
-				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-					<a href="#" target="_blank" rel="noopener">
-						<div class="image-box">
-							<img
-								:src="require(`@/assets/main-img/${image}.jpg`)"
-								alt="image"
-							/>
+				<div
+					v-for="(image, index) in mainImage"
+					:key="index"
+					class="img-wrapper"
+				>
+					<a target="_blank" rel="noopener">
+						<div class="image-box" @click.prevent="goDetail(image.paintingId)">
+							<img :src="image.url" alt="image" />
 							<div class="image-info">
-								<div class="title">Street Man Fighter</div>
-								<div class="name">2022</div>
-								<div class="name">Tom Smith</div>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.year }}</div>
+								<div class="name">{{ image.artist }}</div>
 							</div>
 						</div>
 					</a>
@@ -127,6 +124,10 @@ export default {
 			const container = document.getElementById('main')
 			container.scrollTo({ top: 0, behavior: 'smooth' })
 		}
+		const goDetail = function (artworkId) {
+			console.log(artworkId)
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 
 		return {
 			state,
@@ -135,6 +136,7 @@ export default {
 			goArtworks,
 			toTop,
 			mainImage,
+			goDetail,
 		}
 	},
 }
@@ -296,6 +298,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(70%);
+	cursor: pointer;
 }
 
 img {

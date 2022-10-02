@@ -1,6 +1,13 @@
 <template>
 	<div class="external">
-		<div class="horizontal-scroll-wrapper">
+		<div class="topbutton">
+			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
+		</div>
+		<div
+			class="horizontal-scroll-wrapper"
+			id="main"
+			@scroll.prevent="getScroll()"
+		>
 			<div class="title-wrapper1">
 				<h2 id="title-text1">
 					Art of Trend <br />
@@ -15,35 +22,51 @@
 				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail(image.name)">
 						<img :src="image.url" alt="image" />
-						<div class="image-info">
-							<div class="title">{{ image.name }}</div>
-							<div class="name">{{ image.koreanName }}</div>
-						</div>
 					</div>
 				</a>
+				<div class="image-info">
+					<div class="title">{{ image.name }}</div>
+					<div class="name">{{ image.koreanName }}</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
 	name: 'ArtistPage',
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 		store.dispatch('getArtistList')
 		const artistData = computed(() => store.getters.artistData)
 		const goDetail = function (name) {
-			router.push({ name: 'ArtistDetailPage', params: { name: name } })
+			window.location.href = `http://localhost:3002/artist/${name}`
 		}
+
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+		}
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			goDetail,
 			artistData,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -78,7 +101,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	width: 100vh;
-	transform: rotate(-90deg) translate3d(10vh, -100vh, 0);
+	transform: rotate(-90deg) translate3d(2vh, -100vh, 0);
 	transform-origin: right top;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -114,12 +137,13 @@ export default {
 .img-wrapper {
 	transform: rotate(90deg);
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	min-height: 60vh;
 	transform-origin: 50% 50%;
-	/* transform: rotate(90deg) translateZ(0px) translateX(0px); */
 	transition: 1s;
+	padding-bottom: 10vh;
 }
 
 .img-wrapper:hover {
@@ -150,35 +174,13 @@ img {
 	filter: grayscale(70%);
 } */
 
-a .image-info,
-a .delete {
-	display: block;
-}
-
 .image-info {
-	position: absolute;
-	bottom: -100px;
+	padding-top: 2vh;
 	text-align: center;
 	color: white;
 	transition: 1s;
-	display: none;
+	display: block;
 	width: 100%;
-}
-
-.delete {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	color: rgb(255, 255, 255);
-	font-family: 'Noto Sans', sans-serif;
-	font-size: 13px;
-	align-items: center;
-	background-color: rgba(255, 255, 255, 0.5);
-	border: none;
-	border-radius: 20px;
-	padding: 2px 10px;
-	transition: 1s;
-	display: none;
 }
 
 .title {
@@ -191,5 +193,26 @@ a .delete {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-size: 1.5vh;
 	font-weight: 500;
+}
+
+/* top button */
+.topbutton {
+	position: absolute;
+	left: 30px;
+	top: 50%;
+	z-index: 1;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

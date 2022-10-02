@@ -9,6 +9,7 @@
 				<h2 id="title-text1">
 					Art of Trend, <br />
 					<p id="h2-inner">Recommended for you</p>
+					<p></p>
 				</h2>
 			</div>
 			<div class="title-wrapper2">
@@ -18,13 +19,9 @@
 				</h2>
 			</div>
 			<div class="title-wrapper3 masonry">
-				<div v-for="image in state.imageNum" :key="image">
+				<div v-for="(image, index) in mainImage" :key="index">
 					<div class="mItem">
-						<img
-							:src="require(`@/assets/main-img/${image}.jpg`)"
-							alt="image"
-							id="m-image"
-						/>
+						<img :src="image.url" alt="image" id="m-image" />
 					</div>
 				</div>
 			</div>
@@ -35,36 +32,36 @@
 				</h5>
 			</div>
 			<div id="title-wrapper4">
-				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-					<a href="#" target="_blank" rel="noopener">
-						<div class="image-box">
-							<img
-								:src="require(`@/assets/main-img/${image}.jpg`)"
-								alt="image"
-							/>
+				<div
+					v-for="(image, index) in mainImage"
+					:key="index"
+					class="img-wrapper"
+				>
+					<a target="_blank" rel="noopener">
+						<div class="image-box" @click.prevent="goDetail(image.paintingId)">
+							<img :src="image.url" alt="image" />
 							<div class="image-info">
-								<div class="title">Street Man Fighter</div>
-								<div class="name">2022</div>
-								<div class="name">Tom Smith</div>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.year }}</div>
+								<div class="name">{{ image.artist }}</div>
 							</div>
 						</div>
 					</a>
 				</div>
 			</div>
-			<div class="btn-class">
+			<div class="btn-class" id="black">
 				<button class="btn1" @click="goProfile">PROFILE</button>
 				<button class="btn2" @click="goArtworks">TOP10</button>
 			</div>
 		</div>
 		<div class="topbutton">
-			<img src="@/assets/left.png" class="leftButton" @click="toTop" />
+			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
 		</div>
 	</div>
 </template>
 
 <script>
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import { computed, reactive } from 'vue'
 
 export default {
@@ -73,39 +70,55 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-		const router = useRouter()
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
+		const mainImage = computed(() => store.getters.mainImage)
 
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			console.log(x)
-			// ART-REND color
-			if (x >= 4850) {
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+
+			const windowWidth = window.innerWidth
+			const white = document.getElementById('title-wrapper4')
+			const whiteLocation = white.getBoundingClientRect().left
+			const black = document.getElementById('black')
+			const blackLocation = black.getBoundingClientRect().left
+			if (whiteLocation <= 30) {
 				store.commit('SET_COLOR1', true)
 			} else {
 				store.commit('SET_COLOR1', false)
 			}
-			// 햄버거 color
-			if (x >= 3555) {
+			if (whiteLocation <= windowWidth && blackLocation >= windowWidth) {
 				store.commit('SET_COLOR2', true)
 			} else {
 				store.commit('SET_COLOR2', false)
 			}
 		}
+		window.addEventListener('beforeunload', () => {
+			store.commit('SET_COLOR1', false)
+			store.commit('SET_COLOR2', false)
+		})
 
 		const goProfile = function () {
-			location.href = `http://localhost:3002/mypage/${userId.value}`
+			window.location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 		const goArtworks = function () {
-			router.push({ name: 'Artworks' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 
 		const toTop = function () {
 			const container = document.getElementById('main')
 			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+		const goDetail = function (artworkId) {
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
 		return {
@@ -114,6 +127,8 @@ export default {
 			goProfile,
 			goArtworks,
 			toTop,
+			mainImage,
+			goDetail,
 		}
 	},
 }
@@ -128,7 +143,7 @@ export default {
 }
 #title-wrapper4 {
 	background-color: white;
-	min-height: 15000px;
+	/* min-height: 15000px; */
 	min-width: 100%;
 }
 #m-image {
@@ -136,7 +151,7 @@ export default {
 	height: auto;
 }
 .masonry {
-	column-count: 5;
+	column-count: 6;
 	margin-right: 20%;
 }
 
@@ -275,6 +290,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(70%);
+	cursor: pointer;
 }
 
 img {
@@ -315,11 +331,13 @@ a:hover .image-info {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn2 {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn-class {
 	cursor: pointer;
@@ -328,7 +346,7 @@ a:hover .image-info {
 
 .topbutton {
 	position: absolute;
-	right: 30px;
+	left: 30px;
 	top: 50%;
 }
 .topbutton > button {
@@ -339,5 +357,10 @@ a:hover .image-info {
 	height: 2.6vh;
 	cursor: pointer;
 	margin-right: 0.3vh;
+	display: none;
+}
+
+.block {
+	display: block;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="external">
-			<div class="horizontal-scroll-wrapper">
+			<div class="horizontal-scroll-wrapper" id="main">
 				<div class="title-wrapper1">
 					<h2 id="title-text1">
 						Art of Trend <br />
@@ -10,18 +10,29 @@
 						<h5 class="nickname">{{ state.nickName }}</h5>
 					</h2>
 				</div>
-				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-					<a href="#" target="_blank" rel="noopener">
+				<div
+					v-for="(image, index) in convertList"
+					:key="index"
+					class="img-wrapper"
+				>
+					<a target="_blank" rel="noopener">
 						<div class="image-box">
-							<button class="delete" v-if="state.myPage">delete</button>
+							<button
+								class="delete"
+								v-if="state.myPage"
+								@click.prevent="deleteConvert(image.id)"
+							>
+								delete
+							</button>
 							<img
-								:src="require(`@/assets/main-img/${image}.jpg`)"
+								:src="image.url"
 								alt="image"
+								@click.prevent="goDetail(image.originalId)"
 							/>
 							<div class="image-info">
-								<div class="title">Street Man Fighter</div>
-								<div class="name">2022</div>
-								<div class="name">Tom Smith</div>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.koreanTitle }}</div>
+								<div class="name">{{ image.artist }}</div>
 							</div>
 						</div>
 					</a>
@@ -54,8 +65,22 @@ export default {
 
 		state.nickName = computed(() => store.getters.userNickName)
 
+		const convertList = computed(() => store.getters.convertList)
+		const goDetail = function (artworkId) {
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
+		}
+
+		const deleteConvert = function (artworkId) {
+			const next = confirm('정말 삭제하시겠습니까?')
+			if (next == true) {
+				store.dispatch('deleteConvert', artworkId)
+			}
+		}
 		return {
 			state,
+			convertList,
+			goDetail,
+			deleteConvert,
 		}
 	},
 }
@@ -149,6 +174,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(0%);
+	cursor: pointer;
 }
 
 img {
@@ -201,5 +227,26 @@ a:hover .delete {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 1.5vh;
 	font-weight: 200;
+}
+
+/* top button */
+.topbutton {
+	position: fixed;
+	left: 30px;
+	bottom: 50%;
+	z-index: 1;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 3vh;
+	height: 3vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

@@ -1,15 +1,29 @@
 <template>
 	<div class="masonry-container">
-		<div v-for="image in state.imageNum" :key="image" class="masonry-item">
+		<div
+			v-for="(image, index) in convertList"
+			:key="index"
+			class="masonry-item"
+		>
 			<div class="pseudo-img">
-				<a href="#" target="_blank" rel="noopener">
+				<a target="_blank" rel="noopener">
 					<div class="image-box">
-						<button class="delete" v-if="state.myPage">delete</button>
-						<img :src="require(`@/assets/main-img/${image}.jpg`)" alt="image" />
+						<button
+							class="delete"
+							v-if="state.myPage"
+							@click.prevent="deleteConvert(image.id)"
+						>
+							delete
+						</button>
+						<img
+							:src="image.url"
+							alt="image"
+							@click.prevent="goDetail(image.originalId)"
+						/>
 						<div class="image-info">
-							<div class="title">Street Man Fighter</div>
-							<div class="name">2022</div>
-							<div class="name">Tom Smith</div>
+							<div class="title">{{ image.title }}</div>
+							<div class="name">{{ image.koreanTitle }}</div>
+							<div class="name">{{ image.artist }}</div>
 						</div>
 					</div>
 				</a>
@@ -62,8 +76,21 @@ export default {
 			window.addEventListener('resize', masonryLayout)
 		}
 
+		const deleteConvert = function (artworkId) {
+			const next = confirm('정말 삭제하시겠습니까?')
+			if (next == true) {
+				store.dispatch('deleteConvert', artworkId)
+			}
+		}
+		const goDetail = function (artworkId) {
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
+		}
+		const convertList = computed(() => store.getters.convertList)
 		return {
 			state,
+			convertList,
+			deleteConvert,
+			goDetail,
 		}
 	},
 }
@@ -125,6 +152,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(0%);
+	cursor: pointer;
 }
 
 img {

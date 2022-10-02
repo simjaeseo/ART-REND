@@ -1,7 +1,19 @@
 <template>
 	<div class="detail-bg">
 		<div class="external">
-			<div class="horizontal-scroll-wrapper">
+			<div class="topbutton">
+				<img
+					src="@/assets/left.png"
+					class="leftButton"
+					id="top"
+					@click="toTop"
+				/>
+			</div>
+			<div
+				class="horizontal-scroll-wrapper"
+				id="main"
+				@scroll.prevent="getScroll()"
+			>
 				<div class="title-wrapper1">
 					<h2 id="title-text1">
 						Art of {{ detail.artist.name }}, <br />
@@ -59,7 +71,7 @@
 						</a>
 					</div>
 				</div>
-				<div class="btn-class">
+				<div class="btn-class" id="black">
 					<button class="btn1" @click="goArtist">BACK</button>
 					<button class="btn2" @click="goMain">MAIN</button>
 				</div>
@@ -69,7 +81,7 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 export default {
@@ -79,22 +91,57 @@ export default {
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
 		const route = useRoute()
-		const router = useRouter()
 		const name = route.params.name
 		const store = useStore()
 		store.dispatch('getArtistDetail', name)
 		const detail = computed(() => store.getters.artistDetail)
 		const backImg = computed(() => store.getters.artistDetailBackImg)
-		console.log(backImg.value)
 		const goArtist = function () {
-			router.push({ name: 'ArtistPage' })
+			window.location.href = 'http://localhost:3002/artist'
 		}
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
+
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+
+			const windowWidth = window.innerWidth
+			const white = document.getElementById('title-wrapper4')
+			const whiteLocation = white.getBoundingClientRect().left
+			const black = document.getElementById('black')
+			const blackLocation = black.getBoundingClientRect().left
+			if (whiteLocation <= 30) {
+				store.commit('SET_COLOR1', true)
+			} else {
+				store.commit('SET_COLOR1', false)
+			}
+			if (whiteLocation <= windowWidth && blackLocation >= windowWidth) {
+				store.commit('SET_COLOR2', true)
+			} else {
+				store.commit('SET_COLOR2', false)
+			}
+		}
+		window.addEventListener('beforeunload', () => {
+			store.commit('SET_COLOR1', false)
+			store.commit('SET_COLOR2', false)
+		})
+
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
+		}
+
 		return {
 			name,
 			state,
@@ -103,6 +150,8 @@ export default {
 			goArtist,
 			goMain,
 			goDetail,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -308,11 +357,13 @@ a:hover .image-info {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn2 {
 	background: none;
 	color: white;
 	cursor: pointer;
+	border: none;
 }
 .btn-class {
 	cursor: pointer;
@@ -348,5 +399,26 @@ a:hover .image-info {
 	font-family: 'Noto Sans KR', sans-serif;
 	font-weight: 100;
 	color: white;
+}
+
+/* top button */
+.topbutton {
+	position: absolute;
+	left: 30px;
+	top: 50%;
+	z-index: 1;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

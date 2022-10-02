@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.sql.Blob;
+
 import static javax.persistence.FetchType.LAZY;
 
 @Entity
@@ -23,6 +25,7 @@ public class ChangedPainting extends BaseEntity {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "painting_id")
     private Painting painting;
-    
+
+    @Column(columnDefinition = "LONGTEXT")
     private String url;
 }

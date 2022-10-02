@@ -1,4 +1,8 @@
+from http.client import HTTPResponse
+import os
 import jwt
+import cv2
+import numpy as np
 
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import ChangedPainting, DetailRecommendedPainting, FavoriteStyle, Painting, RecommendedPainting, SelectedPainting
@@ -8,19 +12,24 @@ from django.views.decorators.http import require_safe
 from django.core.paginator import Paginator
 
 from .serializers.painting import PaintingListSerializer, LikePaintSerailizer
-from .cbf_recommend import art_recommend
-from .like_recommend import recommend_like_painting, find_sim_painting_item
-
+from .recommend.cbf_recommend import art_recommend
+from .recommend.like_recommend import recommend_like_painting, find_sim_painting_item
+from .recommend.mainpage_recommend import make_mainpage_recommend
 
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
 from rest_framework import authentication, exceptions
 
+from PIL import Image
+# from .cycleGAN.model import CycleGAN
+# from .cycleGAN.checkpoint import load_checkpoint
+# from .cycleGAN.load_data import PhotoDataset, stringtoRGB
 
-from .cycleGAN.model import CycleGAN
-from .cycleGAN.checkpoint import load_checkpoint
-from .cycleGAN.load_data import PhotoDataset, stringtoRGB
+import random
+
+from .change_photo import change_p, image_encode_base64, upload_image_encode_base64
+
 from torch.utils.data import DataLoader
 # Create your views here.
 import base64
@@ -32,8 +41,6 @@ from django.contrib.auth import authenticate
 @api_view(['GET'])
 def index(request):
     paintings = get_list_or_404(Painting.objects.order_by('-painting_id'))
-    # art_recommend()
-    # print(paintings)
     serializer = PaintingListSerializer(paintings, many=True)
     return Response(serializer.data)
 
@@ -50,6 +57,7 @@ def recommend_detail_painting(request):
 def main_recommend_painting(request):
     # try:
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    print(token)
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])
     user_recommend_painting = set()
@@ -90,22 +98,63 @@ def like_recommend_painting(request, pk):
 
 @api_view(['POST'])
 def change_photo(request, pk):
-    print(request)
-    image = stringtoRGB(request.data['image'])
-    return
+    user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    id = user_decode['id']
+    # f = request.FILES['image']
+    img_data = Image.open(request.FILES['image'])
+    img_arr = np.array(img_data)
+    print(img_data)
+    path = upload_image_encode_base64(img_arr)
+    painting = Painting.objects.get(paintingId=pk)
+    base64_string = change_p(painting.artist, path, id)
+    image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것
+    change_photo = ChangedPainting()
+    try:
+        change_photo.member_id = id
+        change_photo.url = image_path
+        change_photo.painting = painting
+        change_photo.save()
+        return HttpResponse(status=200)
+    except:
+        return HttpResponse(status=404)
 
 
-@api_view(['GET'])
-def test(request):
-    painting = Painting.objects.get(painting_id=1)
-    detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting)
-    print(detail_recommend_painting)
-    a = set()
-    for detail in detail_recommend_painting:
-        a.add(Painting.objects.get(painting_id=detail.recommended_painting_id.painting_id))
-    serializer = PaintingListSerializer(a, many=True)
+@api_view(['GET','POST'])
+def main_page_recommend(request):
+    user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
+    log_df = make_mainpage_recommend(user_decode['id'])
+    # print(log_df)
+    recommend_lst = []
+    try:
+        if log_df == 0:
+            pass
+    except:
+        for id in log_df['painting_id']:
+            painting = Painting.objects.get(paintingId = id)
+            detail_recommend = DetailRecommendedPainting.objects.filter(detail_painting=painting)
+            for recommend_id in detail_recommend:
+                recommend_lst.append(recommend_id.recommended_painting_id)
+                if not len(recommend_lst)%5:
+                    break
+    if len(recommend_lst) < 20:
+        recommend = RecommendedPainting.objects.filter(member_id=user_decode['id'])
+        recommend = list(recommend)
+        random.shuffle(recommend)
+        # print(list(recommend))
+        for i in recommend:
+            recommend_lst.append(i.painting)
+            if len(recommend_lst) == 20:
+                break
+    serializer = LikePaintSerailizer(recommend_lst, many=True)     
     return Response(serializer.data)
+        
 
+@api_view(['POST'])
+def test(request):
+    make_mainpage_recommend(1)
+    return HttpResponse(status=200)
 
 
 

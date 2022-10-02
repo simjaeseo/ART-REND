@@ -8,6 +8,7 @@ export default {
 	auth: {
 		kakaoLogin: () => `${HOST + AUTH}oauth2/authorization/kakao`,
 		googleLogin: () => `${HOST + AUTH}oauth2/authorization/google`,
+		getSelectImg: () => `${HOST + BUSINESS}api/select/list`,
 		memberInfo: () => `${HOST + AUTH}api/signup/members/info`,
 		nickNameForm: memberId => `${HOST + AUTH}api/signup/${memberId}/nickname`,
 		nickNameCheck: memberId =>
@@ -19,6 +20,9 @@ export default {
 		unRegister: memberId => `${HOST + AUTH}api/withdrawal/${memberId}`,
 	},
 	business: {
+		getMainBasedOnSelected: memberId => `${HOST + BUSINESS}
+		api/recommend/${memberId}`,
+		getMainBasedOnActionLog: () => `${HOST + BUSINESS}api/recommend`,
 		select: () => `${HOST + BUSINESS}api/select`,
 		detail: (artworkId, memberId) =>
 			`${HOST + BUSINESS}api/paintings/${artworkId}/${memberId}`,
@@ -29,5 +33,8 @@ export default {
 		getMovementList: () => `${HOST + BUSINESS}api/description/art-trend`,
 		getDetail: () => `${HOST + BUSINESS}api/paintings/search`,
 		actionLog: () => `${HOST + BUSINESS}api/log`,
+		imageConvert: artworkId => `${HOST + BUSINESS}api/changing/${artworkId}`,
+		getImageConvert: memberId => `${HOST + BUSINESS}api/changing/${memberId}`,
+		deleteConvert: () => `${HOST + BUSINESS}api/changing`,
 	},
 }

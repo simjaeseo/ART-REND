@@ -2,6 +2,14 @@
 	<div class="detail">
 		<div>
 			<div id="img-wrap">
+				<div class="topbutton">
+					<img
+						src="@/assets/left.png"
+						class="leftButton"
+						id="top"
+						@click="toTop"
+					/>
+				</div>
 				<div class="img-box">
 					<img
 						:src="detailData.painting.url"
@@ -37,9 +45,13 @@
 			</div>
 			<div id="background-div">
 				<div class="external">
-					<div class="horizontal-scroll-wrapper">
+					<div
+						class="horizontal-scroll-wrapper"
+						id="main"
+						@scroll.prevent="getScroll()"
+					>
 						<div id="img-title-wrap">
-							<div class="title-wrapper">
+							<div class="title-wrapper margin-left">
 								<h1 id="img-title">{{ detailData.painting.title }}</h1>
 								<h5 id="img-title2">{{ detailData.painting.koreanTitle }}</h5>
 								<h4 id="img-title3">{{ detailData.painting.artist }}</h4>
@@ -105,7 +117,7 @@
 		</div>
 
 		<!-- 사진변환 Modal -->
-		<form @submit.prevent="onSubmit()">
+		<form @submit.prevent="onSubmit()" enctype="multipart/form-data">
 			<div
 				class="modal fade"
 				id="pictureModal"
@@ -118,6 +130,7 @@
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel">
 								변환할 사진을 선택해 주세요.
+								<p>변환하기 클릭후 알림창이 뜰때까지 기다려주세요.</p>
 							</h5>
 						</div>
 						<div class="modal-body">
@@ -127,7 +140,12 @@
 									@change="handleAddImage"
 									class="image-input"
 								>
-									<input type="file" accept="image/*" id="input-file" />
+									<input
+										type="file"
+										accept="image/*"
+										id="input-file"
+										name="file"
+									/>
 									<input
 										class="image-upload"
 										:placeholder="state.imageName"
@@ -148,6 +166,7 @@
 								type="button"
 								class="change-button"
 								data-bs-dismiss="modal"
+								id="dismiss"
 							>
 								닫기
 							</button>
@@ -163,21 +182,25 @@
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+import drf from '@/api/api'
 
 export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
 		const store = useStore()
-		const router = useRouter()
 		const route = useRoute()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			imageName: '',
 			imageUrl: '',
 			image: null,
-			img: null,
+			payload: {
+				img: null,
+				artworkId: 0,
+			},
 			like: false,
 			actionLog: {
 				paintingId: 0,
@@ -185,12 +208,14 @@ export default {
 				zoomCnt: 0,
 				inTime: null,
 				outTime: null,
+				change: 0,
 			},
 		})
 		state.actionLog.clickCnt += 1
 		const artworkId = { ...route }
 		const payLoadId = artworkId.params.artworkId
 		state.actionLog.paintingId = payLoadId
+		state.payload.artworkId = payLoadId
 		store.dispatch('getArtWorkDetail', payLoadId)
 		const detailData = computed(() => store.getters.detailData)
 		const userId = computed(() => store.getters.userId)
@@ -219,24 +244,41 @@ export default {
 			state.imageName = image.name
 			state.imageUrl = URL.createObjectURL(image)
 		}
-		const encodeBase64ImageFile = function (image) {
-			return new Promise((resolve, reject) => {
-				let reader = new FileReader()
-				reader.readAsDataURL(image)
-				reader.onload = event => {
-					resolve(event.target.result)
-				}
-				reader.onerror = error => {
-					reject(error)
-				}
+
+		let img = null
+		const authHeader = computed(() => store.getters.authHeader)
+		const onSubmit = async () => {
+			img = state.image
+			const formData = new FormData()
+			formData.append('file', img)
+			formData.append('artworkId', payLoadId)
+			state.payload.img = formData
+			axios({
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: authHeader.value.Authorization,
+				},
+				url: drf.business.imageConvert(payLoadId),
+				method: 'post',
+				data: {
+					file: formData.get('file'),
+				},
 			})
-		}
-		const onSubmit = function () {
-			encodeBase64ImageFile(state.image)
-				.then(data => {
-					state.img = data
+				.then(() => {
+					const next = confirm(
+						'마이페이지에저장되었습니다. 마이페이지로이동하시겠습니까?',
+					)
+					if (next == true) {
+						document.getElementById('dismiss').click()
+						window.location.href = `http://localhost:3002/mypage/${userId.value}`
+					} else {
+						document.getElementById('dismiss').click()
+					}
 				})
-				.then(store.dispatch('imageConvert', state.img))
+				.catch(() => {
+					alert('서비스가비정상적입니다.')
+					document.getElementById('dismiss').click()
+				})
 		}
 
 		const likeArtWork = function () {
@@ -252,10 +294,26 @@ export default {
 		})
 
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
+		}
+
+		const getScroll = function () {
+			const container = document.getElementById('main')
+			const x = container.scrollTop
+			const top = document.getElementById('top')
+			if (x != 0) {
+				top.classList.add('block')
+			} else {
+				top.classList.remove('block')
+			}
+		}
+
+		const toTop = function () {
+			const container = document.getElementById('main')
+			container.scrollTo({ top: 0, behavior: 'smooth' })
 		}
 
 		return {
@@ -271,6 +329,8 @@ export default {
 			unlikeArtWork,
 			goMain,
 			goProfile,
+			getScroll,
+			toTop,
 		}
 	},
 }
@@ -282,12 +342,21 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
 
+#img01 {
+	max-width: 90vw;
+	max-height: 90vh;
+	cursor: pointer;
+}
+
 .button-box {
 	color: white;
 	transition: 1s;
 	display: flex;
 	justify-content: flex-end;
 	margin-top: 1vw;
+	/* position: absolute;
+	z-index: 1;
+	padding: 10px; */
 }
 .button-box > div {
 	font-size: 2vh;
@@ -372,14 +441,12 @@ hr {
 	margin-bottom: 3vw;
 	font-family: 'Noto Serif Georgian', serif;
 }
-#img-title-wrap {
-	margin-left: 10%;
-}
 
 .img-box {
 	height: 70%;
 	display: flex;
 	justify-content: flex-end;
+	align-items: flex-end;
 }
 #selected-img {
 	position: relative;
@@ -411,7 +478,7 @@ hr {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	/* z-index: 2; Sit on top */
-	padding-top: 100px; /* Location of the box */
+	padding-top: 5vh;
 	left: 0;
 	top: 0;
 	width: 100%; /* Full width */
@@ -497,7 +564,7 @@ hr {
 	height: 100vh;
 	color: white;
 	/* height: 100vw; */
-	margin: 100px 0px;
+	/* margin: 100px 0px; */
 }
 
 .horizontal-scroll-wrapper {
@@ -520,34 +587,33 @@ hr {
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(200px);
 	transition: 1s;
-	min-height: 60vh;
+	min-height: 100vh;
 
-	height: 50vw;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+.margin-left {
+	margin-top: -10%;
 }
 
 .title-wrapper2 {
 	transform-origin: 50% 50%;
 	transform: rotate(90deg) translateZ(0px) translateX(200px);
 	transition: 1s;
-	min-height: 60vh;
+	min-height: 100vh;
 
-	height: 50vw;
+	height: 100vh;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-end;
 	padding-right: 10%;
+	margin-top: -20%;
 }
 
 /* Modal */
-.modal-dialog {
-	width: 40vw;
-	max-width: 40vw;
-}
-
 .content {
 	height: auto;
 	background-color: white;
@@ -631,6 +697,7 @@ hr {
 	font-size: 20px;
 	margin: 20px;
 	cursor: pointer;
+	border: none;
 }
 .btn2 {
 	background: none;
@@ -638,6 +705,7 @@ hr {
 	font-size: 20px;
 	margin: 20px;
 	cursor: pointer;
+	border: none;
 }
 .btn1:hover,
 .btn2:hover {
@@ -650,5 +718,25 @@ hr {
 	position: fixed;
 	bottom: 10px;
 	text-align: center;
+}
+
+/* top button */
+.topbutton {
+	position: absolute;
+	right: -50px;
+	top: 50%;
+}
+.topbutton > button {
+	border: none;
+}
+.leftButton {
+	width: 2.6vh;
+	height: 2.6vh;
+	cursor: pointer;
+	margin-right: 0.3vh;
+	display: none;
+}
+.block {
+	display: block;
 }
 </style>

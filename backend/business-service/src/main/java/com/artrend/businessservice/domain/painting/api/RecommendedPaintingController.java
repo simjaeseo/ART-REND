@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendPaintingDto;
 import com.artrend.businessservice.domain.painting.service.RecommendedPaintingService;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
@@ -36,27 +37,27 @@ public class RecommendedPaintingController {
     @GetMapping("/{memberId}")
     public ResponseEntity<? extends DataResponse> findRecommendedPaintings(@PathVariable("memberId")
                                                                                Long memberId,
-                                                                           @RequestHeader HttpHeaders headers,
+                                                                           @RequestHeader(value = "Authorization") String authorization,
                                                                            Pageable pageable) {
-        List<PaintingDto> recommendedPaintings =
-                recommendedPaintingService.findRecommendedPaintings(memberId, headers, pageable);
+        List<RecommendPaintingDto> recommendedPaintings =
+                recommendedPaintingService.findRecommendedPaintings(memberId, authorization, pageable);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new CountDataResponse(recommendedPaintings, recommendedPaintings.size()));
     }
 
-    @Operation(summary = "그림선택후 메인 페이지에 추천된 그림 리스트들을 갱신합니다.", description = "회원 가입시" +
-            " 그림 선택한 결과에 따라 회원에게 맞는 그림 리스트들을 메인 페이지에 띄우는 용도")
+    @Operation(summary = "메인 페이지를 갈 때마다 추천 그림 리스트를 응답 받습니다.", description = "유저 로그 기반" +
+            " 회원에게 맞는 그림 리스트들을 메인 페이지에 띄우는 용도")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
             @ApiResponse(responseCode = "400", description = "잘못된 접근입니다."),
             @ApiResponse(responseCode = "404", description = "그림이 존재하지 않습니다."),
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
-    @PostMapping
-    public ResponseEntity<? extends MessageResponse> recommendMainPaintings(@RequestHeader(value = "Authorization") String authorization) {
-        recommendedPaintingService.recommendMainPaintings(authorization);
-        return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
+    @GetMapping
+    public ResponseEntity<? extends DataResponse> mainPageRecommend(@RequestHeader(value = "Authorization") String authorization) {
+        Object list = recommendedPaintingService.mainPageRecommend(authorization).getBody();
+        return ResponseEntity.status(HttpStatus.OK).body(new DataResponse<>(list));
     }
 }

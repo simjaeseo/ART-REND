@@ -42,7 +42,6 @@ export default {
 		})
 		const store = useStore()
 
-		// 닉네임 중복검사
 		const doubleCheck = function () {
 			store.dispatch('doubleCheck', state.userNickName)
 		}

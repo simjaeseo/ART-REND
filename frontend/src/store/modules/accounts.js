@@ -57,18 +57,15 @@ export default {
 		},
 		SET_USER_IS_EXISTED(state, data) {
 			state.isExisted = data
-			console.log(state.isExisted)
 		},
 		SET_MAIN_IMAGE(state, data) {
 			state.mainImage = data
-			console.log(state.mainImage)
 		},
 		SET_SELECT_LIST(state, data) {
 			state.selectList = data
 		},
 		SET_CONVERT_LIST(state, data) {
 			state.convertList = data
-			console.log(state.convertList)
 		},
 	},
 	actions: {
@@ -90,7 +87,7 @@ export default {
 					router.push({ name: 'SelectImage' })
 				})
 				.catch(() => {
-					alert('에러발생!!!!!!!!!!!')
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 
@@ -117,24 +114,20 @@ export default {
 				method: 'get',
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_SELECT_LIST', res.data.data)
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 		getMainBasedOnSelected({ getters, commit }) {
-			console.log('셀렉트후에선택된그림기반으로한번만가져오자!')
-			console.log(getters.userId)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.getMainBasedOnSelected(getters.userId),
 				method: 'get',
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_MAIN_IMAGE', res.data.data)
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 		selectForm({ getters, dispatch }, img) {
 			axios({
@@ -168,7 +161,7 @@ export default {
 					commit('SET_LIKE_ART_WORK_LIST', res.data.data)
 				})
 				.catch(() => {
-					alert('에러가발생했다')
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 		removeToken({ commit }) {
@@ -188,7 +181,7 @@ export default {
 					confirm('로그아웃하시겠습니까?')
 					router.push({ name: 'Login' })
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 
 		getAllUsers({ commit, getters }) {
@@ -200,7 +193,7 @@ export default {
 				.then(res => {
 					commit('SET_ALL_USERS', res.data)
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 
 		getUserNickname({ commit, getters }, memberId) {
@@ -212,7 +205,7 @@ export default {
 				.then(res => {
 					commit('SET_USER_NICKNAME', res.data.data.nickname)
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 
 		modifyNickName({ getters }, userNickName) {
@@ -224,12 +217,6 @@ export default {
 					nickname: userNickName,
 				},
 			})
-				.then(res => {
-					console.log(res)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
 		getImageConvert({ getters, commit }, memberId) {
 			axios({
@@ -241,7 +228,7 @@ export default {
 					commit('SET_CONVERT_LIST', res.data.data)
 				})
 				.catch(() => {
-					alert('서비스가 비정상적입니다.')
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 	},

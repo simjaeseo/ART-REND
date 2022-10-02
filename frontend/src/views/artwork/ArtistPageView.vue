@@ -34,26 +34,22 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
 	name: 'ArtistPage',
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 		store.dispatch('getArtistList')
 		const artistData = computed(() => store.getters.artistData)
 		const goDetail = function (name) {
-			router.push({ name: 'ArtistDetailPage', params: { name: name } })
+			window.location.href = `http://localhost:3002/artist/${name}`
 		}
 
-		// 스크롤 가져오기
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			// top 버튼
 			const top = document.getElementById('top')
 			if (x != 0) {
 				top.classList.add('block')
@@ -61,7 +57,6 @@ export default {
 				top.classList.remove('block')
 			}
 		}
-		// top 버튼
 		const toTop = function () {
 			const container = document.getElementById('main')
 			container.scrollTo({ top: 0, behavior: 'smooth' })

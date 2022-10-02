@@ -151,7 +151,7 @@ export default {
 		const members = allUsers.filter(item => item !== userId.value) // 내 id 값 삭제
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * members.length)
-			location.href = `http://localhost:3002/mypage/${members[random]}`
+			window.location.href = `http://localhost:3002/mypage/${members[random]}`
 		}
 
 		store.dispatch('likeArtWorkList', memberId)
@@ -159,9 +159,7 @@ export default {
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
 		store.dispatch('getImageConvert', memberId)
-		// 닉네임 중복검사
 		const doubleCheck = function () {
-			console.log(state.modifyNickName)
 			axios({
 				headers: header.value,
 				url: drf.auth.nickNameCheck(memberId),
@@ -174,8 +172,7 @@ export default {
 					alert('사용할 수 있는 닉네임입니다.')
 					state.success = true
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(() => {
 					alert('사용할 수 없는 닉네임입니다.')
 				})
 		}

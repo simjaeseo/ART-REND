@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 export default {
@@ -83,29 +83,25 @@ export default {
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
 		const route = useRoute()
-		const router = useRouter()
 		const name = route.params.name
-		console.log(name)
 		const store = useStore()
 		store.dispatch('getMovementDetail', name)
 		const detail = computed(() => store.getters.movementDetail)
 		const backImg = computed(() => store.getters.movementDetailBackImg)
 
 		const goArtist = function () {
-			router.push({ name: 'MovementPage' })
+			window.location.href = 'http://localhost:3002/movement'
 		}
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
-		// 스크롤 가져오기
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			// top 버튼
 			const top = document.getElementById('top')
 			if (x != 0) {
 				top.classList.add('block')
@@ -113,32 +109,27 @@ export default {
 				top.classList.remove('block')
 			}
 
-			// Nav 색깔
 			const windowWidth = window.innerWidth
 			const white = document.getElementById('title-wrapper4')
 			const whiteLocation = white.getBoundingClientRect().left
 			const black = document.getElementById('black')
 			const blackLocation = black.getBoundingClientRect().left
-			// ART-REND color
 			if (whiteLocation <= 30) {
 				store.commit('SET_COLOR1', true)
 			} else {
 				store.commit('SET_COLOR1', false)
 			}
-			// 햄버거 버튼
 			if (whiteLocation <= windowWidth && blackLocation >= windowWidth) {
 				store.commit('SET_COLOR2', true)
 			} else {
 				store.commit('SET_COLOR2', false)
 			}
 		}
-		// 페이지 나가면 다시 false로 초기화
 		window.addEventListener('beforeunload', () => {
 			store.commit('SET_COLOR1', false)
 			store.commit('SET_COLOR2', false)
 		})
 
-		// top 버튼
 		const toTop = function () {
 			const container = document.getElementById('main')
 			container.scrollTo({ top: 0, behavior: 'smooth' })

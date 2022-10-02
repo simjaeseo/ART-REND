@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -29,9 +30,9 @@ public class ChangedPaintingController {
 
     @PostMapping("/{painting_id}")
     public ResponseEntity<? extends MessageResponse> changePainting(@PathVariable("painting_id") Long paintingId,
-                                                                    @RequestBody String url,
-                                                                    @RequestHeader(value = "Authorization") String authorization) {
-        changedPaintingService.changePainting(url, paintingId, authorization);
+                                                                    @RequestPart(value = "file", required = false) MultipartFile image,
+                                                                    @RequestHeader(value = "Authorization") String authorization) throws IOException {
+        changedPaintingService.changePainting(image, paintingId, authorization);
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
     }
 

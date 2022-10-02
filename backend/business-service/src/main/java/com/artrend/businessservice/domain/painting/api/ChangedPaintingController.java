@@ -29,9 +29,9 @@ public class ChangedPaintingController {
 
     @PostMapping("/{painting_id}")
     public ResponseEntity<? extends MessageResponse> changePainting(@PathVariable("painting_id") Long paintingId,
-                                                                    @RequestBody String url,
+                                                                    @RequestPart("file") MultipartFile image,
                                                                     @RequestHeader(value = "Authorization") String authorization) {
-        changedPaintingService.changePainting(url, paintingId, authorization);
+        changedPaintingService.changePainting(image, paintingId, authorization);
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
     }
 

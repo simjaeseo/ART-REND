@@ -77,7 +77,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .build()
                 .expand(paintingId)
                 .toUri();
-        
+
         restTemplate.postForEntity(uri, entity, String.class);
     }
 

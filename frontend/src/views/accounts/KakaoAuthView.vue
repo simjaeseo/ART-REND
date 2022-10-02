@@ -47,7 +47,7 @@ export default {
 			const decodeAccessToken = jwt_decode(token)
 			store.commit('SET_USER_ID', decodeAccessToken.id)
 			store.dispatch('saveToken', token)
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		return {
 			isLoggedIn,

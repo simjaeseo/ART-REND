@@ -130,6 +130,7 @@
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel">
 								변환할 사진을 선택해 주세요.
+								<p>변환하기 클릭후 알림창이 뜰때까지 기다려주세요.</p>
 							</h5>
 						</div>
 						<div class="modal-body">
@@ -181,14 +182,15 @@
 import DetailPageArtWork from '@/views/artwork/components/DetailPageArtWork.vue'
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+import drf from '@/api/api'
 
 export default {
 	name: 'MainPageView',
 	components: { DetailPageArtWork },
 	setup() {
 		const store = useStore()
-		const router = useRouter()
 		const route = useRoute()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -244,24 +246,39 @@ export default {
 		}
 
 		let img = null
-		const onSubmit = function () {
+		const authHeader = computed(() => store.getters.authHeader)
+		const onSubmit = async () => {
 			img = state.image
 			const formData = new FormData()
 			formData.append('file', img)
 			formData.append('artworkId', payLoadId)
-			console.log(formData.get('file'))
 			state.payload.img = formData
-			console.log(state.payload.img)
-			store.dispatch('imageConvert', formData)
-			const next = confirm(
-				'마이페이지에 저장되었습니다. 마이페이지로 이동하시겠습니까?',
-			)
-			if (next == true) {
-				document.getElementById('dismiss').click()
-				router.push({ name: 'MyPage', params: { memberId: userId.value } })
-			} else {
-				document.getElementById('dismiss').click()
-			}
+			axios({
+				headers: {
+					'Content-Type': 'multipart/form-data',
+					Authorization: authHeader.value.Authorization,
+				},
+				url: drf.business.imageConvert(payLoadId),
+				method: 'post',
+				data: {
+					file: formData.get('file'),
+				},
+			})
+				.then(() => {
+					const next = confirm(
+						'마이페이지에저장되었습니다. 마이페이지로이동하시겠습니까?',
+					)
+					if (next == true) {
+						document.getElementById('dismiss').click()
+						window.location.href = `http://localhost:3002/mypage/${userId.value}`
+					} else {
+						document.getElementById('dismiss').click()
+					}
+				})
+				.catch(() => {
+					alert('서비스가비정상적입니다.')
+					document.getElementById('dismiss').click()
+				})
 		}
 
 		const likeArtWork = function () {
@@ -277,17 +294,15 @@ export default {
 		})
 
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 
-		// 스크롤 가져오기
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			// top 버튼
 			const top = document.getElementById('top')
 			if (x != 0) {
 				top.classList.add('block')
@@ -296,7 +311,6 @@ export default {
 			}
 		}
 
-		// top 버튼
 		const toTop = function () {
 			const container = document.getElementById('main')
 			container.scrollTo({ top: 0, behavior: 'smooth' })

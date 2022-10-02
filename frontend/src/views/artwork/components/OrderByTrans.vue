@@ -20,18 +20,16 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-		const router = useRouter()
 		const store = useStore()
 		const TransArr = computed(() => store.getters.orderByTranslation)
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 		return {
 			state,

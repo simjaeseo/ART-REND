@@ -44,7 +44,7 @@
 
 <script>
 import { reactive, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
@@ -52,7 +52,6 @@ export default {
 	setup() {
 		const store = useStore()
 		const route = useRoute()
-		const router = useRouter()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			nickName: '',
@@ -68,11 +67,14 @@ export default {
 
 		const convertList = computed(() => store.getters.convertList)
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
 		const deleteConvert = function (artworkId) {
-			store.dispatch('deleteConvert', artworkId)
+			const next = confirm('정말 삭제하시겠습니까?')
+			if (next == true) {
+				store.dispatch('deleteConvert', artworkId)
+			}
 		}
 		return {
 			state,

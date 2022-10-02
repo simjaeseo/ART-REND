@@ -43,7 +43,7 @@ export default {
 	},
 	methods: {
 		goMain() {
-			this.$router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		},
 		shred() {
 			this.shredding = anime({

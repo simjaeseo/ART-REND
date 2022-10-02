@@ -270,7 +270,7 @@ export default {
 					)
 					if (next == true) {
 						document.getElementById('dismiss').click()
-						window.location.href = `http://localhost:3002/mypage/${userId.value}`
+						window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
 					} else {
 						document.getElementById('dismiss').click()
 					}
@@ -294,10 +294,10 @@ export default {
 		})
 
 		const goMain = function () {
-			window.location.href = 'http://localhost:3002/main'
+			window.location.href = 'http://j7c104.p.ssafy.io/main'
 		}
 		const goProfile = function () {
-			location.href = `http://localhost:3002/mypage/${userId.value}`
+			location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
 
 		const getScroll = function () {

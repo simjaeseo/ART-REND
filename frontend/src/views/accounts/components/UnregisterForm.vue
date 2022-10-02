@@ -114,14 +114,14 @@ export default {
 						})
 							.then(() => {
 								alert('회원탈퇴되었습니다. 로그인페이지로 이동합니다.')
-								window.location.href = 'http://localhost:3002/'
+								window.location.href = 'http://j7c104.p.ssafy.io/'
 							})
 							.catch(() => {
 								alert('서비스가 비정상적입니다. 다시 시도해주세요')
 							})
 					} else if (result == false) {
 						alert('회원탈퇴를 취소합니다. 메인페이지로 돌아갑니다.')
-						window.location.href = 'http://localhost:3002/main'
+						window.location.href = 'http://j7c104.p.ssafy.io/main'
 					}
 				})
 				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요'))

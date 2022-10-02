@@ -151,7 +151,7 @@ export default {
 		const members = allUsers.filter(item => item !== userId.value) // 내 id 값 삭제
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * members.length)
-			window.location.href = `http://localhost:3002/mypage/${members[random]}`
+			window.location.href = `http://j7c104.p.ssafy.io/mypage/${members[random]}`
 		}
 
 		store.dispatch('likeArtWorkList', memberId)

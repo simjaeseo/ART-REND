@@ -61,14 +61,15 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     }
 
     @Override
-    public void changePainting(String url, Long paintingId, String authorization) {
+    public void changePainting(MultipartFile image, Long paintingId, String authorization) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.add("Authorization", authorization);
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("url", url);
+        body.add("image", image);
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8000")

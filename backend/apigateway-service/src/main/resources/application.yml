@@ -2,6 +2,22 @@ server:
   port: 8080
 
 spring:
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          "[/**]":
+            allowedOrigins: "http://j7c104.p.ssafy.io"
+            allowedHeaders:
+              - authorization
+              - content-type
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - OPTIONS
+              - HEAD
+              - DELETE
   application:
     name: apigateway-service
   rabbitmq:

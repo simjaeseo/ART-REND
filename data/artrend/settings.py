@@ -112,7 +112,7 @@ DATABASES = {
         'NAME': 'artrend',
         'USER': 'root',
         'PASSWORD': 'ssafy',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306'
     }
 }

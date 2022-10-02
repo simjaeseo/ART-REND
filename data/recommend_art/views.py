@@ -101,18 +101,11 @@ def change_photo(request, pk):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     id = user_decode['id']
-    print(type(request.data['image']))
-    image = cv2.imdecode(np.frombuffer(request.data['image'] , np.uint8), cv2.IMREAD_UNCHANGED)
-    # print(request.FILES.getlist('image'))
-    print(image)
-    path = upload_image_encode_base64(image)
-    # path = request.data['image'].replace('data:image/png;base64,','',1)
-    BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
-    print('뭐니')
-    path = image_encode_base64(BASE_PATH+'\photo\img.jpg')
-    print('끝')
-    # print(len(path))
-    # print(path)
+    # f = request.FILES['image']
+    img_data = Image.open(request.FILES['image'])
+    img_arr = np.array(img_data)
+    print(img_data)
+    path = upload_image_encode_base64(img_arr)
     painting = Painting.objects.get(paintingId=pk)
     base64_string = change_p(painting.artist, path, id)
     image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것

@@ -22,12 +22,12 @@
 				<a target="_blank" rel="noopener">
 					<div class="image-box" @click.prevent="goDetail(image.name)">
 						<img :src="image.url" alt="image" />
-						<div class="image-info">
-							<div class="title">{{ image.name }}</div>
-							<div class="name">{{ image.koreanName }}</div>
-						</div>
 					</div>
 				</a>
+				<div class="image-info">
+					<div class="title">{{ image.name }}</div>
+					<div class="name">{{ image.koreanName }}</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -106,7 +106,7 @@ export default {
 	flex-direction: column;
 	align-items: center;
 	width: 100vh;
-	transform: rotate(-90deg) translate3d(10vh, -100vh, 0);
+	transform: rotate(-90deg) translate3d(2vh, -100vh, 0);
 	transform-origin: right top;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -142,12 +142,13 @@ export default {
 .img-wrapper {
 	transform: rotate(90deg);
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	min-height: 60vh;
 	transform-origin: 50% 50%;
-	/* transform: rotate(90deg) translateZ(0px) translateX(0px); */
 	transition: 1s;
+	padding-bottom: 10vh;
 }
 
 .img-wrapper:hover {
@@ -178,35 +179,13 @@ img {
 	filter: grayscale(70%);
 } */
 
-a .image-info,
-a .delete {
-	display: block;
-}
-
 .image-info {
-	position: absolute;
-	bottom: -100px;
+	padding-top: 2vh;
 	text-align: center;
 	color: white;
 	transition: 1s;
-	display: none;
+	display: block;
 	width: 100%;
-}
-
-.delete {
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	color: rgb(255, 255, 255);
-	font-family: 'Noto Sans', sans-serif;
-	font-size: 13px;
-	align-items: center;
-	background-color: rgba(255, 255, 255, 0.5);
-	border: none;
-	border-radius: 20px;
-	padding: 2px 10px;
-	transition: 1s;
-	display: none;
 }
 
 .title {

@@ -86,7 +86,7 @@ export default {
 			axios({
 				headers: {
 					'Content-Type': 'multipart/form-data',
-					Authorization: getters.authHeader,
+					Authorization: getters.authHeader.Authorization,
 				},
 				url: drf.business.imageConvert(id),
 				method: 'post',

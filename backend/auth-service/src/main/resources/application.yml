@@ -4,16 +4,6 @@ server:
 spring:
   application:
     name: auth-service
-  jpa:
-    generate-ddl: true
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
-        default_batch_fetch_size: 1000
-    defer-datasource-initialization: true
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   rabbitmq:
     host: 127.0.0.1
     port: 5672
@@ -22,22 +12,6 @@ spring:
   zipkin:
     base-url: http://127.0.0.1:9411
     enabled: true
-  cloud:
-    gateway:
-      globalcors:
-        cors-configurations:
-          "[/**]":
-            allowedOrigins: "http://j7c104.p.ssafy.io"
-            allowedHeaders:
-              - authorization
-              - content-type
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - OPTIONS
-              - HEAD
-              - DELETE
 
 logging:
   level:

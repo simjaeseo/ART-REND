@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ChangedPaintingService {
@@ -13,5 +14,5 @@ public interface ChangedPaintingService {
 
     void deleteChangedPainting(MemberDto memberDto);
 
-    void changePainting(String url, Long paintingId, String authorization);
+    void changePainting(MultipartFile image, Long paintingId, String authorization) throws IOException;
 }

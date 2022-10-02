@@ -2194,7 +2194,7 @@ INSERT INTO genre (name, description, url)
 VALUES
   (
     '나체화', '인간 또는 신, 악마 등의 인간적인 모습을 나체로 표현한 회화. 자연의 대상물 중에서 가장 자아에 가까운 존재로서의 인체에 대한 아름다움을 표현하기 위하여 옛날부터 그려져 왔다. 민족, 풍습, 시대 등에 따라 그 성립과 양식이 다르지만 나체의 미묘한 선이나 면, 각 부분 간의 비례, 피부의 색조 변화, 육체의 양감 등의 미적 요소를 통일하여 유기적 생명을 표출하는 것을 특징으로 한다. 고대에서는 그리스 시대나 르네상스 시대에 나체 표현이 존중되었으며, 특히 인상주의* 이후 나체를 다룬 회화들이 많이 그려졌다.',
-    'https://artrend.s3.ap-northeast-2.amazonaws.com/FRONTEND/art+movement/%EC%9E%90%ED%99%94%EC%83%81.png'
+    'https://artrend.s3.ap-northeast-2.amazonaws.com/FRONTEND/art+movement/%EB%82%98%EC%B2%B4%ED%99%94.png'
   );
 INSERT INTO genre (name, description, url)
 VALUES
@@ -2241,7 +2241,7 @@ VALUES
 하지만 이러한 시각도 구상과 추상을 어떻게 나누냐에 따라 달라진다. 예를들어 모네와 같은 인상파를 모더니즘 이전의 구상으로 정리할 수도 있고, 이미 현실에 대해 새로운 시야, 새로운 감각으로 바라봤으며, 모든 표현들이 사실적이지만은 않다는 점을 들어 추상이라고 말할 수도 있다. 실제 인상파는 모더니즘의 시작을 알린 미술사조이다.
 
 다른 예를 들자면 동양의 회화를 예로 들 수 있다. 고대 중국부터 한국의 회화들은 대부분 구상과 추상이 섞여있는 경우가 많다. 사람의 얼굴에서 여러가지를 읽으려했던 동양적 사상에 기반해 얼굴은 매우 구상적이며 사실적으로 묘사한 반면, 몸, 옷, 자연, 건물 등은 매우 추상적인 표현이라고 볼 수 있다. 이것을 구상으로 해야 하는가 추상으로 해야 하는가는 그냥 개인이 받아들여야할 문제이지, 구상이다 추상이다 할 수 있는 문제가 아니다.',
-    'https://artrend.s3.ap-northeast-2.amazonaws.com/FRONTEND/art+movement/%EB%A5%B4%EB%84%A4%EC%83%81%EC%8A%A4.png'
+    'https://artrend.s3.ap-northeast-2.amazonaws.com/FRONTEND/art+movement/%EB%82%98%EC%B2%B4%ED%99%94.png'
   );
 INSERT INTO genre (name, description, url)
 VALUES

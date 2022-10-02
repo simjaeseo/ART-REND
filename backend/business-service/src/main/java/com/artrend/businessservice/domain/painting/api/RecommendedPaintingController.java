@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendPaintingDto;
 import com.artrend.businessservice.domain.painting.service.RecommendedPaintingService;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
@@ -38,7 +39,7 @@ public class RecommendedPaintingController {
                                                                                Long memberId,
                                                                            @RequestHeader(value = "Authorization") String authorization,
                                                                            Pageable pageable) {
-        List<PaintingDto> recommendedPaintings =
+        List<RecommendPaintingDto> recommendedPaintings =
                 recommendedPaintingService.findRecommendedPaintings(memberId, authorization, pageable);
 
         return ResponseEntity

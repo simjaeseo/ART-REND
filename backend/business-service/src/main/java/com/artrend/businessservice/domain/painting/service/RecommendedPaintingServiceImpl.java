@@ -1,6 +1,7 @@
 package com.artrend.businessservice.domain.painting.service;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendPaintingDto;
 import com.artrend.businessservice.domain.painting.entity.RecommendedPainting;
 import com.artrend.businessservice.domain.painting.repository.RecommendedPaintingRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
     private final RecommendedPaintingRepository recommendedPaintingRepository;
 
     @Override
-    public List<PaintingDto> findRecommendedPaintings(Long memberId, String authorization, Pageable pageable) {
+    public List<RecommendPaintingDto> findRecommendedPaintings(Long memberId, String authorization, Pageable pageable) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -37,8 +38,8 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
 
         Page<RecommendedPainting> list = recommendedPaintingRepository.findRecommendedPaintings(memberId, pageable);
 
-        List<PaintingDto> result = list.stream()
-                .map(painting -> new PaintingDto(painting.getPainting()))
+        List<RecommendPaintingDto> result = list.stream()
+                .map(painting -> new RecommendPaintingDto(painting.getPainting()))
                 .collect(Collectors.toList());
 
         return result;

@@ -137,7 +137,7 @@ input[id='trans-picture']:checked ~ .tabmenu .trans-picture {
 .tab-inner {
 	position: relative;
 	overflow: hidden;
-	height: 75%;
+	height: 90%;
 }
 
 .tabs {
@@ -169,7 +169,7 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	color: rgb(150, 150, 150);
 	cursor: pointer;
 	border: none;
-	margin: 20px;
+	margin: 0 20px;
 	font-size: 20px;
 }
 .btn2 {
@@ -177,7 +177,7 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	color: rgb(150, 150, 150);
 	cursor: pointer;
 	border: none;
-	margin: 20px;
+	margin: 0 20px;
 	font-size: 20px;
 }
 .btn1:hover,
@@ -189,6 +189,6 @@ input[id='trans-picture']:checked ~ .tab-inner .tabs {
 	width: 100%;
 	text-align: center;
 	position: absolute;
-	bottom: 30px;
+	bottom: 3vh;
 }
 </style>

@@ -8,6 +8,8 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.ChangedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
+import com.artrend.businessservice.domain.painting.util.MultipartInputStreamFileResource;
+import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.List;
@@ -61,8 +64,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     }
 
     @Override
-    public void changePainting(MultipartFile image, Long paintingId, String authorization) {
-//        System.out.println(image);
+    public void changePainting(MultipartFile image, Long paintingId, String authorization) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -70,7 +72,8 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
         headers.add("Authorization", authorization);
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("image", image);
+
+        body.add("image", image.getResource());
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8000")
@@ -79,7 +82,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .expand(paintingId)
                 .toUri();
 
-        restTemplate.postForEntity(uri, entity, String.class);
+        restTemplate.postForEntity(uri, entity, JsonNode.class);
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

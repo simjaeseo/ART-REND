@@ -47,6 +47,12 @@ spring:
             - Path=/auth-service/**
           filters:
             - RewritePath=/auth-service/(?<segment>.*), /$\{segment}
+        - id: kafka-service
+          uri: lb://KAFKA-SERVICE
+          predicates:
+            - Path=/kafka-service/**
+          filters:
+            - RewritePath=/kafka-service/(?<segment>.*), /$\{segment}
 
 eureka:
   instance:

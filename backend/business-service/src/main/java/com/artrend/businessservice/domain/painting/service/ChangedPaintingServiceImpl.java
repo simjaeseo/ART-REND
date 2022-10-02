@@ -8,15 +8,12 @@ import com.artrend.businessservice.domain.painting.exception.PaintingException;
 import com.artrend.businessservice.domain.painting.exception.PaintingExceptionType;
 import com.artrend.businessservice.domain.painting.repository.ChangedPaintingRepository;
 import com.artrend.businessservice.domain.painting.repository.PaintingRepository;
-import com.artrend.businessservice.domain.painting.util.MultipartInputStreamFileResource;
-import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,7 +84,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {
         return changedPaintingRepository
-                .findByMemberIdAndPaintingId(memberDto.getMemberId(), memberDto.getPaintingId());
+                .findByMemberIdAndId(memberDto.getMemberId(), memberDto.getPaintingId());
     }
 
     public void updateChangeCount(Long paintingId, Integer count) {

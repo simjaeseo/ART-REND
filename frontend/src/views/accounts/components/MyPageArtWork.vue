@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<!-- <div class="topbutton">
-			<img src="@/assets/left.png" class="leftButton" id="top" @click="toTop" />
-		</div> -->
 		<div class="external">
 			<div class="horizontal-scroll-wrapper" id="main">
 				<div class="title-wrapper1">
@@ -13,18 +10,29 @@
 						<h5 class="nickname">{{ state.nickName }}</h5>
 					</h2>
 				</div>
-				<div v-for="image in state.imageNum" :key="image" class="img-wrapper">
-					<a href="#" target="_blank" rel="noopener">
+				<div
+					v-for="(image, index) in convertList"
+					:key="index"
+					class="img-wrapper"
+				>
+					<a target="_blank" rel="noopener">
 						<div class="image-box">
-							<button class="delete" v-if="state.myPage">delete</button>
+							<button
+								class="delete"
+								v-if="state.myPage"
+								@click.prevent="deleteConvert(image.id)"
+							>
+								delete
+							</button>
 							<img
-								:src="require(`@/assets/main-img/${image}.jpg`)"
+								:src="image.url"
 								alt="image"
+								@click.prevent="goDetail(image.id)"
 							/>
 							<div class="image-info">
-								<div class="title">Street Man Fighter</div>
-								<div class="name">2022</div>
-								<div class="name">Tom Smith</div>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.koreanTitle }}</div>
+								<div class="name">{{ image.artist }}</div>
 							</div>
 						</div>
 					</a>
@@ -36,7 +44,7 @@
 
 <script>
 import { reactive, computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 export default {
@@ -44,6 +52,7 @@ export default {
 	setup() {
 		const store = useStore()
 		const route = useRoute()
+		const router = useRouter()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 			nickName: '',
@@ -57,29 +66,19 @@ export default {
 
 		state.nickName = computed(() => store.getters.userNickName)
 
-		// // 스크롤 가져오기
-		// const getScroll = function () {
-		// 	const container = document.getElementById('main')
-		// 	const x = container.scrollTop
-		// 	console.log(x)
-		// 	// top 버튼
-		// 	const top = document.getElementById('top')
-		// 	if (x != 0) {
-		// 		top.classList.add('block')
-		// 	} else {
-		// 		top.classList.remove('block')
-		// 	}
-		// }
-		// // top 버튼
-		// const toTop = function () {
-		// 	const container = document.getElementById('main')
-		// 	container.scrollTo({ top: 0, behavior: 'smooth' })
-		// }
+		const convertList = computed(() => store.getters.convertList)
+		const goDetail = function (artworkId) {
+			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+		}
 
+		const deleteConvert = function (artworkId) {
+			store.dispatch('deleteConvert', artworkId)
+		}
 		return {
 			state,
-			// getScroll,
-			// toTop,
+			convertList,
+			goDetail,
+			deleteConvert,
 		}
 	},
 }

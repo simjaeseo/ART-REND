@@ -68,13 +68,11 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
         headers.add("Authorization", authorization);
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("paintingId", paintingId);
         body.add("url", url);
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
         URI uri = UriComponentsBuilder
                 .fromUriString("http://localhost:8000")
-                .path("/api/v1/paintings/change_photo/{id}")
-                .encode()
+                .path("/api/v1/paintings/change_photo/{id}/")
                 .build()
                 .expand(paintingId)
                 .toUri();

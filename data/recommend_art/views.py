@@ -1,6 +1,8 @@
 from http.client import HTTPResponse
 import os
 import jwt
+import cv2
+import numpy as np
 
 from django.shortcuts import redirect, render, get_object_or_404, get_list_or_404
 from .models import ChangedPainting, DetailRecommendedPainting, FavoriteStyle, Painting, RecommendedPainting, SelectedPainting
@@ -26,7 +28,7 @@ from PIL import Image
 
 import random
 
-from .change_photo import change_p, image_encode_base64
+from .change_photo import change_p, image_encode_base64, upload_image_encode_base64
 
 from torch.utils.data import DataLoader
 # Create your views here.
@@ -55,6 +57,7 @@ def recommend_detail_painting(request):
 def main_recommend_painting(request):
     # try:
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
+    print(token)
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     selected_painting = SelectedPainting.objects.filter(member_id = user_decode['id'])
     user_recommend_painting = set()
@@ -98,8 +101,11 @@ def change_photo(request, pk):
     user, token = request.META['HTTP_AUTHORIZATION'].split(' ')
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     id = user_decode['id']
-    path = request.data['url'].replace('data:image/png;base64,','',1)
-    # BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
+    # f = request.FILES['image']
+    img_data = Image.open(request.FILES['image'])
+    img_arr = np.array(img_data)
+    print(img_data)
+    path = upload_image_encode_base64(img_arr)
     painting = Painting.objects.get(paintingId=pk)
     base64_string = change_p(painting.artist, path, id)
     image_path = 'data:image/png;base64,' + base64_string #url에 저장할 것
@@ -112,6 +118,7 @@ def change_photo(request, pk):
         return HttpResponse(status=200)
     except:
         return HttpResponse(status=404)
+
 
 @api_view(['GET','POST'])
 def main_page_recommend(request):
@@ -131,14 +138,14 @@ def main_page_recommend(request):
                 recommend_lst.append(recommend_id.recommended_painting_id)
                 if not len(recommend_lst)%5:
                     break
-    if len(recommend_lst) < 30:
+    if len(recommend_lst) < 20:
         recommend = RecommendedPainting.objects.filter(member_id=user_decode['id'])
         recommend = list(recommend)
         random.shuffle(recommend)
         # print(list(recommend))
         for i in recommend:
             recommend_lst.append(i.painting)
-            if len(recommend_lst) == 30:
+            if len(recommend_lst) == 20:
                 break
     serializer = LikePaintSerailizer(recommend_lst, many=True)     
     return Response(serializer.data)

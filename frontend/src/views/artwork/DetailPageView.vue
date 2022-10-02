@@ -236,29 +236,17 @@ export default {
 			state.imageName = image.name
 			state.imageUrl = URL.createObjectURL(image)
 		}
-		const encodeBase64ImageFile = function (image) {
-			return new Promise((resolve, reject) => {
-				let reader = new FileReader()
-				reader.readAsDataURL(image)
-				reader.onload = event => {
-					resolve(event.target.result)
-				}
-				reader.onerror = error => {
-					reject(error)
-				}
-			})
-		}
-		const onSubmit = function () {
-			encodeBase64ImageFile(state.image).then(data => {
-				// const formData = new FormData()
-				// formData.append('file', data)
-				// state.payload.img = formData
-				state.actionLog.change += 1
-				state.payload.img = data
-				store.dispatch('imageConvert', state.payload)
-			})
-		}
 
+		let img = null
+		const onSubmit = function () {
+			img = state.image
+			const formData = new FormData()
+			formData.append('file', img)
+			console.log(formData.get('file'))
+			state.payload.img = formData
+			console.log(state.payload.img)
+			store.dispatch('imageConvert', state.payload)
+		}
 		const likeArtWork = function () {
 			store.dispatch('likeArtWork', payLoadId)
 		}

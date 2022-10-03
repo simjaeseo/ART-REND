@@ -200,19 +200,6 @@ export default {
 				})
 				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
-
-		getAllUsers({ commit, getters }) {
-			axios({
-				headers: getters.authHeader,
-				url: drf.auth.getAllUsers(),
-				method: 'get',
-			})
-				.then(res => {
-					commit('SET_ALL_USERS', res.data)
-				})
-				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
-		},
-
 		getUserNickname({ commit, getters }, memberId) {
 			axios({
 				headers: getters.authHeader,

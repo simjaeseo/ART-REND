@@ -104,6 +104,7 @@
 				<div class="btn-class">
 					<button class="btn1" @click="goProfile">PROFILE</button>
 					<button class="btn2" @click="goMain">MAIN</button>
+					<button class="btn2" @click="goTop">TOP20</button>
 				</div>
 			</div>
 		</div>
@@ -301,6 +302,9 @@ export default {
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
+		const goTop = function () {
+			location.href = 'http://localhost:3002/artworks'
+		}
 
 		const getScroll = function () {
 			const container = document.getElementById('main')
@@ -333,6 +337,7 @@ export default {
 			goProfile,
 			getScroll,
 			toTop,
+			goTop,
 		}
 	},
 }

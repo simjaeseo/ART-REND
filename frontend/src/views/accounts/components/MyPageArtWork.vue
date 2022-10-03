@@ -10,6 +10,9 @@
 						<h5 class="nickname">{{ state.nickName }}</h5>
 					</h2>
 				</div>
+				<div v-if="!convertList.length" class="text-wrapper">
+					Make your photo card!
+				</div>
 				<div
 					v-for="(image, index) in convertList"
 					:key="index"
@@ -92,7 +95,19 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-
+.text-wrapper {
+	transform: rotate(90deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	transform-origin: 50% 50%;
+	transform: rotate(90deg) translateZ(0px) translateX(0px);
+	transition: 1s;
+	font-family: 'Playfair Display', serif;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.3);
+}
 /* hide scrollbar */
 ::-webkit-scrollbar {
 	width: 1px;

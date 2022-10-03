@@ -36,7 +36,7 @@ def change_p(artist: str, request_image: base64, member_id: int):
     ckpt = check_artist(artist)
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     BASE_PATH = os.path.dirname((os.path.abspath(__file__)))
-    ckpt = load_checkpoint(BASE_PATH+'\checkpoint_art\{}'.format(ckpt), map_location=device)
+    ckpt = load_checkpoint(BASE_PATH+'/checkpoint_art/{}'.format(ckpt), map_location=device)
     gan = CycleGAN(3,3,100, device)
     gan.epochs=ckpt['epoch']
     gan.gen_mtp.load_state_dict(ckpt['gen_mtp'])
@@ -62,8 +62,8 @@ def change_p(artist: str, request_image: base64, member_id: int):
             pred_artist = gan.gen_ptm(photo.to(device)).cpu().detach()
         pred_artist = unnorm(pred_artist)
         img = trans(pred_artist[0]).convert("RGB")
-    img.save(BASE_PATH + f'\photo\{member_id} {artist}.jpg')
-    path = BASE_PATH + f'\photo\{member_id} {artist}.jpg'
+    img.save(BASE_PATH + f'/photo/{member_id} {artist}.jpg')
+    path = BASE_PATH + f'/photo/{member_id} {artist}.jpg'
     # return path
     b64_string=image_encode_base64(path)
     return b64_string

@@ -279,7 +279,7 @@ export default {
 					}
 				})
 				.catch(() => {
-					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
+					alert('10MB이하의 사진만 입력 가능합니다.')
 					document.getElementById('dismiss').click()
 				})
 		}

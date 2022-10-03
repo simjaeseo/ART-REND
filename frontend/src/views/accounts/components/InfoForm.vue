@@ -50,7 +50,6 @@
 
 <script>
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import { reactive, computed } from 'vue'
 import axios from 'axios'
 import drf from '@/api/api'
@@ -65,7 +64,6 @@ export default {
 			next: false,
 		})
 		const store = useStore()
-		const router = useRouter()
 		const isSix = function () {
 			const name_pattern = /^[가-힣]{2,5}$/
 			const date_pattern =
@@ -120,15 +118,16 @@ export default {
 					store.commit('SET_USER_ID', decodeAccessToken.id)
 					store.dispatch('saveToken', token)
 					store.commit('SET_USER_IS_EXISTED', data)
+					store.commit('PREVENT_INFO_FORM_PAGE', true)
 					if (data.isNickName == false && data.isSelected == false) {
-						router.push({ name: 'SignUp' })
+						window.location.href = 'http://localhost:3002/signup'
 					} else if (data.isNickName == true && data.isSelected == false) {
-						router.push({ name: 'SelectImage' })
+						window.location.href = 'http://localhost:3002/select'
 					} else if (data.isNickName == true && data.isSelected == true) {
-						router.push({ name: 'Main' })
+						window.location.href = 'http://localhost:3002/main'
 					}
 				})
-				.catch(() => alert('서비스가 비정상적입니다.'))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		}
 		return {
 			isSix,

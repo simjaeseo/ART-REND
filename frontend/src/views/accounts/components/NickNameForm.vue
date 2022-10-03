@@ -3,7 +3,9 @@
 		<div id="wrap1">
 			<div id="wrap2">
 				<div id="wrap3">
-					<h2 id="text1">Please enter your nickname.</h2>
+					<h2 id="text1">
+						Please enter your nickname between 2 and 7 letters.
+					</h2>
 				</div>
 				<div>
 					<form action="">
@@ -12,6 +14,7 @@
 							id="user-nick-name"
 							v-model="state.userNickName"
 							placeholder=" "
+							maxlength="7"
 						/>
 						<div id="btn-wrap">
 							<button
@@ -43,7 +46,15 @@ export default {
 		const store = useStore()
 
 		const doubleCheck = function () {
-			store.dispatch('doubleCheck', state.userNickName)
+			const name_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{2,7}$/
+			if (name_pattern.test(state.userNickName)) {
+				const next = confirm(`${state.userNickName}(이)가 맞습니까?`)
+				if (next) {
+					store.dispatch('doubleCheck', state.userNickName)
+				}
+			} else {
+				alert('닉네임은 2-7글자 사이의 한/영만 가능합니다.')
+			}
 		}
 		return {
 			doubleCheck,

@@ -10,6 +10,9 @@
 						<h5 class="nickname">{{ state.nickName }}</h5>
 					</h2>
 				</div>
+				<div v-if="!convertList.length" class="text-wrapper">
+					Make your photo card!
+				</div>
 				<div
 					v-for="(image, index) in convertList"
 					:key="index"
@@ -29,7 +32,10 @@
 								alt="image"
 								@click.prevent="goDetail(image.originalId)"
 							/>
-							<div class="image-info">
+							<div
+								class="image-info"
+								@click.prevent="goDetail(image.originalId)"
+							>
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.koreanTitle }}</div>
 								<div class="name">{{ image.artist }}</div>
@@ -71,7 +77,7 @@ export default {
 		}
 
 		const deleteConvert = function (artworkId) {
-			const next = confirm('정말 삭제하시겠습니까?')
+			const next = confirm('삭제하시겠습니까?')
 			if (next == true) {
 				store.dispatch('deleteConvert', artworkId)
 			}
@@ -89,7 +95,19 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-
+.text-wrapper {
+	transform: rotate(90deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 60vh;
+	transform-origin: 50% 50%;
+	transform: rotate(90deg) translateZ(0px) translateX(0px);
+	transition: 1s;
+	font-family: 'Playfair Display', serif;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.3);
+}
 /* hide scrollbar */
 ::-webkit-scrollbar {
 	width: 1px;
@@ -202,19 +220,37 @@ a:hover .delete {
 }
 
 .delete {
-	position: absolute;
+	position: fixed;
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+	z-index: 1;
 }
 
 .title {

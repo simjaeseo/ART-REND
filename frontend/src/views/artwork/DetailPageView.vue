@@ -104,6 +104,7 @@
 				<div class="btn-class">
 					<button class="btn1" @click="goProfile">PROFILE</button>
 					<button class="btn2" @click="goMain">MAIN</button>
+					<button class="btn2" @click="goTop">TOP20</button>
 				</div>
 			</div>
 		</div>
@@ -130,7 +131,9 @@
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLabel">
 								변환할 사진을 선택해 주세요.
-								<p>변환하기 클릭후 알림창이 뜰때까지 기다려주세요.</p>
+								<p id="modal-title-inner">
+									변환하기 클릭후 알림창이 뜰때까지 기다려주세요.
+								</p>
 							</h5>
 						</div>
 						<div class="modal-body">
@@ -266,7 +269,7 @@ export default {
 			})
 				.then(() => {
 					const next = confirm(
-						'마이페이지에저장되었습니다. 마이페이지로이동하시겠습니까?',
+						'마이페이지에 저장되었습니다. 마이페이지로 이동하시겠습니까?',
 					)
 					if (next == true) {
 						document.getElementById('dismiss').click()
@@ -276,7 +279,7 @@ export default {
 					}
 				})
 				.catch(() => {
-					alert('서비스가비정상적입니다.')
+					alert('10MB이하의 사진만 입력 가능합니다.')
 					document.getElementById('dismiss').click()
 				})
 		}
@@ -298,6 +301,9 @@ export default {
 		}
 		const goProfile = function () {
 			location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+		}
+		const goTop = function () {
+			location.href = 'http://j7c104.p.ssafy.io/artworks'
 		}
 
 		const getScroll = function () {
@@ -331,6 +337,7 @@ export default {
 			goProfile,
 			getScroll,
 			toTop,
+			goTop,
 		}
 	},
 }
@@ -341,7 +348,13 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
-
+.modal-title {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+#modal-title-inner {
+	font-size: 15px;
+	font-family: 'Noto Sans KR', sans-serif;
+}
 #img01 {
 	max-width: 90vw;
 	max-height: 90vh;

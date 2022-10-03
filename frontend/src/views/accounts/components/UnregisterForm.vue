@@ -83,6 +83,9 @@ export default {
 			) {
 				const next = true
 				if (next == true) {
+					alert(
+						`성명 ${state.userName} 생년월일 ${state.userBirthday} 확인되었습니다.`,
+					)
 					state.next = true
 				} else {
 					state.next = false
@@ -104,7 +107,7 @@ export default {
 			})
 				.then(() => {
 					const result = confirm(
-						'정말 탈퇴하시겠습니까? 삭제된 계정은 복구 할 수 없습니다.',
+						'정말 탈퇴하시겠습니까? 삭제된 계정은 복구할 수 없습니다.',
 					)
 					if (result == true) {
 						axios({
@@ -113,14 +116,16 @@ export default {
 							method: 'delete',
 						})
 							.then(() => {
-								alert('회원탈퇴되었습니다. 로그인페이지로 이동합니다.')
+								store.dispatch('removeToken')
+								alert('회원 탈퇴가 완료되었습니다. 로그인 페이지로 이동합니다.')
 								window.location.href = 'http://j7c104.p.ssafy.io/'
+								localStorage.setItem('vuex', '')
 							})
 							.catch(() => {
 								alert('서비스가 비정상적입니다. 다시 시도해주세요')
 							})
 					} else if (result == false) {
-						alert('회원탈퇴를 취소합니다. 메인페이지로 돌아갑니다.')
+						alert('회원 탈퇴를 취소합니다.  메인 페이지로 돌아갑니다.')
 						window.location.href = 'http://j7c104.p.ssafy.io/main'
 					}
 				})

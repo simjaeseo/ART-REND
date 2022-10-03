@@ -14,7 +14,7 @@
 					</h2>
 				</div>
 				<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
-					you like {{ state.likeArtWorkList.length }} artworks.
+					There are no artworks that you liked.
 				</div>
 				<div
 					v-for="image in state.likeArtWorkList"

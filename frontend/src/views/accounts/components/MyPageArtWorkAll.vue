@@ -1,32 +1,38 @@
 <template>
-	<div class="masonry-container">
-		<div
-			v-for="(image, index) in convertList"
-			:key="index"
-			class="masonry-item"
-		>
-			<div class="pseudo-img">
-				<a target="_blank" rel="noopener">
-					<div class="image-box">
-						<button
-							class="delete"
-							v-if="state.myPage"
-							@click.prevent="deleteConvert(image.id)"
-						>
-							delete
-						</button>
-						<img
-							:src="image.url"
-							alt="image"
-							@click.prevent="goDetail(image.originalId)"
-						/>
-						<div class="image-info" @click.prevent="goDetail(image.originalId)">
-							<div class="title">{{ image.title }}</div>
-							<div class="name">{{ image.koreanTitle }}</div>
-							<div class="name">{{ image.artist }}</div>
+	<div>
+		<div class="like-count">You have {{ convertList.length }} artworks.</div>
+		<div class="masonry-container">
+			<div
+				v-for="(image, index) in convertList"
+				:key="index"
+				class="masonry-item"
+			>
+				<div class="pseudo-img">
+					<a target="_blank" rel="noopener">
+						<div class="image-box">
+							<button
+								class="delete"
+								v-if="state.myPage"
+								@click.prevent="deleteConvert(image.id)"
+							>
+								delete
+							</button>
+							<img
+								:src="image.url"
+								alt="image"
+								@click.prevent="goDetail(image.originalId)"
+							/>
+							<div
+								class="image-info"
+								@click.prevent="goDetail(image.originalId)"
+							>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.koreanTitle }}</div>
+								<div class="name">{{ image.artist }}</div>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -99,7 +105,13 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-
+.like-count {
+	margin: 0px 300px;
+	text-align: end;
+	color: rgba(0, 0, 0, 0.5);
+	font-family: 'Playfair Display', serif;
+	font-weight: 600;
+}
 .masonry-container {
 	--gap: 10px;
 

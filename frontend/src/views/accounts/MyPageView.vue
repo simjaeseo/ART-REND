@@ -25,6 +25,9 @@
 					>
 						닉네임 수정
 					</button>
+					<button class="move-button" v-if="!state.myPage" @click="goMyProfile">
+						마이페이지
+					</button>
 					<button class="move-button" @click="goOtherProfile">파도타기</button>
 				</div>
 			</div>
@@ -81,6 +84,7 @@
 									id="user-nick-name"
 									:placeholder="state.nickName"
 									v-model="state.modifyNickName"
+									maxlength="7"
 								/>
 								<button
 									class="btn"
@@ -138,54 +142,72 @@ export default {
 			modifyNickName: null,
 			success: false,
 			myPage: false,
+			allUsers: null,
+			members: null,
 		})
+
 		const memberId = route.params.memberId
 		const userId = computed(() => store.getters.userId)
 		if (memberId == userId.value) {
 			state.myPage = true
 		}
-
-		store.dispatch('getAllUsers')
-		const allUsersData = computed(() => store.getters.allUsers).value.data
-		const allUsers = JSON.parse(JSON.stringify(allUsersData)) // Proxy -> 리스트
-		const members = allUsers.filter(item => item !== userId.value) // 내 id 값 삭제
-		const goOtherProfile = function () {
-			const random = Math.floor(Math.random() * members.length)
-			window.location.href = `http://localhost:3002/mypage/${members[random]}`
-		}
-
 		store.dispatch('likeArtWorkList', memberId)
 		store.dispatch('getUserNickname', memberId)
 		state.nickName = computed(() => store.getters.userNickName)
 		const header = computed(() => store.getters.authHeader)
 		store.dispatch('getImageConvert', memberId)
 		const doubleCheck = function () {
-			axios({
-				headers: header.value,
-				url: drf.auth.nickNameCheck(memberId),
-				method: 'post',
-				data: {
-					nickname: state.modifyNickName,
-				},
-			})
-				.then(() => {
-					alert('사용할 수 있는 닉네임입니다.')
-					state.success = true
-				})
-				.catch(() => {
-					alert('사용할 수 없는 닉네임입니다.')
-				})
+			const name_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{2,7}$/
+			if (name_pattern.test(state.modifyNickName)) {
+				const next = confirm(`${state.modifyNickName}(이)가 맞습니까?`)
+				if (next) {
+					axios({
+						headers: header.value,
+						url: drf.auth.nickNameCheck(memberId),
+						method: 'post',
+						data: {
+							nickname: state.modifyNickName,
+						},
+					})
+						.then(() => {
+							alert('사용할 수 있는 닉네임입니다.')
+							state.success = true
+						})
+						.catch(() => {
+							alert('사용할 수 없는 닉네임입니다.')
+						})
+				}
+			} else {
+				alert('닉네임은 2-7글자 사이의 한/영만 가능합니다.')
+			}
 		}
 
 		const modify = function () {
 			store.dispatch('modifyNickName', state.modifyNickName)
 		}
+		const authHeader = computed(() => store.getters.authHeader)
 
+		axios({
+			headers: authHeader.value,
+			url: drf.auth.getAllUsers(),
+			method: 'get',
+		}).then(res => {
+			state.allUsers = res.data.data
+			state.members = state.allUsers.filter(item => item !== userId.value)
+		})
+		const goOtherProfile = function () {
+			const random = Math.floor(Math.random() * state.members.length)
+			window.location.href = `http://localhost:3002/mypage/${state.members[random]}`
+		}
+		const goMyProfile = function () {
+			window.location.href = `http://localhost:3002/mypage/${userId.value}`
+		}
 		return {
 			state,
 			goOtherProfile,
 			doubleCheck,
 			modify,
+			goMyProfile,
 		}
 	},
 }

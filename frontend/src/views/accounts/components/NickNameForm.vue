@@ -46,7 +46,7 @@ export default {
 		const store = useStore()
 
 		const doubleCheck = function () {
-			const name_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{2,7}$/
+			const name_pattern = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,7}$/
 			if (name_pattern.test(state.userNickName)) {
 				const next = confirm(`${state.userNickName}(이)가 맞습니까?`)
 				if (next) {

@@ -51,7 +51,7 @@
 			</div>
 			<div class="btn-class" id="black">
 				<button class="btn1" @click="goProfile">PROFILE</button>
-				<button class="btn2" @click="goArtworks">TOP10</button>
+				<button class="btn2" @click="goArtworks">TOP20</button>
 			</div>
 		</div>
 		<div class="topbutton">

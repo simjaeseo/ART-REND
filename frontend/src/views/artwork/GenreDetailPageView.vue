@@ -66,6 +66,7 @@
 				<div class="btn-class" id="black">
 					<button class="btn1" @click="goArtist">BACK</button>
 					<button class="btn2" @click="goMain">MAIN</button>
+					<button class="btn2" @click="goProfile">PROFILE</button>
 				</div>
 			</div>
 		</div>
@@ -88,6 +89,7 @@ export default {
 		store.dispatch('getGenreDetail', name)
 		const detail = computed(() => store.getters.genreDetail)
 		const backImg = computed(() => store.getters.genreDetailBackImg)
+		const userId = computed(() => store.getters.userId)
 
 		const goArtist = function () {
 			window.location.href = 'http://j7c104.p.ssafy.io/genre'
@@ -97,6 +99,9 @@ export default {
 		}
 		const goDetail = function (artworkId) {
 			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
+		}
+		const goProfile = function () {
+			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
 
 		const getScroll = function () {
@@ -145,6 +150,7 @@ export default {
 			goDetail,
 			getScroll,
 			toTop,
+			goProfile,
 		}
 	},
 }

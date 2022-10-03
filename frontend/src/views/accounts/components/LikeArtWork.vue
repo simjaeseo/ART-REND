@@ -14,7 +14,7 @@
 					</h2>
 				</div>
 				<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
-					you like {{ state.likeArtWorkList.length }} artworks.
+					There are no artworks that you liked.
 				</div>
 				<div
 					v-for="image in state.likeArtWorkList"
@@ -36,7 +36,7 @@
 								alt="image"
 								@click.prevent="goDetail(image.id)"
 							/>
-							<div class="image-info">
+							<div class="image-info" @click.prevent="goDetail(image.id)">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>
 								<div class="name">{{ image.artist }}</div>
@@ -232,6 +232,23 @@ a:hover .delete {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
@@ -240,7 +257,6 @@ a:hover .delete {
 	display: none;
 	z-index: 1;
 }
-
 .title {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 2vh;

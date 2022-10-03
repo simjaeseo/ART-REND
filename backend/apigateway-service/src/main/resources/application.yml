@@ -2,6 +2,13 @@ server:
   port: 8080
 
 spring:
+  application:
+    name: apigateway-service
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     gateway:
       globalcors:
@@ -18,15 +25,6 @@ spring:
               - OPTIONS
               - HEAD
               - DELETE
-  application:
-    name: apigateway-service
-  rabbitmq:
-    host: 127.0.0.1
-    port: 5672
-    username: guest
-    password: guest
-  cloud:
-    gateway:
       routes:
         - id: business-service
           uri: lb://BUSINESS-SERVICE

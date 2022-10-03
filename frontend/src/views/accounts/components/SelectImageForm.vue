@@ -112,6 +112,7 @@ export default {
 		const selectForm = function () {
 			const selectedImages = JSON.parse(JSON.stringify(state.selectedImages))
 			store.dispatch('selectForm', selectedImages)
+			store.commit('PREVENT_SELECT_PAGE', true)
 		}
 		return {
 			deleteClass,
@@ -167,7 +168,6 @@ img {
 	column-count: 4;
 	cursor: pointer;
 	margin-bottom: 16px;
-
 	height: 80vh;
 	overflow: auto;
 }

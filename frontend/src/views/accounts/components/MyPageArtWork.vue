@@ -29,7 +29,10 @@
 								alt="image"
 								@click.prevent="goDetail(image.originalId)"
 							/>
-							<div class="image-info">
+							<div
+								class="image-info"
+								@click.prevent="goDetail(image.originalId)"
+							>
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.koreanTitle }}</div>
 								<div class="name">{{ image.artist }}</div>
@@ -71,7 +74,7 @@ export default {
 		}
 
 		const deleteConvert = function (artworkId) {
-			const next = confirm('정말 삭제하시겠습니까?')
+			const next = confirm('삭제하시겠습니까?')
 			if (next == true) {
 				store.dispatch('deleteConvert', artworkId)
 			}
@@ -202,19 +205,37 @@ a:hover .delete {
 }
 
 .delete {
-	position: absolute;
+	position: fixed;
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+	z-index: 1;
 }
 
 .title {

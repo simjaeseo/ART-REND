@@ -19,7 +19,7 @@
 				</h2>
 			</div>
 			<div class="title-wrapper3 masonry">
-				<div v-for="(image, index) in mainImage" :key="index">
+				<div v-for="(image, index) in mainImage.slice(0, 25)" :key="index">
 					<div class="mItem">
 						<img :src="image.url" alt="image" id="m-image" />
 					</div>
@@ -27,13 +27,13 @@
 			</div>
 			<div>
 				<h5 id="text-saying">
-					All the arts we practice are apprenticeship. The big art is our life.
-					- M. C. Richards
+					We analyze your action log and as a result of analyzing your taste,
+					{{ mainImage.length }} artworks.
 				</h5>
 			</div>
 			<div id="title-wrapper4">
 				<div
-					v-for="(image, index) in mainImage"
+					v-for="(image, index) in mainImage.slice(0, 30)"
 					:key="index"
 					class="img-wrapper"
 				>

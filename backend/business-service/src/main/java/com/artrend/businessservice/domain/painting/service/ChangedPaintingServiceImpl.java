@@ -56,12 +56,12 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.CONFLICT_INFORMATION));
 
         changedPaintingRepository.delete(changedPainting);
-
-        updateChangeCount(memberDto.getPaintingId(), -1);
     }
 
     @Override
+    @Transactional
     public void changePainting(MultipartFile image, Long paintingId, String authorization) throws IOException {
+        updateChangeCount(paintingId);
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
@@ -80,6 +80,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .toUri();
 
         restTemplate.postForEntity(uri, entity, String.class);
+
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {
@@ -87,10 +88,10 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .findByMemberIdAndId(memberDto.getMemberId(), memberDto.getPaintingId());
     }
 
-    public void updateChangeCount(Long paintingId, Integer count) {
+    public void updateChangeCount(Long paintingId) {
         Painting findPainting = paintingRepository.findById(paintingId)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
 
-        findPainting.updateTotalLikeCount(count);
+        findPainting.updateTotalChangeCount();
     }
 }

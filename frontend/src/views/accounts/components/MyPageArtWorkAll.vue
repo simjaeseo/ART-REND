@@ -1,32 +1,38 @@
 <template>
-	<div class="masonry-container">
-		<div
-			v-for="(image, index) in convertList"
-			:key="index"
-			class="masonry-item"
-		>
-			<div class="pseudo-img">
-				<a target="_blank" rel="noopener">
-					<div class="image-box">
-						<button
-							class="delete"
-							v-if="state.myPage"
-							@click.prevent="deleteConvert(image.id)"
-						>
-							delete
-						</button>
-						<img
-							:src="image.url"
-							alt="image"
-							@click.prevent="goDetail(image.originalId)"
-						/>
-						<div class="image-info">
-							<div class="title">{{ image.title }}</div>
-							<div class="name">{{ image.koreanTitle }}</div>
-							<div class="name">{{ image.artist }}</div>
+	<div>
+		<div class="like-count">You have {{ convertList.length }} artworks.</div>
+		<div class="masonry-container">
+			<div
+				v-for="(image, index) in convertList"
+				:key="index"
+				class="masonry-item"
+			>
+				<div class="pseudo-img">
+					<a target="_blank" rel="noopener">
+						<div class="image-box">
+							<button
+								class="delete"
+								v-if="state.myPage"
+								@click.prevent="deleteConvert(image.id)"
+							>
+								delete
+							</button>
+							<img
+								:src="image.url"
+								alt="image"
+								@click.prevent="goDetail(image.originalId)"
+							/>
+							<div
+								class="image-info"
+								@click.prevent="goDetail(image.originalId)"
+							>
+								<div class="title">{{ image.title }}</div>
+								<div class="name">{{ image.koreanTitle }}</div>
+								<div class="name">{{ image.artist }}</div>
+							</div>
 						</div>
-					</div>
-				</a>
+					</a>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -35,13 +41,12 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
 		const route = useRoute()
-		const router = useRouter()
 		const store = useStore()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -78,10 +83,13 @@ export default {
 		}
 
 		const deleteConvert = function (artworkId) {
-			store.dispatch('deleteConvert', artworkId)
+			const next = confirm('삭제하시겠습니까?')
+			if (next == true) {
+				store.dispatch('deleteConvert', artworkId)
+			}
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 		const convertList = computed(() => store.getters.convertList)
 		return {
@@ -97,7 +105,13 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-
+.like-count {
+	margin: 0px 300px;
+	text-align: end;
+	color: rgba(0, 0, 0, 0.5);
+	font-family: 'Playfair Display', serif;
+	font-weight: 600;
+}
 .masonry-container {
 	--gap: 10px;
 
@@ -177,19 +191,37 @@ a:hover .delete {
 }
 
 .delete {
-	position: absolute;
+	position: fixed;
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+	z-index: 1;
 }
 
 .title {

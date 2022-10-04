@@ -14,7 +14,7 @@
 					</h2>
 				</div>
 				<div v-if="!state.likeArtWorkList.length" class="text-wrapper">
-					you like {{ state.likeArtWorkList.length }} artworks.
+					There are no artworks that you liked.
 				</div>
 				<div
 					v-for="image in state.likeArtWorkList"
@@ -36,7 +36,7 @@
 								alt="image"
 								@click.prevent="goDetail(image.id)"
 							/>
-							<div class="image-info">
+							<div class="image-info" @click.prevent="goDetail(image.id)">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>
 								<div class="name">{{ image.artist }}</div>
@@ -52,12 +52,11 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
-		const router = useRouter()
 		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
@@ -77,36 +76,19 @@ export default {
 
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
-			store.dispatch('unlikeArtWork', artworkId)
+			const next = confirm('좋아요를 취소하시겠습니까?')
+			if (next == true) {
+				store.dispatch('unlikeArtWork', artworkId)
+			}
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
-
-		// // 스크롤 가져오기
-		// const getScroll = function () {
-		// 	const container = document.getElementById('main')
-		// 	const x = container.scrollTop
-		// 	// top 버튼
-		// 	const top = document.getElementById('top')
-		// 	if (x != 0) {
-		// 		top.classList.add('block')
-		// 	} else {
-		// 		top.classList.remove('block')
-		// 	}
-		// }
-		// // top 버튼
-		// const toTop = function () {
-		// 	const container = document.getElementById('main')
-		// 	container.scrollTo({ top: 0, behavior: 'smooth' })
-		// }
 
 		return {
 			state,
 			unlikeArtWork,
 			goDetail,
-			// getScroll,
-			// toTop,
 		}
 	},
 }
@@ -250,6 +232,23 @@ a:hover .delete {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
@@ -258,7 +257,6 @@ a:hover .delete {
 	display: none;
 	z-index: 1;
 }
-
 .title {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 2vh;

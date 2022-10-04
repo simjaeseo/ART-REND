@@ -16,7 +16,8 @@ import MovementDetailPageView from '@/views/artwork/MovementDetailPageView.vue'
 import UserInfoView from '@/views/accounts/UserInfoView.vue'
 import UnregisterView from '@/views/accounts/UnregisterView.vue'
 import NotFoundView from '@/views/accounts/NotFoundView.vue'
-// import { mapGetters } from 'vuex'
+import { computed } from 'vue'
+import store from '@/store'
 
 const requireAuth = () => (from, to, next) => {
 	const token = localStorage.getItem('token')
@@ -26,15 +27,30 @@ const requireAuth = () => (from, to, next) => {
 	alert('로그인이 필요한 서비스입니다.')
 	next('/')
 }
-// const isExisted = () => (from, to, next) => {
-// 	const isExisted = mapGetters.isExisted
-// 	if (isExisted.isExisted) {
-// 		alert('접근할수없는페이지입니다.')
-// 		return from()
-// 	}
-// 	next()
-// }
-
+const preventInfoPage = () => (from, to, next) => {
+	const InfoForm = computed(() => store.getters.preventInfoPage)
+	const isExisted = computed(() => store.getters.isExisted)
+	if (InfoForm.value == false || isExisted.value.isExisted == 'false') {
+		return next()
+	}
+	next('/main')
+}
+const preventSelectPage = () => (from, to, next) => {
+	const select = computed(() => store.getters.preventSelectPage)
+	const isExisted = computed(() => store.getters.isExisted)
+	if (select.value == false || isExisted.value.isSelected == 'false') {
+		return next()
+	}
+	next('/main')
+}
+const preventSignupPage = () => (from, to, next) => {
+	const signup = computed(() => store.getters.preventSignupPage)
+	const isExisted = computed(() => store.getters.isExisted)
+	if (signup.value == false || isExisted.value.isNickName == 'false') {
+		return next()
+	}
+	next('/main')
+}
 const routes = [
 	{
 		path: '/',
@@ -45,13 +61,13 @@ const routes = [
 		path: '/signup',
 		name: 'SignUp',
 		component: SignUpView,
-		// beforeEnter: isExisted(),
+		beforeEnter: preventSignupPage(),
 	},
 	{
 		path: '/select',
 		name: 'SelectImage',
 		component: SelectImageView,
-		// beforeEnter: isExisted(),
+		beforeEnter: preventSelectPage(),
 	},
 	{
 		path: '/mypage/:memberId',
@@ -81,7 +97,6 @@ const routes = [
 		path: '/auth',
 		name: 'KakaoAuth',
 		component: KakaoAuthView,
-		// beforeEnter: isExisted(),
 	},
 	{
 		path: '/artist',
@@ -123,7 +138,7 @@ const routes = [
 		path: '/user/form',
 		name: 'UserInfo',
 		component: UserInfoView,
-		// beforeEnter: isExisted(),
+		beforeEnter: preventInfoPage(),
 	},
 	{
 		path: '/unregister',

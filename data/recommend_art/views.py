@@ -63,12 +63,13 @@ def main_recommend_painting(request):
     user_recommend_painting = set()
     for painting_object in selected_painting:
         detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting_object.painting.painting)
-        user_recommend_painting.update(detail_recommend_painting)
+        for detail in detail_recommend_painting:
+            user_recommend_painting.add(detail.recommend_painitng_id)
 
     for paint in user_recommend_painting:
         recommended_painting = RecommendedPainting()
         recommended_painting.member_id = user_decode['id']
-        recommended_painting.painting = paint.recommended_painting_id
+        recommended_painting.painting = paint
         recommended_painting.save()
     return HttpResponse(status=200)
     # except:
@@ -126,7 +127,7 @@ def main_page_recommend(request):
     user_decode = jwt.decode(token, JWT_SECRET_KEY, algorithms=["HS512"])
     log_df = make_mainpage_recommend(user_decode['id'])
     # print(log_df)
-    recommend_lst = []
+    recommend_set = set()
     try:
         if log_df == 0:
             pass
@@ -135,19 +136,19 @@ def main_page_recommend(request):
             painting = Painting.objects.get(paintingId = id)
             detail_recommend = DetailRecommendedPainting.objects.filter(detail_painting=painting)
             for recommend_id in detail_recommend:
-                recommend_lst.append(recommend_id.recommended_painting_id)
-                if not len(recommend_lst)%5:
+                recommend_set.add(recommend_id.recommended_painting_id)
+                if not len(recommend_set)%5:
                     break
-    if len(recommend_lst) < 20:
+    if len(recommend_set) < 20:
         recommend = RecommendedPainting.objects.filter(member_id=user_decode['id'])
         recommend = list(recommend)
         random.shuffle(recommend)
         # print(list(recommend))
         for i in recommend:
-            recommend_lst.append(i.painting)
-            if len(recommend_lst) == 20:
+            recommend_set.add(i.painting)
+            if len(recommend_set) == 20:
                 break
-    serializer = LikePaintSerailizer(recommend_lst, many=True)     
+    serializer = LikePaintSerailizer(list(recommend_set), many=True)     
     return Response(serializer.data)
         
 

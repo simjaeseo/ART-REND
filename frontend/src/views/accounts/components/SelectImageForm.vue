@@ -70,9 +70,7 @@ export default {
 		})
 		const image = computed(() => store.getters.selectList)
 		const selectedImage = function (num) {
-			// 배열에 이미 선택한 사진이 있으면
 			if (state.selectedImages.includes(num)) {
-				// 포문을 돌면서 배열에 들어있는 선택한 값을 제거?
 				for (let i = 0; i < state.selectedImages.length; i += 1) {
 					if (state.selectedImages[i] == num) {
 						document
@@ -82,7 +80,6 @@ export default {
 						i--
 					}
 				}
-				// 배열에 선택한 사진이 없으면 새롭게 추가
 			} else {
 				state.selectedImages.push(num)
 				const idx = state.selectedImages.indexOf(num)
@@ -90,15 +87,12 @@ export default {
 					.getElementById(state.selectedImages[idx])
 					.classList.remove('filter')
 			}
-			// 두개넘어가면 첫번째 삭제
 			if (state.selectedImages.length > 2) {
 				document.getElementById(state.selectedImages[0]).classList.add('filter')
 				state.selectedImages.shift()
 			}
-			console.log(state.selectedImages)
 		}
 		const zoomImage = function (num) {
-			console.log(num)
 			const modal = document.getElementById(`${num}img`)
 			const img = modal.src
 			const modalImg = document.getElementById('modal-inner')
@@ -118,6 +112,7 @@ export default {
 		const selectForm = function () {
 			const selectedImages = JSON.parse(JSON.stringify(state.selectedImages))
 			store.dispatch('selectForm', selectedImages)
+			store.commit('PREVENT_SELECT_PAGE', true)
 		}
 		return {
 			deleteClass,
@@ -173,7 +168,6 @@ img {
 	column-count: 4;
 	cursor: pointer;
 	margin-bottom: 16px;
-
 	height: 80vh;
 	overflow: auto;
 }

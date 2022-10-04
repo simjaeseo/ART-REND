@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router'
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
 
@@ -30,11 +29,10 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-		const router = useRouter()
 		const store = useStore()
 		const detailData = computed(() => store.getters.detailData)
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 		return {
 			state,

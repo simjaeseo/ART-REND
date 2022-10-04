@@ -40,13 +40,11 @@ import OrderByView from '@/views/artwork/components/OrderByView.vue'
 import OrderByTrans from '@/views/artwork/components/OrderByTrans.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 
 export default {
 	name: 'MyPageView',
 	components: { OrderByLike, OrderByView, OrderByTrans },
 	setup() {
-		const router = useRouter()
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
@@ -60,7 +58,7 @@ export default {
 		}
 
 		const goMain = function () {
-			router.push({ name: 'Main' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goProfile = function () {
 			location.href = `http://localhost:3002/mypage/${userId.value}`

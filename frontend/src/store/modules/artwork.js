@@ -94,8 +94,6 @@ export default {
 					file: payload.get('file'),
 				},
 			})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
 		},
 		getArtWorkDetail({ getters, commit }, artworkId) {
 			const memberId = getters.userId
@@ -107,9 +105,8 @@ export default {
 				.then(res => {
 					commit('SET_DETAIL_DATA', res.data.data)
 				})
-				.catch(err => {
-					console.log(err)
-					alert('존재하지 않는 데이터입니다.')
+				.catch(() => {
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 		likeArtWork({ getters, dispatch }, artworkId) {
@@ -122,12 +119,11 @@ export default {
 					memberId: getters.userId,
 				},
 			})
-				.then(res => {
-					console.log(res)
+				.then(() => {
 					dispatch('getArtWorkDetail', artworkId)
 					dispatch('likeArtWorkList')
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 		unlikeArtWork({ getters, dispatch }, artworkId) {
 			axios({
@@ -139,12 +135,11 @@ export default {
 					memberId: getters.userId,
 				},
 			})
-				.then(res => {
-					console.log(res)
+				.then(() => {
 					dispatch('getArtWorkDetail', artworkId)
 					dispatch('likeArtWorkList')
 				})
-				.catch(err => console.log(err))
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 		getHits({ getters, commit }, hits) {
 			axios({
@@ -223,8 +218,8 @@ export default {
 				.then(res => {
 					commit('SET_ARTIST_DETAIL', res.data.data)
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(() => {
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 		getGenreDetail({ commit }, name) {
@@ -239,11 +234,10 @@ export default {
 				},
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_GENRE_DETAIL', res.data.data)
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(() => {
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 		getMovementDetail({ commit }, name) {
@@ -258,30 +252,24 @@ export default {
 				},
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_MOVEMENT_DETAIL', res.data.data)
 				})
-				.catch(err => {
-					console.log(err)
+				.catch(() => {
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 				})
 		},
 		getMainBasedOnActionLog({ getters, commit }) {
-			console.log('액션로그ㅋ')
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.getMainBasedOnActionLog(),
 				method: 'get',
 			})
 				.then(res => {
-					console.log(res)
 					commit('SET_MAIN_IMAGE', res.data.data)
 				})
-				.catch(err => {
-					console.log(err)
-				})
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 		actionLog({ getters }, actionLog) {
-			console.log(actionLog)
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.actionLog(),
@@ -295,16 +283,11 @@ export default {
 					outTime: actionLog.outTime,
 					changeCount: actionLog.change,
 				},
+			}).catch(() => {
+				alert('서비스가 비정상적입니다. 다시 시도해주세요.')
 			})
-				.then(res => {
-					console.log(res)
-				})
-				.catch(err => {
-					console.log(err)
-				})
 		},
-		deleteConvert({ getters }, artworkId) {
-			console.log(getters.userId)
+		deleteConvert({ getters, dispatch }, artworkId) {
 			axios({
 				headers: getters.authHeader,
 				url: drf.business.deleteConvert(),
@@ -314,8 +297,10 @@ export default {
 					memberId: getters.userId,
 				},
 			})
-				.then(res => console.log(res))
-				.catch(err => console.log(err))
+				.then(() => {
+					dispatch('getImageConvert', getters.userId)
+				})
+				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},
 	},
 }

@@ -19,7 +19,7 @@
 				</h2>
 			</div>
 			<div class="title-wrapper3 masonry">
-				<div v-for="(image, index) in mainImage" :key="index">
+				<div v-for="(image, index) in mainImage.slice(0, 25)" :key="index">
 					<div class="mItem">
 						<img :src="image.url" alt="image" id="m-image" />
 					</div>
@@ -27,13 +27,13 @@
 			</div>
 			<div>
 				<h5 id="text-saying">
-					All the arts we practice are apprenticeship. The big art is our life.
-					- M. C. Richards
+					We analyze your action log and as a result of analyzing your taste,
+					{{ mainImage.length }} artworks.
 				</h5>
 			</div>
 			<div id="title-wrapper4">
 				<div
-					v-for="(image, index) in mainImage"
+					v-for="(image, index) in mainImage.slice(0, 30)"
 					:key="index"
 					class="img-wrapper"
 				>
@@ -51,7 +51,7 @@
 			</div>
 			<div class="btn-class" id="black">
 				<button class="btn1" @click="goProfile">PROFILE</button>
-				<button class="btn2" @click="goArtworks">TOP10</button>
+				<button class="btn2" @click="goArtworks">TOP20</button>
 			</div>
 		</div>
 		<div class="topbutton">
@@ -62,7 +62,6 @@
 
 <script>
 import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
 import { computed, reactive } from 'vue'
 
 export default {
@@ -71,7 +70,6 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
-		const router = useRouter()
 		const store = useStore()
 
 		const userId = computed(() => store.getters.userId)
@@ -80,7 +78,6 @@ export default {
 		const getScroll = function () {
 			const container = document.getElementById('main')
 			const x = container.scrollTop
-			// top 버튼
 			const top = document.getElementById('top')
 			if (x != 0) {
 				top.classList.add('block')
@@ -88,36 +85,32 @@ export default {
 				top.classList.remove('block')
 			}
 
-			// Nav 색깔
 			const windowWidth = window.innerWidth
 			const white = document.getElementById('title-wrapper4')
 			const whiteLocation = white.getBoundingClientRect().left
 			const black = document.getElementById('black')
 			const blackLocation = black.getBoundingClientRect().left
-			// ART-REND color
 			if (whiteLocation <= 30) {
 				store.commit('SET_COLOR1', true)
 			} else {
 				store.commit('SET_COLOR1', false)
 			}
-			// 햄버거 버튼
 			if (whiteLocation <= windowWidth && blackLocation >= windowWidth) {
 				store.commit('SET_COLOR2', true)
 			} else {
 				store.commit('SET_COLOR2', false)
 			}
 		}
-		// 페이지 나가면 다시 false로 초기화
 		window.addEventListener('beforeunload', () => {
 			store.commit('SET_COLOR1', false)
 			store.commit('SET_COLOR2', false)
 		})
 
 		const goProfile = function () {
-			location.href = `http://localhost:3002/mypage/${userId.value}`
+			window.location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 		const goArtworks = function () {
-			router.push({ name: 'Artworks' })
+			window.location.href = 'http://localhost:3002/main'
 		}
 
 		const toTop = function () {
@@ -125,8 +118,7 @@ export default {
 			container.scrollTo({ top: 0, behavior: 'smooth' })
 		}
 		const goDetail = function (artworkId) {
-			console.log(artworkId)
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
 		return {
@@ -159,7 +151,7 @@ export default {
 	height: auto;
 }
 .masonry {
-	column-count: 5;
+	column-count: 6;
 	margin-right: 20%;
 }
 

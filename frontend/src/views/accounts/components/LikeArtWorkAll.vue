@@ -24,7 +24,7 @@
 								alt="image"
 								@click.prevent="goDetail(image.id)"
 							/>
-							<div class="image-info">
+							<div class="image-info" @click.prevent="goDetail(image.id)">
 								<div class="title">{{ image.title }}</div>
 								<div class="name">{{ image.year }}</div>
 								<div class="name">{{ image.artist }}</div>
@@ -40,12 +40,11 @@
 <script>
 import { reactive, computed } from 'vue'
 import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
-		const router = useRouter()
 		const route = useRoute()
 		const store = useStore()
 		const state = reactive({
@@ -62,10 +61,13 @@ export default {
 
 		// 좋아요 취소
 		const unlikeArtWork = function (artworkId) {
-			store.dispatch('unlikeArtWork', artworkId)
+			const next = confirm('좋아요를 취소하시겠습니까?')
+			if (next == true) {
+				store.dispatch('unlikeArtWork', artworkId)
+			}
 		}
 		const goDetail = function (artworkId) {
-			router.push({ name: 'Detail', params: { artworkId: artworkId } })
+			window.location.href = `http://localhost:3002/detail/${artworkId}`
 		}
 
 		window.onload = function () {
@@ -199,19 +201,37 @@ a:hover .delete {
 }
 
 .delete {
-	position: absolute;
+	position: fixed;
 	top: 20px;
 	right: 20px;
 	color: rgb(255, 255, 255);
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 13px;
 	align-items: center;
+	background-color: rgb(173, 173, 173);
+	border: none;
+	border-radius: 20px;
+	padding: 2px 10px;
+	transition: 1s;
+	display: none;
+	z-index: 1;
+}
+.delete:hover {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	color: rgb(255, 255, 255);
+	font-family: 'Noto Sans', sans-serif;
+	font-size: 13px;
+	align-items: center;
+	background-color: rgb(173, 173, 173);
 	background-color: rgba(255, 255, 255, 0.5);
 	border: none;
 	border-radius: 20px;
 	padding: 2px 10px;
 	transition: 1s;
 	display: none;
+	z-index: 1;
 }
 
 .title {

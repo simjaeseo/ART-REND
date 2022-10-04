@@ -2,6 +2,7 @@ const HOST = 'http://j7c104.p.ssafy.io:8080/'
 
 const AUTH = 'auth-service/'
 const BUSINESS = 'business-service/'
+const KAFKA = 'kafka-service/'
 // const RECOMMEND = 'recommend-service/'
 
 export default {
@@ -32,7 +33,7 @@ export default {
 		getGenreList: () => `${HOST + BUSINESS}api/description/genre`,
 		getMovementList: () => `${HOST + BUSINESS}api/description/art-trend`,
 		getDetail: () => `${HOST + BUSINESS}api/paintings/search`,
-		actionLog: () => `${HOST + BUSINESS}api/log`,
+		actionLog: () => `${HOST + KAFKA}api/log`,
 		imageConvert: artworkId => `${HOST + BUSINESS}api/changing/${artworkId}`,
 		getImageConvert: memberId => `${HOST + BUSINESS}api/changing/${memberId}`,
 		deleteConvert: () => `${HOST + BUSINESS}api/changing`,

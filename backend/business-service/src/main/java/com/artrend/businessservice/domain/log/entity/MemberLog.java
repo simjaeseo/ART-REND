@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.log.entity;
 
-import com.artrend.businessservice.domain.log.vo.MemberLogRequest;
 import lombok.*;
 
 import javax.persistence.*;

@@ -14,20 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberLogService {
     private final MemberLogProducer memberLogProducer;
 
-
     public void saveMemberLogs(MemberLogRequest memberLogRequest) {
-//        MemberLog log = MemberLog.builder()
-//                .memberId(memberLogRequest.getMemberId())
-//                .paintingId(memberLogRequest.getPaintingId())
-//                .clickCount(memberLogRequest.getClickCount())
-//                .changeCount(memberLogRequest.getChangeCount())
-//                .zoomCount(memberLogRequest.getZoomCount())
-//                .inTime(memberLogRequest.getInTime())
-//                .outTime(memberLogRequest.getOutTime())
-//                .build();
-
         memberLogProducer.memberLogSend("memberLog", memberLogRequest);
-
-//        memberLogRepository.save(log);
     }
 }

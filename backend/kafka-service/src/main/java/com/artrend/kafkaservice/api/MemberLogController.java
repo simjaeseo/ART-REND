@@ -32,7 +32,7 @@ public class MemberLogController {
     @PostMapping("/log")
     public ResponseEntity<? extends MessageResponse> saveMemberLog(@RequestBody MemberLogRequest request) {
         memberLogService.saveMemberLogs(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MessageResponse("성공"));
     }
 
 }

@@ -80,7 +80,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
                 .toUri();
 
         restTemplate.postForEntity(uri, entity, String.class);
-
+        
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

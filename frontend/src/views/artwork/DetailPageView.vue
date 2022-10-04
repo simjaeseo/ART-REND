@@ -275,6 +275,7 @@ export default {
 				},
 			})
 				.then(() => {
+					state.actionLog.change += 1
 					state.isLoading = false
 					const next = confirm(
 						'마이페이지에 저장되었습니다. 마이페이지로 이동하시겠습니까?',

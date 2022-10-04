@@ -21,7 +21,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberLogProducer {
 
-
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     List<Field> fields = Arrays.asList(
@@ -41,16 +40,7 @@ public class MemberLogProducer {
             .name("member_log")
             .build();
 
-    // GoogleSignupDto -> insert할 데이터를 담고 있는 dto ---> 그냥 payload 객체로 받아도  상관은 없을듯한데..
     public void memberLogSend(String topic, MemberLogRequest memberLogRequest) {
-
-//         Long clickCount;
-//         Long zoomCount;
-//         Long changeCount;
-//         String inTime;
-//         String outTime;
-
-
         // 카프카 메세지에 실제 담으려는 payload 객체
         MemberLogPayload payload = MemberLogPayload.builder()
                 .member_id(memberLogRequest.getMemberId())
@@ -75,8 +65,6 @@ public class MemberLogProducer {
 
         kafkaTemplate.send(topic, jsonInString);
         log.info("Order Producer sent data from the Order microservice: " + kafkaMemberLogDto);
-
-//        return googleSignupDto;
     }
 
 }

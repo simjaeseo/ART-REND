@@ -80,7 +80,7 @@ def like_recommend_painting(request, pk):
     print(painting)
     # recommend_like_painting()
     item_sim_df = recommend_like_painting()
-    like_rmd_lst = find_sim_painting_item(item_sim_df, painting.title, 20)
+    like_rmd_lst = find_sim_painting_item(item_sim_df, painting.artist, painting.title, 20)
     rmd_id_lst = set()
     for rmd_title in like_rmd_lst:
         art = Painting.objects.get(title=rmd_title)

@@ -6,11 +6,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from django_pandas.io import read_frame
 
 
-def find_sim_painting_item(df, title_name, top=20):
+def find_sim_painting_item(df, artist, title_name, top=20):
     like_rmd_lst = []
     
     try:
-        title_painting_sim =df[[title_name]].drop(title_name, axis=0)
+        title_painting_sim =df[(df["title_name"]==title_name) & (df["artist"] == artist)].drop(title_name, axis=0)
         title_painting_sim = title_painting_sim.sort_values(title_name, ascending=False)[:top]
     except:
         return like_rmd_lst

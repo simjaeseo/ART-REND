@@ -64,7 +64,7 @@ def main_recommend_painting(request):
     for painting_object in selected_painting:
         detail_recommend_painting = DetailRecommendedPainting.objects.filter(detail_painting=painting_object.painting.painting)
         for detail in detail_recommend_painting:
-            user_recommend_painting.add(detail.recommend_painitng_id)
+            user_recommend_painting.add(detail.recommended_painting_id)
 
     for paint in user_recommend_painting:
         recommended_painting = RecommendedPainting()

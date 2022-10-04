@@ -26,7 +26,7 @@ public class MemberLogService {
 //                .outTime(memberLogRequest.getOutTime())
 //                .build();
 
-        memberLogProducer.memberLogSend("memberLog2", memberLogRequest);
+        memberLogProducer.memberLogSend("memberLog", memberLogRequest);
 
 //        memberLogRepository.save(log);
     }

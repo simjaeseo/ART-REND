@@ -133,6 +133,11 @@
 								변환할 사진을 선택해 주세요.
 								<p id="modal-title-inner">
 									변환하기 클릭후 알림창이 뜰때까지 기다려주세요.
+									<span
+										class="spinner-border"
+										role="status"
+										v-if="state.isLoading"
+									></span>
 								</p>
 							</h5>
 						</div>
@@ -213,6 +218,7 @@ export default {
 				outTime: null,
 				change: 0,
 			},
+			isLoading: false,
 		})
 		state.actionLog.clickCnt += 1
 		const artworkId = { ...route }
@@ -251,6 +257,7 @@ export default {
 		let img = null
 		const authHeader = computed(() => store.getters.authHeader)
 		const onSubmit = async () => {
+			state.isLoading = true
 			img = state.image
 			const formData = new FormData()
 			formData.append('file', img)
@@ -268,6 +275,7 @@ export default {
 				},
 			})
 				.then(() => {
+					state.isLoading = false
 					const next = confirm(
 						'마이페이지에 저장되었습니다. 마이페이지로 이동하시겠습니까?',
 					)
@@ -348,6 +356,16 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+.spinner-border {
+	--bs-spinner-width: 1rem;
+	--bs-spinner-height: 1rem;
+	--bs-spinner-vertical-align: -0.125em;
+	--bs-spinner-border-width: 0.25em;
+	--bs-spinner-animation-speed: 0.75s;
+	--bs-spinner-animation-name: spinner-border;
+	border: var(--bs-spinner-border-width) solid currentcolor;
+	border-right-color: transparent;
+}
 .modal-title {
 	font-family: 'Noto Sans KR', sans-serif;
 }

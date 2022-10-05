@@ -123,7 +123,7 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         URI uri = UriComponentsBuilder
-                .fromUriString("http://j7c104.p.ssafy.io:8000")
+                .fromUriString("https://j7c104.p.ssafy.io:8000")
                 .path("/api/v1/paintings/like_recommend_painting/{id}")
                 .encode()
                 .build()

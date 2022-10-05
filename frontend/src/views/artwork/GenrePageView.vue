@@ -41,7 +41,7 @@ export default {
 		const genreData = computed(() => store.getters.genreData)
 
 		const goDetail = function (name) {
-			window.location.href = `http://j7c104.p.ssafy.io/genre/${name}`
+			window.location.href = `https://j7c104.p.ssafy.io/genre/${name}`
 		}
 
 		const getScroll = function () {

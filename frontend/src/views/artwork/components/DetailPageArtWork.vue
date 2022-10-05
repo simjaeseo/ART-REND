@@ -32,7 +32,7 @@ export default {
 		const store = useStore()
 		const detailData = computed(() => store.getters.detailData)
 		const goDetail = function (artworkId) {
-			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
+			window.location.href = `https://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 		return {
 			state,

@@ -43,7 +43,7 @@ export default {
 	},
 	methods: {
 		goMain() {
-			window.location.href = 'http://j7c104.p.ssafy.io/main'
+			window.location.href = 'https://j7c104.p.ssafy.io/main'
 		},
 		shred() {
 			this.shredding = anime({

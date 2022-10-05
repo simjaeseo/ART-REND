@@ -282,7 +282,7 @@ export default {
 					)
 					if (next == true) {
 						document.getElementById('dismiss').click()
-						window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+						window.location.href = `https://j7c104.p.ssafy.io/mypage/${userId.value}`
 					} else {
 						document.getElementById('dismiss').click()
 					}
@@ -306,13 +306,13 @@ export default {
 		})
 
 		const goMain = function () {
-			window.location.href = 'http://j7c104.p.ssafy.io/main'
+			window.location.href = 'https://j7c104.p.ssafy.io/main'
 		}
 		const goProfile = function () {
-			location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+			location.href = `https://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
 		const goTop = function () {
-			location.href = 'http://j7c104.p.ssafy.io/artworks'
+			location.href = 'https://j7c104.p.ssafy.io/artworks'
 		}
 
 		const getScroll = function () {

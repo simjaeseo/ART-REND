@@ -97,6 +97,7 @@ export default {
 			const img = modal.src
 			const modalImg = document.getElementById('modal-inner')
 			modal.style.display = 'block'
+			modalImg.classList.add('cursor')
 			modalImg.src = img
 		}
 		const plusClass = function (num) {
@@ -128,6 +129,9 @@ export default {
 </script>
 
 <style scoped>
+.cursor {
+	cursor: pointer;
+}
 #modall {
 	height: 100%;
 }

@@ -287,6 +287,7 @@ export default {
 					}
 				})
 				.catch(() => {
+					state.isLoading = false
 					alert('10MB이하의 사진만 입력 가능합니다.')
 					document.getElementById('dismiss').click()
 				})

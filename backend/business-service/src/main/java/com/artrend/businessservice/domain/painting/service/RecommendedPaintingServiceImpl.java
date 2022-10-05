@@ -34,7 +34,7 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
         headers.add("Authorization", authorization);
         headers.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
         HttpEntity<String> entity = new HttpEntity<String>(headers);
-        restTemplate.exchange("https://j7c104.p.ssafy.io:8000/api/v1/paintings/main_recommend_painting/", HttpMethod.POST, entity, Object.class);
+        restTemplate.exchange("http://j7c104.p.ssafy.io:8000/api/v1/paintings/main_recommend_painting/", HttpMethod.POST, entity, Object.class);
 
         Page<RecommendedPainting> list = recommendedPaintingRepository.findRecommendedPaintings(memberId, pageable);
 
@@ -55,7 +55,7 @@ public class RecommendedPaintingServiceImpl implements RecommendedPaintingServic
         HttpEntity<String> entity = new HttpEntity<String>(headers);
         ResponseEntity<Object> result
                 = restTemplate.exchange(
-                "https://j7c104.p.ssafy.io:8000/api/v1/paintings/main_page_recommend/",
+                "http://j7c104.p.ssafy.io:8000/api/v1/paintings/main_page_recommend/",
                 HttpMethod.GET,
                 entity,
                 Object.class

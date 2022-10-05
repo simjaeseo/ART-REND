@@ -10,4 +10,4 @@ RUN apt-get -y install libglib2.0-0
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 COPY . .
-CMD ["python", "manage.py", "runserver", "--certificate", "django.crt", "--key", "django.key"]
+CMD ["python", "manage.py", "runsslserver", "0.0.0.0:8000"]

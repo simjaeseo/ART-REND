@@ -103,6 +103,7 @@ export default {
 	transition: 0.5s;
 	vertical-align: top;
 	filter: grayscale(0%);
+	cursor: pointer;
 }
 
 img {

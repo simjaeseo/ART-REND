@@ -107,10 +107,10 @@ export default {
 		})
 
 		const goProfile = function () {
-			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+			window.location.href = `https://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
 		const goArtworks = function () {
-			window.location.href = 'http://j7c104.p.ssafy.io/main'
+			window.location.href = 'https://j7c104.p.ssafy.io/main'
 		}
 
 		const toTop = function () {
@@ -118,7 +118,7 @@ export default {
 			container.scrollTo({ top: 0, behavior: 'smooth' })
 		}
 		const goDetail = function (artworkId) {
-			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
+			window.location.href = `https://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 
 		return {

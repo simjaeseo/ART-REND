@@ -1,5 +1,5 @@
 server:
-  port: 9876
+  port: 0
 
 spring:
   application:
@@ -17,7 +17,7 @@ spring:
       globalcors:
         cors-configurations:
           "[/**]":
-            allowedOrigins: "http://j7c104.p.ssafy.io"
+            allowedOrigins: "https://j7c104.p.ssafy.io"
             allowedHeaders:
               - authorization
               - content-type

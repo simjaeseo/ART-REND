@@ -44,7 +44,7 @@ export default {
 		store.dispatch('getArtistList')
 		const artistData = computed(() => store.getters.artistData)
 		const goDetail = function (name) {
-			window.location.href = `https://j7c104.p.ssafy.io/artist/${name}`
+			window.location.href = `http://j7c104.p.ssafy.io/artist/${name}`
 		}
 
 		const getScroll = function () {

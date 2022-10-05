@@ -45,7 +45,7 @@ export default {
 		const movementData = computed(() => store.getters.movementData)
 
 		const goDetail = function (name) {
-			window.location.href = `https://j7c104.p.ssafy.io/movement/${name}`
+			window.location.href = `http://j7c104.p.ssafy.io/movement/${name}`
 		}
 
 		const getScroll = function () {

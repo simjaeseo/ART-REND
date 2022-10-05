@@ -1,4 +1,4 @@
-const HOST = 'http://j7c104.p.ssafy.io:8080/'
+const HOST = 'http://j7c104.p.ssafy.io/'
 
 const AUTH = 'auth-service/'
 const BUSINESS = 'business-service/'

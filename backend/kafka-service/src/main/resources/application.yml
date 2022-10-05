@@ -1,9 +1,9 @@
 server:
   port: 9876
-#  ssl:
-#    key-store: classpath:keystore.p12
-#    key-store-type: PKCS12
-#    key-store-password: ssafyartrendpjt
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-type: PKCS12
+    key-store-password: ssafyartrend
 
 spring:
   application:

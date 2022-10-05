@@ -29,7 +29,7 @@ export default {
 		const store = useStore()
 		const TransArr = computed(() => store.getters.orderByTranslation)
 		const goDetail = function (artworkId) {
-			window.location.href = `https://j7c104.p.ssafy.io/detail/${artworkId}`
+			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 		return {
 			state,

@@ -30,7 +30,7 @@ export default {
 		const store = useStore()
 		const LikeArr = computed(() => store.getters.orderByLike)
 		const goDetail = function (artworkId) {
-			window.location.href = `https://j7c104.p.ssafy.io/detail/${artworkId}`
+			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 		return {
 			state,

@@ -42,7 +42,7 @@ public class PaintingServiceImpl implements PaintingService {
 
     @Override
     @Transactional
-    public RecommendDto findPainting(Long paintingId, Long memberId, Pageable pageable) {
+    public RecommendedDataDto findPainting(Long paintingId, Long memberId, Pageable pageable) {
         Painting findPainting = paintingRepository
                 .findById(paintingId)
                 .orElseThrow(() -> new PaintingException(PaintingExceptionType.NOT_FOUND_PAINTING));
@@ -65,17 +65,17 @@ public class PaintingServiceImpl implements PaintingService {
 
         if (isLiked == true) {
             objectResponseEntity = likedPaintingService.recommendRequestV2(likedPainting.get().getId());
-            return new RecommendDto(new PaintingDto(findPainting, true), objectResponseEntity);
+            return new RecommendedDataDto(new PaintingDto(findPainting, true), objectResponseEntity);
         }
 
         Page<DetailRecommendedPainting> list = detailRecommendedPaintingRepository
                 .findDetailRecommendedPaintings(paintingId, pageable);
 
-        List<DetailDto> result = list.stream()
-                .map(painting -> new DetailDto(painting))
+        List<DetailPageDto> result = list.stream()
+                .map(painting -> new DetailPageDto(painting))
                 .collect(Collectors.toList());
 
-        return new RecommendDto(new PaintingDto(findPainting, false), result);
+        return new RecommendedDataDto(new PaintingDto(findPainting, false), result);
     }
 
     @Override

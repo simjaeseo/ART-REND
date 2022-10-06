@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DetailDto {
+public class DetailPageDto {
     private Long paintingId;
     private String artist;
     private String description;
@@ -20,7 +20,7 @@ public class DetailDto {
     private String url;
     private String year;
 
-    public DetailDto(DetailRecommendedPainting painting) {
+    public DetailPageDto(DetailRecommendedPainting painting) {
         this.paintingId = painting.getRecommended().getId();
         this.artist = painting.getRecommended().getArtist();
         this.description = painting.getRecommended().getDescription();

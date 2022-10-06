@@ -1,6 +1,5 @@
 package com.artrend.businessservice.domain.painting.dto;
 
-import com.artrend.businessservice.domain.painting.entity.Painting;
 import com.artrend.businessservice.domain.painting.entity.RecommendedPainting;
 import lombok.AllArgsConstructor;
 import lombok.Data;

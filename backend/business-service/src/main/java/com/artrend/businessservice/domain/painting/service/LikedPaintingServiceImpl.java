@@ -76,8 +76,8 @@ public class LikedPaintingServiceImpl implements LikedPaintingService {
         Page<DetailRecommendedPainting> list = detailRecommendedPaintingRepository
                 .findDetailRecommendedPaintings(likedPainting.getPainting().getId(), pageable);
 
-        List<DetailDto> result = list.stream()
-                .map(painting -> new DetailDto(painting))
+        List<DetailPageDto> result = list.stream()
+                .map(painting -> new DetailPageDto(painting))
                 .collect(Collectors.toList());
 
         DetailResponse response

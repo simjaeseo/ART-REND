@@ -1,6 +1,6 @@
 package com.artrend.businessservice.domain.painting.vo;
 
-import com.artrend.businessservice.domain.painting.dto.DetailDto;
+import com.artrend.businessservice.domain.painting.dto.DetailPageDto;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class DetailResponse implements Serializable {
     private PaintingDto painting;
-    private List<DetailDto> recommendList;
+    private List<DetailPageDto> recommendList;
 }

@@ -4,7 +4,7 @@ import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.vo.DetailResponse;
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
-import com.artrend.businessservice.domain.painting.dto.RecommendDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendedDataDto;
 import com.artrend.businessservice.domain.painting.service.LikedPaintingService;
 import com.artrend.businessservice.global.common.DataResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -41,7 +41,7 @@ public class LikedPaintingController {
             @RequestBody @Valid MemberDto memberDto) throws IOException {
         PaintingDto result = likedPaintingService.like(memberDto);
         Object list = likedPaintingService.recommendRequestV2(memberDto.getPaintingId()).getBody();
-        RecommendDto response = new RecommendDto(result, list);
+        RecommendedDataDto response = new RecommendedDataDto(result, list);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(new DataResponse(response));
     }

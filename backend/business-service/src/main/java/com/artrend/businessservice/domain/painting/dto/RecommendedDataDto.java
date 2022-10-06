@@ -10,20 +10,20 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class RecommendDto {
+public class RecommendedDataDto {
     private PaintingDto painting;
     private Object recommendedList;
 
-    public RecommendDto(PaintingDto painting, List<DetailDto> recommendedList) {
+    public RecommendedDataDto(PaintingDto painting, List<DetailPageDto> recommendedList) {
         this.painting = painting;
         this.recommendedList = recommendedList;
     }
-    public RecommendDto(PaintingDto painting, ResponseEntity<Object> recommendedList) {
+    public RecommendedDataDto(PaintingDto painting, ResponseEntity<Object> recommendedList) {
         this.painting = painting;
         this.recommendedList = recommendedList.getBody();
     }
 
-    public RecommendDto(PaintingDto painting, Object object) {
+    public RecommendedDataDto(PaintingDto painting, Object object) {
         this.painting = painting;
         this.recommendedList = object;
     }

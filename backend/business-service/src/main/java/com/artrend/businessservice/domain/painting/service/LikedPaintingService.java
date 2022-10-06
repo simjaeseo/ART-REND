@@ -4,7 +4,6 @@ import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.vo.DetailResponse;
 import com.artrend.businessservice.domain.painting.dto.MemberDto;
 import com.artrend.businessservice.domain.painting.dto.LikedPaintingDto;
-import com.artrend.businessservice.domain.painting.dto.RecommendDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 

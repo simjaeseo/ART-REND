@@ -1,14 +1,13 @@
 package com.artrend.businessservice.domain.painting.api;
 
 import com.artrend.businessservice.domain.painting.dto.PaintingCondition;
-import com.artrend.businessservice.domain.painting.dto.RecommendDto;
+import com.artrend.businessservice.domain.painting.dto.RecommendedDataDto;
 import com.artrend.businessservice.domain.painting.dto.SearchCondition;
 import com.artrend.businessservice.domain.painting.service.PaintingService;
 import com.artrend.businessservice.domain.painting.dto.PaintingDto;
 import com.artrend.businessservice.domain.painting.vo.SearchResponse;
 import com.artrend.businessservice.global.common.CountDataResponse;
 import com.artrend.businessservice.global.common.DataResponse;
-import com.artrend.businessservice.global.common.MessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -63,7 +62,7 @@ public class PaintingController {
     public ResponseEntity<? extends DataResponse> findPainting(@PathVariable("painting_id") Long paintingId,
                                                                @PathVariable("member_id") Long memberId,
                                                                Pageable pageable) {
-        RecommendDto result = paintingService.findPainting(paintingId, memberId, pageable);
+        RecommendedDataDto result = paintingService.findPainting(paintingId, memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new DataResponse(result));
     }
 

@@ -28,14 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final OAuth2LogoutSuccessHandler oAuth2LogoutSuccessHandler;
 
     private static final String[] PERMIT_URL_ARRAY = {
-            /* swagger v2 */
-            "/v2/api-docs",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui.html",
-            "/webjars/**",
             /* swagger v3 */
             "/v3/api-docs/**",
             "/swagger-ui/**",
@@ -45,22 +37,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/oauth2/authorization/google",
             "/test",
             "/error",
-            "/health_check",
             "/logout",
             "/token/reissuance/*",
             "/signup/**",
             "/api/**",
-            "/ccccccc",
-            "/swagger-ui/index.html",
-            "/auth-service/swagger-ui/index.html",
-            "signup/members/info"
+            "/signup/members/info"
     };
-
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         http.csrf().disable().cors();
         http
                 .exceptionHandling()
@@ -93,21 +78,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
     }
-
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//
-//        CorsConfiguration configuration = new CorsConfiguration();
-//
-//        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3001/", "https://youthful-kirch-818851.netlify.app/", "https://ssafymate.site/", "https://www.ssafymate.site/", "https://i6a402.p.ssafy.io/%22"));
-//                configuration.addAllowedHeader("");
-//        configuration.addAllowedMethod("");
-//        configuration.setAllowCredentials(true);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//
-//        return source;
-//
-//    }
 }

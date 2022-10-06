@@ -29,8 +29,6 @@ public class OAuth2LogoutSuccessHandler extends SimpleUrlLogoutSuccessHandler {
 
         String authorization = request.getHeader("Authorization");
 
-//        authService.logout(authorization.replace("Bearer ", ""));
-
         if (response.isCommitted()) {
             log.debug("응답이 이미 커밋된 상태입니다. " + "/logout-success" + "로 리다이렉트하도록 바꿀 수 없습니다.");
             return;

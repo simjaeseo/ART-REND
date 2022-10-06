@@ -36,7 +36,6 @@ ALLOWED_HOSTS = ['j7c104.p.ssafy.io']
 # Application definition
 
 INSTALLED_APPS = [
-    'sslserver',
     # local apps
     'user',
     'recommend_art',

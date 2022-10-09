@@ -17,6 +17,7 @@ export default {
 		preventInfoPage: false,
 		preventSignupPage: false,
 		preventSelectPage: false,
+		convertListAll: [],
 	},
 	getters: {
 		authHeader: state => ({ Authorization: `Bearer ${state.token}` }),
@@ -34,6 +35,7 @@ export default {
 		preventInfoPage: state => state.preventInfoPage,
 		preventSelectPage: state => state.preventSelectPage,
 		preventSignupPage: state => state.preventSignupPage,
+		convertListAll: state => state.convertListAll,
 	},
 	mutations: {
 		SET_TOKEN(state, token) {
@@ -80,6 +82,9 @@ export default {
 		},
 		PREVENT_SIGNUP_PAGE(state, value) {
 			state.preventSignupPage = value
+		},
+		SET_CONVERT_LIST_ALL(state, data) {
+			state.convertListAll = data
 		},
 	},
 	actions: {
@@ -230,6 +235,20 @@ export default {
 			})
 				.then(res => {
 					commit('SET_CONVERT_LIST', res.data.data)
+				})
+				.catch(() => {
+					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
+				})
+		},
+		getImageConvertAll({ getters, commit }) {
+			axios({
+				headers: getters.authHeader,
+				url: drf.business.getImageConvertAll(),
+				method: 'get',
+			})
+				.then(res => {
+					console.log(res)
+					commit('SET_CONVERT_LIST_ALL', res.data.data)
 				})
 				.catch(() => {
 					alert('서비스가 비정상적입니다. 다시 시도해주세요.')

@@ -16,7 +16,7 @@ public class ChangedPaintingRepositoryImpl extends QuerydslRepositorySupport imp
     }
 
     @Override
-    public Page<ChangedPainting> findChangedPaintingsAll(Long memberId, Pageable pageable) {
+    public Page<ChangedPainting> findChangedPaintings(Long memberId, Pageable pageable) {
         return applyPagination(pageable, contentQuery -> contentQuery
                 .selectFrom(changedPainting)
                 .where(
@@ -27,6 +27,15 @@ public class ChangedPaintingRepositoryImpl extends QuerydslRepositorySupport imp
                         .where(
                                 memberEq(memberId)
                         )
+        );
+    }
+
+    @Override
+    public Page<ChangedPainting> findChangedPaintingsAll(Pageable pageable) {
+        return applyPagination(pageable, contentQuery -> contentQuery
+                        .selectFrom(changedPainting)
+                , countQuery -> countQuery
+                        .selectFrom(changedPainting)
         );
     }
 

@@ -66,6 +66,11 @@
 								</a>
 							</li>
 							<li class="nav-item">
+								<a href="http://j7c104.p.ssafy.io/exhibition">
+									<div>EXHIBITION</div>
+								</a>
+							</li>
+							<li class="nav-item">
 								<a href="http://j7c104.p.ssafy.io/artist">
 									<div>ARTIST</div>
 								</a>
@@ -114,7 +119,11 @@ export default {
 		let now = window.location.href
 		if (now.includes('detail')) {
 			oneBlack = true
-		} else if (now.includes('mypage') || now.includes('artworks')) {
+		} else if (
+			now.includes('mypage') ||
+			now.includes('artworks') ||
+			now.includes('exhibition')
+		) {
 			oneBlack = true
 			twoBlack = true
 		} else if (

@@ -35,6 +35,7 @@ export default {
 		actionLog: () => `${HOST + KAFKA}/api/log`,
 		imageConvert: artworkId => `${HOST + BUSINESS}/api/changing/${artworkId}`,
 		getImageConvert: memberId => `${HOST + BUSINESS}/api/changing/${memberId}`,
+		getImageConvertAll: () => `${HOST + BUSINESS}/api/changing`,
 		deleteConvert: () => `${HOST + BUSINESS}/api/changing`,
 	},
 }

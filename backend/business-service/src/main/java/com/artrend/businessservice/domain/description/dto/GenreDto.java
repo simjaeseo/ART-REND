@@ -13,13 +13,6 @@ public class GenreDto {
     private String description;
     private String url;
 
-    @QueryProjection
-    public GenreDto(Genre genre) {
-        this.name = genre.getName();
-        this.description = genre.getDescription();
-        this.url = genre.getUrl();
-    }
-
     @Data
     @NoArgsConstructor
     public static class GenreListDto {

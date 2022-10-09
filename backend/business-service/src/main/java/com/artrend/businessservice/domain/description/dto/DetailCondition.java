@@ -10,14 +10,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DetailCondition {
     private String name;
-
-    public DetailCondition(SearchCondition condition) {
-        if (condition.getArtist() != null) {
-            this.name = condition.getArtist();
-        } else if (condition.getGenre() != null) {
-            this.name = condition.getGenre();
-        } else if (condition.getArtTrend() != null) {
-            this.name = condition.getArtTrend();
-        }
-    }
 }

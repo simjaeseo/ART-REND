@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +35,12 @@ public class ChangedPaintingController {
         return ResponseEntity.status(HttpStatus.OK).body(new MessageResponse());
     }
 
+    @GetMapping
+    public ResponseEntity<? extends CountDataResponse> findPaintingsAll(Pageable pageable) {
+        List<ChangedPaintingDto> paintings = changedPaintingService.findChangedPaintingsAll(pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse<>(paintings, paintings.size()));
+    }
+
     @Operation(summary = "회원별 변환한 그림 조회하기", description = "해당 회원의 변환한 그림 목록을 조회합니다.")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "성공"),
@@ -44,9 +49,9 @@ public class ChangedPaintingController {
             @ApiResponse(responseCode = "500", description = "서버 에러입니다.")
     })
     @GetMapping("/{member_id}")
-    public ResponseEntity<? extends DataResponse> findChangedPaintingsAll(@PathVariable("member_id")
+    public ResponseEntity<? extends DataResponse> findChangedPaintings(@PathVariable("member_id")
                                                                           Long memberId, Pageable pageable) {
-        List<ChangedPaintingDto> paintings = changedPaintingService.findChangedPaintingsAll(memberId, pageable);
+        List<ChangedPaintingDto> paintings = changedPaintingService.findChangedPaintings(memberId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(new CountDataResponse(paintings, paintings.size()));
     }
 

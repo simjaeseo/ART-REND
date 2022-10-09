@@ -16,6 +16,7 @@ import MovementDetailPageView from '@/views/artwork/MovementDetailPageView.vue'
 import UserInfoView from '@/views/accounts/UserInfoView.vue'
 import UnregisterView from '@/views/accounts/UnregisterView.vue'
 import NotFoundView from '@/views/accounts/NotFoundView.vue'
+import ExhibitionView from '@/views/artwork/ExhibitionView.vue'
 import { computed } from 'vue'
 import store from '@/store'
 
@@ -132,6 +133,12 @@ const routes = [
 		path: '/movement/:name',
 		name: 'MovementDetailPage',
 		component: MovementDetailPageView,
+		beforeEnter: requireAuth(),
+	},
+	{
+		path: '/exhibition',
+		name: 'ExhibitionPage',
+		component: ExhibitionView,
 		beforeEnter: requireAuth(),
 	},
 	{

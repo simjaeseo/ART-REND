@@ -89,7 +89,7 @@ export default {
 			}
 		}
 		const goDetail = function (artworkId) {
-			window.location.href = `http://localhost:3002/detail/${artworkId}`
+			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 		const convertList = computed(() => store.getters.convertList)
 		return {

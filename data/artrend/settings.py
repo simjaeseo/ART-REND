@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-8dwe2o8j&_uxu@7&7b!(0#ozduv3n+ny&k&g^f9h6hn)hsz(3y
 # DEBUG = False
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['j7c104.p.ssafy.io']
 
 
 # Application definition
@@ -113,7 +113,7 @@ DATABASES = {
         'NAME': 'artrend',
         'USER': 'root',
         'PASSWORD': 'ssafy',
-        'HOST': 'localhost',
+        'HOST': 'mysql',
         'PORT': '3306'
     }
 }

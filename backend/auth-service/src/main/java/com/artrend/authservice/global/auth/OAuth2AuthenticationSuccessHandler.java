@@ -84,7 +84,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         if (isExisted == true && isSelectPainting == true && isNickname == true) {
             String accessToken = tokenProvider.createToken(providerId, findMember.get().getId());
 
-            return UriComponentsBuilder.fromUriString("http://j7c104.p.ssafy.io/auth")
+            return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                     .queryParam("provider", provider)
                     .queryParam("providerId", providerId)
                     .queryParam("isExisted", isExisted)
@@ -94,7 +94,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                     .build().toUriString();
         }
 
-        return UriComponentsBuilder.fromUriString("http://j7c104.p.ssafy.io/auth")
+        return UriComponentsBuilder.fromUriString("http://localhost:3002/auth")
                 .queryParam("provider", provider)
                 .queryParam("providerId", providerId)
                 .queryParam("isExisted", isExisted)

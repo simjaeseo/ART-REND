@@ -91,16 +91,16 @@ export default {
 		const backImg = computed(() => store.getters.movementDetailBackImg)
 		const userId = computed(() => store.getters.userId)
 		const goArtist = function () {
-			window.location.href = 'http://localhost:3002/movement'
+			window.location.href = 'http://j7c104.p.ssafy.io/movement'
 		}
 		const goMain = function () {
-			window.location.href = 'http://localhost:3002/main'
+			window.location.href = 'http://j7c104.p.ssafy.io/main'
 		}
 		const goDetail = function (artworkId) {
-			window.location.href = `http://localhost:3002/detail/${artworkId}`
+			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
 		}
 		const goProfile = function () {
-			window.location.href = `http://localhost:3002/mypage/${userId.value}`
+			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
 
 		const getScroll = function () {

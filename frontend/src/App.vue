@@ -2,7 +2,7 @@
 	<div>
 		<div class="fixed-top">
 			<div class="navbar">
-				<a href="http://localhost:3002/main" id="brad-text">
+				<a href="http://j7c104.p.ssafy.io/main" id="brad-text">
 					<h1 :style="[oneBlack ? { color: '#000000' } : { color: '#ffffff' }]">
 						ART-REND
 					</h1>
@@ -51,37 +51,37 @@
 						<div id="menu-text">MENU</div>
 						<ul class="navbar-nav justify-content-end">
 							<li class="nav-item">
-								<a href="http://localhost:3002/main">
+								<a href="http://j7c104.p.ssafy.io/main">
 									<div>HOME</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a :href="`http://localhost:3002/mypage/${userId}`">
+								<a :href="`http://j7c104.p.ssafy.io/mypage/${userId}`">
 									<div>PROFILE</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="http://localhost:3002/artworks">
+								<a href="http://j7c104.p.ssafy.io/artworks">
 									<div>TOP ARTWORKS</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="http://localhost:3002/exhibition">
+								<a href="http://j7c104.p.ssafy.io/exhibition">
 									<div>EXHIBITION</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="http://localhost:3002/artist">
+								<a href="http://j7c104.p.ssafy.io/artist">
 									<div>ARTIST</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="http://localhost:3002/genre">
+								<a href="http://j7c104.p.ssafy.io/genre">
 									<div>GENRE</div>
 								</a>
 							</li>
 							<li class="nav-item">
-								<a href="http://localhost:3002/movement">
+								<a href="http://j7c104.p.ssafy.io/movement">
 									<div>MOVEMENT</div>
 								</a>
 							</li>
@@ -89,7 +89,7 @@
 								<div @click="logout()">LOGOUT</div>
 							</li>
 							<li>
-								<a href="http://localhost:3002/unregister" id="withdraw">
+								<a href="http://j7c104.p.ssafy.io/unregister" id="withdraw">
 									<div>WITHDRAW</div>
 								</a>
 							</li>

@@ -14,7 +14,7 @@ spring:
       globalcors:
         cors-configurations:
           "[/**]":
-            allowedOrigins: "http://localhost:3002"
+            allowedOrigins: "http://j7c104.p.ssafy.io"
             allowedHeaders:
               - authorization
               - content-type

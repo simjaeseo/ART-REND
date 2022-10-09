@@ -47,7 +47,7 @@ export default {
 			const decodeAccessToken = jwt_decode(token)
 			store.commit('SET_USER_ID', decodeAccessToken.id)
 			store.dispatch('saveToken', token)
-			window.location.href = 'http://localhost:3002/main'
+			window.location.href = 'http://j7c104.p.ssafy.io/main'
 		}
 		return {
 			isLoggedIn,

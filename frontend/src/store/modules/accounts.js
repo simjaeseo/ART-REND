@@ -103,7 +103,7 @@ export default {
 				},
 			})
 				.then(() => {
-					window.location.href = 'http://j7c104.p.ssafy.io/select'
+					window.location.href = 'http://localhost:3002/select'
 				})
 				.catch(() => {
 					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
@@ -160,7 +160,7 @@ export default {
 				},
 			})
 				.then(() => {
-					window.location.href = 'http://j7c104.p.ssafy.io/main'
+					window.location.href = 'http://localhost:3002/main'
 					dispatch('getMainBasedOnSelected')
 				})
 				.catch(() => {
@@ -199,7 +199,7 @@ export default {
 					if (next) {
 						dispatch('removeToken')
 						commit('REMOVE_TOKEN')
-						window.location.href = 'http://j7c104.p.ssafy.io/'
+						window.location.href = 'http://localhost:3002/'
 						localStorage.setItem('vuex', '')
 					}
 				})
@@ -245,9 +245,14 @@ export default {
 				headers: getters.authHeader,
 				url: drf.business.getImageConvertAll(),
 				method: 'get',
+				params: {
+					size: 500,
+				},
 			})
 				.then(res => {
-					commit('SET_CONVERT_LIST_ALL', res.data.data)
+					if (res.data.count) {
+						commit('SET_CONVERT_LIST_ALL', res.data.data)
+					}
 				})
 				.catch(() => {
 					alert('서비스가 비정상적입니다. 다시 시도해주세요.')

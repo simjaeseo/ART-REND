@@ -15,7 +15,10 @@
 									alt="image"
 									@click.prevent="goDetail(image.id)"
 								/>
-								<div class="image-info" @click.prevent="goDetail(image.id)">
+								<div
+									class="image-info"
+									@click.prevent="goDetail(image.memberId)"
+								>
 									<div class="title">{{ image.title }}</div>
 									<div class="name">{{ image.koreanTitle }}</div>
 									<div class="name">{{ image.artist }}</div>
@@ -40,6 +43,7 @@ export default {
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
+		const convertList = computed(() => store.getters.convertListAll)
 
 		store.dispatch('getImageConvertAll')
 		window.onload = function () {
@@ -65,11 +69,9 @@ export default {
 			masonryLayout()
 			window.addEventListener('resize', masonryLayout)
 		}
-
 		const goDetail = function (userId) {
 			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId}`
 		}
-		const convertList = computed(() => store.getters.convertListAll)
 		return {
 			state,
 			convertList,
@@ -80,8 +82,22 @@ export default {
 </script>
 
 <style scoped>
+#click-btn {
+	display: inline;
+	width: 50px;
+	height: 50px;
+}
+.get-btn {
+	text-align: center;
+	cursor: pointer;
+}
+.get-btn:hover {
+	text-align: center;
+	cursor: pointer;
+	color: gray;
+}
 .wrap-div1 {
-	padding-top: 200px;
+	padding-top: 170px;
 }
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');

@@ -120,11 +120,11 @@ export default {
 					store.commit('SET_USER_IS_EXISTED', data)
 					store.commit('PREVENT_INFO_FORM_PAGE', true)
 					if (data.isNickName == false && data.isSelected == false) {
-						window.location.href = 'http://j7c104.p.ssafy.io/signup'
+						window.location.href = 'http://localhost:3002/signup'
 					} else if (data.isNickName == true && data.isSelected == false) {
-						window.location.href = 'http://j7c104.p.ssafy.io/select'
+						window.location.href = 'http://localhost:3002/select'
 					} else if (data.isNickName == true && data.isSelected == true) {
-						window.location.href = 'http://j7c104.p.ssafy.io/main'
+						window.location.href = 'http://localhost:3002/main'
 					}
 				})
 				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))

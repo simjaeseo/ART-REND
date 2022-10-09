@@ -12,6 +12,13 @@ public class ArtTrendDto {
     private String description;
     private String url;
 
+    @QueryProjection
+    public ArtTrendDto(ArtTrend artTrend) {
+        this.name = artTrend.getName();
+        this.description = artTrend.getDescription();
+        this.url = artTrend.getUrl();
+    }
+
     @Data
     @NoArgsConstructor
     public static class ArtTrendListDto {

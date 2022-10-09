@@ -39,8 +39,8 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
     private final PaintingRepository paintingRepository;
 
     @Override
-    public List<ChangedPaintingDto> findChangedPaintingsAll(Long memberId, Pageable pageable) {
-        Page<ChangedPainting> list = changedPaintingRepository.findChangedPaintingsAll(memberId, pageable);
+    public List<ChangedPaintingDto> findChangedPaintings(Long memberId, Pageable pageable) {
+        Page<ChangedPainting> list = changedPaintingRepository.findChangedPaintings(memberId, pageable);
 
         List<ChangedPaintingDto> result = list.stream()
                 .map(painting -> new ChangedPaintingDto(painting))
@@ -81,6 +81,16 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
 
         restTemplate.postForEntity(uri, entity, String.class);
         
+    }
+
+    @Override
+    public List<ChangedPaintingDto> findChangedPaintingsAll(Pageable pageable) {
+        Page<ChangedPainting> list = changedPaintingRepository.findChangedPaintingsAll(pageable);
+        List<ChangedPaintingDto> result = list.stream()
+                .map(painting -> new ChangedPaintingDto(painting))
+                .collect(Collectors.toList());
+
+        return result;
     }
 
     public Optional<ChangedPainting> findChangedPaintingWithMemberAndPaintingId(MemberDto memberDto) {

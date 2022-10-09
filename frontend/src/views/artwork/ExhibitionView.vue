@@ -67,7 +67,7 @@ export default {
 		}
 
 		const goDetail = function (userId) {
-			window.location.href = `http://localhost:3002/mypage/${userId}`
+			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId}`
 		}
 		const convertList = computed(() => store.getters.convertListAll)
 		return {

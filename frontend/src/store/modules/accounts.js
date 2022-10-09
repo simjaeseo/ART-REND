@@ -246,8 +246,7 @@ export default {
 				url: drf.business.getImageConvertAll(),
 				method: 'get',
 			})
-				.then(res => {
-					console.log(res)
+				.then(() => {
 					commit('SET_CONVERT_LIST_ALL', res.data.data)
 				})
 				.catch(() => {

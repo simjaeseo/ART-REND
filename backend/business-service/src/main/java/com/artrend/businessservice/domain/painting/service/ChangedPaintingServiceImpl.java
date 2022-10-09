@@ -73,7 +73,7 @@ public class ChangedPaintingServiceImpl implements ChangedPaintingService {
         body.add("image", image.getResource());
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(body, headers);
         URI uri = UriComponentsBuilder
-                .fromUriString("http://j7c104.p.ssafy.io:8000")
+                .fromUriString("http://localhost:8000")
                 .path("/api/v1/paintings/change_photo/{id}/")
                 .build()
                 .expand(paintingId)

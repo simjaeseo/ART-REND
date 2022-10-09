@@ -18,6 +18,15 @@
 		<div>
 			<div id="wrap1" class="container">
 				<h2 id="text1">Double-click the 2 pictures you like.</h2>
+				<button
+					class="btn"
+					id="nick-name-check-btn"
+					type="submit"
+					v-if="state.selectedImages.length == 2"
+					@click.prevent="selectForm"
+				>
+					SELECT
+				</button>
 			</div>
 			<div class="container">
 				<div class="masonry">
@@ -39,17 +48,6 @@
 							/>
 						</div>
 					</div>
-				</div>
-				<div id="btn-wrap">
-					<button
-						class="btn"
-						id="nick-name-check-btn"
-						type="submit"
-						v-if="state.selectedImages.length == 2"
-						@click.prevent="selectForm"
-					>
-						SELECT
-					</button>
 				</div>
 			</div>
 		</div>
@@ -149,10 +147,13 @@ export default {
 	background: white;
 	color: black;
 	text-align: end;
+	display: inline;
+	height: 40px;
+	margin-top: 11vh;
 }
 #wrap1 {
 	display: flex;
-	align-items: flex-end;
+	justify-content: space-between;
 	/* height: 20vh; */
 
 	height: 15vh;
@@ -160,7 +161,7 @@ export default {
 #text1 {
 	color: white;
 	/* margin-bottom: 50px; */
-
+	margin-top: 10vh;
 	margin-bottom: 20px;
 }
 img {
@@ -172,7 +173,7 @@ img {
 	column-count: 4;
 	cursor: pointer;
 	margin-bottom: 16px;
-	height: 80vh;
+	height: 90vh;
 	overflow: auto;
 }
 

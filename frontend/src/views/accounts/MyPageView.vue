@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="div-back">
 		<div class="mypage">
 			<input type="radio" name="tabmenu" id="my-picture" checked="true" />
 			<input type="radio" name="tabmenu" id="my-picture-all" />
@@ -216,7 +216,6 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-
 .mypage {
 	padding-top: 80px;
 	height: 100vh;

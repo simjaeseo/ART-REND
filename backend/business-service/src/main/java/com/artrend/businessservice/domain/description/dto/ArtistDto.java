@@ -15,6 +15,16 @@ public class ArtistDto {
     private String death;
     private String url;
 
+    @QueryProjection
+    public ArtistDto(Artist artist) {
+        this.name = artist.getName();
+        this.koreanName = artist.getKoreanName();
+        this.description = artist.getDescription();
+        this.birth = artist.getBirth();
+        this.death = artist.getDeath();
+        this.url = artist.getUrl();
+    }
+
     @Data
     @NoArgsConstructor
     public static class ArtistListDto {

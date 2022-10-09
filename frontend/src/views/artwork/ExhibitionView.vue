@@ -13,7 +13,7 @@
 								<img
 									:src="image.url"
 									alt="image"
-									@click.prevent="goDetail(image.id)"
+									@click.prevent="goDetail(image.memberId)"
 								/>
 								<div
 									class="image-info"

@@ -197,10 +197,10 @@ export default {
 		})
 		const goOtherProfile = function () {
 			const random = Math.floor(Math.random() * state.members.length)
-			window.location.href = `http://j7c104.p.ssafy.io/mypage/${state.members[random]}`
+			window.location.href = `http://localhost:3002/mypage/${state.members[random]}`
 		}
 		const goMyProfile = function () {
-			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+			window.location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 		return {
 			state,

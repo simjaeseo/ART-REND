@@ -13,12 +13,9 @@
 								<img
 									:src="image.url"
 									alt="image"
-									@click.prevent="goDetail(image.originalId)"
+									@click.prevent="goDetail(image.id)"
 								/>
-								<div
-									class="image-info"
-									@click.prevent="goDetail(image.originalId)"
-								>
+								<div class="image-info" @click.prevent="goDetail(image.id)">
 									<div class="title">{{ image.title }}</div>
 									<div class="name">{{ image.koreanTitle }}</div>
 									<div class="name">{{ image.artist }}</div>
@@ -44,6 +41,7 @@ export default {
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		})
 
+		store.dispatch('getImageConvertAll')
 		window.onload = function () {
 			function masonryLayout() {
 				const masonryContainerStyle = getComputedStyle(
@@ -68,10 +66,10 @@ export default {
 			window.addEventListener('resize', masonryLayout)
 		}
 
-		const goDetail = function (artworkId) {
-			window.location.href = `http://localhost:3002/detail/${artworkId}`
+		const goDetail = function (userId) {
+			window.location.href = `http://localhost:3002/mypage/${userId}`
 		}
-		const convertList = computed(() => store.getters.convertList)
+		const convertList = computed(() => store.getters.convertListAll)
 		return {
 			state,
 			convertList,

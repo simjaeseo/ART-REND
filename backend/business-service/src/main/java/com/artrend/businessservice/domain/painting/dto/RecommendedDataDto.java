@@ -18,6 +18,7 @@ public class RecommendedDataDto {
         this.painting = painting;
         this.recommendedList = recommendedList;
     }
+
     public RecommendedDataDto(PaintingDto painting, ResponseEntity<Object> recommendedList) {
         this.painting = painting;
         this.recommendedList = recommendedList.getBody();

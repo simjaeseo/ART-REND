@@ -103,7 +103,7 @@ export default {
 				},
 			})
 				.then(() => {
-					window.location.href = 'http://localhost:3002/select'
+					window.location.href = 'http://j7c104.p.ssafy.io/select'
 				})
 				.catch(() => {
 					alert('서비스가 비정상적입니다. 다시 시도해주세요.')
@@ -160,7 +160,7 @@ export default {
 				},
 			})
 				.then(() => {
-					window.location.href = 'http://localhost:3002/main'
+					window.location.href = 'http://j7c104.p.ssafy.io/main'
 					dispatch('getMainBasedOnSelected')
 				})
 				.catch(() => {
@@ -199,7 +199,7 @@ export default {
 					if (next) {
 						dispatch('removeToken')
 						commit('REMOVE_TOKEN')
-						window.location.href = 'http://localhost:3002/'
+						window.location.href = 'http://j7c104.p.ssafy.io/'
 						localStorage.setItem('vuex', '')
 					}
 				})

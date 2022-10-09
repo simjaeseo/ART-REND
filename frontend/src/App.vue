@@ -119,11 +119,7 @@ export default {
 		let now = window.location.href
 		if (now.includes('detail')) {
 			oneBlack = true
-		} else if (
-			now.includes('mypage') ||
-			now.includes('artworks') ||
-			now.includes('exhibition')
-		) {
+		} else if (now.includes('mypage') || now.includes('artworks')) {
 			oneBlack = true
 			twoBlack = true
 		} else if (

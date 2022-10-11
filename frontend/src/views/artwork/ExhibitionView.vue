@@ -3,8 +3,6 @@
 		<div class="mypage">
 			<input type="radio" name="tabmenu" id="my-picture" checked="true" />
 			<input type="radio" name="tabmenu" id="my-picture-all" />
-			<input type="radio" name="tabmenu" id="like-picture" />
-			<input type="radio" name="tabmenu" id="like-picture-all" />
 			<label for="my-picture-all" class="my-picture-all">
 				<div>ALL PHOTO CARD</div>
 			</label>
@@ -12,20 +10,13 @@
 				<div class="top">ᐱ</div>
 				<div>PHOTO CARD</div>
 			</label>
-			<label for="like-picture-all" class="like-picture-all">
-				<div>ALL Favorite Artwork</div>
-			</label>
-			<label for="like-picture" class="like-picture-top">
-				<div class="top">ᐱ</div>
-				<div>Favorite Artwork</div>
-			</label>
 			<div class="tab-inner">
 				<div class="tabs">
 					<div class="tab">
-						<like-art-work />
+						<exhibition-row />
 					</div>
 					<div class="tab2">
-						<like-art-work-all />
+						<exhibition-all />
 					</div>
 				</div>
 			</div>
@@ -34,14 +25,14 @@
 </template>
 
 <script>
-import LikeArtWork from '@/views/artwork/components/ExhibitionRow.vue'
-import LikeArtWorkAll from '@/views/artwork/components/ExhibitionAll.vue'
+import ExhibitionRow from '@/views/artwork/components/ExhibitionRow.vue'
+import ExhibitionAll from '@/views/artwork/components/ExhibitionAll.vue'
 import { useStore } from 'vuex'
 import { computed } from 'vue'
 
 export default {
 	name: 'ExhibitionView',
-	components: { LikeArtWork, LikeArtWorkAll },
+	components: { ExhibitionRow, ExhibitionAll },
 	setup() {
 		const store = useStore()
 		store.dispatch('getImageConvertAll')
@@ -70,17 +61,7 @@ input[name='tabmenu'] {
 	display: none;
 }
 
-.tabmenu {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: absolute;
-	z-index: 1;
-}
-
-.my-picture,
-.like-picture {
+.my-picture {
 	text-align: center;
 	font-weight: 600;
 	font-size: 20px;
@@ -93,38 +74,8 @@ input[name='tabmenu'] {
 	white-space: nowrap;
 }
 
-.move-button {
-	margin-right: 10px;
-	align-items: center;
-	background-color: transparent;
-	border: 1px solid rgb(0, 0, 0, 0.2);
-	padding: 2px 12px;
-	border-radius: 10px;
-	/* border: none; */
-
-	font-family: 'Noto Sans KR', sans-serif;
-	color: rgba(0, 0, 0, 0.2);
-	text-align: center;
-	font-weight: 400;
-	font-size: 15px;
-	white-space: nowrap;
-}
-
-.move-button:hover {
-	text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-	box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-	color: rgba(0, 0, 0);
-	border: 1px solid rgb(0, 0, 0);
-}
-
-.btn-box {
-	margin-right: 10px;
-}
-
 .my-picture-all,
-.like-picture-all,
-.my-picture-top,
-.like-picture-top {
+.my-picture-top {
 	display: none;
 	text-align: center;
 	position: absolute;
@@ -143,17 +94,13 @@ input[name='tabmenu'] {
 }
 
 .my-picture-all:hover,
-.like-picture-all:hover,
-.my-picture-top:hover,
-.like-picture-top:hover {
+.my-picture-top:hover {
 	color: rgb(190, 190, 190);
 	cursor: pointer;
 }
 
 input[id='my-picture']:checked ~ .tabmenu .my-picture,
-input[id='my-picture-all']:checked ~ .tabmenu .my-picture,
-input[id='like-picture']:checked ~ .tabmenu .like-picture,
-input[id='like-picture-all']:checked ~ .tabmenu .like-picture {
+input[id='my-picture-all']:checked ~ .tabmenu .my-picture {
 	color: rgb(0, 0, 0);
 	text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 	border-bottom: 2px solid black;
@@ -166,7 +113,7 @@ input[id='like-picture-all']:checked ~ .tabmenu .like-picture {
 }
 
 .tabs {
-	height: 230%;
+	height: 200%;
 	display: flex;
 	flex-direction: column;
 	transition: 0.5s;
@@ -176,12 +123,13 @@ input[id='like-picture-all']:checked ~ .tabmenu .like-picture {
 
 .tab {
 	height: 50%;
-	margin-bottom: -3vh;
+	/* margin-bottom: -3vh; */
 }
 
 .tab2 {
 	height: 50%;
 	overflow-y: scroll;
+	margin-top: 100px;
 }
 
 input[id='my-picture']:checked ~ .my-picture-all {
@@ -189,14 +137,6 @@ input[id='my-picture']:checked ~ .my-picture-all {
 }
 
 input[id='my-picture-all']:checked ~ .my-picture-top {
-	display: block;
-}
-
-input[id='like-picture']:checked ~ .like-picture-all {
-	display: block;
-}
-
-input[id='like-picture-all']:checked ~ .like-picture-top {
 	display: block;
 }
 
@@ -208,30 +148,22 @@ input[id='my-picture-all']:checked ~ .tab-inner .tabs {
 	top: -100%;
 }
 
-input[id='like-picture']:checked ~ .tab-inner .tabs {
-	top: -200%;
-}
-
-input[id='like-picture-all']:checked ~ .tab-inner .tabs {
-	top: -300%;
-}
-
 /* scroll */
 .tab2::-webkit-scrollbar {
 	width: 10px;
 }
 
 .tab2::-webkit-scrollbar-thumb {
-	background-color: rgb(0, 0, 0);
+	background-color: rgb(255, 255, 255, 0.7);
 	border-radius: 10px;
 	background-clip: padding-box;
 	border: 2px solid transparent;
 }
 
 .tab2::-webkit-scrollbar-track {
-	background-color: rgb(0, 0, 0, 0.2);
+	background-color: rgba(255, 255, 255, 0.2);
 	border-radius: 10px;
-	box-shadow: inset 0px 0px 5px white;
+	box-shadow: inset 0px 0px 5px rgb(0, 0, 0);
 }
 
 /* Modal */

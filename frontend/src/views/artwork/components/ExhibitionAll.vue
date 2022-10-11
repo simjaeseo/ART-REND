@@ -79,47 +79,47 @@ export default {
 	--gap: 10px;
 
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(7, 1fr);
 	column-gap: var(--gap);
-	grid-auto-rows: 10px;
-	margin: 10px 300px;
-}
-
-.like-count {
-	margin: 0px 300px;
-	text-align: end;
-	color: rgba(0, 0, 0, 0.5);
-	font-family: 'Playfair Display', serif;
-	font-weight: 600;
+	row-gap: 15px;
+	margin: 30px 300px;
 }
 
 @media screen and (max-width: 2100px) {
 	.masonry-container {
-		grid-template-columns: repeat(7, 1fr);
+		grid-template-columns: repeat(6, 1fr);
 	}
 }
 
 @media screen and (max-width: 1900px) {
 	.masonry-container {
-		grid-template-columns: repeat(6, 1fr);
-		margin: 10px 15vw;
-	}
-	.like-count {
-		margin: 0 15vw;
+		grid-template-columns: repeat(5, 1fr);
+		margin: 30px 15vw;
 	}
 }
 
-@media screen and (max-width: 1300px) {
+@media screen and (max-width: 1500px) {
 	.masonry-container {
-		grid-template-columns: repeat(5, 1fr);
-		margin: 10px 13vw;
+		grid-template-columns: repeat(4, 1fr);
+		margin: 30px 13vw;
 	}
-	.like-count {
-		margin: 0 13vw;
+}
+
+@media screen and (max-width: 1150px) {
+	.masonry-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 30px 13vw;
 	}
 }
 
 @media screen and (max-width: 800px) {
+	.masonry-container {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 30px 13vw;
+	}
+}
+
+@media screen and (max-width: 600px) {
 	.masonry-container {
 		display: block;
 	}
@@ -159,8 +159,8 @@ a:hover .delete {
 
 .image-info {
 	position: absolute;
-	bottom: 20px;
-	right: 30px;
+	bottom: 10px;
+	right: 10px;
 	text-align: end;
 	color: white;
 	transition: 1s;
@@ -203,13 +203,13 @@ a:hover .delete {
 
 .title {
 	font-family: 'Noto Sans', sans-serif;
-	font-size: 2vh;
+	font-size: 20px;
 	font-weight: 600;
 }
 
 .name {
 	font-family: 'Noto Sans', sans-serif;
-	font-size: 1.5vh;
+	font-size: 15px;
 	font-weight: 200;
 }
 </style>

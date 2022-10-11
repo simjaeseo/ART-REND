@@ -160,9 +160,7 @@ export default {
 }
 #text1 {
 	color: white;
-	/* margin-bottom: 50px; */
 	margin-top: 10vh;
-	margin-bottom: 20px;
 }
 img {
 	width: 100%;
@@ -173,7 +171,8 @@ img {
 	column-count: 4;
 	cursor: pointer;
 	margin-bottom: 16px;
-	height: 90vh;
+	height: 80vh;
+	padding-top: 40px;
 	overflow: auto;
 }
 

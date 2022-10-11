@@ -39,7 +39,7 @@
 				<div>PHOTO CARD</div>
 			</label>
 			<label for="like-picture-all" class="like-picture-all">
-				<div>ALL Favorite Artwork</div>
+				<div @click="masonryLayout">ALL Favorite Artwork</div>
 			</label>
 			<label for="like-picture" class="like-picture-top">
 				<div class="top">ᐱ</div>
@@ -202,12 +202,34 @@ export default {
 		const goMyProfile = function () {
 			window.location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
 		}
+
+		const masonryLayout = function masonryLayout() {
+			const masonryContainerStyle = getComputedStyle(
+				document.querySelector('.masonry-container'),
+			)
+			const columnGap = parseInt(
+				masonryContainerStyle.getPropertyValue('column-gap'),
+			)
+			const autoRows = parseInt(
+				masonryContainerStyle.getPropertyValue('grid-auto-rows'),
+			)
+
+			document.querySelectorAll('.masonry-item').forEach(elt => {
+				elt.style.gridRowEnd = `span ${Math.ceil(
+					elt.querySelector('.pseudo-img').scrollHeight / autoRows +
+						columnGap / autoRows,
+				)}`
+			})
+		}
+		window.addEventListener('resize', masonryLayout)
+
 		return {
 			state,
 			goOtherProfile,
 			doubleCheck,
 			modify,
 			goMyProfile,
+			masonryLayout,
 		}
 	},
 }

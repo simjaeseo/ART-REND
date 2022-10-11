@@ -187,7 +187,7 @@ export default {
 	color: white;
 }
 .nav-item2 {
-	margin-top: 4.5vh;
+	margin-top: 2.5vh;
 	font-weight: 900;
 	color: gray;
 	cursor: pointer;
@@ -209,7 +209,7 @@ export default {
 #logo-title {
 	/* margin-top: 100px; */
 	/* margin-bottom: 50px; */
-	margin-bottom: 4.5vh;
+	margin-bottom: 2.5vh;
 	font-weight: 400;
 	font-family: 'DM Serif Display', serif;
 	font-size: 7.5vh;

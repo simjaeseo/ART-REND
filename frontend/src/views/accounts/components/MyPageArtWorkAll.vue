@@ -1,12 +1,8 @@
 <template>
 	<div>
 		<div class="like-count">You have {{ convertList.length }} artworks.</div>
-		<div class="masonry-container">
-			<div
-				v-for="(image, index) in convertList"
-				:key="index"
-				class="masonry-item"
-			>
+		<div class="grid-container">
+			<div v-for="(image, index) in convertList" :key="index" class="grid-item">
 				<div class="pseudo-img">
 					<a target="_blank" rel="noopener">
 						<div class="image-box">
@@ -58,30 +54,6 @@ export default {
 			state.myPage = true
 		}
 
-		window.onload = function () {
-			function masonryLayout() {
-				const masonryContainerStyle = getComputedStyle(
-					document.querySelector('.masonry-container'),
-				)
-				const columnGap = parseInt(
-					masonryContainerStyle.getPropertyValue('column-gap'),
-				)
-				const autoRows = parseInt(
-					masonryContainerStyle.getPropertyValue('grid-auto-rows'),
-				)
-
-				document.querySelectorAll('.masonry-item').forEach(elt => {
-					elt.style.gridRowEnd = `span ${Math.ceil(
-						elt.querySelector('.pseudo-img').scrollHeight / autoRows +
-							columnGap / autoRows,
-					)}`
-				})
-			}
-
-			masonryLayout()
-			window.addEventListener('resize', masonryLayout)
-		}
-
 		const deleteConvert = function (artworkId) {
 			const next = confirm('삭제하시겠습니까?')
 			if (next == true) {
@@ -111,43 +83,62 @@ export default {
 	color: rgba(0, 0, 0, 0.5);
 	font-family: 'Playfair Display', serif;
 	font-weight: 600;
+	padding-right: 20px;
 }
-.masonry-container {
+.grid-container {
 	--gap: 10px;
 
 	display: grid;
-	grid-template-columns: repeat(5, 1fr);
+	grid-template-columns: repeat(6, 1fr);
 	column-gap: var(--gap);
-	grid-auto-rows: 10px;
-	margin: 0px 300px;
+	margin: 10px 300px;
 }
 
 @media screen and (max-width: 2100px) {
-	.masonry-container {
-		grid-template-columns: repeat(4, 1fr);
+	.grid-container {
+		grid-template-columns: repeat(5, 1fr);
 	}
 }
 
 @media screen and (max-width: 1900px) {
-	.masonry-container {
-		grid-template-columns: repeat(3, 1fr);
+	.grid-container {
+		grid-template-columns: repeat(4, 1fr);
+		margin: 10px 15vw;
+	}
+
+	.like-count {
 		margin: 0 15vw;
 	}
 }
 
-@media screen and (max-width: 1300px) {
-	.masonry-container {
+@media screen and (max-width: 1500px) {
+	.grid-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 10px 13vw;
+	}
+
+	.like-count {
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 1150px) {
+	.grid-container {
 		grid-template-columns: repeat(2, 1fr);
+		margin: 10px 13vw;
+	}
+
+	.like-count {
 		margin: 0 13vw;
 	}
 }
 
 @media screen and (max-width: 800px) {
-	.masonry-container {
+	.grid-container {
 		display: block;
 	}
 
-	.masonry-item {
+	.grid-item {
 		margin-bottom: var(--gap);
 	}
 }
@@ -158,6 +149,7 @@ export default {
 	justify-content: center;
 	align-items: center;
 	font-size: 2rem;
+	margin-bottom: 10px;
 }
 
 .image-box {
@@ -165,6 +157,10 @@ export default {
 	vertical-align: top;
 	filter: grayscale(0%);
 	cursor: pointer;
+}
+
+a {
+	width: 90%;
 }
 
 img {

@@ -58,10 +58,10 @@ export default {
 		}
 
 		const goMain = function () {
-			window.location.href = 'http://j7c104.p.ssafy.io/main'
+			window.location.href = 'http://localhost:3002/main'
 		}
 		const goProfile = function () {
-			location.href = `http://j7c104.p.ssafy.io/mypage/${userId.value}`
+			location.href = `http://localhost:3002/mypage/${userId.value}`
 		}
 		return {
 			getLikes,

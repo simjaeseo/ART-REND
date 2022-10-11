@@ -1,23 +1,9 @@
 <template>
 	<div>
-		<div class="external">
-			<div class="horizontal-scroll-wrapper" id="main">
-				<div class="title-wrapper1">
-					<h2 id="title-text1">
-						Art of Trend <br />
-						<h4>My Own Exhibition</h4>
-						<hr />
-						<h5 class="nickname">{{ state.nickName }}</h5>
-					</h2>
-				</div>
-				<div v-if="!convertList.length" class="text-wrapper">
-					Make your photo card!
-				</div>
-				<div
-					v-for="(image, index) in convertList"
-					:key="index"
-					class="img-wrapper"
-				>
+		<div class="like-count">You have {{ convertList.length }} artworks.</div>
+		<div class="grid-container">
+			<div v-for="(image, index) in convertList" :key="index" class="grid-item">
+				<div class="pseudo-img">
 					<a target="_blank" rel="noopener">
 						<div class="image-box">
 							<button
@@ -50,17 +36,16 @@
 
 <script>
 import { reactive, computed } from 'vue'
-import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 
 export default {
 	name: 'MyPageArtWork',
 	setup() {
-		const store = useStore()
 		const route = useRoute()
+		const store = useStore()
 		const state = reactive({
 			imageNum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-			nickName: '',
 			myPage: false,
 		})
 		const memberId = route.params.memberId
@@ -69,24 +54,21 @@ export default {
 			state.myPage = true
 		}
 
-		state.nickName = computed(() => store.getters.userNickName)
-
-		const convertList = computed(() => store.getters.convertList)
-		const goDetail = function (artworkId) {
-			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
-		}
-
 		const deleteConvert = function (artworkId) {
 			const next = confirm('삭제하시겠습니까?')
 			if (next == true) {
 				store.dispatch('deleteConvert', artworkId)
 			}
 		}
+		const goDetail = function (artworkId) {
+			window.location.href = `http://j7c104.p.ssafy.io/detail/${artworkId}`
+		}
+		const convertList = computed(() => store.getters.convertList)
 		return {
 			state,
 			convertList,
-			goDetail,
 			deleteConvert,
+			goDetail,
 		}
 	},
 }
@@ -95,97 +77,79 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;200;500;600&display=swap');
-.text-wrapper {
-	transform: rotate(90deg);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	min-height: 60vh;
-	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0px) translateX(0px);
-	transition: 1s;
+.like-count {
+	margin: 0px 300px;
+	text-align: end;
+	color: rgba(0, 0, 0, 0.5);
 	font-family: 'Playfair Display', serif;
-	font-size: 20px;
-	color: rgba(0, 0, 0, 0.3);
+	font-weight: 600;
+	padding-right: 20px;
 }
-/* hide scrollbar */
-::-webkit-scrollbar {
-	width: 1px;
-	height: 1px;
+.grid-container {
+	--gap: 10px;
+
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	column-gap: var(--gap);
+	margin: 10px 300px;
 }
 
-::-webkit-scrollbar-button {
-	width: 1px;
-	height: 1px;
+@media screen and (max-width: 2100px) {
+	.grid-container {
+		grid-template-columns: repeat(5, 1fr);
+	}
 }
 
-.external {
-	height: 100vh;
-	animation: slideInRight 2s ease-out;
+@media screen and (max-width: 1900px) {
+	.grid-container {
+		grid-template-columns: repeat(4, 1fr);
+		margin: 10px 15vw;
+	}
+
+	.like-count {
+		margin: 0 15vw;
+	}
 }
 
-.horizontal-scroll-wrapper {
+@media screen and (max-width: 1500px) {
+	.grid-container {
+		grid-template-columns: repeat(3, 1fr);
+		margin: 10px 13vw;
+	}
+
+	.like-count {
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 1150px) {
+	.grid-container {
+		grid-template-columns: repeat(2, 1fr);
+		margin: 10px 13vw;
+	}
+
+	.like-count {
+		margin: 0 13vw;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	.grid-container {
+		display: block;
+	}
+
+	.grid-item {
+		margin-bottom: var(--gap);
+	}
+}
+
+/* ignore this */
+.pseudo-img {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100vh;
-	transform: rotate(-90deg) translate3d(10vh, -100vh, 0);
-	transform-origin: right top;
-	overflow-y: auto;
-	overflow-x: hidden;
-	padding: 0;
-	height: 100vw;
-	transform-style: preserve-3d;
-	perspective: 1px;
-	padding-bottom: 10rem;
-}
-
-.title-wrapper1 {
-	transform: rotate(90deg);
-	display: flex;
-	align-items: center;
 	justify-content: center;
-	min-height: 100vh;
-	min-width: 900px;
-	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0px) translateX(0px);
-	transition: 1s;
-	z-index: -1;
-}
-
-#title-text1 {
-	font-size: 60px;
-	position: relative;
-	font-family: 'Playfair Display', serif;
-	animation: fadeInLeft 5s ease-out;
-}
-
-.nickname {
-	font-family: 'Noto Sans KR', sans-serif;
-}
-
-.img-wrapper {
-	transform: rotate(90deg);
-	display: flex;
 	align-items: center;
-	justify-content: center;
-	min-height: 60vh;
-	transform-origin: 50% 50%;
-	transform: rotate(90deg) translateZ(0px) translateX(0px);
-	transition: 1s;
-}
-
-.img-wrapper:hover {
-	min-height: 75vh;
-	transform: rotate(90deg) translateZ(0px) translateX(0px) scale(1.2);
-}
-
-.img-wrapper a {
-	overflow: hidden;
-	display: block;
-	box-shadow: 15px 15px 60px rgba(0, 0, 0, 1);
-	/* background-color: rgba(255, 255, 255, 0.8);
-	padding: 0.5vh; */
+	font-size: 2rem;
+	margin-bottom: 10px;
 }
 
 .image-box {
@@ -195,9 +159,12 @@ export default {
 	cursor: pointer;
 }
 
+a {
+	width: 90%;
+}
+
 img {
-	max-width: 45vh;
-	max-height: 50vh;
+	width: 100%;
 }
 
 a:hover .image-box {
@@ -263,26 +230,5 @@ a:hover .delete {
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 1.5vh;
 	font-weight: 200;
-}
-
-/* top button */
-.topbutton {
-	position: fixed;
-	left: 30px;
-	bottom: 50%;
-	z-index: 1;
-}
-.topbutton > button {
-	border: none;
-}
-.leftButton {
-	width: 3vh;
-	height: 3vh;
-	cursor: pointer;
-	margin-right: 0.3vh;
-	display: none;
-}
-.block {
-	display: block;
 }
 </style>

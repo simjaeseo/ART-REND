@@ -14,6 +14,8 @@ spring:
       server:
         git:
           uri: https://github.com/jg6735/spring-cloud-config
+          username: jg6735
+          password: wlrmschlrh2
 
 management:
   endpoints:

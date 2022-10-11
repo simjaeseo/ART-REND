@@ -118,7 +118,7 @@ export default {
 							.then(() => {
 								store.dispatch('removeToken')
 								alert('회원 탈퇴가 완료되었습니다. 로그인 페이지로 이동합니다.')
-								window.location.href = 'http://j7c104.p.ssafy.io/'
+								window.location.href = 'http://localhost:3002/'
 								localStorage.setItem('vuex', '')
 							})
 							.catch(() => {
@@ -126,7 +126,7 @@ export default {
 							})
 					} else if (result == false) {
 						alert('회원 탈퇴를 취소합니다.  메인 페이지로 돌아갑니다.')
-						window.location.href = 'http://j7c104.p.ssafy.io/main'
+						window.location.href = 'http://localhost:3002/main'
 					}
 				})
 				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요'))

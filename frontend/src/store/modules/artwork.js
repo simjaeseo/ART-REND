@@ -121,7 +121,7 @@ export default {
 			})
 				.then(() => {
 					dispatch('getArtWorkDetail', artworkId)
-					dispatch('likeArtWorkList')
+					dispatch('likeArtWorkList', getters.userId)
 				})
 				.catch(() => alert('서비스가 비정상적입니다. 다시 시도해주세요.'))
 		},

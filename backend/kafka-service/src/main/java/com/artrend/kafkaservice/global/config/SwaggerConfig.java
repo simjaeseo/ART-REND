@@ -1,27 +1,3 @@
-package com.artrend.kafkaservice.global.config;
-
-import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Info;
-import org.springdoc.core.GroupedOpenApi;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-
-@Configuration
-public class SwaggerConfig {
-
-    @Bean
-    public GroupedOpenApi publicApi() {
-        return GroupedOpenApi.builder()
-                .group("v1-artrend")
-                .pathsToMatch("/api/**")
-                .build();
-    }
-    @Bean
-    public OpenAPI springShopOpenAPI() {
-        return new OpenAPI()
-                .info(new Info().title("Art-rend API")
-                        .description("Art-rend 프로젝트 API 명세서입니다.")
-                        .version("v0.1"));
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:e47b61b0402baac85bf8d470b55123a65803700ad25bf83542211623e1670538
+size 832

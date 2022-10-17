@@ -1,13 +1,3 @@
-package com.artrend.kafkaservice;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-@SpringBootApplication
-public class KafkaServiceApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(KafkaServiceApplication.class, args);
-	}
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c5e423ace545d2a67fd79bad5a055ccef23661dcce04e4edc66adfca549035d5
+size 342

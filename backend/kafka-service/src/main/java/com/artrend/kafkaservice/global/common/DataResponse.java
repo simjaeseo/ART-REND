@@ -1,13 +1,3 @@
-package com.artrend.kafkaservice.global.common;
-
-import lombok.Getter;
-
-@Getter
-public class DataResponse<T> extends MessageResponse {
-    private T data;
-
-    public DataResponse(String message, T data) {
-        super(message);
-        this.data = data;
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:85d20ab0cc0fa50852dae22b4eb7ffa4136b7b841cf3447ef7b89d825dfb7190
+size 275

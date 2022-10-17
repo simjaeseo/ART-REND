@@ -1,16 +1,3 @@
-package com.artrend.kafkaservice.dto.kafka.payload;
-
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
-public class MemberLogPayload {
-    private Long member_id;
-    private Long painting_id;
-    private Long click_count;
-    private Long zoom_count;
-    private Long change_count;
-    private String in_time;
-    private String out_time;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:759f3bd1474aaac763c62414469869455184205d2d12ae07515d5ff53b267b69
+size 367

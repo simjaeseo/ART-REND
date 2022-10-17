@@ -1,17 +1,3 @@
-package com.artrend.kafkaservice.dto.kafka;
-
-import lombok.Builder;
-import lombok.Data;
-
-import java.util.List;
-
-@Data
-@Builder
-public class Schema {
-
-    private String type;
-    private List<Field> fields;
-    private boolean optional;
-    private String name;
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a995b1e072cd057ecc250591b821a3220510df2accc2c9f47d75cfcd582980d1
+size 281

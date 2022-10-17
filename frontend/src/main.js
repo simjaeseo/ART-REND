@@ -1,11 +1,3 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
-const app = createApp(App)
-
-app.use(store)
-app.use(router)
-app.mount('#app')
-
-window.Kakao.init('4c906933ce965e211fe9908cafa8951b')
+version https://git-lfs.github.com/spec/v1
+oid sha256:5975577e1fdb37a2e40f61939c38d8536996adc0168f379930816f91924a0750
+size 261

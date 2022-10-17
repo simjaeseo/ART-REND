@@ -1,20 +1,3 @@
-package com.artrend.kafkaservice.service;
-
-import com.artrend.kafkaservice.dto.request.MemberLogRequest;
-import com.artrend.kafkaservice.messagequeue.MemberLogProducer;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-@Service
-@Transactional
-@RequiredArgsConstructor
-@Slf4j
-public class MemberLogService {
-    private final MemberLogProducer memberLogProducer;
-
-    public void saveMemberLogs(MemberLogRequest memberLogRequest) {
-        memberLogProducer.memberLogSend("memberLog", memberLogRequest);
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b1b1ceefbf01cc85670d2eb3d450b6f8deecb6d9e5eae4343f79c2cd721508bd
+size 667

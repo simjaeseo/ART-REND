@@ -4,16 +4,7 @@
 
 
 
-## :family: 프로젝트 팀원 소개
 
-| :smile: [문서희](https://github.com/seohmoon) | 🙂 [지근](https://github.com/jg6735) | :smiley: [심재서](https://github.com/simjaeseo) | :laughing: [소정현](https://github.com/sjhyun7057) | :blush: [김지수](https://github.com/gitjisu) | :wink: [박세은](https://github.com/seniing) |
-| :-------------------------------------------: | :---------------------------------: | :---------------------------------------------: | :------------------------------------------------: | :------------------------------------------: | :-----------------------------------------: |
-|                   **Data**                    |            **Back-End**             |                  **Back-End**                   |                      **Data**                      |                **Front-End**                 |                **Front-End**                |
-|                    Django                     |               Spring                |                     Spring                      |                       Django                       |                     Vue3                     |                    Vue3                     |
-
-####  :calendar: [ 개발일지 (wiki) ] 
-
-[개발일지 (wiki)]: https://lab.ssafy.com/s07-bigdata-recom-sub2/S07P22C104/-/wikis/home
 
 <br />
 
